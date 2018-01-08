@@ -4,8 +4,8 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <source>My Cover</source>
-        <translation>Mein Cover</translation>
+        <source>Sailfish-Connect</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -32,16 +32,8 @@
 <context>
     <name>DeviceListPage</name>
     <message>
-        <source>Show Page 2</source>
-        <translation type="unfinished">Zur Seite 2</translation>
-    </message>
-    <message>
         <source>UI Template</source>
         <translation type="unfinished">UI-Vorlage</translation>
-    </message>
-    <message>
-        <source>Hello Sailors</source>
-        <translation type="unfinished">Hallo Matrosen</translation>
     </message>
 </context>
 <context>

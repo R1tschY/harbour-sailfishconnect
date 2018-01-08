@@ -45,12 +45,12 @@ DISTFILES += \
     translations/*.ts \
     qml/pages/DevicePage.qml \
     qml/pages/DeviceListPage.qml \
-    habour-sailfishconnect.desktop \
     rpm/harbour-sailfishconnect.yaml \
     rpm/harbour-sailfishconnect.spec \
     rpm/harbour-sailfishconnect.changes.in \
     rpm/harbour-sailfishconnect.changes.run.in \
-    qml/harbour-sailfishconnect.qml
+    qml/harbour-sailfishconnect.qml \
+    harbour-sailfishconnect.desktop
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 

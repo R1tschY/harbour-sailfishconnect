@@ -65,6 +65,13 @@ Daemon::Daemon(QObject* parent, bool testMode)
     s_instance = this;
     qCDebug(coreLogger) << "KdeConnect daemon starting";
 
+    // Loading config
+    auto* config = KdeConnectConfig::instance();
+    if (!config->valid()) {
+        qCCritical(coreLogger) << "no valid configuation. aborting!";
+        return;
+    }
+
     //Load backends
 //    if (testMode)
         /*d->m_linkProviders.insert(new LoopbackLinkProvider());
@@ -183,6 +190,7 @@ void Daemon::onNewDeviceLink(const NetworkPackage& identityPackage, DeviceLink* 
 
         //we discard the connections that we created but it's not paired.
         if (!isDiscoveringDevices() && !device->isTrusted() && !dl->linkShouldBeKeptAlive()) {
+            qCDebug(coreLogger) << "device discarded :(";
             device->deleteLater();
         } else {
             addDevice(device);

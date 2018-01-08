@@ -24,6 +24,8 @@
 #include "socketlinereader.h"
 #include "lanlinkprovider.h"
 #include "../../corelogging.h"
+#include "uploadjob.h"
+#include "downloadjob.h"
 
 using namespace SailfishConnect;
 
@@ -82,25 +84,23 @@ QString LanDeviceLink::name()
 
 bool LanDeviceLink::sendPackage(NetworkPackage& np)
 {
-    return false;
-//    if (np.hasPayload()) {
-//        np.setPayloadTransferInfo(sendPayload(np)->transferInfo());
-//    }
+    if (np.hasPayload()) {
+        np.setPayloadTransferInfo(sendPayload(np)->transferInfo());
+    }
 
-//    int written = m_socketLineReader->write(np.serialize());
+    int written = m_socketLineReader->write(np.serialize());
 
-//    //Actually we can't detect if a package is received or not. We keep TCP
-//    //"ESTABLISHED" connections that look legit (return true when we use them),
-//    //but that are actually broken (until keepalive detects that they are down).
-//    return (written != -1);
+    //Actually we can't detect if a package is received or not. We keep TCP
+    //"ESTABLISHED" connections that look legit (return true when we use them),
+    //but that are actually broken (until keepalive detects that they are down).
+    return (written != -1);
 }
 
 UploadJob* LanDeviceLink::sendPayload(const NetworkPackage& np)
 {
-//    UploadJob* job = new UploadJob(np.payload(), deviceId());
-//    job->start();
-//    return job;
-    return nullptr;
+    UploadJob* job = new UploadJob(np.payload(), deviceId());
+    job->start();
+    return job;
 }
 
 void LanDeviceLink::dataReceived()
@@ -120,14 +120,14 @@ void LanDeviceLink::dataReceived()
     }
 
     if (package.hasPayloadTransferInfo()) {
-        //qCDebug(coreLogger) << "HasPayloadTransferInfo";
+        qCDebug(coreLogger) << "HasPayloadTransferInfo";
         QVariantMap transferInfo = package.payloadTransferInfo();
         //FIXME: The next two lines shouldn't be needed! Why are they here?
         transferInfo.insert(QStringLiteral("useSsl"), true);
         transferInfo.insert(QStringLiteral("deviceId"), deviceId());
-//        DownloadJob* job = new DownloadJob(m_socketLineReader->peerAddress(), transferInfo);
-//        job->start();
-//        package.setPayload(job->getPayload(), package.payloadSize());
+        DownloadJob* job = new DownloadJob(m_socketLineReader->peerAddress(), transferInfo);
+        job->start();
+        package.setPayload(job->getPayload(), package.payloadSize());
     }
 
     Q_EMIT receivedPackage(package);

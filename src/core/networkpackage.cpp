@@ -155,7 +155,6 @@ bool NetworkPackage::unserialize(const QByteArray& a, NetworkPackage* np)
     if (np->m_body.contains(QStringLiteral("deviceId")))
     {
         QString deviceId = np->get<QString>(QStringLiteral("deviceId"));
-        //TODO: DbusHelper::filterNonExportableCharacters(deviceId);
         np->set(QStringLiteral("deviceId"), deviceId);
     }
 

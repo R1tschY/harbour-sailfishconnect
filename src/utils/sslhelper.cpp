@@ -16,26 +16,24 @@ namespace Ssl {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ssl")
 
-struct X509Deleter {
-    void operator()(X509* ptr) { X509_free(ptr); }
-};
-using X509Ptr = std::unique_ptr<X509, X509Deleter>;
-
-struct BioDeleter {
-    void operator()(BIO* ptr) { BIO_free(ptr); }
-};
-using BioPtr = std::unique_ptr<BIO, BioDeleter>;
-
-struct EvpPkeyDeleter {
-    void operator()(EVP_PKEY* ptr) { EVP_PKEY_free(ptr); }
-};
-using EvpPkeyPtr = std::unique_ptr<EVP_PKEY, EvpPkeyDeleter>;
 
 struct BigNumDeleter {
     void operator()(BIGNUM* ptr) { BN_free(ptr); }
 };
 using BigNumPtr = std::unique_ptr<BIGNUM, BigNumDeleter>;
 
+
+#define _SSL_PTR(name, sslName) \
+    struct name##Deleter { \
+        void operator()(sslName* ptr) { sslName##_free(ptr); } \
+    }; \
+    using name##Ptr = std::unique_ptr<sslName, name##Deleter>;
+#define SSL_PTR(name, sslName) _SSL_PTR(name, sslName)
+
+SSL_PTR(X509, X509)
+SSL_PTR(Rsa, RSA)
+SSL_PTR(Bio, BIO)
+SSL_PTR(EvpPkey, EVP_PKEY)
 
 
 static QByteArray getByteArray(BIO* bio)
@@ -62,7 +60,6 @@ static BigNumPtr toBigNum(unsigned int value)
     int success = BN_set_word(result.get(), value);
     if (!success) {
         BN_zero(result.get());
-        qCWarning(logger) << "BN_set_word failed";
     }
 
     return result;
@@ -70,23 +67,22 @@ static BigNumPtr toBigNum(unsigned int value)
 
 QSslKey KeyGenerator::generateRsa(int bits)
 {
-    EvpPkeyPtr result(EVP_PKEY_new());
     BigNumPtr e = toBigNum(RSA_F4);
 
-    RSA* rsa = RSA_new();
-    bool success = RSA_generate_key_ex(rsa, bits, e.get(), nullptr);
+    RsaPtr rsa(RSA_new());
+    bool success = RSA_generate_key_ex(rsa.get(), bits, e.get(), nullptr);
     if (!success) {
         return QSslKey();
     }
 
-    success = EVP_PKEY_assign_RSA(result.get(), rsa);
-    if (!success) {
-        return QSslKey();
-    }
+    BioPtr memIo(BIO_new(BIO_s_mem()));
+    PEM_write_bio_RSAPrivateKey(
+                memIo.get(), rsa.get(), nullptr,
+                nullptr, 0, nullptr, nullptr);
 
     return QSslKey(
-        reinterpret_cast<Qt::HANDLE>(result.release()),
-        QSsl::PrivateKey);
+                getByteArray(memIo.get()),
+                QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey);
 }
 
 

@@ -42,44 +42,49 @@ public:
      * Our own info
      */
 
-    QString deviceId();
-    QString name();
-    QString deviceType();
+    QString deviceId() const;
+    QString name() const;
+    QString deviceType() const;
 
-    QString privateKeyPath();
-    QSslKey privateKey();
-    QSslKey publicKey();
+    QString privateKeyPath() const;
+    QSslKey privateKey() const;
 
-    QString certificatePath();
-    QSslCertificate certificate();
+    QString certificatePath() const;
+    QSslCertificate certificate() const;
+
+    QString configPath() const;
+    QString trustedDevicesConfigPath() const;
 
     void setName(const QString& name);
+
+    bool valid() const;
 
     /*
      * Trusted devices
      */
 
-    QStringList trustedDevices(); //list of ids
+    QStringList trustedDevices() const; //list of ids
     void removeTrustedDevice(const QString& id);
     void addTrustedDevice(const QString& id, const QString& name, const QString& type);
-    KdeConnectConfig::DeviceInfo getTrustedDevice(const QString& id);
+    KdeConnectConfig::DeviceInfo getTrustedDevice(const QString& id) const;
 
     void setDeviceProperty(const QString& deviceId, const QString& name, const QString& value);
-    QString getDeviceProperty(const QString& deviceId, const QString& name, const QString& defaultValue = QString());
+    QString getDeviceProperty(const QString& deviceId, const QString& name, const QString& defaultValue = QString()) const;
 
     /*
      * Paths for config files, there is no guarantee the directories already exist
      */
-    QDir baseConfigDir();
-    QDir deviceConfigDir(const QString& deviceId);
-    QDir pluginConfigDir(const QString& deviceId, const QString& pluginName); //Used by KdeConnectPluginConfig
+    QDir baseConfigDir() const;
+    QDir deviceConfigDir(const QString& deviceId) const;
+    QDir pluginConfigDir(const QString& deviceId, const QString& pluginName) const; //Used by KdeConnectPluginConfig
 
 private:
-    KdeConnectConfig();
-
-private:
-
     struct KdeConnectConfigPrivate* d;
+
+    KdeConnectConfig();
+    void createBaseConfigDir();
+    void createCertificate();
+    void createDeviceId();
 };
 
 #endif

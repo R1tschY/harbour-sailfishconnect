@@ -303,7 +303,7 @@ void LanLinkProvider::sslErrors(const QList<QSslError>& errors)
 //I'm the new device and this is the answer to my UDP identity package (no data received yet). They are connecting to us through TCP, and they should send an identity.
 void LanLinkProvider::newConnection()
 {
-    //qCDebug(coreLogger) << "LanLinkProvider newConnection";
+    qCDebug(coreLogger) << "LanLinkProvider newConnection";
 
     while (m_server->hasPendingConnections()) {
         QSslSocket* socket = m_server->nextPendingConnection();
@@ -326,7 +326,7 @@ void LanLinkProvider::dataReceived()
 
     const QByteArray data = socket->readLine();
 
-    qCDebug(coreLogger) << "LanLinkProvider received reply:" << data;
+    //qCDebug(coreLogger) << "LanLinkProvider received reply:" << data;
 
     NetworkPackage* np = new NetworkPackage(QLatin1String(""));
     bool success = NetworkPackage::unserialize(data, np);
@@ -346,7 +346,7 @@ void LanLinkProvider::dataReceived()
     m_receivedIdentityPackages[socket].np = np;
 
     const QString& deviceId = np->get<QString>(QStringLiteral("deviceId"));
-    //qCDebug(coreLogger) << "Handshaking done (i'm the new device)";
+    qCDebug(coreLogger) << "Handshaking done (i'm the new device)";
 
     //This socket will now be owned by the LanDeviceLink or we don't want more data to be received, forget about it
     disconnect(socket, &QIODevice::readyRead, this, &LanLinkProvider::dataReceived);

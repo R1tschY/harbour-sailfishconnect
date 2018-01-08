@@ -49,10 +49,11 @@
 #include <QSslKey>
 
 #include "corelogging.h"
-#include "daemon.h"
 #include "../utils/sslhelper.h"
 
 using namespace SailfishConnect;
+
+static KdeConnectConfig* s_instance = nullptr;
 
 struct KdeConnectConfigPrivate {
     QDir m_configBaseDir;
@@ -60,6 +61,7 @@ struct KdeConnectConfigPrivate {
     QSslKey m_privateKey;
     QSslCertificate m_certificate;
     QString m_deviceId;
+    QString m_name;
 
     QSettings* m_config;
     QSettings* m_trustedDevices;
@@ -71,13 +73,16 @@ static const QFile::Permissions strictFilePermissions =
 
 KdeConnectConfig* KdeConnectConfig::instance()
 {
-    static KdeConnectConfig kcc = KdeConnectConfig();
-    return &kcc;
+    Q_ASSERT(s_instance != nullptr);
+    return s_instance;
 }
 
 KdeConnectConfig::KdeConnectConfig()
     : d(new KdeConnectConfigPrivate)
 {
+    Q_ASSERT(s_instance == nullptr);
+    s_instance = this;
+
     createBaseConfigDir();
 
     d->m_config = new QSettings(configPath(), QSettings::IniFormat);
@@ -122,9 +127,8 @@ void KdeConnectConfig::createCertificate()
         }
 
         if (!keyFile.open(QIODevice::ReadWrite | QIODevice::Truncate))  {
-            Daemon::instance()->reportError(
-                        QStringLiteral("KDE Connect"),
-                        tr("Could not store private key file: %1").arg(keyPath));
+            qCCritical(coreLogger)
+                    << "Could not store private key file:" << keyPath;
         } else {
             keyFile.setPermissions(strictFilePermissions);
             keyFile.write(d->m_privateKey.toPem());
@@ -168,9 +172,8 @@ void KdeConnectConfig::createCertificate()
         }
 
         if (!certFile.open(QIODevice::ReadWrite | QIODevice::Truncate))  {
-            Daemon::instance()->reportError(
-                        QStringLiteral("KDE Connect"),
-                        tr("Could not store certificate file: %1").arg(certPath));
+            qCCritical(coreLogger)
+                    << "Could not store certificate file:" << certPath;
         } else {
             certFile.setPermissions(strictFilePermissions);
             certFile.write(d->m_certificate.toPem());
@@ -197,20 +200,31 @@ void KdeConnectConfig::createDeviceId()
     qCDebug(coreLogger) << "My id:" << d->m_deviceId;
 }
 
-QString KdeConnectConfig::name() const
+void KdeConnectConfig::createName()
 {
     QString name = d->m_config->value(QStringLiteral("name")).toString();
     if (name.isNull()) {
-        // TODO: use /etc/hw-release
-        return qgetenv("USER") + '@' + QHostInfo::localHostName();
+        name = defaultName();
     }
-    return name;
+    d->m_name = name;
+}
+
+QString KdeConnectConfig::name() const
+{
+    return d->m_name;
+}
+
+QString KdeConnectConfig::defaultName() const
+{
+    return qgetenv("USER") + '@' + QHostInfo::localHostName();
 }
 
 void KdeConnectConfig::setName(const QString& name)
 {
     d->m_config->setValue(QStringLiteral("name"), name);
     d->m_config->sync();
+
+    d->m_name = name;
 }
 
 bool KdeConnectConfig::valid() const
@@ -220,7 +234,7 @@ bool KdeConnectConfig::valid() const
 
 QString KdeConnectConfig::deviceType() const
 {
-    return QStringLiteral("phone"); // TODO
+    return QStringLiteral("unknown");
 }
 
 QString KdeConnectConfig::deviceId() const

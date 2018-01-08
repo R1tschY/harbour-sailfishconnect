@@ -31,6 +31,9 @@ class KdeConnectConfig
 {
     Q_DECLARE_TR_FUNCTIONS(KdeConnectConfig)
 public:
+    KdeConnectConfig();
+    virtual ~KdeConnectConfig() = default;
+
     struct DeviceInfo {
         QString deviceName;
         QString deviceType;
@@ -44,7 +47,8 @@ public:
 
     QString deviceId() const;
     QString name() const;
-    QString deviceType() const;
+    virtual QString defaultName() const;
+    virtual QString deviceType() const;
 
     QString privateKeyPath() const;
     QSslKey privateKey() const;
@@ -81,10 +85,10 @@ public:
 private:
     struct KdeConnectConfigPrivate* d;
 
-    KdeConnectConfig();
     void createBaseConfigDir();
     void createCertificate();
     void createDeviceId();
+    void createName();
 };
 
 #endif

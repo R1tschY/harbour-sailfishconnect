@@ -38,7 +38,8 @@ SOURCES += \
     src/ui/devicelistmodel.cpp \
     src/core/backend/lan/downloadjob.cpp \
     src/core/backend/lan/uploadjob.cpp \
-    src/sailfishconnect.cpp
+    src/sailfishconnect.cpp \
+    src/sailfishosconfig.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -87,4 +88,5 @@ HEADERS += \
     src/appdaemon.h \
     src/ui/devicelistmodel.h \
     src/core/backend/lan/downloadjob.h \
-    src/core/backend/lan/uploadjob.h
+    src/core/backend/lan/uploadjob.h \
+    src/sailfishosconfig.h

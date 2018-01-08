@@ -29,6 +29,7 @@
 #include <unistd.h>
 
 #include "appdaemon.h"
+#include "sailfishosconfig.h"
 #include "ui/devicelistmodel.h"
 
 namespace SailfishConnect {
@@ -75,6 +76,7 @@ int main(int argc, char *argv[])
     std::unique_ptr<QQuickView> view(SailfishApp::createView());
 
     registerQmlTypes();
+    SailfishOsConfig config;
     AppDaemon daemon;
 
     view->setSource(SailfishApp::pathToMainQml());

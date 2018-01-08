@@ -10,13 +10,13 @@
 #   - translation filenames have to be changed
 
 # The name of your application
-TARGET = SailfishConnect
+TARGET = harbour-sailfishconnect
 
 CONFIG += sailfishapp c++14
 QT += network
 PKGCONFIG += openssl
 
-SOURCES += src/SailfishConnect.cpp \
+SOURCES += \
     src/core/backend/lan/landevicelink.cpp \
     src/core/backend/lan/lanlinkprovider.cpp \
     src/core/backend/lan/lanpairinghandler.cpp \
@@ -37,18 +37,20 @@ SOURCES += src/SailfishConnect.cpp \
     src/appdaemon.cpp \
     src/ui/devicelistmodel.cpp \
     src/core/backend/lan/downloadjob.cpp \
-    src/core/backend/lan/uploadjob.cpp
+    src/core/backend/lan/uploadjob.cpp \
+    src/sailfishconnect.cpp
 
-DISTFILES += qml/SailfishConnect.qml \
+DISTFILES += \
     qml/cover/CoverPage.qml \
-    rpm/SailfishConnect.changes.in \
-    rpm/SailfishConnect.changes.run.in \
-    rpm/SailfishConnect.spec \
-    rpm/SailfishConnect.yaml \
     translations/*.ts \
-    SailfishConnect.desktop \
     qml/pages/DevicePage.qml \
-    qml/pages/DeviceListPage.qml
+    qml/pages/DeviceListPage.qml \
+    habour-sailfishconnect.desktop \
+    rpm/harbour-sailfishconnect.yaml \
+    rpm/harbour-sailfishconnect.spec \
+    rpm/harbour-sailfishconnect.changes.in \
+    rpm/harbour-sailfishconnect.changes.run.in \
+    qml/harbour-sailfishconnect.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
@@ -60,7 +62,7 @@ CONFIG += sailfishapp_i18n
 # planning to localize your app, remember to comment out the
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
-TRANSLATIONS += translations/SailfishConnect-de.ts
+TRANSLATIONS += translations/harbour-sailfishconnect-de.ts
 
 HEADERS += \
     src/core/backend/lan/landevicelink.h \

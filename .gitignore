@@ -1,0 +1,7 @@
+# Backups
+*~
+*.bak
+*.swp
+
+# Qt Creator
+*.user

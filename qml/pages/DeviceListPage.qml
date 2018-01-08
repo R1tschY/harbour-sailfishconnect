@@ -30,25 +30,27 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Nemo.Notifications 1.0
+import SailfishConnect 0.1
 
 
 Page {
     id: page
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
-    allowedOrientations: Orientation.All
+    allowedOrientations: Orientation.Portrait
 
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         anchors.fill: parent
 
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-        PullDownMenu {
-            MenuItem {
-                text: qsTr("Show Page 2")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
-            }
-        }
+//        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
+//        PullDownMenu {
+//            MenuItem {
+//                text: qsTr("Show Page 2")
+//                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+//            }
+//        }
 
         // Tell SilicaFlickable the height of its content.
         contentHeight: column.height
@@ -63,11 +65,53 @@ Page {
             PageHeader {
                 title: qsTr("UI Template")
             }
-            Label {
-                x: Theme.horizontalPageMargin
-                text: qsTr("Hello Sailors")
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
+
+//            Button {
+//                Notification {
+//                    id: notification
+//                    category: "x-nemo.example"
+//                    summary: "Notification summary"
+//                    body: "Notification body"
+//                    onClicked: console.log("Clicked")
+//                }
+//                text: "Application notification" + (notification.replacesId ? " ID:" + notification.replacesId : "")
+//                onClicked: notification.publish()
+//            }
+
+            Component {
+                id: deviceDelegate
+                Item {
+                    width: page.width
+                    height: Theme.fontSizeMedium + Theme.fontSizeSmall + Theme.paddingSmall * 4
+                    Row {
+                        Image {
+                            height: Theme.fontSizeMedium + Theme.fontSizeSmall
+                            width: Theme.fontSizeMedium + Theme.fontSizeSmall
+                            source: iconUrl
+                        }
+                        Column {
+                            Text {
+                                font.pixelSize: Theme.fontSizeMedium
+                                text: '<b>Name:</b> ' + name
+                                color: "white"
+                            }
+                            Text {
+                                font.pixelSize: Theme.fontSizeSmall
+                                text: '<b>Id:</b> ' + id
+                                color: "white"
+                            }
+                        }
+                    }
+                }
+            }
+
+            SilicaListView {
+                width: page.width; height: 200
+
+                model: DeviceListModel { id: listModel }
+                delegate: deviceDelegate
+                highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+                focus: true
             }
         }
     }

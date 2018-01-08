@@ -33,18 +33,22 @@ SOURCES += src/SailfishConnect.cpp \
     src/core/corelogging.cpp \
     src/core/backend/lan/server.cpp \
     src/core/daemon.cpp \
-    src/utils/sslhelper.cpp
+    src/utils/sslhelper.cpp \
+    src/appdaemon.cpp \
+    src/ui/devicelistmodel.cpp \
+    src/core/backend/lan/downloadjob.cpp \
+    src/core/backend/lan/uploadjob.cpp
 
 DISTFILES += qml/SailfishConnect.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml \
     rpm/SailfishConnect.changes.in \
     rpm/SailfishConnect.changes.run.in \
     rpm/SailfishConnect.spec \
     rpm/SailfishConnect.yaml \
     translations/*.ts \
-    SailfishConnect.desktop
+    SailfishConnect.desktop \
+    qml/pages/DevicePage.qml \
+    qml/pages/DeviceListPage.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
@@ -77,4 +81,8 @@ HEADERS += \
     src/core/backend/lan/server.h \
     src/core/daemon.h \
     src/utils/asconst.h \
-    src/utils/sslhelper.h
+    src/utils/sslhelper.h \
+    src/appdaemon.h \
+    src/ui/devicelistmodel.h \
+    src/core/backend/lan/downloadjob.h \
+    src/core/backend/lan/uploadjob.h

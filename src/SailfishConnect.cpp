@@ -4,42 +4,19 @@
 
 #include <memory>
 #include <QLoggingCategory>
+#include <QQmlEngine>
 #include <sailfishapp.h>
 
 #include <execinfo.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "core/daemon.h"
+#include "appdaemon.h"
+#include "ui/devicelistmodel.h"
 
 namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
-
-class SailfishConnectDaemon : public Daemon
-{
-public:
-    SailfishConnectDaemon(QObject* parent = Q_NULLPTR) : Daemon(parent) {}
-
-    void askPairingConfirmation(Device* device) override
-    {
-       qCWarning(logger) << "askPairingConfirmation";
-//        KNotification* notification = new KNotification(QStringLiteral("pairingRequest"));
-//        notification->setIconName(QStringLiteral("dialog-information"));
-//        notification->setComponentName(QStringLiteral("kdeconnect"));
-//        notification->setText(i18n("Pairing request from %1", device->name().toHtmlEscaped()));
-//        notification->setActions(QStringList() << i18n("Accept") << i18n("Reject"));
-////         notification->setTimeout(PairingHandler::pairingTimeoutMsec());
-//        connect(notification, &KNotification::action1Activated, device, &Device::acceptPairing);
-//        connect(notification, &KNotification::action2Activated, device, &Device::rejectPairing);
-//        notification->sendEvent();
-    }
-
-    void reportError(const QString & title, const QString & description) override
-    {
-       qCCritical(logger) << title << description;
-    }
-};
 
 void logBacktrace()
 {
@@ -65,6 +42,10 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     }
 }
 
+void registerQmlTypes() {
+    qmlRegisterType<DeviceListModel>("SailfishConnect", 0, 1, "DeviceListModel");
+}
+
 } // SailfishConnect
 
 int main(int argc, char *argv[])
@@ -76,9 +57,11 @@ int main(int argc, char *argv[])
     std::unique_ptr<QGuiApplication> app(SailfishApp::application(argc, argv));
     std::unique_ptr<QQuickView> view(SailfishApp::createView());
 
+    registerQmlTypes();
+    AppDaemon daemon;
+
     view->setSource(SailfishApp::pathToMainQml());
     view->showFullScreen();
 
-    SailfishConnectDaemon daemon;
     return app->exec();
 }

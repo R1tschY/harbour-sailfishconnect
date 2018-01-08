@@ -30,7 +30,7 @@
     </message>
 </context>
 <context>
-    <name>FirstPage</name>
+    <name>DeviceListPage</name>
     <message>
         <source>Show Page 2</source>
         <translation type="unfinished"></translation>
@@ -41,6 +41,28 @@
     </message>
     <message>
         <source>Hello Sailors</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DevicePage</name>
+    <message>
+        <source>Nested Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>KdeConnectConfig</name>
+    <message>
+        <source>Could not store private key file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not store certificate file: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -63,17 +85,6 @@
     </message>
     <message>
         <source>Timed out</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SecondPage</name>
-    <message>
-        <source>Nested Page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Item</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

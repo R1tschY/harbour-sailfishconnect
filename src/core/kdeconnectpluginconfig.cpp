@@ -28,7 +28,7 @@
 struct SailfishConnectPluginConfigPrivate
 {
     QDir m_configDir;
-    QSettings* m_config;
+    QScopedPointer<QSettings> m_config;
 };
 
 SailfishConnectPluginConfig::SailfishConnectPluginConfig(const QString& deviceId, const QString& pluginName)
@@ -37,13 +37,10 @@ SailfishConnectPluginConfig::SailfishConnectPluginConfig(const QString& deviceId
     d->m_configDir = KdeConnectConfig::instance()->pluginConfigDir(deviceId, pluginName);
     QDir().mkpath(d->m_configDir.path());
 
-    d->m_config = new QSettings(d->m_configDir.absoluteFilePath(QStringLiteral("config")), QSettings::IniFormat);
+    d->m_config.reset(new QSettings(d->m_configDir.absoluteFilePath(QStringLiteral("config")), QSettings::IniFormat));
 }
 
-SailfishConnectPluginConfig::~SailfishConnectPluginConfig()
-{
-    delete d->m_config;
-}
+SailfishConnectPluginConfig::~SailfishConnectPluginConfig() = default;
 
 QVariant SailfishConnectPluginConfig::get(const QString& key, const QVariant& defaultValue)
 {

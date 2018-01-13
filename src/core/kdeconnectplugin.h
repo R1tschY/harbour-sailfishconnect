@@ -21,6 +21,7 @@
 #ifndef KDECONNECTPLUGIN_H
 #define KDECONNECTPLUGIN_H
 
+#include <memory>
 #include <QObject>
 #include <QVariantList>
 
@@ -30,23 +31,35 @@
 
 struct KdeConnectPluginPrivate;
 
-class SailfishConnectPlugin
+
+class SailfishConnectPluginFactory
+{
+public:
+    virtual ~SailfishConnectPluginFactory() = default;
+
+    virtual KdeConnectPlugin* create(
+        Device* device, QString name, QSet<QString> outgoingCapabilities) = 0;
+};
+
+#define SailfishConnectPlugin_iid "SailfishConnect.Plugin"
+Q_DECLARE_INTERFACE(SailfishConnectPluginFactory, SailfishConnectPlugin_iid)
+
+
+class KdeConnectPlugin
     : public QObject
 {
     Q_OBJECT
 
 public:
-    SailfishConnectPlugin(QObject* parent, const QVariantList& args);
-    ~SailfishConnectPlugin() override;
+    KdeConnectPlugin(
+            Device* device, QString name, QSet<QString> outgoingCapabilities);
+    ~KdeConnectPlugin();
 
-    const Device* device();
-    Device const* device() const;
+    const Device* device() const;
 
     bool sendPackage(NetworkPackage& np) const;
 
     SailfishConnectPluginConfig* config() const;
-
-    virtual QString dbusPath() const;
 
 public Q_SLOTS:
     /**
@@ -59,11 +72,10 @@ public Q_SLOTS:
      * This method will be called when a device is connected to this computer.
      * The plugin could be loaded already, but there is no guarantee we will be able to reach the device until this is called.
      */
-    virtual void connected() = 0;
+    virtual void connected() { }
 
 private:
     QScopedPointer<KdeConnectPluginPrivate> d;
-
 };
 
 #endif

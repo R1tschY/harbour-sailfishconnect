@@ -35,7 +35,7 @@ class SailfishConnectPluginConfig : public QObject
 
 public:
     SailfishConnectPluginConfig(const QString& deviceId, const QString& pluginName);
-    ~SailfishConnectPluginConfig() override;
+    ~SailfishConnectPluginConfig();
 
     /**
      * Store a key-value pair in this config object

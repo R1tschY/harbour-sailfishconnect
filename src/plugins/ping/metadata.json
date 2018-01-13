@@ -1,0 +1,5 @@
+{
+    "Id": "SailfishConnect::PingPlugin",
+    "IncomingCapabilities": ["kdeconnect.ping"],
+    "OutcomingCapabilities": ["kdeconnect.ping"]
+}

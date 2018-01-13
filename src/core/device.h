@@ -31,7 +31,7 @@
 #include "backend/devicelink.h"
 
 class DeviceLink;
-class SailfishConnectPlugin;
+class KdeConnectPlugin;
 
 class Device
     : public QObject
@@ -94,7 +94,7 @@ public:
 
     Q_SCRIPTABLE QString pluginsConfigFile() const;
 
-    SailfishConnectPlugin* plugin(const QString& pluginName) const;
+    KdeConnectPlugin* plugin(const QString& pluginName) const;
     Q_SCRIPTABLE void setPluginEnabled(const QString& pluginName, bool enabled);
     Q_SCRIPTABLE bool isPluginEnabled(const QString& pluginName) const;
 
@@ -150,10 +150,10 @@ private: //Fields (TODO: dPointer!)
     int m_protocolVersion;
 
     QVector<DeviceLink*> m_deviceLinks;
-    QHash<QString, SailfishConnectPlugin*> m_plugins;
+    QHash<QString, KdeConnectPlugin*> m_plugins;
 
     //Capabilities stuff
-    QMultiMap<QString, SailfishConnectPlugin*> m_pluginsByIncomingCapability;
+    QMultiMap<QString, KdeConnectPlugin*> m_pluginsByIncomingCapability;
     QSet<QString> m_supportedPlugins;
     QSet<PairingHandler*> m_pairRequests;
 };

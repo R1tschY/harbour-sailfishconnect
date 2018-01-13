@@ -20,6 +20,7 @@
 
 #include "kdeconnectplugin.h"
 
+#include <memory>
 #include "corelogging.h"
 
 using namespace SailfishConnect;
@@ -29,56 +30,45 @@ struct KdeConnectPluginPrivate
     Device* m_device;
     QString m_pluginName;
     QSet<QString> m_outgoingCapabilties;
-    SailfishConnectPluginConfig* m_config;
+    std::unique_ptr<SailfishConnectPluginConfig> m_config = nullptr;
 };
 
-SailfishConnectPlugin::SailfishConnectPlugin(QObject* parent, const QVariantList& args)
-    : QObject(parent)
+KdeConnectPlugin::KdeConnectPlugin(Device* device, QString name, QSet<QString> outgoingCapabilities)
+    : QObject(device)
     , d(new KdeConnectPluginPrivate)
 {
-    d->m_device = qvariant_cast< Device* >(args.at(0));
-    d->m_pluginName = args.at(1).toString();
-    d->m_outgoingCapabilties = args.at(2).toStringList().toSet();
-    d->m_config = nullptr;
+    d->m_device = device;
+    d->m_pluginName = name;
+    d->m_outgoingCapabilties = outgoingCapabilities;
 }
 
-SailfishConnectPluginConfig* SailfishConnectPlugin::config() const
+KdeConnectPlugin::~KdeConnectPlugin() = default;
+
+SailfishConnectPluginConfig* KdeConnectPlugin::config() const
 {
     //Create on demand, because not every plugin will use it
     if (!d->m_config) {
-        d->m_config = new SailfishConnectPluginConfig(d->m_device->id(), d->m_pluginName);
+        d->m_config.reset(new SailfishConnectPluginConfig(
+                              d->m_device->id(), d->m_pluginName));
     }
-    return d->m_config;
+    return d->m_config.get();
 }
 
-SailfishConnectPlugin::~SailfishConnectPlugin()
-{
-    if (d->m_config) {
-        delete d->m_config;
-    }
-}
-
-const Device* SailfishConnectPlugin::device()
+const Device* KdeConnectPlugin::device() const
 {
     return d->m_device;
 }
 
-Device const* SailfishConnectPlugin::device() const
+bool KdeConnectPlugin::sendPackage(NetworkPackage& np) const
 {
-    return d->m_device;
-}
-
-bool SailfishConnectPlugin::sendPackage(NetworkPackage& np) const
-{
-    if(!d->m_outgoingCapabilties.contains(np.type())) {
-        qCWarning(coreLogger) << metaObject()->className() << "tried to send an unsupported package type" << np.type() << ". Supported:" << d->m_outgoingCapabilties;
+    if (!d->m_outgoingCapabilties.contains(np.type())) {
+        qCWarning(coreLogger).nospace()
+                << metaObject()->className()
+                << " tried to send an unsupported package type " << np.type()
+                << ". Supported: " << d->m_outgoingCapabilties;
         return false;
     }
-     qCWarning(coreLogger) << metaObject()->className() << "sends" << np.type();
+    qCWarning(coreLogger) << metaObject()->className() << "sends" << np.type();
     return d->m_device->sendPackage(np);
 }
 
-QString SailfishConnectPlugin::dbusPath() const
-{
-    return {};
-}

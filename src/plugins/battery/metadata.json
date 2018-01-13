@@ -1,0 +1,5 @@
+{
+    "Id": "SailfishConnect::BatteryPlugin",
+    "IncomingCapabilities": ["kdeconnect.battery.request"],
+    "OutcomingCapabilities": ["kdeconnect.battery"]
+}

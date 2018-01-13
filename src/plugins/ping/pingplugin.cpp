@@ -15,22 +15,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVICEINFO_H
-#define DEVICEINFO_H
+#include "pingplugin.h"
 
-class QString;
+#include <QLoggingCategory>
+
+#include <core/networkpackage.h>
 
 namespace SailfishConnect {
 
-class SystemInfo
-{
-public:
-    virtual ~SystemInfo() = default;
+static Q_LOGGING_CATEGORY(logger, "SailfishConnect.Ping")
 
-    virtual QString defaultName() const;
-    virtual QString deviceType() const;
-};
+bool PingPlugin::receivePackage(const NetworkPackage& np)
+{
+    QString message =
+            np.get<QString>(QStringLiteral("message"), QStringLiteral("Ping!"));
+    int id = qHash(message);
+
+    qCDebug(logger) << "Ping:" << message << "Id:" << id;
+
+    return true;
+}
+
+PingPluginFactory::PingPluginFactory(QObject *parent)
+: QObject(parent)
+{ }
 
 } // namespace SailfishConnect
 
-#endif // DEVICEINFO_H
+Q_IMPORT_PLUGIN(PingPluginFactory)

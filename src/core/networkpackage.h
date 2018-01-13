@@ -66,6 +66,7 @@ public:
     }
     template<typename T> void set(const QString& key, const T& value) { m_body[key] = QVariant(value); }
     bool has(const QString& key) const { return m_body.contains(key); }
+    void remove(const QString& key) { m_body.remove(key); }
 
     QSharedPointer<QIODevice> payload() const { return m_payload; }
     void setPayload(const QSharedPointer<QIODevice>& device, qint64 payloadSize) { m_payload = device; m_payloadSize = payloadSize; Q_ASSERT(m_payloadSize >= -1); }

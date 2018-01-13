@@ -35,7 +35,8 @@
 #include "networkpackage.h"
 #include "kdeconnectconfig.h"
 #include "corelogging.h"
-#include "../utils/asconst.h"
+#include "pluginloader.h"
+#include "../utils/cpphelper.h"
 
 using namespace SailfishConnect;
 
@@ -88,34 +89,32 @@ QStringList Device::loadedPlugins() const
 
 void Device::reloadPlugins()
 {
-    QHash<QString, SailfishConnectPlugin*> newPluginMap, oldPluginMap = m_plugins;
-    QMultiMap<QString, SailfishConnectPlugin*> newPluginsByIncomingCapability;
+    QHash<QString, KdeConnectPlugin*> newPluginMap, oldPluginMap = m_plugins;
+    QMultiMap<QString, KdeConnectPlugin*> newPluginsByIncomingCapability;
 
     if (isTrusted() && isReachable()) { //Do not load any plugin for unpaired devices, nor useless loading them for unreachable devices
-// TODO
-//        PluginLoader* loader = PluginLoader::instance();
+        PluginManager* pluginManager = PluginManager::instance();
 
-//        for (const QString& pluginName : asConst(m_supportedPlugins)) {
-//            const KPluginMetaData service = loader->getPluginInfo(pluginName);
+        for (const QString& pluginId : asConst(m_supportedPlugins)) {
 
-//            const bool pluginEnabled = isPluginEnabled(pluginName);
-//            const QSet<QString> incomingCapabilities = KPluginMetaData::readStringList(service.rawData(), QStringLiteral("X-KdeConnect-SupportedPackageType")).toSet();
+            const bool pluginEnabled = isPluginEnabled(pluginId);
+            if (pluginEnabled) {
+                KdeConnectPlugin* plugin = m_plugins.take(pluginId);
+                if (!plugin) {
+                    plugin = pluginManager->instantiatePluginForDevice(
+                                pluginId, this);
+                }
+                Q_ASSERT(plugin);
 
-//            if (pluginEnabled) {
-//                SailfishConnectPlugin* plugin = m_plugins.take(pluginName);
+                const auto incomingCapabilities =
+                        pluginManager->incomingCapabilities(pluginId);
+                for (const QString& interface : incomingCapabilities) {
+                    newPluginsByIncomingCapability.insert(interface, plugin);
+                }
 
-//                if (!plugin) {
-//                    plugin = loader->instantiatePluginForDevice(pluginName, this);
-//                }
-//                Q_ASSERT(plugin);
-
-//                for (const QString& interface : incomingCapabilities) {
-//                    newPluginsByIncomingCapability.insert(interface, plugin);
-//                }
-
-//                newPluginMap[pluginName] = plugin;
-//            }
-//        }
+                newPluginMap[pluginId] = plugin;
+            }
+        }
     }
 
     const bool differentPlugins = oldPluginMap != newPluginMap;
@@ -222,10 +221,10 @@ void Device::addLink(const NetworkPackage& identityPackage, DeviceLink* link)
         const QSet<QString> outgoingCapabilities = identityPackage.get<QStringList>(QStringLiteral("outgoingCapabilities")).toSet()
                           , incomingCapabilities = identityPackage.get<QStringList>(QStringLiteral("incomingCapabilities")).toSet();
 
-        m_supportedPlugins = QSet<QString>(); // TODO: PluginLoader::instance()->pluginsForCapabilities(incomingCapabilities, outgoingCapabilities);
+        m_supportedPlugins = PluginManager::instance()->pluginsForCapabilities(incomingCapabilities, outgoingCapabilities);
         qDebug() << "new plugins for" << m_deviceName << m_supportedPlugins << incomingCapabilities << outgoingCapabilities;
     } else {
-        m_supportedPlugins = QSet<QString>(); // TODO: PluginLoader::instance()->getPluginList().toSet();
+        m_supportedPlugins = PluginManager::instance()->getPluginList().toSet();
     }
 
     reloadPlugins();
@@ -319,11 +318,11 @@ void Device::privateReceivedPackage(const NetworkPackage& np)
 {
     Q_ASSERT(np.type() != PACKAGE_TYPE_PAIR);
     if (isTrusted()) {
-        const QList<SailfishConnectPlugin*> plugins = m_pluginsByIncomingCapability.values(np.type());
+        const QList<KdeConnectPlugin*> plugins = m_pluginsByIncomingCapability.values(np.type());
         if (plugins.isEmpty()) {
             qWarning() << "discarding unsupported package" << np.type() << "for" << name();
         }
-        for (SailfishConnectPlugin* plugin : plugins) {
+        for (KdeConnectPlugin* plugin : plugins) {
             plugin->receivePackage(np);
         }
     } else {
@@ -424,7 +423,7 @@ void Device::setName(const QString& name)
     }
 }
 
-SailfishConnectPlugin* Device::plugin(const QString& pluginName) const
+KdeConnectPlugin* Device::plugin(const QString& pluginName) const
 {
     return m_plugins[pluginName];
 }
@@ -439,9 +438,9 @@ void Device::setPluginEnabled(const QString& pluginName, bool enabled)
     reloadPlugins();
 }
 
-bool Device::isPluginEnabled(const QString& pluginName) const
+bool Device::isPluginEnabled(const QString& pluginId) const
 {
-    const QString enabledKey = pluginName + QStringLiteral("Enabled");
+    const QString enabledKey = pluginId + QStringLiteral("Enabled");
     QSettings pluginStates(pluginsConfigFile(), QSettings::IniFormat);
     pluginStates.beginGroup("Plugins");
 

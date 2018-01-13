@@ -14,7 +14,9 @@ TARGET = harbour-sailfishconnect
 
 CONFIG += sailfishapp c++14
 QT += network
-PKGCONFIG += openssl
+PKGCONFIG += openssl contextkit-statefs
+DEFINES += QT_STATICPLUGIN
+INCLUDEPATH += src
 
 SOURCES += \
     src/core/backend/lan/landevicelink.cpp \
@@ -39,7 +41,10 @@ SOURCES += \
     src/core/backend/lan/downloadjob.cpp \
     src/core/backend/lan/uploadjob.cpp \
     src/sailfishconnect.cpp \
-    src/sailfishosconfig.cpp
+    src/core/pluginloader.cpp \
+    src/plugins/battery/batteryplugin.cpp \
+    src/plugins/ping/pingplugin.cpp \
+    src/core/systeminfo.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -51,7 +56,10 @@ DISTFILES += \
     rpm/harbour-sailfishconnect.changes.in \
     rpm/harbour-sailfishconnect.changes.run.in \
     qml/harbour-sailfishconnect.qml \
-    harbour-sailfishconnect.desktop
+    harbour-sailfishconnect.desktop \
+    src/plugins/battery/metadata.json \
+    src/plugins/ping/metadata.json \
+    README.md
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
@@ -83,10 +91,16 @@ HEADERS += \
     src/core/corelogging.h \
     src/core/backend/lan/server.h \
     src/core/daemon.h \
-    src/utils/asconst.h \
     src/utils/sslhelper.h \
     src/appdaemon.h \
     src/ui/devicelistmodel.h \
     src/core/backend/lan/downloadjob.h \
     src/core/backend/lan/uploadjob.h \
-    src/sailfishosconfig.h
+    src/core/pluginloader.h \
+    src/plugins/battery/batteryplugin.h \
+    src/plugins/ping/pingplugin.h \
+    src/core/systeminfo.h \
+    src/utils/cpphelper.h
+
+SUBDIRS += \
+    src/plugins/battery/SailfishConnectBatteryPlugin.pro

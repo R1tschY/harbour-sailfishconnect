@@ -21,6 +21,7 @@
 #ifndef LANLINKPROVIDER_H
 #define LANLINKPROVIDER_H
 
+#include <QHash>
 #include <QObject>
 #include <QTcpServer>
 #include <QSslSocket>
@@ -83,14 +84,14 @@ private:
     QUdpSocket m_udpSocket;
     quint16 m_tcpPort;
 
-    QMap<QString, LanDeviceLink*> m_links;
-    QMap<QString, LanPairingHandler*> m_pairingHandlers;
+    QHash<QString, LanDeviceLink*> m_links;
+    QHash<QString, LanPairingHandler*> m_pairingHandlers;
 
     struct PendingConnect {
         NetworkPackage* np;
         QHostAddress sender;
     };
-    QMap<QSslSocket*, PendingConnect> m_receivedIdentityPackages;
+    QHash<QSslSocket*, PendingConnect> m_receivedIdentityPackages;
     QNetworkConfiguration m_lastConfig;
     const bool m_testMode;
     QTimer m_combineBroadcastsTimer;

@@ -19,13 +19,20 @@
 #define ASCONST_H
 
 #include <type_traits>
+#include <memory>
 
 namespace SailfishConnect {
 
-template <class T>
+template<typename T>
 constexpr typename std::add_const<T>::type& asConst(T& t) noexcept
 {
     return t;
+}
+
+template<typename T, typename...Args>
+std::unique_ptr<T> makeUniquePtr(Args&&...args)
+{
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
 } // SailfishConnect

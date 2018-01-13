@@ -48,17 +48,6 @@
     </message>
 </context>
 <context>
-    <name>KdeConnectConfig</name>
-    <message>
-        <source>Could not store private key file: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not store certificate file: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>

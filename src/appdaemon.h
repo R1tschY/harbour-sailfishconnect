@@ -26,7 +26,7 @@ class AppDaemon : public Daemon
 {
     Q_OBJECT
 public:
-    AppDaemon(QObject* parent = nullptr) : Daemon(parent) {}
+    AppDaemon(QObject* parent = nullptr);
 
     void askPairingConfirmation(Device* device) override;
 

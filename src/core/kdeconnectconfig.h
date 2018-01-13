@@ -21,18 +21,22 @@
 #ifndef KDECONNECTCONFIG_H
 #define KDECONNECTCONFIG_H
 
+#include <memory>
 #include <QDir>
 #include <QCoreApplication>
 
 class QSslCertificate;
 class QSslKey;
 
+namespace SailfishConnect {
+class SystemInfo;
+} // namespace SailfishConnect
+
 class KdeConnectConfig
 {
     Q_DECLARE_TR_FUNCTIONS(KdeConnectConfig)
 public:
-    KdeConnectConfig();
-    virtual ~KdeConnectConfig() = default;
+    KdeConnectConfig(std::unique_ptr<SailfishConnect::SystemInfo> systemInfo);
 
     struct DeviceInfo {
         QString deviceName;
@@ -47,8 +51,8 @@ public:
 
     QString deviceId() const;
     QString name() const;
-    virtual QString defaultName() const;
-    virtual QString deviceType() const;
+    QString defaultName() const;
+    QString deviceType() const;
 
     QString privateKeyPath() const;
     QSslKey privateKey() const;

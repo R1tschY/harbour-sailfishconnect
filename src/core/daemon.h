@@ -21,9 +21,8 @@
 #ifndef KDECONNECT_DAEMON_H
 #define KDECONNECT_DAEMON_H
 
+#include <memory>
 #include <QObject>
-#include <QSet>
-#include <QMap>
 
 #include "device.h"
 
@@ -31,6 +30,11 @@ class NetworkPackage;
 class DeviceLink;
 class Device;
 class QNetworkAccessManager;
+class KdeConnectConfig;
+
+namespace SailfishConnect {
+class SystemInfo;
+} // namespace SailfishConnect
 
 class Daemon
     : public QObject
@@ -40,12 +44,13 @@ class Daemon
     Q_PROPERTY(QStringList pairingRequests READ pairingRequests NOTIFY pairingRequestsChanged)
 
 public:
-    explicit Daemon(QObject* parent, bool testMode = false);
+    explicit Daemon(std::unique_ptr<SailfishConnect::SystemInfo> systemInfo, QObject* parent, bool testMode = false);
     ~Daemon() override;
 
     static Daemon* instance();
 
     QList<Device*> devicesList() const;
+    KdeConnectConfig* config();
 
     virtual void askPairingConfirmation(Device* device) = 0;
     virtual void reportError(const QString& title, const QString& description) = 0;

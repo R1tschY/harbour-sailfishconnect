@@ -22,7 +22,7 @@
 
 #include "../core/daemon.h"
 #include "../core/device.h"
-#include "../utils/asconst.h"
+#include "../utils/cpphelper.h"
 
 namespace SailfishConnect {
 

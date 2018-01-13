@@ -19,10 +19,48 @@
 
 #include <QLoggingCategory>
 #include <QTimer>
+#include <QSettings>
+
+#include "core/systeminfo.h"
+#include "utils/cpphelper.h"
 
 namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
+
+namespace {
+
+class SailfishOsConfig : public SystemInfo
+{
+public:
+    QString defaultName() const override;
+    QString deviceType() const override;
+};
+
+QString SailfishOsConfig::defaultName() const
+{
+    QSettings hwRelease(
+                QStringLiteral("/etc/hw-release"), QSettings::IniFormat);
+    auto hwName = hwRelease.value(QStringLiteral("NAME")).toString();
+    if (!hwName.isEmpty()) {
+        return hwName;
+    }
+
+    return SailfishOsConfig::defaultName();
+}
+
+QString SailfishOsConfig::deviceType() const
+{
+    // TODO: How to detect tablet?
+    return QStringLiteral("phone");
+}
+
+} // namespace
+
+
+AppDaemon::AppDaemon(QObject *parent)
+: Daemon(makeUniquePtr<SailfishOsConfig>(), parent)
+{}
 
 void AppDaemon::askPairingConfirmation(Device *device)
 {

@@ -17,10 +17,15 @@
 
 #include "sslhelper.h"
 
+#include <openssl/bn.h>
+#include <openssl/evp.h>
+#include <openssl/x509.h>
 #include <openssl/err.h>
 #include <openssl/bio.h>
 #include <openssl/pem.h>
 
+
+#include <memory>
 #include <QDebug>
 #include <QDateTime>
 #include <QLoggingCategory>

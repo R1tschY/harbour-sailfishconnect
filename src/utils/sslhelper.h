@@ -18,12 +18,6 @@
 #ifndef SSLHELPER_H
 #define SSLHELPER_H
 
-#include <openssl/bn.h>
-#include <openssl/evp.h>
-#include <openssl/x509.h>
-
-#include <memory>
-#include <QString>
 #include <QDateTime>
 #include <QMap>
 

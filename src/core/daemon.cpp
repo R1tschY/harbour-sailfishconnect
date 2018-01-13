@@ -34,7 +34,9 @@
 #include "backend/devicelink.h"
 #include "backend/linkprovider.h"
 #include "corelogging.h"
-#include "../utils/asconst.h"
+#include "../utils/cpphelper.h"
+#include "kdeconnectconfig.h"
+#include "systeminfo.h"
 
 using namespace SailfishConnect;
 
@@ -46,9 +48,15 @@ struct DaemonPrivate
     QSet<LinkProvider*> m_linkProviders;
 
     //Every known device
-    QMap<QString, Device*> m_devices;
+    QHash<QString, Device*> m_devices;
 
     QSet<QString> m_discoveryModeAcquisitions;
+
+    KdeConnectConfig m_config;
+
+    DaemonPrivate(std::unique_ptr<SystemInfo> systemInfo)
+    : m_config(std::move(systemInfo))
+    { }
 };
 
 Daemon* Daemon::instance()
@@ -57,9 +65,9 @@ Daemon* Daemon::instance()
     return s_instance;
 }
 
-Daemon::Daemon(QObject* parent, bool testMode)
+Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, QObject* parent, bool testMode)
     : QObject(parent)
-    , d(new DaemonPrivate)
+    , d(new DaemonPrivate(std::move(systemInfo)))
 {
     Q_ASSERT(!s_instance);
     s_instance = this;
@@ -238,6 +246,11 @@ QNetworkAccessManager* Daemon::networkAccessManager()
 QList<Device*> Daemon::devicesList() const
 {
     return d->m_devices.values();
+}
+
+KdeConnectConfig *Daemon::config()
+{
+    return &d->m_config;
 }
 
 bool Daemon::isDiscoveringDevices() const

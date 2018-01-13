@@ -378,7 +378,7 @@ void LanLinkProvider::deviceLinkDestroyed(QObject* destroyedDeviceLink)
     const QString id = destroyedDeviceLink->property("deviceId").toString();
     //qCDebug(coreLogger) << "deviceLinkDestroyed" << id;
     Q_ASSERT(m_links.key(static_cast<LanDeviceLink*>(destroyedDeviceLink)) == id);
-    QMap< QString, LanDeviceLink* >::iterator linkIterator = m_links.find(id);
+    auto linkIterator = m_links.find(id);
     if (linkIterator != m_links.end()) {
         Q_ASSERT(linkIterator.value() == destroyedDeviceLink);
         m_links.erase(linkIterator);
@@ -460,7 +460,7 @@ void LanLinkProvider::addLink(const QString& deviceId, QSslSocket* socket, Netwo
 
     LanDeviceLink* deviceLink;
     //Do we have a link for this device already?
-    QMap< QString, LanDeviceLink* >::iterator linkIterator = m_links.find(deviceId);
+    auto linkIterator = m_links.find(deviceId);
     if (linkIterator != m_links.end()) {
         qCDebug(coreLogger) << "Reusing link to" << deviceId;
         deviceLink = linkIterator.value();

@@ -50,10 +50,10 @@
 
 #include "corelogging.h"
 #include "../utils/sslhelper.h"
+#include "systeminfo.h"
+#include "daemon.h"
 
 using namespace SailfishConnect;
-
-static KdeConnectConfig* s_instance = nullptr;
 
 struct KdeConnectConfigPrivate {
     QDir m_configBaseDir;
@@ -65,6 +65,8 @@ struct KdeConnectConfigPrivate {
 
     QSettings* m_config;
     QSettings* m_trustedDevices;
+
+    std::unique_ptr<SailfishConnect::SystemInfo> systemInfo;
 };
 
 static const QFile::Permissions strictFilePermissions =
@@ -73,23 +75,21 @@ static const QFile::Permissions strictFilePermissions =
 
 KdeConnectConfig* KdeConnectConfig::instance()
 {
-    Q_ASSERT(s_instance != nullptr);
-    return s_instance;
+    return Daemon::instance()->config();
 }
 
-KdeConnectConfig::KdeConnectConfig()
+KdeConnectConfig::KdeConnectConfig(std::unique_ptr<SailfishConnect::SystemInfo> systemInfo)
     : d(new KdeConnectConfigPrivate)
 {
-    Q_ASSERT(s_instance == nullptr);
-    s_instance = this;
+    d->systemInfo = std::move(systemInfo);
 
     createBaseConfigDir();
-
     d->m_config = new QSettings(configPath(), QSettings::IniFormat);
     d->m_trustedDevices = new QSettings(
                 trustedDevicesConfigPath(),
                 QSettings::IniFormat);
 
+    createName();
     createCertificate();
 }
 
@@ -203,8 +203,8 @@ void KdeConnectConfig::createDeviceId()
 void KdeConnectConfig::createName()
 {
     QString name = d->m_config->value(QStringLiteral("name")).toString();
-    if (name.isNull()) {
-        name = defaultName();
+    if (name.isEmpty()) {
+        name = d->systemInfo->defaultName();
     }
     d->m_name = name;
 }
@@ -212,11 +212,6 @@ void KdeConnectConfig::createName()
 QString KdeConnectConfig::name() const
 {
     return d->m_name;
-}
-
-QString KdeConnectConfig::defaultName() const
-{
-    return qgetenv("USER") + '@' + QHostInfo::localHostName();
 }
 
 void KdeConnectConfig::setName(const QString& name)
@@ -234,7 +229,7 @@ bool KdeConnectConfig::valid() const
 
 QString KdeConnectConfig::deviceType() const
 {
-    return QStringLiteral("unknown");
+    return d->systemInfo->deviceType();
 }
 
 QString KdeConnectConfig::deviceId() const

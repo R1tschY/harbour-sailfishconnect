@@ -50,6 +50,9 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     case QtInfoMsg:
     case QtWarningMsg:
     case QtCriticalMsg:
+        if (msg.contains("BACKTRACE")) {
+            logBacktrace();
+        }
         fprintf(stderr, "%s\n", localMsg.constData());
         break;
     case QtFatalMsg:

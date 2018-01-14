@@ -39,6 +39,8 @@
 #include <QPluginLoader>
 #include <QtPlugin>
 #include <QJsonArray>
+#include <QJsonObject>
+#include <QLoggingCategory>
 
 #include "corelogging.h"
 #include "device.h"
@@ -46,6 +48,7 @@
 #include "../utils/cpphelper.h"
 
 using namespace SailfishConnect;
+
 
 class PluginLoader {
 public:
@@ -130,19 +133,23 @@ QStringList toStringList(const QJsonValue& value)
 PluginManager::PluginListEntry PluginManager::createPluginEntry(
         std::unique_ptr<PluginLoader> pluginLoader)
 {
-    auto metadata = pluginLoader->metadata();
+    QJsonObject metadata = pluginLoader->metadata();
     if (metadata.value(QStringLiteral("IID")).toString()
             != QStringLiteral("SailfishConnect.Plugin"))
     {
         return PluginListEntry();
     }
 
+
+    auto pluginMetadata = metadata.value(QStringLiteral("MetaData")).toObject();
     return PluginListEntry {
-            metadata.value("Id").toString(),
-            toStringList(metadata.value(
+            pluginMetadata.value("Id").toString(),
+            toStringList(pluginMetadata.value(
                              QStringLiteral("IncomingCapabilities"))).toSet(),
-            toStringList(metadata.value(
+            toStringList(pluginMetadata.value(
                              QStringLiteral("OutcomingCapabilities"))).toSet(),
+            pluginMetadata.value(
+                             QStringLiteral("EnabledByDefault")).toBool(true),
             std::move(pluginLoader)
     };
 }
@@ -158,12 +165,13 @@ PluginManager::PluginManager()
     const auto staticPlugins = QPluginLoader::staticPlugins();
     for (const QStaticPlugin& staticPlugin : staticPlugins) {
         auto entry = createPluginEntry(
-                    std::unique_ptr<StaticPluginLoader>(
-                        new StaticPluginLoader(staticPlugin)));
+                    makeUniquePtr<StaticPluginLoader>(staticPlugin));
         if (!entry.id.isEmpty()) {
             plugins[entry.id] = std::move(entry);
         }
     }
+
+    qCDebug(coreLogger) << "loaded plugins:" << getPluginList();
 }
 
 QStringList PluginManager::getPluginList() const
@@ -221,6 +229,15 @@ QStringList PluginManager::outgoingCapabilities(const QString &pluginId) const
         return QStringList();
     }
     return entryIter->second.outgoingCapabilities.toList();
+}
+
+bool PluginManager::enabledByDefault(const QString &pluginId) const
+{
+    auto entryIter = plugins.find(pluginId);
+    if (entryIter == plugins.end()) {
+        return true;
+    }
+    return entryIter->second.enabledByDefault;
 }
 
 QStringList PluginManager::incomingCapabilities() const

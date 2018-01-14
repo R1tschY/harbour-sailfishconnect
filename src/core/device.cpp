@@ -27,6 +27,7 @@
 #include <QtGlobal>
 #include <QSslCertificate>
 #include <QSettings>
+#include <QHostAddress>
 
 #include "kdeconnectplugin.h"
 #include "backend/devicelink.h"
@@ -56,7 +57,7 @@ Device::Device(QObject* parent, const QString& id)
     m_deviceType = str2type(info.deviceType);
 
     //Assume every plugin is supported until addLink is called and we can get the actual list
-    m_supportedPlugins = QSet<QString>();// TODO: PluginLoader::instance()->getPluginList().toSet();
+    m_supportedPlugins = PluginManager::instance()->getPluginList().toSet();
 
     connect(this, &Device::pairingError, this, &warn);
 }
@@ -92,7 +93,9 @@ void Device::reloadPlugins()
     QHash<QString, KdeConnectPlugin*> newPluginMap, oldPluginMap = m_plugins;
     QMultiMap<QString, KdeConnectPlugin*> newPluginsByIncomingCapability;
 
-    if (isTrusted() && isReachable()) { //Do not load any plugin for unpaired devices, nor useless loading them for unreachable devices
+    // Do not load any plugin for unpaired devices, nor useless loading them for
+    // unreachable devices
+    if (isTrusted() && isReachable()) {
         PluginManager* pluginManager = PluginManager::instance();
 
         for (const QString& pluginId : asConst(m_supportedPlugins)) {
@@ -119,8 +122,8 @@ void Device::reloadPlugins()
 
     const bool differentPlugins = oldPluginMap != newPluginMap;
 
-    //Erase all left plugins in the original map (meaning that we don't want
-    //them anymore, otherwise they would have been moved to the newPluginMap)
+    // Erase all left plugins in the original map (meaning that we don't want
+    // them anymore, otherwise they would have been moved to the newPluginMap)
     qDeleteAll(m_plugins);
     m_plugins = newPluginMap;
     m_pluginsByIncomingCapability = newPluginsByIncomingCapability;
@@ -175,7 +178,7 @@ void Device::pairStatusChanged(DeviceLink::PairStatus status)
         KdeConnectConfig::instance()->addTrustedDevice(id(), name(), type());
     }
 
-    reloadPlugins(); //Will load/unload plugins
+    reloadPlugins(); // Will load/unload plugins
 
     bool isTrusted = (status == DeviceLink::Paired);
     Q_EMIT trustedChanged(isTrusted);
@@ -207,9 +210,9 @@ void Device::addLink(const NetworkPackage& identityPackage, DeviceLink* link)
 
     m_deviceLinks.append(link);
 
-    //Theoretically we will never add two links from the same provider (the provider should destroy
-    //the old one before this is called), so we do not have to worry about destroying old links.
-    //-- Actually, we should not destroy them or the provider will store an invalid ref!
+    // Theoretically we will never add two links from the same provider (the provider should destroy
+    // the old one before this is called), so we do not have to worry about destroying old links.
+    // -- Actually, we should not destroy them or the provider will store an invalid ref!
 
     connect(link, &DeviceLink::receivedPackage,
             this, &Device::privateReceivedPackage);
@@ -306,7 +309,8 @@ bool Device::sendPackage(NetworkPackage& np)
     Q_ASSERT(np.type() != PACKAGE_TYPE_PAIR);
     Q_ASSERT(isTrusted());
 
-    //Maybe we could block here any package that is not an identity or a pairing package to prevent sending non encrypted data
+    // Maybe we could block here any package that is not an identity or a
+    // pairing package to prevent sending non encrypted data
     for (DeviceLink* dl : asConst(m_deviceLinks)) {
         if (dl->sendPackage(np)) return true;
     }
@@ -444,8 +448,9 @@ bool Device::isPluginEnabled(const QString& pluginId) const
     QSettings pluginStates(pluginsConfigFile(), QSettings::IniFormat);
     pluginStates.beginGroup("Plugins");
 
-    return (pluginStates.contains(enabledKey) ? pluginStates.value(enabledKey, false).toBool()
-                                            : false); // TODO: PluginLoader::instance()->getPluginInfo(pluginName).isEnabledByDefault());
+    return pluginStates.contains(enabledKey)
+        ? pluginStates.value(enabledKey).toBool()
+        : PluginManager::instance()->enabledByDefault(pluginId);
 }
 
 QString Device::encryptionInfo() const
@@ -459,7 +464,7 @@ QString Device::encryptionInfo() const
     }
     result += tr("SHA1 fingerprint of your device certificate is: %1\n").arg(localSha1);
 
-    std::string  remotePem = KdeConnectConfig::instance()->getDeviceProperty(id(), QStringLiteral("certificate")).toStdString();
+    std::string remotePem = KdeConnectConfig::instance()->getDeviceProperty(id(), QStringLiteral("certificate")).toStdString();
     QSslCertificate remoteCertificate = QSslCertificate(QByteArray(remotePem.c_str(), (int)remotePem.size()));
     QString remoteSha1 = QString::fromLatin1(remoteCertificate.digest(digestAlgorithm).toHex());
     for (int i = 2; i < remoteSha1.size(); i += 3) {

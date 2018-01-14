@@ -60,6 +60,7 @@ public:
 
     QStringList incomingCapabilities(const QString& pluginId) const;
     QStringList outgoingCapabilities(const QString& pluginId) const;
+    bool enabledByDefault(const QString& pluginId) const;
 
     QStringList incomingCapabilities() const;
     QStringList outgoingCapabilities() const;
@@ -72,6 +73,7 @@ private:
         QString id;
         QSet<QString> incomingCapabilities;
         QSet<QString> outgoingCapabilities;
+        bool enabledByDefault;
         std::unique_ptr<PluginLoader> loader;
     };
 

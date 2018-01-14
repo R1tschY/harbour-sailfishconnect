@@ -82,6 +82,7 @@ public:
     /*
      * Paths for config files, there is no guarantee the directories already exist
      */
+    // TODO: return QString
     QDir baseConfigDir() const;
     QDir deviceConfigDir(const QString& deviceId) const;
     QDir pluginConfigDir(const QString& deviceId, const QString& pluginName) const; //Used by KdeConnectPluginConfig

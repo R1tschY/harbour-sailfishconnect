@@ -50,7 +50,7 @@ LanLinkProvider::LanLinkProvider(bool testMode)
 
     connect(&m_udpSocket, &QIODevice::readyRead, this, &LanLinkProvider::newUdpConnection);
 
-    m_server = new Server(this);
+    m_server = new Server(this);    
     m_server->setProxy(QNetworkProxy::NoProxy);
     connect(m_server,&QTcpServer::newConnection,this, &LanLinkProvider::newConnection);
 
@@ -72,6 +72,7 @@ void LanLinkProvider::onNetworkConfigurationChanged(const QNetworkConfiguration&
 
 LanLinkProvider::~LanLinkProvider()
 {
+    qCDebug(coreLogger) << "BACKTRACE:";
 }
 
 void LanLinkProvider::onStart()
@@ -153,8 +154,7 @@ void LanLinkProvider::newUdpConnection() //udpBroadcastReceived
         bool success = NetworkPackage::unserialize(datagram, receivedPackage);
 
         qCDebug(coreLogger) << "udp connection from " << receivedPackage->get<QString>(QStringLiteral("deviceId"));
-
-        qCDebug(coreLogger) << "Datagram " << datagram.data() ;
+        //qCDebug(coreLogger) << "Datagram " << datagram.data() ;
 
         if (!success || receivedPackage->type() != PACKAGE_TYPE_IDENTITY) {
             delete receivedPackage;
@@ -162,7 +162,7 @@ void LanLinkProvider::newUdpConnection() //udpBroadcastReceived
         }
 
         if (receivedPackage->get<QString>(QStringLiteral("deviceId")) == KdeConnectConfig::instance()->deviceId()) {
-            //qCDebug(coreLogger) << "Ignoring my own broadcast";
+            qCDebug(coreLogger) << "Ignoring my own broadcast";
             delete receivedPackage;
             continue;
         }

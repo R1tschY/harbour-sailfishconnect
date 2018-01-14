@@ -46,7 +46,7 @@ KdeConnectPlugin::~KdeConnectPlugin() = default;
 
 SailfishConnectPluginConfig* KdeConnectPlugin::config() const
 {
-    //Create on demand, because not every plugin will use it
+    // Create on demand, because not every plugin will use it
     if (!d->m_config) {
         d->m_config.reset(new SailfishConnectPluginConfig(
                               d->m_device->id(), d->m_pluginName));
@@ -68,7 +68,8 @@ bool KdeConnectPlugin::sendPackage(NetworkPackage& np) const
                 << ". Supported: " << d->m_outgoingCapabilties;
         return false;
     }
-    qCWarning(coreLogger) << metaObject()->className() << "sends" << np.type();
+    qCDebug(coreLogger) << metaObject()->className() << "sends" << np.type();
+    qCDebug(coreLogger) << "data:" << np.serialize().data();
     return d->m_device->sendPackage(np);
 }
 

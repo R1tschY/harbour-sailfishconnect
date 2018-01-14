@@ -31,6 +31,7 @@
 
 #include "corelogging.h"
 #include "kdeconnectconfig.h"
+#include "pluginloader.h"
 
 using namespace SailfishConnect;
 
@@ -66,10 +67,10 @@ void NetworkPackage::createIdentityPackage(NetworkPackage* np)
     np->set(QStringLiteral("deviceName"), config->name());
     np->set(QStringLiteral("deviceType"), config->deviceType());
     np->set(QStringLiteral("protocolVersion"),  NetworkPackage::s_protocolVersion);
-    //np->set(QStringLiteral("incomingCapabilities"), QStringList()); //TODO: PluginLoader::instance()->incomingCapabilities());
-    //np->set(QStringLiteral("outgoingCapabilities"), QStringList()); //TODO: PluginLoader::instance()->outgoingCapabilities());
+    np->set(QStringLiteral("incomingCapabilities"), PluginManager::instance()->incomingCapabilities());
+    np->set(QStringLiteral("outgoingCapabilities"), PluginManager::instance()->outgoingCapabilities());
 
-    qCDebug(coreLogger) << "createIdentityPackage" << np->serialize();
+    //qCDebug(coreLogger) << "createIdentityPackage" << np->serialize();
 }
 
 template<class T>
@@ -104,9 +105,9 @@ QByteArray NetworkPackage::serialize() const
     auto jsonDocument = QJsonDocument::fromVariant(variant);
     QByteArray json = jsonDocument.toJson(QJsonDocument::Compact);
     if (json.isEmpty()) {
-        qCDebug(coreLogger) << "Serialization error:";
+        qCDebug(coreLogger) << "Serialization error";
     } else {
-        qCDebug(coreLogger) << "Serialized package:" << json;
+        //qCDebug(coreLogger) << "Serialized package:" << json;
         json.append('\n');
     }
 

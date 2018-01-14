@@ -10,7 +10,7 @@ SailfishOS client for KDE Connect
     * :o: Downloads/Uploads (Payload)
 
 * Plugins
-    * :construction: Battery
+    * :white_check_mark: Battery
     * :construction: Ping
     * :o: Clipboard
     * :o: FindMyPhone

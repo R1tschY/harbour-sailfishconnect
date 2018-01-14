@@ -35,6 +35,40 @@ std::unique_ptr<T> makeUniquePtr(Args&&...args)
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
+
+template<typename...Args>
+struct NonConstOverload
+{
+    template<typename R, typename T>
+    static constexpr auto of(R (T::*func)(Args...)) noexcept -> decltype(func)
+    {
+        return func;
+    }
+};
+
+template<typename...Args>
+struct ConstOverload
+{
+    template<typename R, typename T>
+    static constexpr auto of(R (T::*func)(Args...) const) noexcept -> decltype(func)
+    {
+        return func;
+    }
+};
+
+template<typename...Args>
+struct Overload : ConstOverload<Args...>, NonConstOverload<Args...>
+{
+    using ConstOverload<Args...>::of;
+    using NonConstOverload<Args...>::of;
+
+    template<typename R>
+    static constexpr auto of(R (*func)(Args...)) noexcept -> decltype(func)
+    {
+        return func;
+    }
+};
+
 } // SailfishConnect
 
 #endif // ASCONST_H

@@ -17,8 +17,11 @@
 
 #include "batteryplugin.h"
 
+#include <QtGlobal>
+
 #include <contextproperty.h>
 #include <core/networkpackage.h>
+#include <utils/cpphelper.h>
 
 
 namespace SailfishConnect {
@@ -34,18 +37,28 @@ BatteryPlugin::BatteryPlugin(
                              QStringLiteral("Battery.LowBattery"), this)),
       batteryPackage_(QStringLiteral("kdeconnect.battery"))
 {
+    debounceTimer_.setInterval(100);
+    debounceTimer_.setSingleShot(true);
+    debounceTimer_.setTimerType(Qt::CoarseTimer);
+
     connect(chargePercentage_, &ContextProperty::valueChanged,
-            this, &BatteryPlugin::sendStatus);
+            &debounceTimer_, Overload<>::of(&QTimer::start));
     connect(isCharging_, &ContextProperty::valueChanged,
-            this, &BatteryPlugin::sendStatus);
+            &debounceTimer_, Overload<>::of(&QTimer::start));
     connect(lowBattery_, &ContextProperty::valueChanged,
+            &debounceTimer_, Overload<>::of(&QTimer::start));
+    connect(&debounceTimer_, &QTimer::timeout,
             this, &BatteryPlugin::sendStatus);
+
+    chargePercentage_->subscribe();
+    isCharging_->subscribe();
+    lowBattery_->subscribe();
 }
 
 bool BatteryPlugin::receivePackage(const NetworkPackage &np)
 {
     if (np.get<bool>(QStringLiteral("request"))) {
-        sendStatus();
+        debounceTimer_.start();
     }
 
     return true;
@@ -53,9 +66,7 @@ bool BatteryPlugin::receivePackage(const NetworkPackage &np)
 
 void BatteryPlugin::connected()
 {
-    chargePercentage_->subscribe();
-    isCharging_->subscribe();
-    lowBattery_->subscribe();
+    debounceTimer_.start();
 }
 
 void BatteryPlugin::sendStatus()

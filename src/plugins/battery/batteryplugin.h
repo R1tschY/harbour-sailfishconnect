@@ -20,6 +20,7 @@
 
 #include <QObject>
 #include <QtPlugin>
+#include <QTimer>
 
 #include "../../core/kdeconnectplugin.h"
 
@@ -50,6 +51,7 @@ private:
     ContextProperty* chargePercentage_;
     ContextProperty* isCharging_;
     ContextProperty* lowBattery_;
+    QTimer debounceTimer_;
 
     void sendStatus();
     void setCheckedStatus(

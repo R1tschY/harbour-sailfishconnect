@@ -13,8 +13,8 @@
 TARGET = harbour-sailfishconnect
 
 CONFIG += sailfishapp c++14
-QT += network
-PKGCONFIG += openssl contextkit-statefs
+QT += network dbus
+PKGCONFIG += openssl contextkit-statefs nemonotifications-qt5
 DEFINES += QT_STATICPLUGIN
 INCLUDEPATH += src
 
@@ -44,7 +44,8 @@ SOURCES += \
     src/core/pluginloader.cpp \
     src/plugins/battery/batteryplugin.cpp \
     src/plugins/ping/pingplugin.cpp \
-    src/core/systeminfo.cpp
+    src/core/systeminfo.cpp \
+    src/plugins/clipboard/clipboardplugin.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -100,7 +101,8 @@ HEADERS += \
     src/plugins/battery/batteryplugin.h \
     src/plugins/ping/pingplugin.h \
     src/core/systeminfo.h \
-    src/utils/cpphelper.h
+    src/utils/cpphelper.h \
+    src/plugins/clipboard/clipboardplugin.h
 
 SUBDIRS += \
     src/plugins/battery/SailfishConnectBatteryPlugin.pro

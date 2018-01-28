@@ -34,7 +34,9 @@ public:
     enum ExtraRoles {
         NameRole = Qt::UserRole,
         IdRole,
-        IconUrlRole
+        IconUrlRole,
+        TrustedRole,
+        ReachableRole
     };
 
     explicit DeviceListModel(QObject *parent = 0);
@@ -53,7 +55,7 @@ private:
     void deviceIdAdded(const QString& id);
     void deviceIdRemoved(const QString& id);
     void deviceRemoved(Device *device);
-    void deviceDataChanged(Device* device);
+    void deviceDataChanged(Device* device, const QVector<int> &roles);
 
     void connectDevice(Device* device);
     void disconnectDevice(Device* device);

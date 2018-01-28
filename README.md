@@ -28,7 +28,8 @@ SailfishOS client for KDE Connect
 * UI
     * :construction: Device list
     * :o: Pairing
-    * :o: plugin UIs
+    * :o: Plugin UIs
+    * :o: Plugin management
 
 * Backend
     * :construction: LAN (no payload support)

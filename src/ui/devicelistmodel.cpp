@@ -71,12 +71,17 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     auto& device = m_devices[index.row()];
-    if (role == NameRole) {
+    switch (role) {
+    case NameRole:
         return device->name();
-    } else if (role == IdRole) {
+    case IdRole:
         return device->id();
-    } else if (role == IconUrlRole) {
+    case IconUrlRole:
         return deviceTypeToIcon(device->id());
+    case TrustedRole:
+        return device->isTrusted();
+    case ReachableRole:
+        return device->isReachable();
     }
 
     return QVariant();
@@ -88,13 +93,13 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
     roles[NameRole] = "name";
     roles[IdRole] = "id";
     roles[IconUrlRole] = "iconUrl";
+    roles[TrustedRole] = "trusted";
+    roles[ReachableRole] = "reachable";
     return roles;
 }
 
 void DeviceListModel::deviceIdAdded(const QString& id)
 {
-    qCDebug(logger) << "START" << id;
-
     auto* device = m_daemon->getDevice(id);
     if (device == nullptr) {
         qCDebug(logger) << "no device with id" << id;
@@ -118,8 +123,6 @@ void DeviceListModel::deviceIdAdded(const QString& id)
     }
 
     connectDevice(device);
-
-    qCDebug(logger) << "END" << m_devices.length();
 }
 
 void DeviceListModel::deviceIdRemoved(const QString& id)
@@ -135,8 +138,6 @@ void DeviceListModel::deviceIdRemoved(const QString& id)
 
 void DeviceListModel::deviceRemoved(Device* device)
 {
-    qCDebug(logger) << "START";
-
     int index = m_devices.indexOf(device);
     if (index < 0)
         return;
@@ -146,27 +147,28 @@ void DeviceListModel::deviceRemoved(Device* device)
     beginRemoveRows(QModelIndex(), index, index);
     m_devices.removeAt(index);
     endRemoveRows();
-
-    qCDebug(logger) << "END" << m_devices.length();
 }
 
-void DeviceListModel::deviceDataChanged(Device *device)
+void DeviceListModel::deviceDataChanged(
+        Device *device, const QVector<int> &roles)
 {
-    qCDebug(logger) << "START";
-
     int row = m_devices.indexOf(device);
     if (row < 0)
         return;
 
-    dataChanged(index(row), index(row), {Qt::DisplayRole});
-
-    qCDebug(logger) << "END";
+    dataChanged(index(row), index(row), roles);
 }
 
 void DeviceListModel::connectDevice(Device *device)
 {
     connect(device, &Device::nameChanged, this, [=]{
-       deviceDataChanged(device);
+        deviceDataChanged(device, {Qt::DisplayRole, NameRole});
+    });
+    connect(device, &Device::trustedChanged, this, [=]{
+        deviceDataChanged(device, {TrustedRole});
+    });
+    connect(device, &Device::reachableChanged, this, [=]{
+        deviceDataChanged(device, {ReachableRole});
     });
     connect(device, &Device::destroyed, this, [=]{
         deviceRemoved(device);

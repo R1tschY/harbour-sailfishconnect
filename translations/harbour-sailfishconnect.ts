@@ -32,7 +32,7 @@
 <context>
     <name>DeviceListPage</name>
     <message>
-        <source>UI Template</source>
+        <source>Select device</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

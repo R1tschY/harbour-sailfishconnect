@@ -32,8 +32,8 @@
 <context>
     <name>DeviceListPage</name>
     <message>
-        <source>UI Template</source>
-        <translation type="unfinished">UI-Vorlage</translation>
+        <source>Select device</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

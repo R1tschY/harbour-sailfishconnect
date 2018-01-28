@@ -20,9 +20,20 @@ import Sailfish.Silica 1.0
 import Nemo.Notifications 1.0
 import SailfishConnect 0.1
 
-
 Page {
     id: page
+
+    function selectDeviceColor(trusted, reachable) {
+        if (trusted) {
+            return (reachable
+                ? Theme.highlightColor
+                : Theme.secondaryHighlightColor)
+        } else {
+            return (reachable
+                ? Theme.primaryColor
+                : Theme.secondaryColor)
+        }
+    }
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.Portrait
@@ -50,7 +61,7 @@ Page {
             width: page.width
             spacing: Theme.paddingLarge
             PageHeader {
-                title: qsTr("UI Template")
+                title: qsTr("Select device")
             }
 
 //            Button {
@@ -67,6 +78,7 @@ Page {
 
             Component {
                 id: deviceDelegate
+
                 Item {
                     width: page.width
                     height: Theme.fontSizeMedium + Theme.fontSizeSmall + Theme.paddingSmall * 4
@@ -74,7 +86,8 @@ Page {
                         Image {
                             height: Theme.fontSizeMedium + Theme.fontSizeSmall
                             width: Theme.fontSizeMedium + Theme.fontSizeSmall
-                            source: iconUrl
+                            source: iconUrl + "?" +
+                                    selectDeviceColor(trusted, reachable)
                         }
                         Column {
                             Text {
@@ -97,8 +110,6 @@ Page {
 
                 model: DeviceListModel { id: listModel }
                 delegate: deviceDelegate
-                highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-                focus: true
             }
         }
     }

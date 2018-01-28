@@ -25,20 +25,45 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "SailfishConnect.Ping")
 
+PingPlugin::PingPlugin(
+        Device *device, const QString& name,
+        const QSet<QString>& outgoingCapabilities)
+    : KdeConnectPlugin(device, name, outgoingCapabilities)
+{
+    // TODO: notification_.setAppIcon();
+    notification_.setAppName("Sailfish-Connect");
+    notification_.setBody("Ping!");
+    notification_.setCategory("device");
+    notification_.setUrgency(Notification::Low);
+
+    connect(&notification_, &Notification::clicked,
+            this, &PingPlugin::resetCount);
+    connect(&notification_, &Notification::closed,
+            this, &PingPlugin::resetCount);
+}
+
 bool PingPlugin::receivePackage(const NetworkPackage& np)
 {
     QString message =
             np.get<QString>(QStringLiteral("message"), QStringLiteral("Ping!"));
-    int id = qHash(message);
 
-    qCDebug(logger) << "Ping:" << message << "Id:" << id;
+    qCInfo(logger) << "Ping:" << message << "from" << device()->name();
+
+    count_ += 1;
+    notification_.setSummary(device()->name());
+    notification_.setBody(message);
+    notification_.setItemCount(count_);
+    notification_.publish();
+
+    // TODO: remoteAction: openDevice(device()->id())
 
     return true;
 }
 
-PingPluginFactory::PingPluginFactory(QObject *parent)
-: QObject(parent)
-{ }
+void PingPlugin::resetCount()
+{
+    count_ = 0;
+}
 
 } // namespace SailfishConnect
 

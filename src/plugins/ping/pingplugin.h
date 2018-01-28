@@ -23,16 +23,27 @@
 
 #include "../../core/kdeconnectplugin.h"
 
+#include <notification.h>
+
 namespace SailfishConnect {
 
 class PingPlugin : public KdeConnectPlugin
 {
     Q_OBJECT
 public:
-    using KdeConnectPlugin::KdeConnectPlugin;
+    PingPlugin(
+            Device* device,
+            const QString &name,
+            const QSet<QString> &outgoingCapabilities);
 
 public slots:
     bool receivePackage(const NetworkPackage &np) override;
+
+private:
+    Notification notification_;
+    int count_ = 0;
+
+    void resetCount();
 };
 
 

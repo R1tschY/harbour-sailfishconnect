@@ -33,7 +33,10 @@ struct KdeConnectPluginPrivate
     std::unique_ptr<SailfishConnectPluginConfig> m_config = nullptr;
 };
 
-KdeConnectPlugin::KdeConnectPlugin(Device* device, QString name, QSet<QString> outgoingCapabilities)
+KdeConnectPlugin::KdeConnectPlugin(
+        Device* device,
+        const QString &name,
+        const QSet<QString> &outgoingCapabilities)
     : QObject(device)
     , d(new KdeConnectPluginPrivate)
 {

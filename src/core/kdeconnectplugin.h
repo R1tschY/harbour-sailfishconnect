@@ -38,11 +38,31 @@ public:
     virtual ~SailfishConnectPluginFactory() = default;
 
     virtual KdeConnectPlugin* create(
-        Device* device, QString name, QSet<QString> outgoingCapabilities) = 0;
+            Device* device,
+            const QString& name,
+            const QSet<QString>& outgoingCapabilities) = 0;
 };
 
 #define SailfishConnectPlugin_iid "SailfishConnect.Plugin"
 Q_DECLARE_INTERFACE(SailfishConnectPluginFactory, SailfishConnectPlugin_iid)
+
+
+template<typename T>
+class SailfishConnectPluginFactory_ :
+        public QObject, public SailfishConnectPluginFactory
+{
+public:
+    using FactoryBaseType = SailfishConnectPluginFactory_<T>;
+
+    KdeConnectPlugin* create(
+            Device* device,
+            const QString& name,
+            const QSet<QString>& outgoingCapabilities) override
+    {
+        return new T(device, name, outgoingCapabilities);
+    }
+};
+
 
 
 class KdeConnectPlugin
@@ -52,7 +72,8 @@ class KdeConnectPlugin
 
 public:
     KdeConnectPlugin(
-            Device* device, QString name, QSet<QString> outgoingCapabilities);
+            Device* device, const QString& name,
+            const QSet<QString>& outgoingCapabilities);
     ~KdeConnectPlugin();
 
     const Device* device() const;

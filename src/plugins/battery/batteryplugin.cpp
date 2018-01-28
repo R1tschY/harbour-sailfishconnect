@@ -97,10 +97,6 @@ void BatteryPlugin::setCheckedStatus(
     }
 }
 
-BatteryPluginFactory::BatteryPluginFactory(QObject *parent)
-: QObject(parent)
-{ }
-
 } // namespace SailfishConnect
 
 Q_IMPORT_PLUGIN(BatteryPluginFactory)

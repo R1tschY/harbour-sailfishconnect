@@ -62,21 +62,14 @@ private:
 };
 
 
-class BatteryPluginFactory : public QObject, public SailfishConnectPluginFactory
+class BatteryPluginFactory :
+        public SailfishConnectPluginFactory_<BatteryPlugin>
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID SailfishConnectPlugin_iid FILE "metadata.json")
     Q_INTERFACES(SailfishConnectPluginFactory)
 public:
-    explicit BatteryPluginFactory(QObject *parent = nullptr);
-
-    KdeConnectPlugin* create(
-        Device* device,
-        QString name,
-        QSet<QString> outgoingCapabilities) override
-    {
-        return new BatteryPlugin(device, name, outgoingCapabilities);
-    }
+    using FactoryBaseType::FactoryBaseType;
 };
 
 } // namespace SailfishConnect

@@ -24,15 +24,9 @@ Page {
     id: page
 
     function selectDeviceColor(trusted, reachable) {
-        if (trusted) {
-            return (reachable
-                ? Theme.highlightColor
-                : Theme.secondaryHighlightColor)
-        } else {
-            return (reachable
-                ? Theme.primaryColor
-                : Theme.secondaryColor)
-        }
+        return (reachable
+            ? Theme.highlightColor
+            : Theme.primaryColor)
     }
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
@@ -79,9 +73,10 @@ Page {
             Component {
                 id: deviceDelegate
 
-                Item {
+                BackgroundItem {
                     width: page.width
                     height: Theme.fontSizeMedium + Theme.fontSizeSmall + Theme.paddingSmall * 4
+
                     Row {
                         Image {
                             height: Theme.fontSizeMedium + Theme.fontSizeSmall
@@ -92,23 +87,59 @@ Page {
                         Column {
                             Text {
                                 font.pixelSize: Theme.fontSizeMedium
-                                text: '<b>Name:</b> ' + name
-                                color: "white"
+                                text: '<b>' + name + '</b>'
+                                color: highlighted
+                                       ? Theme.highlightColor
+                                       : Theme.primaryColor
                             }
                             Text {
                                 font.pixelSize: Theme.fontSizeSmall
-                                text: '<b>Id:</b> ' + id
-                                color: "white"
+                                text: id
+                                color: highlighted
+                                       ? Theme.highlightColor
+                                       : Theme.secondaryColor
                             }
                         }
                     }
+
+                    onClicked: console.log("click!")
                 }
             }
 
+
+            DeviceListModel {
+                id: devicelistModel
+            }
+
+            FilterValueProxyModel {
+                id: trustedDevicesModel
+
+                filterRoleName: "trusted"
+                filterValue: true
+                sourceModel: devicelistModel
+            }
+
+            FilterValueProxyModel {
+                id: nontrustedDevicesModel
+
+                filterRoleName: "trusted"
+                filterValue: false
+                sourceModel: devicelistModel
+            }
+
+            SectionHeader { text: qsTr("Trusted devices") }
             SilicaListView {
                 width: page.width; height: 200
 
-                model: DeviceListModel { id: listModel }
+                model: trustedDevicesModel
+                delegate: deviceDelegate
+            }
+
+            SectionHeader { text: qsTr("Near devices") }
+            SilicaListView {
+                width: page.width; height: 200
+
+                model: nontrustedDevicesModel
                 delegate: deviceDelegate
             }
         }

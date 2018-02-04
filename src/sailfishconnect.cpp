@@ -30,6 +30,7 @@
 
 #include "appdaemon.h"
 #include "ui/devicelistmodel.h"
+#include "ui/filtervalueproxymodel.h"
 
 namespace SailfishConnect {
 
@@ -63,7 +64,10 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 }
 
 void registerQmlTypes() {
-    qmlRegisterType<DeviceListModel>("SailfishConnect", 0, 1, "DeviceListModel");
+    qmlRegisterType<DeviceListModel>(
+                "SailfishConnect", 0, 1, "DeviceListModel");
+    qmlRegisterType<FilterValueProxyModel>(
+                "SailfishConnect", 0, 1, "FilterValueProxyModel");
 }
 
 } // SailfishConnect

@@ -45,7 +45,8 @@ SOURCES += \
     src/plugins/battery/batteryplugin.cpp \
     src/plugins/ping/pingplugin.cpp \
     src/core/systeminfo.cpp \
-    src/plugins/clipboard/clipboardplugin.cpp
+    src/plugins/clipboard/clipboardplugin.cpp \
+    src/ui/filtervalueproxymodel.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -102,7 +103,8 @@ HEADERS += \
     src/plugins/ping/pingplugin.h \
     src/core/systeminfo.h \
     src/utils/cpphelper.h \
-    src/plugins/clipboard/clipboardplugin.h
+    src/plugins/clipboard/clipboardplugin.h \
+    src/ui/filtervalueproxymodel.h
 
 SUBDIRS += \
     src/plugins/battery/SailfishConnectBatteryPlugin.pro

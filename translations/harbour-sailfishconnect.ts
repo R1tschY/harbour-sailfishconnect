@@ -35,6 +35,14 @@
         <source>Select device</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Trusted devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Near devices</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePage</name>

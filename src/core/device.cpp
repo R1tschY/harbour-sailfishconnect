@@ -46,6 +46,10 @@ static void warn(const QString& info)
     qWarning() << "Device pairing error" << info;
 }
 
+Device::Device()
+    : m_protocolVersion(NetworkPackage::s_protocolVersion)
+{ }
+
 Device::Device(QObject* parent, const QString& id)
     : QObject(parent)
     , m_deviceId(id)

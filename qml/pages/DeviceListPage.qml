@@ -29,10 +29,8 @@ Page {
             : Theme.primaryColor)
     }
 
-    // The effective value will be restricted by ApplicationWindow.allowedOrientations
-    allowedOrientations: Orientation.Portrait
+    allowedOrientations: Orientation.All
 
-    // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         anchors.fill: parent
 
@@ -44,11 +42,8 @@ Page {
 //            }
 //        }
 
-        // Tell SilicaFlickable the height of its content.
         contentHeight: column.height
 
-        // Place our content in a Column.  The PageHeader is always placed at the top
-        // of the page, followed by our content.
         Column {
             id: column
 
@@ -57,18 +52,6 @@ Page {
             PageHeader {
                 title: qsTr("Select device")
             }
-
-//            Button {
-//                Notification {
-//                    id: notification
-//                    category: "x-nemo.example"
-//                    summary: "Notification summary"
-//                    body: "Notification body"
-//                    onClicked: console.log("Clicked")
-//                }
-//                text: "Application notification" + (notification.replacesId ? " ID:" + notification.replacesId : "")
-//                onClicked: notification.publish()
-//            }
 
             Component {
                 id: deviceDelegate
@@ -102,7 +85,17 @@ Page {
                         }
                     }
 
-                    onClicked: console.log("click!")
+                    onClicked: {
+                        if (daemon.pairingRequests.indexOf(id) !== -1) {
+                            pageStack.push(
+                                Qt.resolvedUrl("AcceptPairingDialog.qml"),
+                                { deviceId: id })
+                        } else {
+                            pageStack.push(
+                                Qt.resolvedUrl("DevicePage.qml"),
+                                { deviceId: id })
+                        }
+                    }
                 }
             }
 
@@ -110,6 +103,23 @@ Page {
             DeviceListModel {
                 id: devicelistModel
             }
+
+            // Test model
+//            ListModel {
+//                id: devicelistModel
+
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "1"; deviceId: "1"; trusted: true; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "2"; deviceId: "1"; trusted: true; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "3"; deviceId: "1"; trusted: true; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "4"; deviceId: "1"; trusted: true; reachable: false }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "5"; deviceId: "1"; trusted: true; reachable: false }
+
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "1"; deviceId: "1"; trusted: false; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "2"; deviceId: "1"; trusted: false; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "3"; deviceId: "1"; trusted: false; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "4"; deviceId: "1"; trusted: false; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "5"; deviceId: "1"; trusted: false; reachable: true }
+//             }
 
             FilterValueProxyModel {
                 id: trustedDevicesModel
@@ -129,7 +139,8 @@ Page {
 
             SectionHeader { text: qsTr("Trusted devices") }
             SilicaListView {
-                width: page.width; height: 200
+                width: page.width
+                height: childrenRect.height
 
                 model: trustedDevicesModel
                 delegate: deviceDelegate
@@ -137,12 +148,15 @@ Page {
 
             SectionHeader { text: qsTr("Near devices") }
             SilicaListView {
-                width: page.width; height: 200
+                width: page.width
+                height: childrenRect.height
 
                 model: nontrustedDevicesModel
                 delegate: deviceDelegate
             }
         }
+
+        VerticalScrollDecorator {}
     }
 }
 

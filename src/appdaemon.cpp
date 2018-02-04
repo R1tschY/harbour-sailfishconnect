@@ -75,7 +75,7 @@ void AppDaemon::askPairingConfirmation(Device *device)
     //        connect(notification, &KNotification::action2Activated, device, &Device::rejectPairing);
     //        notification->sendEvent();
 
-    QTimer::singleShot(1000, this, [=](){ device->acceptPairing(); });
+    QTimer::singleShot(10000, this, [=](){ device->acceptPairing(); });
 }
 
 void AppDaemon::reportError(const QString &title, const QString &description)

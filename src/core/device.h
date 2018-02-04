@@ -56,6 +56,8 @@ public:
         Tablet,
     };
 
+    Device();
+
     /**
      * Restores the @p device from the saved configuration
      *

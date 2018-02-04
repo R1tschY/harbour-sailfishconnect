@@ -36,8 +36,7 @@ namespace SailfishConnect {
 class SystemInfo;
 } // namespace SailfishConnect
 
-class Daemon
-    : public QObject
+class Daemon : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool isDiscoveringDevices READ isDiscoveringDevices)
@@ -56,7 +55,7 @@ public:
     virtual void reportError(const QString& title, const QString& description) = 0;
     virtual QNetworkAccessManager* networkAccessManager();
 
-    Device* getDevice(const QString& deviceId);
+    Q_SCRIPTABLE Device* getDevice(const QString& deviceId);
 
     QStringList pairingRequests() const;
 

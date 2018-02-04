@@ -29,6 +29,7 @@
 #include <unistd.h>
 
 #include "appdaemon.h"
+#include "core/device.h"
 #include "ui/devicelistmodel.h"
 #include "ui/filtervalueproxymodel.h"
 
@@ -68,6 +69,9 @@ void registerQmlTypes() {
                 "SailfishConnect", 0, 1, "DeviceListModel");
     qmlRegisterType<FilterValueProxyModel>(
                 "SailfishConnect", 0, 1, "FilterValueProxyModel");
+
+    qmlRegisterType<Device>(
+                "SailfishConnect", 0, 1, "Device");
 }
 
 } // SailfishConnect
@@ -84,6 +88,7 @@ int main(int argc, char *argv[])
     registerQmlTypes();
     AppDaemon daemon;
 
+    view->rootContext()->setContextProperty("daemon", &daemon);
     view->setSource(SailfishApp::pathToMainQml());
     view->showFullScreen();
 

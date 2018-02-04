@@ -20,9 +20,8 @@ import Sailfish.Silica 1.0
 
 
 Page {
-    id: page
+    property string deviceId
 
-    // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
 
     SilicaListView {
@@ -30,7 +29,7 @@ Page {
         model: 20
         anchors.fill: parent
         header: PageHeader {
-            title: qsTr("Nested Page")
+            title: daemon.getDevice(deviceId).name
         }
         delegate: BackgroundItem {
             id: delegate

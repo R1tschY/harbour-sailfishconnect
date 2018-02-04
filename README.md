@@ -11,8 +11,8 @@ SailfishOS client for KDE Connect
 
 * Plugins
     * :white_check_mark: Battery
+    * :white_check_mark: Clipboard
     * :construction: Ping
-    * :o: Clipboard
     * :o: FindMyPhone
     * :o: MousePad
     * :o: Mpris

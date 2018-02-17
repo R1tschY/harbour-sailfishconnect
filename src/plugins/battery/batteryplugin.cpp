@@ -53,6 +53,8 @@ BatteryPlugin::BatteryPlugin(
     chargePercentage_->subscribe();
     isCharging_->subscribe();
     lowBattery_->subscribe();
+
+    debounceTimer_.start();
 }
 
 bool BatteryPlugin::receivePackage(const NetworkPackage &np)

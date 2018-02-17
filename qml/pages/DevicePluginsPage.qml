@@ -43,9 +43,9 @@ Page {
                 text: pluginName
                 icon.source: pluginIconUrl
                 description: pluginDescription
-                checked: pluginEnabled
-                automaticCheck: false
-                onClicked: pluginEnabled = !checked
+                onCheckedChanged: pluginEnabled = checked
+
+                Component.onCompleted: pluginSwitch.checked = pluginEnabled
             }
         }
         VerticalScrollDecorator {}

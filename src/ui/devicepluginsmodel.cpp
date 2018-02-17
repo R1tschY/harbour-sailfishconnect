@@ -50,9 +50,12 @@ bool DevicePluginsModel::setData(
         return false;
 
     if (role == EnabledRole) {
-        auto& pluginId = pluginIds_[idx.row()];
-        device_->setPluginEnabled(pluginId, value.toBool());
-        emit dataChanged(idx, idx, { EnabledRole });
+        // setPluginEnabled triggers pluginsChanged triggers setDevice
+        // which resets the model
+        if (data(idx, EnabledRole) != value) {
+            auto& pluginId = pluginIds_[idx.row()];
+            device_->setPluginEnabled(pluginId, value.toBool());
+        }
         return true;
     }
 
@@ -102,8 +105,6 @@ void DevicePluginsModel::setDevice(Device* value)
     if (device_) {
         connect(device_, &Device::destroyed,
                 this, [&](){ setDevice(nullptr); });
-        connect(device_, &Device::pluginsChanged,
-                this, &DevicePluginsModel::update);
 
         pluginIds_ = device_->supportedPlugins();
     }
@@ -111,16 +112,6 @@ void DevicePluginsModel::setDevice(Device* value)
     endResetModel();
 
     emit deviceIdChanged();
-
-}
-
-void DevicePluginsModel::update()
-{
-    beginResetModel();
-
-    pluginIds_ = device_->supportedPlugins();
-
-    endResetModel();
 }
 
 } // namespace SailfishConnect

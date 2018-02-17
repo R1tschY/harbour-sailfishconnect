@@ -43,6 +43,8 @@ bool ClipboardPlugin::receivePackage(const NetworkPackage &np)
 
     QString content = np.get<QString>(QStringLiteral("content"));
     QGuiApplication::clipboard()->setText(content);
+
+    return true;
 }
 
 void ClipboardPlugin::changed()
@@ -56,6 +58,21 @@ void ClipboardPlugin::changed()
 
     NetworkPackage np(packageType, {{"content", clipboard->text()}});
     sendPackage(np);
+}
+
+QString ClipboardPluginFactory::name() const
+{
+    return tr("Clipboard");
+}
+
+QString ClipboardPluginFactory::description() const
+{
+    return tr("Synchronize clipboard between devices.");
+}
+
+QString ClipboardPluginFactory::iconUrl() const
+{
+    return "image://theme/icon-m-clipboard";
 }
 
 } // namespace SailfishConnect

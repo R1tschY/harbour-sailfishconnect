@@ -58,18 +58,21 @@ private:
             const QString& name,
             const QVariant& value,
             int min,
-            int max);
+            int max);    
 };
 
 
-class BatteryPluginFactory :
-        public SailfishConnectPluginFactory_<BatteryPlugin>
+class BatteryPluginFactory : public SailfishConnectPluginFactory_<BatteryPlugin>
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID SailfishConnectPlugin_iid FILE "metadata.json")
     Q_INTERFACES(SailfishConnectPluginFactory)
 public:
     using FactoryBaseType::FactoryBaseType;
+
+    QString name() const override;
+    QString description() const override;
+    QString iconUrl() const override;
 };
 
 } // namespace SailfishConnect

@@ -140,16 +140,32 @@ PluginManager::PluginListEntry PluginManager::createPluginEntry(
         return PluginListEntry();
     }
 
-
     auto pluginMetadata = metadata.value(QStringLiteral("MetaData")).toObject();
+    auto pluginId = pluginMetadata.value("Id").toString();
+    if (pluginId.isEmpty()) {
+        qCDebug(coreLogger) << "Could not load plugin with empty id with "
+                               "metadata:" << pluginMetadata;
+        return PluginListEntry();
+    }
+
+    auto* factory = qobject_cast<SailfishConnectPluginFactory*>(
+                pluginLoader->instance());
+    if (!factory) {
+        qCDebug(coreLogger).nospace()
+                << "Could not load plugin: " << pluginId
+                << " (" << pluginLoader->errorString() << ")";
+        return PluginListEntry();
+    }
+
     return PluginListEntry {
-            pluginMetadata.value("Id").toString(),
+            pluginId,
             toStringList(pluginMetadata.value(
                              QStringLiteral("IncomingCapabilities"))).toSet(),
             toStringList(pluginMetadata.value(
                              QStringLiteral("OutcomingCapabilities"))).toSet(),
             pluginMetadata.value(
                              QStringLiteral("EnabledByDefault")).toBool(true),
+            factory,
             std::move(pluginLoader)
     };
 }
@@ -193,16 +209,7 @@ KdeConnectPlugin* PluginManager::instantiatePluginForDevice(const QString& plugi
     }
 
     auto& entry = entryIter->second;
-    auto* factory = qobject_cast<SailfishConnectPluginFactory*>(
-                entry.loader->instance());
-    if (!factory) {
-        qCDebug(coreLogger).nospace()
-                << "Could not load plugin: " << pluginId
-                << " (" << entry.loader->errorString() << ")";
-        return nullptr;
-    }
-
-    KdeConnectPlugin* plugin = factory->create(
+    KdeConnectPlugin* plugin = entry.factory->create(
                 device, entry.id, entry.outgoingCapabilities);
     if (!plugin) {
         qCDebug(coreLogger) << "Error loading plugin";
@@ -238,6 +245,33 @@ bool PluginManager::enabledByDefault(const QString &pluginId) const
         return true;
     }
     return entryIter->second.enabledByDefault;
+}
+
+QString PluginManager::pluginName(const QString &pluginId) const
+{
+    auto entryIter = plugins.find(pluginId);
+    if (entryIter == plugins.end()) {
+        return QString();
+    }
+    return entryIter->second.factory->name();
+}
+
+QString PluginManager::pluginDescription(const QString &pluginId) const
+{
+    auto entryIter = plugins.find(pluginId);
+    if (entryIter == plugins.end()) {
+        return QString();
+    }
+    return entryIter->second.factory->description();
+}
+
+QString PluginManager::pluginIconUrl(const QString &pluginId) const
+{
+    auto entryIter = plugins.find(pluginId);
+    if (entryIter == plugins.end()) {
+        return QString();
+    }
+    return entryIter->second.factory->iconUrl();
 }
 
 QStringList PluginManager::incomingCapabilities() const

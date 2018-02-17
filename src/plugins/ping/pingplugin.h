@@ -56,6 +56,10 @@ class PingPluginFactory :
 public:
     using SailfishConnectPluginFactory_<PingPlugin>
         ::SailfishConnectPluginFactory_;
+
+    QString name() const override;
+    QString description() const override;
+    QString iconUrl() const override;
 };
 
 } // namespace SailfishConnect

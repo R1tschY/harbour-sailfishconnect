@@ -157,7 +157,7 @@ void Daemon::forceOnNetworkChange()
     }
 }
 
-Device*Daemon::getDevice(const QString& deviceId)
+Device* Daemon::getDevice(const QString& deviceId)
 {
     for (Device* device : asConst(d->m_devices)) {
         if (device->id() == deviceId) {

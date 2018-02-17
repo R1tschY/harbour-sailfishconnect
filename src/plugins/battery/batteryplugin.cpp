@@ -29,13 +29,13 @@ namespace SailfishConnect {
 BatteryPlugin::BatteryPlugin(
         Device *device, QString name, QSet<QString> outgoingCapabilities)
     : KdeConnectPlugin(device, name, outgoingCapabilities),
+      batteryPackage_(QStringLiteral("kdeconnect.battery")),
       chargePercentage_(new ContextProperty(
                        QStringLiteral("Battery.ChargePercentage"), this)),
       isCharging_(new ContextProperty(
                              QStringLiteral("Battery.IsCharging"), this)),
       lowBattery_(new ContextProperty(
-                             QStringLiteral("Battery.LowBattery"), this)),
-      batteryPackage_(QStringLiteral("kdeconnect.battery"))
+                             QStringLiteral("Battery.LowBattery"), this))
 {
     debounceTimer_.setInterval(100);
     debounceTimer_.setSingleShot(true);
@@ -95,6 +95,21 @@ void BatteryPlugin::setCheckedStatus(
     } else {
         batteryPackage_.remove(name);
     }
+}
+
+QString BatteryPluginFactory::name() const
+{
+    return tr("Battery report");
+}
+
+QString BatteryPluginFactory::description() const
+{
+    return tr("Sends battery charge changes.");
+}
+
+QString BatteryPluginFactory::iconUrl() const
+{
+    return "image://theme/icon-m-battery";
 }
 
 } // namespace SailfishConnect

@@ -52,6 +52,10 @@ class ClipboardPluginFactory :
 public:
     using SailfishConnectPluginFactory_<ClipboardPlugin>
         ::SailfishConnectPluginFactory_;
+
+    QString name() const override;
+    QString description() const override;
+    QString iconUrl() const override;
 };
 
 } // namespace SailfishConnect

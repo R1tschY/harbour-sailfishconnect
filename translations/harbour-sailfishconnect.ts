@@ -47,11 +47,14 @@
 <context>
     <name>DevicePage</name>
     <message>
-        <source>Nested Page</source>
+        <source>Plugins</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>DevicePluginsPage</name>
     <message>
-        <source>Item</source>
+        <source>Select Plugins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -74,6 +77,39 @@
     </message>
     <message>
         <source>Timed out</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::BatteryPluginFactory</name>
+    <message>
+        <source>Battery report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sends battery charge changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::ClipboardPluginFactory</name>
+    <message>
+        <source>Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synchronize clipboard between devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::PingPluginFactory</name>
+    <message>
+        <source>Ping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ping other device and receive pings.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

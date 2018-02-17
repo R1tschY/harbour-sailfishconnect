@@ -41,6 +41,10 @@ public:
             Device* device,
             const QString& name,
             const QSet<QString>& outgoingCapabilities) = 0;
+
+    virtual QString name() const = 0;
+    virtual QString description() const = 0;
+    virtual QString iconUrl() const = 0;
 };
 
 #define SailfishConnectPlugin_iid "SailfishConnect.Plugin"
@@ -65,16 +69,17 @@ public:
 
 
 
-class KdeConnectPlugin
-    : public QObject
+class KdeConnectPlugin : public QObject
 {
     Q_OBJECT
 
 public:
     KdeConnectPlugin(
-            Device* device, const QString& name,
+            Device* device, const QString& id,
             const QSet<QString>& outgoingCapabilities);
     ~KdeConnectPlugin();
+
+    QString id() const;
 
     const Device* device() const;
 

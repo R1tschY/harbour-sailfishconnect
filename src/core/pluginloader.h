@@ -48,6 +48,7 @@
 class Device;
 class KdeConnectPlugin;
 class PluginLoader;
+class SailfishConnectPluginFactory;
 
 class PluginManager
 {
@@ -61,6 +62,9 @@ public:
     QStringList incomingCapabilities(const QString& pluginId) const;
     QStringList outgoingCapabilities(const QString& pluginId) const;
     bool enabledByDefault(const QString& pluginId) const;
+    QString pluginName(const QString& pluginId) const;
+    QString pluginDescription(const QString& pluginId) const;
+    QString pluginIconUrl(const QString& pluginId) const;
 
     QStringList incomingCapabilities() const;
     QStringList outgoingCapabilities() const;
@@ -74,6 +78,7 @@ private:
         QSet<QString> incomingCapabilities;
         QSet<QString> outgoingCapabilities;
         bool enabledByDefault;
+        SailfishConnectPluginFactory* factory;
         std::unique_ptr<PluginLoader> loader;
     };
 

@@ -28,21 +28,25 @@ using namespace SailfishConnect;
 struct KdeConnectPluginPrivate
 {
     Device* m_device;
-    QString m_pluginName;
+    QString m_pluginId;
     QSet<QString> m_outgoingCapabilties;
     std::unique_ptr<SailfishConnectPluginConfig> m_config = nullptr;
 };
 
-KdeConnectPlugin::KdeConnectPlugin(
-        Device* device,
-        const QString &name,
+KdeConnectPlugin::KdeConnectPlugin(Device* device,
+        const QString &id,
         const QSet<QString> &outgoingCapabilities)
     : QObject(device)
     , d(new KdeConnectPluginPrivate)
 {
     d->m_device = device;
-    d->m_pluginName = name;
+    d->m_pluginId = id;
     d->m_outgoingCapabilties = outgoingCapabilities;
+}
+
+QString KdeConnectPlugin::id() const
+{
+    return d->m_pluginId;
 }
 
 KdeConnectPlugin::~KdeConnectPlugin() = default;
@@ -52,7 +56,7 @@ SailfishConnectPluginConfig* KdeConnectPlugin::config() const
     // Create on demand, because not every plugin will use it
     if (!d->m_config) {
         d->m_config.reset(new SailfishConnectPluginConfig(
-                              d->m_device->id(), d->m_pluginName));
+                              d->m_device->id(), d->m_pluginId));
     }
     return d->m_config.get();
 }

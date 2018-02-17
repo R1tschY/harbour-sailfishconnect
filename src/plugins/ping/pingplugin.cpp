@@ -65,6 +65,21 @@ void PingPlugin::resetCount()
     count_ = 0;
 }
 
+QString PingPluginFactory::name() const
+{
+    return tr("Ping");
+}
+
+QString PingPluginFactory::description() const
+{
+    return tr("Ping other device and receive pings.");
+}
+
+QString PingPluginFactory::iconUrl() const
+{
+    return "image://theme/icon-m-bubble-universal";
+}
+
 } // namespace SailfishConnect
 
 Q_IMPORT_PLUGIN(PingPluginFactory)

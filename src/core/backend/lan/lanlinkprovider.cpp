@@ -72,7 +72,6 @@ void LanLinkProvider::onNetworkConfigurationChanged(const QNetworkConfiguration&
 
 LanLinkProvider::~LanLinkProvider()
 {
-    qCDebug(coreLogger) << "BACKTRACE:";
 }
 
 void LanLinkProvider::onStart()
@@ -161,8 +160,16 @@ void LanLinkProvider::newUdpConnection() //udpBroadcastReceived
             continue;
         }
 
-        if (receivedPackage->get<QString>(QStringLiteral("deviceId")) == KdeConnectConfig::instance()->deviceId()) {
+        auto deviceId = receivedPackage->get<QString>(QStringLiteral("deviceId"));
+        if (deviceId == KdeConnectConfig::instance()->deviceId()) {
             qCDebug(coreLogger) << "Ignoring my own broadcast";
+            delete receivedPackage;
+            continue;
+        }
+
+        if (m_links.contains(deviceId)) {
+            qCDebug(coreLogger) << "Ignoring broadcast of linked device"
+                                << deviceId;
             delete receivedPackage;
             continue;
         }
@@ -462,9 +469,8 @@ void LanLinkProvider::addLink(const QString& deviceId, QSslSocket* socket, Netwo
     //Do we have a link for this device already?
     auto linkIterator = m_links.find(deviceId);
     if (linkIterator != m_links.end()) {
-        qCDebug(coreLogger) << "Reusing link to" << deviceId;
-        deviceLink = linkIterator.value();
-        deviceLink->reset(socket, connectionOrigin);
+        qCDebug(coreLogger) << "A link already exists to" << deviceId;
+        return;
     } else {
         deviceLink = new LanDeviceLink(deviceId, this, socket, connectionOrigin);
         connect(deviceLink, &QObject::destroyed, this, &LanLinkProvider::deviceLinkDestroyed);

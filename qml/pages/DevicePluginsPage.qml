@@ -17,29 +17,37 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import SailfishConnect 0.1
 
 
 Page {
-    property string deviceId
+    property string device
 
     allowedOrientations: Orientation.All
 
-    SilicaFlickable {
+    SilicaListView {
+        id: listView
+        model: DevicePluginsModel {
+            deviceId: device
+        }
         anchors.fill: parent
-
-        PageHeader {
-            title: daemon.getDevice(deviceId).name
+        header: PageHeader {
+            title: qsTr("Select Plugins")
         }
 
-        PullDownMenu {
-            MenuItem {
-                text: qsTr("Plugins")
-                onClicked: pageStack.push(
-                               Qt.resolvedUrl("DevicePluginsPage.qml"),
-                               { device: deviceId })
+        delegate: BackgroundItem {
+            id: delegate
+
+            IconTextSwitch {
+                id: pluginSwitch
+                text: pluginName
+                icon.source: pluginIconUrl
+                description: pluginDescription
+                checked: pluginEnabled
+                automaticCheck: false
+                onClicked: pluginEnabled = !checked
             }
         }
-
         VerticalScrollDecorator {}
     }
 }

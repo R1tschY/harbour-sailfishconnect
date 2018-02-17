@@ -58,7 +58,9 @@ Page {
 
                 BackgroundItem {
                     width: page.width
-                    height: Theme.fontSizeMedium + Theme.fontSizeSmall + Theme.paddingSmall * 4
+                    height: Theme.fontSizeMedium +
+                            Theme.fontSizeSmall +
+                            Theme.paddingSmall * 4
 
                     Row {
                         Image {

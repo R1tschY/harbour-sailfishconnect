@@ -32,6 +32,7 @@
 #include "core/device.h"
 #include "ui/devicelistmodel.h"
 #include "ui/filtervalueproxymodel.h"
+#include "ui/devicepluginsmodel.h"
 
 namespace SailfishConnect {
 
@@ -69,6 +70,8 @@ void registerQmlTypes() {
                 "SailfishConnect", 0, 1, "DeviceListModel");
     qmlRegisterType<FilterValueProxyModel>(
                 "SailfishConnect", 0, 1, "FilterValueProxyModel");
+    qmlRegisterType<DevicePluginsModel>(
+                "SailfishConnect", 0, 1, "DevicePluginsModel");
 
     qmlRegisterType<Device>(
                 "SailfishConnect", 0, 1, "Device");

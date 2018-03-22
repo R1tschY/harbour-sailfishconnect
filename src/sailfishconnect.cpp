@@ -22,6 +22,9 @@
 #include <memory>
 #include <QLoggingCategory>
 #include <QQmlEngine>
+#include <QtQml>
+#include <QQuickView>
+#include <QGuiApplication>
 #include <sailfishapp.h>
 
 #include <execinfo.h>

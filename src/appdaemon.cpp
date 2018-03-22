@@ -46,7 +46,7 @@ QString SailfishOsConfig::defaultName() const
         return hwName;
     }
 
-    return SailfishOsConfig::defaultName();
+    return SystemInfo::defaultName();
 }
 
 QString SailfishOsConfig::deviceType() const

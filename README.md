@@ -7,6 +7,7 @@ SailfishOS client for KDE Connect
 * Core
     * :white_check_mark: Pairing
     * :white_check_mark: Plugin management
+    * :construction: Use background daemon
     * :o: Downloads/Uploads (Payload)
 
 * Plugins
@@ -26,17 +27,24 @@ SailfishOS client for KDE Connect
     * :o: Telephony
 
 * UI
-    * :construction: Device list
-    * :construction: Pairing
-    * :construction: Plugin management
-    * :o: Device view
+    * :white_check_mark: Device list
+    * :white_check_mark: Pairing
+    * :white_check_mark: Plugin management
+    * :construction: Device view
     * :o: Plugin UIs
     * :o: SSL key view
     * :o: Edit device name
 
 * Backend
-    * :construction: LAN (no payload support)
+    * :construction: LAN
     * :x: Bluetooth (no QtBluetooth in Harhour allowed)
+
+
+## Screenshots
+
+![Screenshot 1](/doc/Screenshot_1.png.png)
+![Screenshot 2](/doc/Screenshot_2.png.png)
+![Screenshot 3](/doc/Screenshot_3.png.png)
 
 
 ## Credits

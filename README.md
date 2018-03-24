@@ -42,9 +42,9 @@ SailfishOS client for KDE Connect
 
 ## Screenshots
 
-![Screenshot 1](/doc/Screenshot_1.png.png)
-![Screenshot 2](/doc/Screenshot_2.png.png)
-![Screenshot 3](/doc/Screenshot_3.png.png)
+![Screenshot 1](/doc/Screenshot_1.png)
+![Screenshot 2](/doc/Screenshot_2.png)
+![Screenshot 3](/doc/Screenshot_3.png)
 
 
 ## Credits

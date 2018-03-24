@@ -20,6 +20,8 @@
 
 #include "core/daemon.h"
 
+#include <notification.h>
+
 namespace SailfishConnect {
 
 class AppDaemon : public Daemon
@@ -34,6 +36,9 @@ public:
 
 signals:
     void askForPairingConfirmation(Device* deviceId);
+
+private:
+    Notification notification_;
 };
 
 } // namespace SailfishConnect

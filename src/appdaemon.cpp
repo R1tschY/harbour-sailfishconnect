@@ -65,22 +65,17 @@ QString SailfishOsConfig::deviceType() const
 
 AppDaemon::AppDaemon(QObject *parent)
 : Daemon(makeUniquePtr<SailfishOsConfig>(), parent)
-{}
+{
+    notification_.setAppName("Sailfish-Connect");
+    notification_.setCategory("device");
+}
 
 void AppDaemon::askPairingConfirmation(Device *device)
-{
-    qCWarning(logger) << "askPairingConfirmation";
-    //        KNotification* notification = new KNotification(QStringLiteral("pairingRequest"));
-    //        notification->setIconName(QStringLiteral("dialog-information"));
-    //        notification->setComponentName(QStringLiteral("kdeconnect"));
-    //        notification->setText(i18n("Pairing request from %1", device->name().toHtmlEscaped()));
-    //        notification->setActions(QStringList() << i18n("Accept") << i18n("Reject"));
-    ////         notification->setTimeout(PairingHandler::pairingTimeoutMsec());
-    //        connect(notification, &KNotification::action1Activated, device, &Device::acceptPairing);
-    //        connect(notification, &KNotification::action2Activated, device, &Device::rejectPairing);
-    //        notification->sendEvent();
-
-    QTimer::singleShot(10000, this, [=](){ device->acceptPairing(); });
+{    
+    notification_.setSummary(
+        tr("Pairing request from %1").arg(device->name()));
+    notification_.setOrigin(device->name());
+    notification_.publish();
 }
 
 void AppDaemon::reportError(const QString &title, const QString &description)

@@ -17,19 +17,105 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import SailfishConnect.UI 0.1
+import SailfishConnect.Core 0.1
 
 
 Page {
     property string deviceId
+    property Device _device: daemon.getDevice(deviceId)
+    property bool waitForAcceptedPairing: false
 
-    allowedOrientations: Orientation.All
-
-    SilicaFlickable {
+    SilicaListView {
         anchors.fill: parent
 
-        PageHeader {
-            title: daemon.getDevice(deviceId).name
+        header: Column {
+            width: parent.width
+            height: header.height + mainColumn.height + Theme.paddingLarge
+
+            PageHeader {
+                id: header
+                title: _device.name
+            }
+
+            function updateState() {
+                waitForAcceptedPairing = false
+            }
+
+            Component.onCompleted: {
+                _device.pairingError.connect(updateState)
+                _device.trustedChanged.connect(updateState)
+            }
+
+            Column {
+                id: mainColumn
+                width: parent.width - Theme.paddingLarge * 2
+                spacing: Theme.paddingLarge
+                x: Theme.paddingLarge
+
+                Label {
+                    id: stateText
+                    text: qsTr("You don't trust this device")
+                }
+
+                Button {
+                    id: requestBtn
+                    visible: mainColumn.state == ""
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    text: qsTr("Request pairing")
+                    onClicked: {
+                        waitForAcceptedPairing = true
+                        _device.requestPair()
+                    }
+                }
+
+                Row {
+                    id: acceptRejectBtns
+                    visible: mainColumn.state == "waitingParingRequest"
+                    width: parent.width
+                    spacing: Theme.paddingLarge
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Button {
+                        text: qsTr("Accept")
+                        onClicked: _device.acceptPairing()
+                    }
+
+                    Button {
+                        text: qsTr("Reject")
+                        onClicked: _device.rejectPairing()
+                    }
+                }
+
+                states: [
+                    State {
+                        name: "trusted"
+                        when: _device.isTrusted
+                        PropertyChanges {
+                            target: stateText;
+                            text: qsTr("You trust this device")}
+                    },
+                    State {
+                        name: "waitForAcceptedPairing"
+                        when: waitForAcceptedPairing
+                        PropertyChanges {
+                            target: stateText;
+                            text: qsTr("Waiting for accepted pairing ...")}
+                    },
+                    State {
+                        name: "waitingParingRequest"
+                        when: _device.hasPairingRequests
+                        PropertyChanges {
+                            target: stateText;
+                            text: qsTr("This device wants to pair with your " +
+                                       "device.")}
+                    }
+                ]
+            }
         }
+
+        model: 0 // TODO: plugin UIs
 
         PullDownMenu {
             MenuItem {
@@ -37,6 +123,12 @@ Page {
                 onClicked: pageStack.push(
                                Qt.resolvedUrl("DevicePluginsPage.qml"),
                                { device: deviceId })
+            }
+
+            MenuItem {
+                visible: _device.isTrusted
+                text: qsTr("Unpair")
+                onClicked: _device.unpair()
             }
         }
 

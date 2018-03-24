@@ -70,14 +70,14 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 void registerQmlTypes() {
     qmlRegisterType<DeviceListModel>(
-                "SailfishConnect", 0, 1, "DeviceListModel");
+                "SailfishConnect.UI", 0, 1, "DeviceListModel");
     qmlRegisterType<FilterValueProxyModel>(
-                "SailfishConnect", 0, 1, "FilterValueProxyModel");
+                "SailfishConnect.UI", 0, 1, "FilterValueProxyModel");
     qmlRegisterType<DevicePluginsModel>(
-                "SailfishConnect", 0, 1, "DevicePluginsModel");
+                "SailfishConnect.UI", 0, 1, "DevicePluginsModel");
 
     qmlRegisterType<Device>(
-                "SailfishConnect", 0, 1, "Device");
+                "SailfishConnect.Core", 0, 1, "Device");
 }
 
 } // SailfishConnect

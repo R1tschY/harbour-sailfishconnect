@@ -212,13 +212,7 @@ void Daemon::onDeviceStatusChanged()
 
     qCDebug(coreLogger) << "Device" << device->name() << "status changed. Reachable:" << device->isReachable() << ". Trusted: " << device->isTrusted();
 
-    if (!device->isReachable() && !device->isTrusted()) {
-        qCDebug(coreLogger) << "Destroying device" << device->name();
-        removeDevice(device);
-    } else {
-        Q_EMIT deviceVisibilityChanged(device->id(), device->isReachable());
-    }
-
+    Q_EMIT deviceVisibilityChanged(device->id(), device->isReachable());
 }
 
 void Daemon::setAnnouncedName(const QString& name)

@@ -50,6 +50,38 @@
         <source>Plugins</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You don&apos;t trust this device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request pairing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unpair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting for accepted pairing ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This device wants to pair with your device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You trust this device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePluginsPage</name>
@@ -81,13 +113,20 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::AppDaemon</name>
+    <message>
+        <source>Pairing request from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::BatteryPluginFactory</name>
     <message>
         <source>Battery report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sends battery charge changes.</source>
+        <source>Share battery charge state.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

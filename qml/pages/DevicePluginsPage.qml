@@ -17,7 +17,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import SailfishConnect 0.1
+import SailfishConnect.UI 0.1
 
 
 Page {

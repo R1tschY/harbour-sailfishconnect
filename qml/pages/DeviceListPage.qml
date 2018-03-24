@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Nemo.Notifications 1.0
-import SailfishConnect 0.1
+import SailfishConnect.UI 0.1
 
 Page {
     id: page
@@ -88,15 +88,9 @@ Page {
                     }
 
                     onClicked: {
-                        if (daemon.pairingRequests.indexOf(id) !== -1) {
-                            pageStack.push(
-                                Qt.resolvedUrl("AcceptPairingDialog.qml"),
-                                { deviceId: id })
-                        } else {
-                            pageStack.push(
-                                Qt.resolvedUrl("DevicePage.qml"),
-                                { deviceId: id })
-                        }
+                        pageStack.push(
+                            Qt.resolvedUrl("DevicePage.qml"),
+                            { deviceId: id })
                     }
                 }
             }

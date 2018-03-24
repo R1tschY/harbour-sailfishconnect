@@ -106,7 +106,7 @@ QString BatteryPluginFactory::name() const
 
 QString BatteryPluginFactory::description() const
 {
-    return tr("Sends battery charge changes.");
+    return tr("Share battery charge state.");
 }
 
 QString BatteryPluginFactory::iconUrl() const

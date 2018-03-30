@@ -25,6 +25,9 @@
 #include <QtQml>
 #include <QQuickView>
 #include <QGuiApplication>
+#include <QDBusConnection>
+#include <QDBusInterface>
+#include <QDBusReply>
 #include <sailfishapp.h>
 
 #include <execinfo.h>
@@ -36,10 +39,20 @@
 #include "ui/devicelistmodel.h"
 #include "ui/filtervalueproxymodel.h"
 #include "ui/devicepluginsmodel.h"
+#include "ui.h"
 
 namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
+
+QString DBUS_SERVICE_NAME =
+        QStringLiteral("org.harbour.SailfishConnect");
+
+QString PACKAGE_NAME =
+        QStringLiteral("sailfishconnect");
+
+QString PRETTY_PACKAGE_NAME =
+        QStringLiteral("Sailfish-Connect");
 
 void logBacktrace()
 {
@@ -80,6 +93,18 @@ void registerQmlTypes() {
                 "SailfishConnect.Core", 0, 1, "Device");
 }
 
+std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
+{
+    std::unique_ptr<QGuiApplication> app(SailfishApp::application(argc, argv));
+    app->setApplicationDisplayName(PRETTY_PACKAGE_NAME);
+    app->setApplicationName(PACKAGE_NAME);
+
+    // always daemonize
+    app->setQuitOnLastWindowClosed(false);
+
+    return app;
+}
+
 } // SailfishConnect
 
 int main(int argc, char *argv[])
@@ -88,15 +113,21 @@ int main(int argc, char *argv[])
 
     qInstallMessageHandler(myMessageOutput);
 
-    std::unique_ptr<QGuiApplication> app(SailfishApp::application(argc, argv));
-    std::unique_ptr<QQuickView> view(SailfishApp::createView());
+    auto app = createApplication(argc, argv);
+
+    auto sessionBus = QDBusConnection::sessionBus();
+    if (!sessionBus.registerService(DBUS_SERVICE_NAME)) {
+        qCInfo(logger) << "Other daemon exists.";
+        UI::raise();
+        return 0;
+    }
 
     registerQmlTypes();
-    AppDaemon daemon;
 
-    view->rootContext()->setContextProperty("daemon", &daemon);
-    view->setSource(SailfishApp::pathToMainQml());
-    view->showFullScreen();
+    AppDaemon daemon;
+    UI ui;
+
+    ui.showMainWindow();
 
     return app->exec();
 }

@@ -47,7 +47,8 @@ SOURCES += \
     src/core/systeminfo.cpp \
     src/plugins/clipboard/clipboardplugin.cpp \
     src/ui/filtervalueproxymodel.cpp \
-    src/ui/devicepluginsmodel.cpp
+    src/ui/devicepluginsmodel.cpp \
+    src/ui.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -106,7 +107,9 @@ HEADERS += \
     src/utils/cpphelper.h \
     src/plugins/clipboard/clipboardplugin.h \
     src/ui/filtervalueproxymodel.h \
-    src/ui/devicepluginsmodel.h
+    src/ui/devicepluginsmodel.h \
+    src/ui.h \
+    src/sailfishconnect.h
 
 SUBDIRS += \
     src/plugins/battery/SailfishConnectBatteryPlugin.pro

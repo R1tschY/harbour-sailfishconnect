@@ -24,6 +24,7 @@
 
 #include "core/systeminfo.h"
 #include "utils/cpphelper.h"
+#include "sailfishconnect.h"
 
 namespace SailfishConnect {
 
@@ -66,7 +67,7 @@ QString SailfishOsConfig::deviceType() const
 AppDaemon::AppDaemon(QObject *parent)
 : Daemon(makeUniquePtr<SailfishOsConfig>(), parent)
 {
-    notification_.setAppName("Sailfish-Connect");
+    notification_.setAppName(PRETTY_PACKAGE_NAME);
     notification_.setCategory("device");
 }
 
@@ -82,6 +83,5 @@ void AppDaemon::reportError(const QString &title, const QString &description)
 {
     qCCritical(logger) << title << description;
 }
-
 
 } // namespace SailfishConnect

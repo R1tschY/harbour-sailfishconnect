@@ -20,6 +20,8 @@
 
 #include "lanlinkprovider.h"
 
+#include <algorithm>
+
 #include <QHostInfo>
 #include <QTcpServer>
 #include <QNetworkProxy>
@@ -57,9 +59,9 @@ LanLinkProvider::LanLinkProvider(bool testMode)
     m_udpSocket.setProxy(QNetworkProxy::NoProxy);
 
     //Detect when a network interface changes status, so we announce ourelves in the new network
-    QNetworkConfigurationManager* networkManager = new QNetworkConfigurationManager(this);
-    connect(networkManager, &QNetworkConfigurationManager::configurationChanged, this, &LanLinkProvider::onNetworkConfigurationChanged);
-
+    connect(
+        &m_networkManager, &QNetworkConfigurationManager::configurationChanged,
+        this, &LanLinkProvider::onNetworkConfigurationChanged);
 }
 
 void LanLinkProvider::onNetworkConfigurationChanged(const QNetworkConfiguration& config)
@@ -78,6 +80,7 @@ void LanLinkProvider::onStart()
 {
     const QHostAddress bindAddress = m_testMode? QHostAddress::LocalHost : QHostAddress::Any;
 
+    // TODO: only bind to WLAN, Ethernet and Bluetooth networks
     bool success = m_udpSocket.bind(bindAddress, UDP_PORT, QUdpSocket::ShareAddress);
     Q_ASSERT(success);
 
@@ -125,13 +128,41 @@ void LanLinkProvider::broadcastToNetwork()
 
     qCDebug(coreLogger()) << "Broadcasting identity packet";
 
-    QHostAddress destAddress = m_testMode? QHostAddress::LocalHost : QHostAddress(QStringLiteral("255.255.255.255"));
-
     NetworkPackage np(QLatin1String(""));
     NetworkPackage::createIdentityPackage(&np);
     np.set(QStringLiteral("tcpPort"), m_tcpPort);
 
-    m_udpSocket.writeDatagram(np.serialize(), destAddress, UDP_PORT);
+    if (m_testMode) {
+        m_udpSocket.writeDatagram(np.serialize(), QHostAddress::LocalHost, UDP_PORT);
+        return;
+    }
+
+    auto interfaces = LanLinkProvider::getUsefulNetworkInterfaces();
+    if (!interfaces.empty()) {
+        // TODO: support IPv6 with multicast FF02::1
+        m_udpSocket.writeDatagram(
+                    np.serialize(), QHostAddress::Broadcast, UDP_PORT);
+    }
+}
+
+QList<QNetworkInterface> LanLinkProvider::getUsefulNetworkInterfaces() {
+    auto configs = m_networkManager.allConfigurations(
+                QNetworkConfiguration::Active);
+
+    // only use Ethernet, WLAN or Bluetooth network
+    configs.erase(std::remove_if(configs.begin(), configs.end(), [](const QNetworkConfiguration& config) {
+        auto bearerTypeFamily = config.bearerTypeFamily();
+        return bearerTypeFamily != QNetworkConfiguration::BearerEthernet
+            && bearerTypeFamily != QNetworkConfiguration::BearerWLAN
+            && bearerTypeFamily != QNetworkConfiguration::BearerBluetooth
+        ;
+    }), configs.end());
+
+    QList<QNetworkInterface> result;
+    for (auto& config : configs) {
+        result.push_back(QNetworkSession(config).interface());
+    }
+    return result;
 }
 
 //I'm the existing device, a new device is kindly introducing itself.

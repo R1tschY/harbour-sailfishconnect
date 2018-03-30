@@ -29,6 +29,7 @@
 #include <QTimer>
 #include <QNetworkSession>
 #include <QSslSocket>
+#include <QNetworkConfigurationManager>
 
 #include "../linkprovider.h"
 #include "server.h"
@@ -80,6 +81,9 @@ private:
     void onNetworkConfigurationChanged(const QNetworkConfiguration& config);
     void addLink(const QString& deviceId, QSslSocket* socket, NetworkPackage* receivedPackage, LanDeviceLink::ConnectionStarted connectionOrigin);
 
+    QList<QNetworkInterface> getUsefulNetworkInterfaces();
+
+    // TODO: use pimple
     Server* m_server;
     QUdpSocket m_udpSocket;
     quint16 m_tcpPort;
@@ -95,6 +99,8 @@ private:
     QNetworkConfiguration m_lastConfig;
     const bool m_testMode;
     QTimer m_combineBroadcastsTimer;
+
+    QNetworkConfigurationManager m_networkManager;
 };
 
 #endif

@@ -193,10 +193,12 @@ void KdeConnectConfig::createDeviceId()
 {
     if (!d->m_certificate.isNull()) {
         d->m_deviceId =
-                d->m_certificate.subjectInfo(QSslCertificate::CommonName).at(0);
+            d->m_certificate.subjectInfo(QSslCertificate::CommonName).at(0);
     } else {
         d->m_deviceId = QUuid::createUuid().toString();
     }
+    d->m_deviceId = Device::sanitizeDeviceId(d->m_deviceId);
+
     qCDebug(coreLogger) << "My id:" << d->m_deviceId;
 }
 

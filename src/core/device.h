@@ -107,6 +107,18 @@ public:
 
     QHostAddress getLocalIpAddress() const;
 
+    /**
+     * @brief sanitize device id
+     *
+     * The device id has to be a valid ascii identifer (/[A-Za-z0-9_]+/). This
+     * function replaces all not allowed characters with `_`. Ids containing
+     * characters that are not allowed as dbus paths would make app crash.
+     *
+     * @param deviceId a non-sanitized device id
+     * @return sanitized device id
+     */
+    static QString sanitizeDeviceId(const QString& deviceId);
+
 public Q_SLOTS:
     ///sends a @p np package to the device
     ///virtual for testing purposes.

@@ -28,6 +28,7 @@
 #include <QSslCertificate>
 #include <QSettings>
 #include <QHostAddress>
+#include <QRegularExpression>
 
 #include "kdeconnectplugin.h"
 #include "backend/devicelink.h"
@@ -52,7 +53,7 @@ Device::Device()
 
 Device::Device(QObject* parent, const QString& id)
     : QObject(parent)
-    , m_deviceId(id)
+    , m_deviceId(sanitizeDeviceId(id))
     , m_protocolVersion(NetworkPackage::s_protocolVersion) //We don't know it yet
 {
     KdeConnectConfig::DeviceInfo info = KdeConnectConfig::instance()->getTrustedDevice(id);
@@ -68,7 +69,8 @@ Device::Device(QObject* parent, const QString& id)
 
 Device::Device(QObject* parent, const NetworkPackage& identityPackage, DeviceLink* dl)
     : QObject(parent)
-    , m_deviceId(identityPackage.get<QString>(QStringLiteral("deviceId")))
+    , m_deviceId(sanitizeDeviceId(
+          identityPackage.get<QString>(QStringLiteral("deviceId"))))
     , m_deviceName(identityPackage.get<QString>(QStringLiteral("deviceName")))
 {
     addLink(identityPackage, dl);
@@ -421,6 +423,15 @@ QString Device::iconForStatus(bool reachable, bool trusted) const
     QString type = type2str(deviceType);
 
     return type+status;
+}
+
+QString Device::sanitizeDeviceId(const QString& deviceId)
+{
+    static QRegularExpression regexp("[^A-Za-z0-9_]");
+
+    QString result = deviceId;
+    result.replace(regexp, QLatin1String("_"));
+    return result;
 }
 
 void Device::setName(const QString& name)

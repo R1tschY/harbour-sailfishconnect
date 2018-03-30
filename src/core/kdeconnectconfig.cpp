@@ -96,10 +96,8 @@ KdeConnectConfig::KdeConnectConfig(std::unique_ptr<SailfishConnect::SystemInfo> 
 void KdeConnectConfig::createBaseConfigDir()
 {
     QString configPath = QStandardPaths::writableLocation(
-                QStandardPaths::ConfigLocation);
-    QString kdeconnectConfigPath =
-            QDir(configPath).absoluteFilePath(QStringLiteral("kdeconnect"));
-    d->m_configBaseDir = QDir(kdeconnectConfigPath);
+                QStandardPaths::AppConfigLocation);
+    d->m_configBaseDir = QDir(configPath);
 
     // Make sure base directory exists
     QDir().mkpath(d->m_configBaseDir.absolutePath());

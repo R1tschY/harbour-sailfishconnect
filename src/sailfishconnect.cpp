@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
     registerQmlTypes();
 
     AppDaemon daemon;
-    UI ui;
+    UI ui(&daemon);
 
     ui.showMainWindow();
 

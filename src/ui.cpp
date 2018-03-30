@@ -9,6 +9,7 @@
 #include <sailfishapp.h>
 
 #include "sailfishconnect.h"
+#include "appdaemon.h"
 
 namespace SailfishConnect {
 
@@ -21,7 +22,9 @@ const QString UI::DBUS_PATH =
         QStringLiteral("/org/harbour/SailfishConnect/UI");
 
 
-UI::UI(QObject *parent) : QObject(parent)
+UI::UI(AppDaemon* daemon, QObject *parent)
+    : QObject(parent)
+    , m_daemon(daemon)
 {
     auto sessionBus = QDBusConnection::sessionBus();
     sessionBus.registerObject(
@@ -47,7 +50,7 @@ void UI::showMainWindow()
         this, &UI::onMainWindowDestroyed);
 
     // view
-    m_view->rootContext()->setContextProperty("daemon", this);
+    m_view->rootContext()->setContextProperty("daemon", m_daemon);
     m_view->setSource(SailfishApp::pathToMainQml());
     m_view->showFullScreen();
 }

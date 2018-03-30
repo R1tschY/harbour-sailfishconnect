@@ -8,6 +8,8 @@ class QQuickView;
 
 namespace SailfishConnect {
 
+class AppDaemon;
+
 /**
  * @brief manages ui
  *
@@ -22,7 +24,7 @@ public:
     static const QString DBUS_INTERFACE_NAME;
     static const QString DBUS_PATH;
 
-    explicit UI(QObject *parent = nullptr);
+    explicit UI(AppDaemon* daemon, QObject *parent = nullptr);
 
     /**
      * @brief notify other main daemon to show app window
@@ -37,6 +39,7 @@ public slots:
 
 private:
     QQuickView* m_view = nullptr;
+    AppDaemon *m_daemon;
 
     void onMainWindowDestroyed();
 

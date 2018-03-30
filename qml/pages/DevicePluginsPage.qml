@@ -21,6 +21,8 @@ import SailfishConnect.UI 0.1
 
 
 Page {
+    id: page
+
     property string device
 
     allowedOrientations: Orientation.All
@@ -35,8 +37,10 @@ Page {
             title: qsTr("Select Plugins")
         }
 
-        delegate: BackgroundItem {
+        delegate: ListItem {
             id: delegate
+            width: page.width
+            height: pluginSwitch.height
 
             IconTextSwitch {
                 id: pluginSwitch
@@ -48,6 +52,7 @@ Page {
                 Component.onCompleted: pluginSwitch.checked = pluginEnabled
             }
         }
+
         VerticalScrollDecorator {}
     }
 }

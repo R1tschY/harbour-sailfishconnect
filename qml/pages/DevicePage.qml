@@ -22,6 +22,8 @@ import SailfishConnect.Core 0.1
 
 
 Page {
+    id: page
+
     property string deviceId
     property Device _device: daemon.getDevice(deviceId)
     property bool waitForAcceptedPairing: false

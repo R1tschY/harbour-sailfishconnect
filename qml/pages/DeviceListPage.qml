@@ -34,14 +34,6 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
-//        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-//        PullDownMenu {
-//            MenuItem {
-//                text: qsTr("Show Page 2")
-//                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
-//            }
-//        }
-
         contentHeight: column.height
 
         Column {
@@ -56,34 +48,45 @@ Page {
             Component {
                 id: deviceDelegate
 
-                BackgroundItem {
+                ListItem {
+                    id: listItem
                     width: page.width
-                    height: Theme.fontSizeMedium +
-                            Theme.fontSizeSmall +
-                            Theme.paddingSmall * 4
+                    height: Theme.itemSizeMedium
 
-                    Row {
-                        Image {
-                            height: Theme.fontSizeMedium + Theme.fontSizeSmall
-                            width: Theme.fontSizeMedium + Theme.fontSizeSmall
-                            source: iconUrl + "?" +
-                                    selectDeviceColor(trusted, reachable)
+                    Image {
+                        id: icon
+                        source: iconUrl + "?" +
+                                selectDeviceColor(trusted, reachable)
+
+                        x: Theme.horizontalPageMargin
+                        anchors.verticalCenter: parent.verticalCenter
+                        sourceSize.width: Theme.iconSizeMedium
+                        sourceSize.height: Theme.iconSizeMedium
+                    }
+                    Column {
+                        anchors {
+                            left: icon.right
+                            leftMargin: Theme.paddingLarge
+                            right: parent.right
+                            rightMargin: Theme.horizontalPageMargin
+                            verticalCenter: parent.verticalCenter
                         }
-                        Column {
-                            Text {
-                                font.pixelSize: Theme.fontSizeMedium
-                                text: '<b>' + name + '</b>'
-                                color: highlighted
-                                       ? Theme.highlightColor
-                                       : Theme.primaryColor
-                            }
-                            Text {
-                                font.pixelSize: Theme.fontSizeSmall
-                                text: id
-                                color: highlighted
-                                       ? Theme.highlightColor
-                                       : Theme.secondaryColor
-                            }
+
+                        Label {
+                            text: '<b>' + name + '</b>'
+                            color: listItem.highlighted
+                                   ? Theme.highlightColor
+                                   : Theme.primaryColor
+                            truncationMode: TruncationMode.Fade
+                        }
+                        Label {
+                            text: id
+                            color: listItem.highlighted
+                                   ? Theme.secondaryHighlightColor
+                                   : Theme.secondaryColor
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            width: parent.width
+                            truncationMode: TruncationMode.Fade
                         }
                     }
 

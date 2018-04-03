@@ -27,7 +27,6 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
-
         contentHeight: column.height
 
         Column {
@@ -35,6 +34,7 @@ Page {
 
             width: page.width
             spacing: Theme.paddingLarge
+
             PageHeader {
                 title: qsTr("Sailfish-Connect")
             }
@@ -99,6 +99,7 @@ Page {
                                ? Theme.highlightColor
                                : Theme.primaryColor
                         truncationMode: TruncationMode.Fade
+                        textFormat: Text.PlainText
 
                         Behavior on y { NumberAnimation {} }
                     }
@@ -123,6 +124,7 @@ Page {
                         font.pixelSize: Theme.fontSizeExtraSmall
                         opacity: showStatus ? 1.0 : 0.0
                         width: parent.width
+                        textFormat: Text.PlainText
 
                         Behavior on opacity { FadeAnimation {} }
                     }
@@ -195,6 +197,13 @@ Page {
 
                 model: otherNearDevicesModel
                 delegate: deviceDelegate
+            }
+        }
+
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("About ...")
+                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
         }
 

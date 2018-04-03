@@ -55,6 +55,7 @@ DISTFILES += \
     translations/*.ts \
     qml/pages/DevicePage.qml \
     qml/pages/DeviceListPage.qml \
+    qml/pages/AboutPage.qml \
     rpm/harbour-sailfishconnect.yaml \
     rpm/harbour-sailfishconnect.spec \
     rpm/harbour-sailfishconnect.changes.in \
@@ -63,7 +64,7 @@ DISTFILES += \
     harbour-sailfishconnect.desktop \
     src/plugins/battery/metadata.json \
     src/plugins/ping/metadata.json \
-    README.md
+    *.md
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 

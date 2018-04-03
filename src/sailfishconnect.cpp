@@ -45,11 +45,14 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
 
+
+QString PACKAGE_VERSION = QStringLiteral("0.1");
+
 QString DBUS_SERVICE_NAME =
         QStringLiteral("org.harbour.SailfishConnect");
 
 QString PACKAGE_NAME =
-        QStringLiteral("sailfishconnect");
+        QStringLiteral("harbour-sailfishconnect");
 
 QString PRETTY_PACKAGE_NAME =
         QStringLiteral("Sailfish-Connect");
@@ -98,6 +101,7 @@ std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
     std::unique_ptr<QGuiApplication> app(SailfishApp::application(argc, argv));
     app->setApplicationDisplayName(PRETTY_PACKAGE_NAME);
     app->setApplicationName(PACKAGE_NAME);
+    app->setApplicationVersion(PACKAGE_VERSION);
 
     // always daemonize
     app->setQuitOnLastWindowClosed(false);

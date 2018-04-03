@@ -29,34 +29,30 @@ ClipboardPlugin::ClipboardPlugin(
         const QString &name,
         const QSet<QString> &outgoingCapabilities)
     : KdeConnectPlugin(device, name, outgoingCapabilities)
+    , m_clipboard(QGuiApplication::clipboard())
 {
-    QClipboard *clipboard = QGuiApplication::clipboard();
-
     connect(
-        clipboard, &QClipboard::dataChanged,
-        this, &ClipboardPlugin::changed);
+        m_clipboard, &QClipboard::dataChanged,
+        this, &ClipboardPlugin::dataChanged);
 }
 
 bool ClipboardPlugin::receivePackage(const NetworkPackage &np)
 {
-    ignoreNextChange_ = true;
-
     QString content = np.get<QString>(QStringLiteral("content"));
-    QGuiApplication::clipboard()->setText(content);
+    m_lastClipboardText = content;
+    m_clipboard->setText(content);
 
     return true;
 }
 
-void ClipboardPlugin::changed()
+void ClipboardPlugin::dataChanged()
 {
-    if (ignoreNextChange_) {
-        ignoreNextChange_ = false;
+    QString clipboardText = m_clipboard->text();
+    if (m_lastClipboardText == clipboardText)
         return;
-    }
 
-    QClipboard *clipboard = QGuiApplication::clipboard();
-
-    NetworkPackage np(packageType, {{"content", clipboard->text()}});
+    m_lastClipboardText = clipboardText;
+    NetworkPackage np(packageType, {{"content", clipboardText}});
     sendPackage(np);
 }
 

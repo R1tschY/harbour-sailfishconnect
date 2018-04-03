@@ -20,6 +20,7 @@
 
 #include <QObject>
 #include <QtPlugin>
+#include <QClipboard>
 
 #include "../../core/kdeconnectplugin.h"
 
@@ -38,9 +39,10 @@ public slots:
     bool receivePackage(const NetworkPackage &np) override;
 
 private:
-    void changed();
+    void dataChanged();
 
-    bool ignoreNextChange_ = false;
+    QString m_lastClipboardText;
+    QClipboard* m_clipboard;
 };
 
 class ClipboardPluginFactory :

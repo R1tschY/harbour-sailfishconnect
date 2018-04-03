@@ -1,18 +1,18 @@
 # harbour-sailfishconnect
-SailfishOS client for KDE Connect
 
+SailfishOS client for KDE-Connect
 
 ## Features
 
 * Core
-    * :white_check_mark: Pairing
-    * :white_check_mark: Plugin management
-    * :construction: Use background daemon
+    * :heavy_check_mark: Pairing
+    * :heavy_check_mark: Plugin management
+    * :heavy_check_mark: Use background daemon
     * :o: Downloads/Uploads (Payload)
 
 * Plugins
-    * :white_check_mark: Battery
-    * :white_check_mark: Clipboard
+    * :heavy_check_mark: Battery
+    * :heavy_check_mark: Clipboard
     * :construction: Ping
     * :o: FindMyPhone
     * :o: MousePad
@@ -27,16 +27,15 @@ SailfishOS client for KDE Connect
     * :o: Telephony
 
 * UI
-    * :white_check_mark: Device list
-    * :white_check_mark: Pairing
-    * :white_check_mark: Plugin management
+    * :heavy_check_mark: Device list
+    * :heavy_check_mark: Pairing
+    * :heavy_check_mark: Plugin management
+    * :heavy_check_mark: Edit device name
+    * :heavy_check_mark: SSL key hash view
     * :construction: Device view
-    * :o: Plugin UIs
-    * :o: SSL key view
-    * :o: Edit device name
 
 * Backend
-    * :construction: LAN
+    * :construction: LAN (some bugs exist)
     * :x: Bluetooth (no QtBluetooth in Harhour allowed)
 
 
@@ -49,4 +48,4 @@ SailfishOS client for KDE Connect
 
 ## Credits
 
-Uses code from the KDE Connect desktop client.
+Uses code from the KDE-Connect desktop client.

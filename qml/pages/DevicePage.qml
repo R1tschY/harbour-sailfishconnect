@@ -123,6 +123,13 @@ Page {
 
         PullDownMenu {
             MenuItem {
+                text: qsTr("Encryption info")
+                onClicked: pageStack.push(
+                               Qt.resolvedUrl("EncryptionInfoPage.qml"),
+                               { device: _device })
+            }
+
+            MenuItem {
                 text: qsTr("Plugins")
                 onClicked: pageStack.push(
                                Qt.resolvedUrl("DevicePluginsPage.qml"),

@@ -133,11 +133,22 @@
         <source>Send ping</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Encryption info</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePluginsPage</name>
     <message>
         <source>Select Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EncryptionInfoPage</name>
+    <message>
+        <source>Encryption info</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -56,6 +56,7 @@ DISTFILES += \
     qml/pages/DevicePage.qml \
     qml/pages/DeviceListPage.qml \
     qml/pages/AboutPage.qml \
+    qml/pages/EncryptionInfoPage.qml \
     rpm/harbour-sailfishconnect.yaml \
     rpm/harbour-sailfishconnect.spec \
     rpm/harbour-sailfishconnect.changes.in \

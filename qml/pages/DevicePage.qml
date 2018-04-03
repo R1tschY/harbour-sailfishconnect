@@ -28,10 +28,12 @@ Page {
     property Device _device: daemon.getDevice(deviceId)
     property bool waitForAcceptedPairing: false
 
-    SilicaListView {
+    property bool connected: _device.isTrusted && _device.isReachable
+
+    SilicaFlickable {
         anchors.fill: parent
 
-        header: Column {
+        Column {
             width: parent.width
             height: header.height + mainColumn.height + Theme.paddingLarge
 
@@ -39,6 +41,8 @@ Page {
                 id: header
                 title: _device.name
             }
+
+            // Pairing UI
 
             function updateState() {
                 waitForAcceptedPairing = false
@@ -117,8 +121,6 @@ Page {
             }
         }
 
-        model: 0 // TODO: plugin UIs
-
         PullDownMenu {
             MenuItem {
                 text: qsTr("Plugins")
@@ -131,6 +133,13 @@ Page {
                 visible: _device.isTrusted
                 text: qsTr("Unpair")
                 onClicked: _device.unpair()
+            }
+
+            MenuItem {
+                visible: connected
+                text: qsTr("Send ping")
+                onClicked: _device.plugin("SailfishConnect::PingPlugin").
+                    sendPing()
             }
         }
 

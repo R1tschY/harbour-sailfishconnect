@@ -27,6 +27,13 @@
 
 namespace SailfishConnect {
 
+/**
+ * @brief Send pings
+ *
+ * Packets:
+ * - kdeconnect.ping
+ *   - message: Custom message (optional, string)
+ */
 class PingPlugin : public KdeConnectPlugin
 {
     Q_OBJECT
@@ -38,6 +45,9 @@ public:
 
 public slots:
     bool receivePackage(const NetworkPackage &np) override;
+
+    Q_SCRIPTABLE void sendPing();
+    Q_SCRIPTABLE void sendPing(const QString& message);
 
 private:
     Notification notification_;

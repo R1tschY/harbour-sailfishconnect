@@ -96,7 +96,7 @@ public:
 
     Q_SCRIPTABLE QString pluginsConfigFile() const;
 
-    KdeConnectPlugin* plugin(const QString& pluginName) const;
+    Q_SCRIPTABLE KdeConnectPlugin* plugin(const QString& pluginName) const;
     Q_SCRIPTABLE void setPluginEnabled(const QString& pluginName, bool enabled);
     Q_SCRIPTABLE bool isPluginEnabled(const QString& pluginName) const;
 

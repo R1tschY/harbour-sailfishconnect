@@ -129,6 +129,10 @@
         <source>You trust this device</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Send ping</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePluginsPage</name>

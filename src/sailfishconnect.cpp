@@ -36,6 +36,7 @@
 
 #include "appdaemon.h"
 #include "core/device.h"
+#include "core/kdeconnectplugin.h"
 #include "ui/devicelistmodel.h"
 #include "ui/filtervalueproxymodel.h"
 #include "ui/devicepluginsmodel.h"
@@ -94,6 +95,9 @@ void registerQmlTypes() {
 
     qmlRegisterType<Device>(
                 "SailfishConnect.Core", 0, 1, "Device");
+    qmlRegisterUncreatableType<KdeConnectPlugin>(
+                "SailfishConnect.Core", 0, 1, "Plugin",
+                QStringLiteral("instance of abstract type cannot be created"));
 }
 
 std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)

@@ -60,6 +60,23 @@ bool PingPlugin::receivePackage(const NetworkPackage& np)
     return true;
 }
 
+void PingPlugin::sendPing()
+{
+    NetworkPackage np(QStringLiteral("kdeconnect.ping"));
+    bool success = sendPackage(np);
+    qCDebug(logger) << "sendPing:" << success;
+}
+
+void PingPlugin::sendPing(const QString& message)
+{
+    NetworkPackage np(QStringLiteral("kdeconnect.ping"));
+    if (!message.isEmpty()) {
+        np.set(QStringLiteral("message"), message);
+    }
+    bool success = sendPackage(np);
+    qCDebug(logger).nospace() << "sendPing(" << message << "): " << success;
+}
+
 void PingPlugin::resetCount()
 {
     count_ = 0;

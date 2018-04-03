@@ -82,6 +82,8 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
         return device->isTrusted();
     case ReachableRole:
         return device->isReachable();
+    case HasPairingRequestsRole:
+        return device->hasPairingRequests();
     }
 
     return QVariant();
@@ -95,6 +97,7 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
     roles[IconUrlRole] = "iconUrl";
     roles[TrustedRole] = "trusted";
     roles[ReachableRole] = "reachable";
+    roles[HasPairingRequestsRole] = "hasPairingRequests";
     return roles;
 }
 
@@ -170,9 +173,12 @@ void DeviceListModel::connectDevice(Device *device)
     connect(device, &Device::reachableChanged, this, [=]{
         deviceDataChanged(device, {ReachableRole});
     });
+    connect(device, &Device::hasPairingRequestsChanged, this, [=]{
+        deviceDataChanged(device, {HasPairingRequestsRole});
+    });
     connect(device, &Device::destroyed, this, [=]{
         deviceRemoved(device);
-     });
+    });
 }
 
 void DeviceListModel::disconnectDevice(Device *device)

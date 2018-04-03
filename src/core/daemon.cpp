@@ -217,10 +217,12 @@ void Daemon::onDeviceStatusChanged()
 
 void Daemon::setAnnouncedName(const QString& name)
 {
-    qCDebug(coreLogger()) << "Announcing name";
-    KdeConnectConfig::instance()->setName(name);
-    forceOnNetworkChange();
-    Q_EMIT announcedNameChanged(name);
+    if (name != KdeConnectConfig::instance()->name()) {
+        qCDebug(coreLogger()) << "Announcing name";
+        KdeConnectConfig::instance()->setName(name);
+        forceOnNetworkChange();
+        Q_EMIT announcedNameChanged(name);
+    }
 }
 
 QString Daemon::announcedName()

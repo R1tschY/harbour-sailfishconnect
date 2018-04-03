@@ -36,7 +36,8 @@ public:
         IdRole,
         IconUrlRole,
         TrustedRole,
-        ReachableRole
+        ReachableRole,
+        HasPairingRequestsRole
     };
 
     explicit DeviceListModel(QObject *parent = 0);

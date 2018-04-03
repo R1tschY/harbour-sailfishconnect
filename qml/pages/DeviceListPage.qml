@@ -23,12 +23,6 @@ import SailfishConnect.UI 0.1
 Page {
     id: page
 
-    function selectDeviceColor(trusted, reachable) {
-        return (reachable
-            ? Theme.highlightColor
-            : Theme.primaryColor)
-    }
-
     allowedOrientations: Orientation.All
 
     SilicaFlickable {
@@ -42,52 +36,95 @@ Page {
             width: page.width
             spacing: Theme.paddingLarge
             PageHeader {
-                title: qsTr("Select device")
+                title: qsTr("Sailfish-Connect")
             }
+
+            TextField {
+                width: parent.width
+                label: qsTr("Device Name")
+                placeholderText: daemon.announcedName()
+                text: daemon.announcedName()
+
+                onActiveFocusChanged: {
+                    if (activeFocus)
+                        return
+
+                    if (text.length === 0) {
+                        text = daemon.announcedName()
+                    } else {
+                        daemon.setAnnouncedName(text)
+                        placeholderText = text
+                    }
+                }
+
+                EnterKey.onClicked: page.focus = true
+                EnterKey.iconSource: "image://theme/icon-m-enter-close"
+            }
+
 
             Component {
                 id: deviceDelegate
 
                 ListItem {
                     id: listItem
+
+                    property bool showStatus: deviceStatusLabel.text.length
+
                     width: page.width
                     height: Theme.itemSizeMedium
 
                     Image {
                         id: icon
-                        source: iconUrl + "?" +
-                                selectDeviceColor(trusted, reachable)
+                        source: iconUrl
 
                         x: Theme.horizontalPageMargin
                         anchors.verticalCenter: parent.verticalCenter
                         sourceSize.width: Theme.iconSizeMedium
                         sourceSize.height: Theme.iconSizeMedium
                     }
-                    Column {
+
+                    Label {
+                        id: deviceNameLabel
                         anchors {
                             left: icon.right
                             leftMargin: Theme.paddingLarge
                             right: parent.right
                             rightMargin: Theme.horizontalPageMargin
-                            verticalCenter: parent.verticalCenter
+                        }
+                        y: listItem.contentHeight / 2 - implicitHeight / 2
+                           - showStatus * (deviceStatusLabel.implicitHeight / 2)
+
+                        text: name
+                        color: listItem.highlighted
+                               ? Theme.highlightColor
+                               : Theme.primaryColor
+                        truncationMode: TruncationMode.Fade
+
+                        Behavior on y { NumberAnimation {} }
+                    }
+
+                    Label {
+                        id: deviceStatusLabel
+                        anchors {
+                            left: deviceNameLabel.left
+                            top: deviceNameLabel.bottom
+                            right: parent.right
+                            rightMargin: Theme.horizontalPageMargin
                         }
 
-                        Label {
-                            text: '<b>' + name + '</b>'
-                            color: listItem.highlighted
-                                   ? Theme.highlightColor
-                                   : Theme.primaryColor
-                            truncationMode: TruncationMode.Fade
-                        }
-                        Label {
-                            text: id
-                            color: listItem.highlighted
-                                   ? Theme.secondaryHighlightColor
-                                   : Theme.secondaryColor
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                            width: parent.width
-                            truncationMode: TruncationMode.Fade
-                        }
+                        text: (trusted && reachable)
+                              ? qsTr("Connected")
+                              : (hasPairingRequests
+                                 ? qsTr("Pending pairing request ...") : "")
+                        color: listItem.highlighted
+                               ? Theme.secondaryHighlightColor
+                               : Theme.secondaryColor
+                        truncationMode: TruncationMode.Fade
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        opacity: showStatus ? 1.0 : 0.0
+                        width: parent.width
+
+                        Behavior on opacity { FadeAnimation {} }
                     }
 
                     onClicked: {
@@ -97,7 +134,6 @@ Page {
                     }
                 }
             }
-
 
             DeviceListModel {
                 id: devicelistModel
@@ -135,8 +171,15 @@ Page {
                 filterValue: false
                 sourceModel: devicelistModel
             }
+            FilterValueProxyModel {
+                id: otherNearDevicesModel
 
-            SectionHeader { text: qsTr("Trusted devices") }
+                filterRoleName: "reachable"
+                filterValue: true
+                sourceModel: nontrustedDevicesModel
+            }
+
+            SectionHeader { text: qsTr("Paired devices") }
             SilicaListView {
                 width: page.width
                 height: childrenRect.height
@@ -145,12 +188,12 @@ Page {
                 delegate: deviceDelegate
             }
 
-            SectionHeader { text: qsTr("Near devices") }
+            SectionHeader { text: qsTr("Nearby devices") }
             SilicaListView {
                 width: page.width
                 height: childrenRect.height
 
-                model: nontrustedDevicesModel
+                model: otherNearDevicesModel
                 delegate: deviceDelegate
             }
         }

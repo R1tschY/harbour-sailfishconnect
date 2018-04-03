@@ -32,15 +32,27 @@
 <context>
     <name>DeviceListPage</name>
     <message>
-        <source>Select device</source>
+        <source>Sailfish-Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Trusted devices</source>
+        <source>Device Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Near devices</source>
+        <source>Paired devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nearby devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pending pairing request ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

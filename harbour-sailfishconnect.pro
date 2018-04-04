@@ -48,7 +48,8 @@ SOURCES += \
     src/plugins/clipboard/clipboardplugin.cpp \
     src/ui/filtervalueproxymodel.cpp \
     src/ui/devicepluginsmodel.cpp \
-    src/ui.cpp
+    src/ui.cpp \
+    src/plugins/telepathy/telepathyplugin.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -111,7 +112,8 @@ HEADERS += \
     src/ui/filtervalueproxymodel.h \
     src/ui/devicepluginsmodel.h \
     src/ui.h \
-    src/sailfishconnect.h
+    src/sailfishconnect.h \
+    src/plugins/telepathy/telepathyplugin.h
 
 SUBDIRS += \
     src/plugins/battery/SailfishConnectBatteryPlugin.pro

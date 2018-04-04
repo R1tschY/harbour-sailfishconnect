@@ -214,4 +214,15 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>SailfishConnect::TelepathyPluginFactory</name>
+    <message>
+        <source>Send SMS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send text messages from other devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

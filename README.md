@@ -13,6 +13,7 @@ SailfishOS client for KDE-Connect
 * Plugins
     * :heavy_check_mark: Battery
     * :heavy_check_mark: Clipboard
+    * :heavy_check_mark: Telepathy
     * :construction: Ping
     * :o: FindMyPhone
     * :o: MousePad
@@ -23,7 +24,6 @@ SailfishOS client for KDE-Connect
     * :o: RunCommand
     * :o: Sftp
     * :o: Share
-    * :o: Telepathy
     * :o: Telephony
 
 * UI

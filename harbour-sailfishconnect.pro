@@ -49,7 +49,9 @@ SOURCES += \
     src/ui/filtervalueproxymodel.cpp \
     src/ui/devicepluginsmodel.cpp \
     src/ui.cpp \
-    src/plugins/telepathy/telepathyplugin.cpp
+    src/plugins/telepathy/telepathyplugin.cpp \
+    src/plugins/mprisremote/mprisremoteplugin.cpp \
+    src/ui/mprisplayersmodel.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -113,7 +115,9 @@ HEADERS += \
     src/ui/devicepluginsmodel.h \
     src/ui.h \
     src/sailfishconnect.h \
-    src/plugins/telepathy/telepathyplugin.h
+    src/plugins/telepathy/telepathyplugin.h \
+    src/plugins/mprisremote/mprisremoteplugin.h \
+    src/ui/mprisplayersmodel.h
 
 SUBDIRS += \
     src/plugins/battery/SailfishConnectBatteryPlugin.pro

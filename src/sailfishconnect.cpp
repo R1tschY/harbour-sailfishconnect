@@ -37,9 +37,11 @@
 #include "appdaemon.h"
 #include "core/device.h"
 #include "core/kdeconnectplugin.h"
+#include "plugins/mprisremote/mprisremoteplugin.h"
 #include "ui/devicelistmodel.h"
 #include "ui/filtervalueproxymodel.h"
 #include "ui/devicepluginsmodel.h"
+#include "ui/mprisplayersmodel.h"
 #include "ui.h"
 
 namespace SailfishConnect {
@@ -92,12 +94,18 @@ void registerQmlTypes() {
                 "SailfishConnect.UI", 0, 1, "FilterValueProxyModel");
     qmlRegisterType<DevicePluginsModel>(
                 "SailfishConnect.UI", 0, 1, "DevicePluginsModel");
+    qmlRegisterType<MprisPlayersModel>(
+                "SailfishConnect.UI", 0, 1, "MprisPlayersModel");
 
     qmlRegisterType<Device>(
                 "SailfishConnect.Core", 0, 1, "Device");
     qmlRegisterUncreatableType<KdeConnectPlugin>(
                 "SailfishConnect.Core", 0, 1, "Plugin",
                 QStringLiteral("instance of abstract type cannot be created"));
+
+    qmlRegisterUncreatableType<MprisPlayer>(
+                "SailfishConnect.Mpris", 0, 1, "MprisPlayer",
+                QStringLiteral("not intented to be created from users (MprisPlayer)"));
 }
 
 std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)

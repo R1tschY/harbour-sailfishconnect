@@ -81,6 +81,7 @@ CONFIG += sailfishapp_i18n
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/harbour-sailfishconnect-de.ts
+TRANSLATIONS += translations/harbour-sailfishconnect-ru.ts
 
 HEADERS += \
     src/core/backend/lan/landevicelink.h \

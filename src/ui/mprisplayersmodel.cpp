@@ -43,11 +43,15 @@ int MprisPlayersModel::rowCount(const QModelIndex &parent) const
 
 QVariant MprisPlayersModel::data(const QModelIndex &index, int role) const
 {
+    qCDebug(logger) << "data" << index.row() << roleNames()[role];
+
     if (!index.isValid() || index.row() >= m_players.size())
         return QVariant();
 
     auto player = m_plugin->player(m_players[index.row()]);
     switch (role) {
+    case Player:
+        return QVariant::fromValue<QObject*>(player);
     case PlayerNameRole:
         return m_players[index.row()];
     case IsPlayingRole:
@@ -88,6 +92,7 @@ QVariant MprisPlayersModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> MprisPlayersModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
+    roles[Player] = "player";
     roles[PlayerNameRole] = "playerName";
     roles[IsPlayingRole] = "isPlaying";
     roles[CurrentSongRole] = "song";
@@ -109,22 +114,35 @@ QHash<int, QByteArray> MprisPlayersModel::roleNames() const
 
 void MprisPlayersModel::setDeviceId(const QString& value)
 {
-    auto* device = Daemon::instance()->getDevice(value);
-    if (!device) {
+    if (value == m_deviceId)
+        return;
+
+    if (m_device) {
+        m_device->disconnect(this);
+    }
+
+    m_device = Daemon::instance()->getDevice(value);
+    if (!m_device) {
         m_deviceId = QString();
         setPlugin(nullptr);
         return;
     }
 
     m_deviceId = value;
-    setPlugin(qobject_cast<MprisRemotePlugin*>(device->plugin(
-                QStringLiteral("SailfishConnect::MprisRemotePlugin"))));
+
+    connect(
+        m_device, &Device::pluginsChanged,
+        this, &MprisPlayersModel::devicePluginsChanged);
+
+    devicePluginsChanged();
 }
 
 void MprisPlayersModel::setPlugin(MprisRemotePlugin* plugin)
 {
-    beginResetModel();
+    if (plugin == m_plugin)
+        return;
 
+    beginResetModel();
     if (m_plugin) {
         m_plugin->disconnect(this);
         for (auto player : m_players) {
@@ -134,10 +152,9 @@ void MprisPlayersModel::setPlugin(MprisRemotePlugin* plugin)
     }
 
     m_plugin = plugin;
-
     if (m_plugin) {
         connect(m_plugin, &MprisRemotePlugin::destroyed,
-                this, [&](){ setPlugin(nullptr); });
+                this, &MprisPlayersModel::pluginDestroyed);
         connect(m_plugin, &MprisRemotePlugin::playerAdded,
                 this, &MprisPlayersModel::playerAdded);
         connect(m_plugin, &MprisRemotePlugin::playerRemoved,
@@ -195,6 +212,24 @@ void MprisPlayersModel::playerUpdated()
 
     auto i = m_players.indexOf(player->name());
     dataChanged(index(i), index(i));
+}
+
+void MprisPlayersModel::pluginDestroyed()
+{
+    beginResetModel();
+    m_players.clear();
+    m_plugin = nullptr;
+    endResetModel();
+}
+
+void MprisPlayersModel::devicePluginsChanged()
+{
+    if (m_device == nullptr)
+        return;
+
+    // set plugin when it is reloaded
+    setPlugin(qobject_cast<MprisRemotePlugin*>(m_device->plugin(
+        QStringLiteral("SailfishConnect::MprisRemotePlugin"))));
 }
 
 } // namespace SailfishConnect

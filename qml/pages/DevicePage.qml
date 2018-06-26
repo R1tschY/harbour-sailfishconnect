@@ -19,6 +19,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import SailfishConnect.UI 0.1
 import SailfishConnect.Core 0.1
+import SailfishConnect.Mpris 0.1
+import "../components"
 
 
 Page {
@@ -35,7 +37,8 @@ Page {
 
         Column {
             width: parent.width
-            height: header.height + mainColumn.height + Theme.paddingLarge
+            height: header.height + mainColumn.height + Theme.paddingLarge +
+                    mprisUi.height
 
             PageHeader {
                 id: header
@@ -56,68 +59,80 @@ Page {
             Column {
                 id: mainColumn
                 width: parent.width - Theme.paddingLarge * 2
-                spacing: Theme.paddingLarge
+                height: trustEntry.height + mprisUi.height
                 x: Theme.paddingLarge
 
-                Label {
-                    id: stateText
-                    text: qsTr("You don't trust this device")
-                }
-
-                Button {
-                    id: requestBtn
-                    visible: mainColumn.state == ""
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    text: qsTr("Request pairing")
-                    onClicked: {
-                        waitForAcceptedPairing = true
-                        _device.requestPair()
-                    }
-                }
-
-                Row {
-                    id: acceptRejectBtns
-                    visible: mainColumn.state == "waitingParingRequest"
-                    width: parent.width
+                Column {
+                    id: trustEntry
                     spacing: Theme.paddingLarge
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: parent.width
+                    height: Theme.itemSizeMedium
 
-                    Button {
-                        text: qsTr("Accept")
-                        onClicked: _device.acceptPairing()
+                    Label {
+                        id: stateText
+                        text: qsTr("You don't trust this device")
                     }
 
                     Button {
-                        text: qsTr("Reject")
-                        onClicked: _device.rejectPairing()
+                        id: requestBtn
+                        visible: trustEntry.state == ""
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        text: qsTr("Request pairing")
+                        onClicked: {
+                            waitForAcceptedPairing = true
+                            _device.requestPair()
+                        }
                     }
+
+                    Row {
+                        id: acceptRejectBtns
+                        visible: trustEntry.state == "waitingParingRequest"
+                        width: parent.width
+                        spacing: Theme.paddingLarge
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        Button {
+                            text: qsTr("Accept")
+                            onClicked: _device.acceptPairing()
+                        }
+
+                        Button {
+                            text: qsTr("Reject")
+                            onClicked: _device.rejectPairing()
+                        }
+                    }
+
+                    states: [
+                        State {
+                            name: "trusted"
+                            when: _device.isTrusted
+                            PropertyChanges {
+                                target: stateText;
+                                text: qsTr("You trust this device")}
+                        },
+                        State {
+                            name: "waitForAcceptedPairing"
+                            when: waitForAcceptedPairing
+                            PropertyChanges {
+                                target: stateText;
+                                text: qsTr("Waiting for accepted pairing ...")}
+                        },
+                        State {
+                            name: "waitingParingRequest"
+                            when: _device.hasPairingRequests
+                            PropertyChanges {
+                                target: stateText;
+                                text: qsTr("This device wants to pair with your " +
+                                           "device.")}
+                        }
+                    ]
                 }
 
-                states: [
-                    State {
-                        name: "trusted"
-                        when: _device.isTrusted
-                        PropertyChanges {
-                            target: stateText;
-                            text: qsTr("You trust this device")}
-                    },
-                    State {
-                        name: "waitForAcceptedPairing"
-                        when: waitForAcceptedPairing
-                        PropertyChanges {
-                            target: stateText;
-                            text: qsTr("Waiting for accepted pairing ...")}
-                    },
-                    State {
-                        name: "waitingParingRequest"
-                        when: _device.hasPairingRequests
-                        PropertyChanges {
-                            target: stateText;
-                            text: qsTr("This device wants to pair with your " +
-                                       "device.")}
-                    }
-                ]
+                // MPRIS
+                MprisUi {
+                    id: mprisUi
+                }
             }
         }
 
@@ -149,6 +164,7 @@ Page {
                     sendPing()
             }
         }
+
 
         VerticalScrollDecorator {}
     }

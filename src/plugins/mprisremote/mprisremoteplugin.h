@@ -25,7 +25,7 @@ class MprisPlayer : public QObject
     Q_PROPERTY(QString albumArtUrl READ albumArtUrl NOTIFY propertiesChanged)
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY propertiesChanged)
     Q_PROPERTY(qint64 length READ length NOTIFY propertiesChanged)
-    Q_PROPERTY(qint64 position READ position WRITE setPosition NOTIFY propertiesChanged)
+    Q_PROPERTY(qint64 position READ position WRITE setPosition)
     Q_PROPERTY(bool playAllowed READ playAllowed NOTIFY propertiesChanged)
     Q_PROPERTY(bool pauseAllowed READ pauseAllowed NOTIFY propertiesChanged)
     Q_PROPERTY(bool goNextAllowed READ goNextAllowed NOTIFY propertiesChanged)
@@ -74,13 +74,14 @@ private:
     MprisRemotePlugin* m_parent;
 
     const QString m_player;
+    const bool m_isSpotify = false;
     bool m_isPlaying = false;
     bool m_playAllowed = true;
     bool m_pauseAllowed = true;
     bool m_goNextAllowed = true;
     bool m_goPreviousAllowed = true;
     bool m_seekAllowed = true;
-    int m_volume = 50;
+    int m_volume = -1;
     qint64 m_length = -1;
     qint64 m_lastPosition = 0;
     qint64 m_lastPositionTime = 0;
@@ -95,9 +96,10 @@ private:
      */
     bool isSpotify() const
     {
-        return m_player.toLower() == QLatin1String("spotify");
+        return m_isSpotify;
     }
 };
+
 
 class MprisRemotePlugin : public KdeConnectPlugin
 {

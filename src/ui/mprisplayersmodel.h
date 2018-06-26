@@ -20,6 +20,8 @@
 
 #include <QAbstractListModel>
 
+class Device;
+
 namespace SailfishConnect {
 
 class MprisRemotePlugin;
@@ -34,7 +36,8 @@ public:
     explicit MprisPlayersModel(QObject *parent = nullptr);
 
     enum ExtraRoles {
-        PlayerNameRole = Qt::UserRole,
+        Player = Qt::UserRole,
+        PlayerNameRole,
         IsPlayingRole,
         CurrentSongRole,
         TitleRole,
@@ -66,10 +69,13 @@ private:
     QStringList m_players;
     MprisRemotePlugin* m_plugin = nullptr;
     QString m_deviceId;
+    Device* m_device = nullptr;
 
     void playerAdded(const QString& name);
     void playerRemoved(const QString& name);
     void playerUpdated();
+    void pluginDestroyed();
+    void devicePluginsChanged();
 
     void setPlugin(MprisRemotePlugin* plugin);
 

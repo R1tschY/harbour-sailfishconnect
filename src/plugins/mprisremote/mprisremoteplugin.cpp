@@ -37,7 +37,8 @@ static const QString PACKAGE_TYPE_MPRIS =
 // MprisPlayer
 
 MprisPlayer::MprisPlayer(MprisRemotePlugin *parent, const QString& name)
-    : QObject(parent), m_parent(parent), m_player(name)
+    : QObject(parent), m_parent(parent), m_player(name),
+      m_isSpotify(m_player.toLower() == QLatin1String("spotify"))
 { }
 
 qlonglong MprisPlayer::position() const

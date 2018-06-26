@@ -15,9 +15,9 @@ SailfishOS client for KDE-Connect
     * :heavy_check_mark: Clipboard
     * :heavy_check_mark: Telepathy
     * :construction: Ping
+    * :construction: Mpris
     * :o: FindMyPhone
     * :o: MousePad
-    * :o: Mpris
     * :o: Notifications
     * :o: ReceiseNotifications
     * :o: RemoteKeyboard

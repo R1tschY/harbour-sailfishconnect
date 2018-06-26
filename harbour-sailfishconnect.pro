@@ -51,7 +51,9 @@ SOURCES += \
     src/ui.cpp \
     src/plugins/telepathy/telepathyplugin.cpp \
     src/plugins/mprisremote/mprisremoteplugin.cpp \
-    src/ui/mprisplayersmodel.cpp
+    src/ui/mprisplayersmodel.cpp \
+    src/core/filetransferjob.cpp \
+    src/utils/job.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -60,6 +62,7 @@ DISTFILES += \
     qml/pages/DeviceListPage.qml \
     qml/pages/AboutPage.qml \
     qml/pages/EncryptionInfoPage.qml \
+    qml/components/MprisUi.qml \
     rpm/harbour-sailfishconnect.yaml \
     rpm/harbour-sailfishconnect.spec \
     rpm/harbour-sailfishconnect.changes.in \
@@ -117,7 +120,9 @@ HEADERS += \
     src/sailfishconnect.h \
     src/plugins/telepathy/telepathyplugin.h \
     src/plugins/mprisremote/mprisremoteplugin.h \
-    src/ui/mprisplayersmodel.h
+    src/ui/mprisplayersmodel.h \
+    src/core/filetransferjob.h \
+    src/utils/job.h
 
 SUBDIRS += \
     src/plugins/battery/SailfishConnectBatteryPlugin.pro

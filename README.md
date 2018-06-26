@@ -8,7 +8,7 @@ SailfishOS client for KDE-Connect
     * :heavy_check_mark: Pairing
     * :heavy_check_mark: Plugin management
     * :heavy_check_mark: Use background daemon
-    * :o: Downloads/Uploads (Payload)
+    * :construction: Downloads/Uploads (Payload)
 
 * Plugins
     * :heavy_check_mark: Battery

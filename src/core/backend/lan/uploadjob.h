@@ -26,15 +26,16 @@
 #include <QVariantMap>
 #include <QSharedPointer>
 #include <QSslSocket>
+#include <utils/job.h>
 #include "server.h"
 
-class UploadJob : public QThread
+class UploadJob : public SailfishConnect::Job
 {
     Q_OBJECT
 public:
     explicit UploadJob(const QSharedPointer<QIODevice>& source, const QString& deviceId);
 
-    void run() override;
+    void doStart() override;
 
     QVariantMap transferInfo();
 

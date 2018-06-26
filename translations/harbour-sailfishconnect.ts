@@ -153,6 +153,21 @@
     </message>
 </context>
 <context>
+    <name>FileTransferJob</name>
+    <message>
+        <source>Receiving file over KDE Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filename already present</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Received incomplete file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
@@ -171,6 +186,13 @@
     </message>
     <message>
         <source>Timed out</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MprisUi</name>
+    <message>
+        <source>No remote player</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -233,6 +255,13 @@
     </message>
     <message>
         <source>Allow sending of text messages.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UploadJob</name>
+    <message>
+        <source>Couldn&apos;t find an available port</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

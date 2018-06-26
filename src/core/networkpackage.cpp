@@ -32,6 +32,7 @@
 #include "corelogging.h"
 #include "kdeconnectconfig.h"
 #include "pluginloader.h"
+#include "filetransferjob.h"
 
 using namespace SailfishConnect;
 
@@ -165,6 +166,6 @@ bool NetworkPackage::unserialize(const QByteArray& a, NetworkPackage* np)
 
 FileTransferJob* NetworkPackage::createPayloadTransferJob(const QUrl& destination) const
 {
-    return nullptr;
+    return new FileTransferJob(payload(), payloadSize(), destination);
 }
 

@@ -34,7 +34,7 @@
 using namespace SailfishConnect;
 
 DownloadJob::DownloadJob(const QHostAddress& address, const QVariantMap& transferInfo)
-    : QThread()
+    : Job()
     , m_address(address)
     , m_port(transferInfo[QStringLiteral("port")].toInt())
     , m_socket(new QSslSocket)
@@ -53,7 +53,7 @@ DownloadJob::~DownloadJob()
 
 }
 
-void DownloadJob::run()
+void DownloadJob::doStart()
 {
     //TODO: Timeout?
     // Cannot use read only, might be due to ssl handshake, getting QIODevice::ReadOnly error and no connection
@@ -63,10 +63,8 @@ void DownloadJob::run()
 void DownloadJob::socketFailed(QAbstractSocket::SocketError error)
 {
     qWarning() << error << m_socket->errorString();
-// TODO:
-    //    setError(error + 1);
-//    setErrorText(m_socket->errorString());
-//    emitResult();
+    setErrorString(m_socket->errorString());
+    exit();
 }
 
 QSharedPointer<QIODevice> DownloadJob::getPayload()
@@ -76,5 +74,5 @@ QSharedPointer<QIODevice> DownloadJob::getPayload()
 
 void DownloadJob::socketConnected()
 {
-    // TODO: emitResult();
+    exit();
 }

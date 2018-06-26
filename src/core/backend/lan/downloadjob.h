@@ -28,15 +28,16 @@
 #include <QSharedPointer>
 #include <QSslSocket>
 #include <QBuffer>
+#include <utils/job.h>
 
 
-class DownloadJob : public QThread
+class DownloadJob : public SailfishConnect::Job
 {
     Q_OBJECT
 public:
     DownloadJob(const QHostAddress& address, const QVariantMap& transferInfo);
     ~DownloadJob() override;
-    void run() override;
+    void doStart() override;
     QSharedPointer<QIODevice> getPayload();
 
 private:

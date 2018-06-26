@@ -27,7 +27,7 @@
 using namespace SailfishConnect;
 
 UploadJob::UploadJob(const QSharedPointer<QIODevice>& source, const QString& deviceId)
-    : QThread()
+    : Job()
     , m_input(source)
     , m_server(new Server(this))
     , m_socket(nullptr)
@@ -38,7 +38,7 @@ UploadJob::UploadJob(const QSharedPointer<QIODevice>& source, const QString& dev
     connect(m_input.data(), &QIODevice::aboutToClose, this, &UploadJob::aboutToClose);
 }
 
-void UploadJob::run()
+void UploadJob::doStart()
 {
     m_port = MIN_PORT;
     while (!m_server->listen(QHostAddress::Any, m_port)) {
@@ -46,9 +46,8 @@ void UploadJob::run()
         if (m_port > MAX_PORT) { //No ports available?
             qCWarning(coreLogger) << "Error opening a port in range" << MIN_PORT << "-" << MAX_PORT;
             m_port = 0;
-            // TODO:setError(1);
-            // TODO:setErrorText(tr("Couldn't find an available port"));
-            // TODO:emitResult();
+            setErrorString(tr("Couldn't find an available port"));
+            exit();
             return;
         }
     }
@@ -59,7 +58,9 @@ void UploadJob::newConnection()
 {
     if (!m_input->open(QIODevice::ReadOnly)) {
         qCWarning(coreLogger) << "error when opening the input to upload";
-        return; //TODO: Handle error, clean up...
+        setErrorString(m_input->errorString());
+        cleanup();
+        return;
     }
 
     Server* server = qobject_cast<Server*>(sender());
@@ -99,15 +100,15 @@ void UploadJob::startUploading()
 
 void UploadJob::aboutToClose()
 {
-//     qDebug() << "closing...";
+    qDebug() << "closing...";
     m_socket->disconnectFromHost();
 }
 
 void UploadJob::cleanup()
 {
     m_socket->close();
-//     qDebug() << "closed!";
-    // TODO:emitResult();
+    qDebug() << "closed!";
+    exit();
 }
 
 QVariantMap UploadJob::transferInfo()
@@ -119,15 +120,17 @@ QVariantMap UploadJob::transferInfo()
 void UploadJob::socketFailed(QAbstractSocket::SocketError error)
 {
     qWarning() << "error uploading" << error;
-    // TODO:setError(2);
-    // TODO:emitResult();
+    setErrorString(m_socket->errorString());
     m_socket->close();
+    exit();
 }
 
 void UploadJob::sslErrors(const QList<QSslError>& errors)
 {
     qWarning() << "ssl errors" << errors;
-    // TODO:setError(1);
-    // TODO:emitResult();
+
+    setErrorString(errors.first().errorString());  // TODO
+
     m_socket->close();
+    exit();
 }

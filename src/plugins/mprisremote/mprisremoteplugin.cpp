@@ -43,7 +43,7 @@ MprisPlayer::MprisPlayer(MprisRemotePlugin *parent, const QString& name)
 
 qlonglong MprisPlayer::position() const
 {
-    if (m_isPlaying) {
+    if (m_isPlaying && m_lastPosition >= 0) {
         return m_lastPosition +
                 QDateTime::currentMSecsSinceEpoch() - m_lastPositionTime;
     } else {
@@ -70,7 +70,7 @@ void MprisPlayer::setVolume(int value)
 
 void MprisPlayer::setPosition(int value)
 {
-    if (setVolumeAllowed()) {
+    if (seekAllowed()) {
         m_parent->sendCommand(m_player, "setPosition", value);
 
         m_lastPosition = value;
@@ -107,7 +107,7 @@ void MprisPlayer::receivePackage(const NetworkPackage &np)
     m_seekAllowed =
             np.get<bool>(QStringLiteral("canSeek"), m_seekAllowed);
 
-    if (np.has(QStringLiteral("pos"))) {
+    if (np.has(QStringLiteral("pos")) && !isSpotify()) {
         m_lastPosition = np.get<qint64>(QStringLiteral("pos"), m_lastPosition);
         m_lastPositionTime = QDateTime::currentMSecsSinceEpoch();
     }
@@ -157,7 +157,7 @@ void MprisPlayer::next()
 
 void MprisPlayer::seek(int value)
 {
-    if (setVolumeAllowed()) {
+    if (seekAllowed()) {
         m_parent->sendCommand(m_player, "seek", value);
     }
 }

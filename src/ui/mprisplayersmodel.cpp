@@ -43,8 +43,6 @@ int MprisPlayersModel::rowCount(const QModelIndex &parent) const
 
 QVariant MprisPlayersModel::data(const QModelIndex &index, int role) const
 {
-    qCDebug(logger) << "data" << index.row() << roleNames()[role];
-
     if (!index.isValid() || index.row() >= m_players.size())
         return QVariant();
 

@@ -26,6 +26,7 @@ class MprisPlayer : public QObject
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY propertiesChanged)
     Q_PROPERTY(qint64 length READ length NOTIFY propertiesChanged)
     Q_PROPERTY(qint64 position READ position WRITE setPosition)
+    Q_PROPERTY(bool hasPosition READ hasPosition NOTIFY propertiesChanged)
     Q_PROPERTY(bool playAllowed READ playAllowed NOTIFY propertiesChanged)
     Q_PROPERTY(bool pauseAllowed READ pauseAllowed NOTIFY propertiesChanged)
     Q_PROPERTY(bool goNextAllowed READ goNextAllowed NOTIFY propertiesChanged)
@@ -46,6 +47,7 @@ public:
     int volume() const { return m_volume; }
     qlonglong length() const { return m_length; }
     qlonglong position() const;
+    bool hasPosition() const { return m_lastPosition >= 0; }
     bool playAllowed() const { return m_playAllowed; }
     bool pauseAllowed() const { return m_pauseAllowed; }
     bool goNextAllowed() const { return m_goNextAllowed; }
@@ -76,15 +78,15 @@ private:
     const QString m_player;
     const bool m_isSpotify = false;
     bool m_isPlaying = false;
-    bool m_playAllowed = true;
-    bool m_pauseAllowed = true;
-    bool m_goNextAllowed = true;
-    bool m_goPreviousAllowed = true;
-    bool m_seekAllowed = true;
+    bool m_playAllowed = false;
+    bool m_pauseAllowed = false;
+    bool m_goNextAllowed = false;
+    bool m_goPreviousAllowed = false;
+    bool m_seekAllowed = false;
     int m_volume = -1;
     qint64 m_length = -1;
-    qint64 m_lastPosition = 0;
-    qint64 m_lastPositionTime = 0;
+    qint64 m_lastPosition = -1;
+    qint64 m_lastPositionTime = -1;
     QString m_currentSong;
     QString m_title;
     QString m_artist;

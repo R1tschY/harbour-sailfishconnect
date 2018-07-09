@@ -71,20 +71,30 @@ Item {
 
                 Slider {
                     id: positionSlider
-                    visible: player.position > 0
+                    visible: player.hasPosition
                     width: parent.width
                     minimumValue: 0
-                    maximumValue: length
-                    value: player.position // TODO: update on song change
-                    enabled: false // TODO: seekAllowed
+                    maximumValue: player.length
+                    value: 0
+                    enabled: player.seekAllowed
+
+                    Component.onCompleted: {
+                        player.propertiesChange.connect(updatePosition)
+
+                        updatePosition()
+                    }
+
+                    function updatePosition() {
+                        positionSlider.value = player.position
+                    }
                 }
 
                 Timer {
                     interval: 1000
                     repeat: true
-                    running: isPlaying
-                    triggeredOnStart: true
-                    onTriggered: positionSlider.value = player.position
+                    running: isPlaying && player.hasPosition
+                    triggeredOnStart: false
+                    onTriggered: positionSlider.updatePosition()
                 }
             }
         }

@@ -92,6 +92,10 @@
         <source>About ...</source>
         <translation>Об устройстве ...</translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePage</name>
@@ -155,6 +159,21 @@
     </message>
 </context>
 <context>
+    <name>FileTransferJob</name>
+    <message>
+        <source>Receiving file over KDE Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filename already present</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Received incomplete file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
@@ -174,6 +193,13 @@
     <message>
         <source>Timed out</source>
         <translation>Истек срок ожидания</translation>
+    </message>
+</context>
+<context>
+    <name>MprisUi</name>
+    <message>
+        <source>No remote player</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -236,6 +262,13 @@
     <message>
         <source>Allow sending of text messages.</source>
         <translation>Разрешить отправку СМС.</translation>
+    </message>
+</context>
+<context>
+    <name>UploadJob</name>
+    <message>
+        <source>Couldn&apos;t find an available port</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

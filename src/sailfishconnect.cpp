@@ -49,7 +49,7 @@ namespace SailfishConnect {
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
 
 
-QString PACKAGE_VERSION = QStringLiteral("0.1");
+QString PACKAGE_VERSION = QStringLiteral("0.2");
 
 QString DBUS_SERVICE_NAME =
         QStringLiteral("org.harbour.SailfishConnect");
@@ -89,22 +89,22 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 void registerQmlTypes() {
     qmlRegisterType<DeviceListModel>(
-                "SailfishConnect.UI", 0, 1, "DeviceListModel");
+                "SailfishConnect.UI", 0, 2, "DeviceListModel");
     qmlRegisterType<FilterValueProxyModel>(
-                "SailfishConnect.UI", 0, 1, "FilterValueProxyModel");
+                "SailfishConnect.UI", 0, 2, "FilterValueProxyModel");
     qmlRegisterType<DevicePluginsModel>(
-                "SailfishConnect.UI", 0, 1, "DevicePluginsModel");
+                "SailfishConnect.UI", 0, 2, "DevicePluginsModel");
     qmlRegisterType<MprisPlayersModel>(
-                "SailfishConnect.UI", 0, 1, "MprisPlayersModel");
+                "SailfishConnect.UI", 0, 2, "MprisPlayersModel");
 
     qmlRegisterType<Device>(
-                "SailfishConnect.Core", 0, 1, "Device");
+                "SailfishConnect.Core", 0, 2, "Device");
     qmlRegisterUncreatableType<KdeConnectPlugin>(
-                "SailfishConnect.Core", 0, 1, "Plugin",
+                "SailfishConnect.Core", 0, 2, "Plugin",
                 QStringLiteral("instance of abstract type cannot be created"));
 
     qmlRegisterUncreatableType<MprisPlayer>(
-                "SailfishConnect.Mpris", 0, 1, "MprisPlayer",
+                "SailfishConnect.Mpris", 0, 2, "MprisPlayer",
                 QStringLiteral("not intented to be created from users (MprisPlayer)"));
 }
 

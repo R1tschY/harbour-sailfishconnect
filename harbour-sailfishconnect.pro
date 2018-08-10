@@ -15,7 +15,11 @@ TARGET = harbour-sailfishconnect
 CONFIG += sailfishapp c++14
 QT += network dbus
 PKGCONFIG += openssl contextkit-statefs nemonotifications-qt5
-DEFINES += QT_STATICPLUGIN
+DEFINES += \
+    QT_STATICPLUGIN \
+    QT_DEPRECATED_WARNINGS \
+    QT_DISABLE_DEPRECATED_BEFORE=0x050500 \
+    QT_USE_QSTRINGBUILDER
 INCLUDEPATH += src
 
 SOURCES += \

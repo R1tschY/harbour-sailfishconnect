@@ -5,6 +5,7 @@
 #include <QQuickView>
 #include <QDBusInterface>
 #include <QDBusReply>
+#include <QQmlContext>
 
 #include <sailfishapp.h>
 

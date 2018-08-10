@@ -27,8 +27,8 @@ Page {
     id: page
 
     property string deviceId
-    property Device _device: daemon.getDevice(deviceId)
     property bool waitForAcceptedPairing: false
+    property Device _device: daemon.getDevice(deviceId)
 
     property bool connected: _device.isTrusted && _device.isReachable
 
@@ -129,10 +129,8 @@ Page {
                     ]
                 }
 
-                // MPRIS
-                MprisUi {
-                    id: mprisUi
-                }
+                // Plugin UIs
+                MprisUi { id: mprisUi }
             }
         }
 

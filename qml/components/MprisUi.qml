@@ -4,7 +4,47 @@ import SailfishConnect.UI 0.1
 import SailfishConnect.Core 0.1
 import SailfishConnect.Mpris 0.1
 
-Item {
+SilicaListView {
+    property Device _device: daemon.getDevice(deviceId)
+
+    id: mprisView
+    width: parent.width
+    height: childrenRect.height
+    visible:
+        _device.isReachable && _device.isTrusted &&
+        _device.supportedPlugins.indexOf(
+            "SailfishConnect::MprisRemotePlugin") >= 0
+
+    header: SectionHeader {
+        text: "MPRIS"
+        id: header
+    }
+
+    delegate: mprisPlayerDelegate
+    model: MprisPlayersModel {
+        deviceId: page.deviceId
+    }
+
+    Label {
+        id: replacement
+        text: qsTr("No remote player")
+        enabled: mprisView.count === 0
+        anchors.bottom: mprisView.bottom
+        wrapMode: Text.Wrap
+        horizontalAlignment: Text.AlignHCenter
+        font {
+            pixelSize: Theme.fontSizeExtraLarge
+            family: Theme.fontFamilyHeading
+        }
+        x: Theme.horizontalPageMargin
+        width: parent.width - 2 * x
+        color: Theme.rgba(Theme.highlightColor, 0.6)
+        opacity: enabled ? 1.0 : 0
+
+        Behavior on opacity { FadeAnimation { duration: 300 } }
+    }
+
+
     Component {
         id: mprisPlayerDelegate
 
@@ -98,46 +138,5 @@ Item {
                 }
             }
         }
-    }
-
-    width: parent.width
-    height: mprisView.height + replacement.height
-
-    SilicaListView {
-
-        id: mprisView
-        width: parent.width
-        height: childrenRect.height
-        // TODO: visible: "mpris" in loadedPlugins
-
-        header: SectionHeader {
-            text: "MPRIS"
-            id: header
-        }
-
-        model: MprisPlayersModel {
-            deviceId: page.deviceId
-        }
-
-        Label {
-            id: replacement
-            text: qsTr("No remote player")
-            enabled: mprisView.count === 0
-            anchors.bottom: mprisView.bottom
-            wrapMode: Text.Wrap
-            horizontalAlignment: Text.AlignHCenter
-            font {
-                pixelSize: Theme.fontSizeExtraLarge
-                family: Theme.fontFamilyHeading
-            }
-            x: Theme.horizontalPageMargin
-            width: parent.width - 2*x
-            color: Theme.rgba(Theme.highlightColor, 0.6)
-            opacity: enabled ? 1.0 : 0
-
-            Behavior on opacity { FadeAnimation { duration: 300 } }
-        }
-
-        delegate: mprisPlayerDelegate
     }
 }

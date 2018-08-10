@@ -24,6 +24,7 @@ PkgConfigBR:
   - sailfishapp >= 1.0.2
   - openssl >= 1.0.1
   - Qt5Core
+  - Qt5Network
   - Qt5Qml
   - Qt5Quick
   - contextkit-statefs

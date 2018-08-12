@@ -181,19 +181,20 @@ Page {
                 sourceModel: nontrustedDevicesModel
             }
 
-            SectionHeader { text: qsTr("Paired devices") }
             SilicaListView {
                 width: page.width
-                height: childrenRect.height
+                height: contentItem.childrenRect.height
+                header: SectionHeader { text: qsTr("Paired devices") }
 
                 model: trustedDevicesModel
                 delegate: deviceDelegate
             }
 
-            SectionHeader { text: qsTr("Nearby devices") }
+
             SilicaListView {
                 width: page.width
-                height: childrenRect.height
+                height: contentItem.childrenRect.height
+                header: SectionHeader { text: qsTr("Nearby devices") }
 
                 model: otherNearDevicesModel
                 delegate: deviceDelegate

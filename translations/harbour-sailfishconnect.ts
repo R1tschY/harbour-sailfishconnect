@@ -207,7 +207,11 @@
 <context>
     <name>MprisUi</name>
     <message>
-        <source>No remote player</source>
+        <source>No remote players</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multimedia Controls</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

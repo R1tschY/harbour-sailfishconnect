@@ -7,14 +7,14 @@ import SailfishConnect.Mpris 0.2
 SilicaListView {
     id: mprisView
     width: parent.width
-    height: childrenRect.height
+    height: Math.max(contentItem.childrenRect.height, Theme.itemSizeExtraLarge)
     visible:
         _device.isReachable && _device.isTrusted &&
         _device.supportedPlugins.indexOf(
             "SailfishConnect::MprisRemotePlugin") >= 0
 
     header: SectionHeader {
-        text: "MPRIS"
+        text: qsTr("Multimedia Controls")
         id: header
     }
 
@@ -25,19 +25,22 @@ SilicaListView {
 
     Label {
         id: replacement
-        text: qsTr("No remote player")
-        enabled: mprisView.count === 0
+
         anchors.bottom: mprisView.bottom
+        x: Theme.horizontalPageMargin
+        width: parent.width - 2 * x
+
+        enabled: mprisView.count === 0
+        opacity: enabled ? 1.0 : 0
+
+        text: qsTr("No remote players")
         wrapMode: Text.Wrap
         horizontalAlignment: Text.AlignHCenter
         font {
             pixelSize: Theme.fontSizeExtraLarge
             family: Theme.fontFamilyHeading
         }
-        x: Theme.horizontalPageMargin
-        width: parent.width - 2 * x
         color: Theme.rgba(Theme.highlightColor, 0.6)
-        opacity: enabled ? 1.0 : 0
 
         Behavior on opacity { FadeAnimation { duration: 300 } }
     }
@@ -46,94 +49,91 @@ SilicaListView {
     Component {
         id: mprisPlayerDelegate
 
-        ListItem {
+        Column {
             id: listItem
             width: parent.width
-            height: childrenRect.height
+            spacing: Theme.paddingSmall
 
-            Column {
+            Label {
+                text: playerName
+                width: listItem.width
+                truncationMode: TruncationMode.Fade
+                textFormat: Text.PlainText
+            }
+
+            Label {
+                text: song
+                width: listItem.width
+                truncationMode: TruncationMode.Fade
+                textFormat: Text.PlainText
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.weight: Font.Bold
+            }
+
+            Item {
                 width: parent.width
-                id: mprisItems
+                height: Theme.itemSizeMedium
 
-                Label {
-                    text: playerName
-                    truncationMode: TruncationMode.Fade
-                    textFormat: Text.PlainText
+                IconButton {
+                    id: playBtn
+                    icon.source: (isPlaying && (pauseAllowed || playAllowed)) ?
+                        "image://theme/icon-m-pause"
+                        : "image://theme/icon-m-play"
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
+                    }
+                    enabled: pauseAllowed || playAllowed
+                    onClicked: player.playPause()
                 }
 
-                Label {
-                    text: song
-                    truncationMode: TruncationMode.Fade // TODO: does not work
-                    textFormat: Text.PlainText
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font.weight: Font.Bold
+                IconButton {
+                    icon.source: "image://theme/icon-m-previous"
+                    anchors {
+                        top: playBtn.top
+                        right: playBtn.left
+                    }
+                    visible: goPreviousAllowed
+                    onClicked: player.previous()
                 }
 
-                Item {
-                    width: parent.width
-                    height: Theme.itemSizeMedium
-
-                    IconButton {
-                        id: playBtn
-                        icon.source: (isPlaying && (pauseAllowed || playAllowed)) ?
-                            "image://theme/icon-m-pause"
-                            : "image://theme/icon-m-play"
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                        }
-                        enabled: pauseAllowed || playAllowed
-                        onClicked: player.playPause()
+                IconButton {
+                    icon.source: "image://theme/icon-m-next"
+                    anchors {
+                        top: playBtn.top
+                        left: playBtn.right
                     }
+                    visible: goNextAllowed
+                    onClicked: player.next()
+                }
+            }
 
-                    IconButton {
-                        icon.source: "image://theme/icon-m-previous"
-                        anchors {
-                            top: playBtn.top
-                            right: playBtn.left
-                        }
-                        visible: goPreviousAllowed
-                        onClicked: player.previous()
-                    }
+            Slider {
+                id: positionSlider
+                visible: player.hasPosition && player.length > 0
+                width: parent.width
+                minimumValue: 0
+                maximumValue: Math.max(player.length, 1)
+                value: 0
+                enabled: player.seekAllowed
 
-                    IconButton {
-                        icon.source: "image://theme/icon-m-next"
-                        anchors {
-                            top: playBtn.top
-                            left: playBtn.right
-                        }
-                        visible: goNextAllowed
-                        onClicked: player.next()
-                    }
+                Component.onCompleted: {
+                    player.propertiesChanged.connect(updatePosition)
+
+                    updatePosition()
                 }
 
-                Slider {
-                    id: positionSlider
-                    visible: player.hasPosition
-                    width: parent.width
-                    minimumValue: 0
-                    maximumValue: player.length
-                    value: 0
-                    enabled: player.seekAllowed
-
-                    Component.onCompleted: {
-                        player.propertiesChanged.connect(updatePosition)
-
-                        updatePosition()
-                    }
-
-                    function updatePosition() {
-                        positionSlider.value = player.position
-                    }
+                function updatePosition() {
+                    positionSlider.value = player.position
                 }
+            }
 
-                Timer {
-                    interval: 1000
-                    repeat: true
-                    running: isPlaying && player.hasPosition
-                    triggeredOnStart: false
-                    onTriggered: positionSlider.updatePosition()
-                }
+            Timer {
+                interval: 1000
+                repeat: true
+                running: isPlaying && player.hasPosition
+                triggeredOnStart: false
+                onTriggered: positionSlider.updatePosition()
             }
         }
     }

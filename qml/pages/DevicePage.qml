@@ -33,12 +33,13 @@ Page {
     property bool connected: _device.isTrusted && _device.isReachable
 
     SilicaFlickable {
+        id: deviceView
         anchors.fill: parent
+        contentHeight: deviceColumn.height + Theme.paddingLargeban
 
         Column {
+            id: deviceColumn
             width: parent.width
-            height: header.height + mainColumn.height + Theme.paddingLarge +
-                    mprisUi.height
 
             PageHeader {
                 id: header
@@ -59,8 +60,7 @@ Page {
             Column {
                 id: mainColumn
                 width: parent.width - Theme.paddingLarge * 2
-                height: trustEntry.height + mprisUi.height
-                x: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
 
                 Column {
                     id: trustEntry
@@ -166,6 +166,6 @@ Page {
         }
 
 
-        VerticalScrollDecorator {}
+        VerticalScrollDecorator { flickable: deviceView }
     }
 }

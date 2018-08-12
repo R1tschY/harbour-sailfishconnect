@@ -5,8 +5,6 @@ import SailfishConnect.Core 0.2
 import SailfishConnect.Mpris 0.2
 
 SilicaListView {
-    property Device _device: daemon.getDevice(deviceId)
-
     id: mprisView
     width: parent.width
     height: childrenRect.height
@@ -119,7 +117,7 @@ SilicaListView {
                     enabled: player.seekAllowed
 
                     Component.onCompleted: {
-                        player.propertiesChange.connect(updatePosition)
+                        player.propertiesChanged.connect(updatePosition)
 
                         updatePosition()
                     }

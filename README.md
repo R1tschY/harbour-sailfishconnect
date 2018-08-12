@@ -45,6 +45,13 @@ SailfishOS client for KDE-Connect
 ![Screenshot 2](/doc/Screenshot_2.png)
 ![Screenshot 3](/doc/Screenshot_3.png)
 
+## Known Issues
+
+    * Clipboard: Changed clipboard content is only recognized when window is in
+      foreground. (#7)
+    * LAN: Link sometimes gets right destroyed after first connection
+        * Symptom: no connection after app start
+        * Workaround: Do a refresh from Sailfish Connect or KDE Connect.
 
 ## Credits
 

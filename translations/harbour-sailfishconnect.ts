@@ -33,6 +33,17 @@
     </message>
 </context>
 <context>
+    <name>ClipboardUi</name>
+    <message>
+        <source>Copyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To send the clipboard content this window has to be in the foreground. For receiving a clipboard content this is not required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>Sailfish-Connect</source>
@@ -98,10 +109,6 @@
 <context>
     <name>DevicePage</name>
     <message>
-        <source>Plugins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You don&apos;t trust this device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -118,7 +125,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unpair</source>
+        <source>You trust this device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -130,15 +137,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You trust this device</source>
+        <source>Encryption info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unpair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Send ping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Encryption info</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

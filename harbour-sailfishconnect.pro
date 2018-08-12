@@ -75,7 +75,8 @@ DISTFILES += \
     harbour-sailfishconnect.desktop \
     src/plugins/battery/metadata.json \
     src/plugins/ping/metadata.json \
-    *.md
+    *.md \
+    qml/components/ClipboardUi.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 

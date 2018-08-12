@@ -130,7 +130,9 @@ Page {
                 }
 
                 // Plugin UIs
+
                 MprisUi { id: mprisUi }
+                ClipboardUi { id: clipboardUi }
             }
         }
 

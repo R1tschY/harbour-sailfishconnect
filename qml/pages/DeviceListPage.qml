@@ -36,7 +36,7 @@ Page {
             spacing: Theme.paddingLarge
 
             PageHeader {
-                title: qsTr("Sailfish-Connect")
+                title: qsTr("Sailfish Connect")  // TODO: QT5.9: Qt.application.displayName
             }
 
             TextField {

@@ -39,7 +39,7 @@ Page {
             }
 
             Label {
-                text: "<b>Sailfish-Connect</b>" // TODO: QT5.9: Qt.application.displayName
+                text: "<b>Sailfish Connect</b>" // TODO: QT5.9: Qt.application.displayName
                 color: Theme.highlightColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -66,14 +66,18 @@ Page {
                 width: page.width - 2 * Theme.horizontalPageMargin
 
                 Label {
-                    text: qsTr("<a href=\"https://github.com/R1tschY/harbour-sailfishconnect/issues\">Bug reports on Github</a>")
+                    text:
+                        "<a href=\"https://github.com/R1tschY/harbour-sailfishconnect/issues\">" +
+                        qsTr("Bug reports on Github") + "</a>"
                     color: Theme.highlightColor
                     linkColor: Theme.primaryColor
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
 
                 Label {
-                    text: qsTr("<a href=\"https://github.com/R1tschY/harbour-sailfishconnect\">Source code on Github</a>")
+                    text:
+                        "<a href=\"https://github.com/R1tschY/harbour-sailfishconnect\">" +
+                        qsTr("Source code on Github") + "</a>"
                     color: Theme.highlightColor
                     linkColor: Theme.primaryColor
                     onLinkActivated: Qt.openUrlExternally(link)

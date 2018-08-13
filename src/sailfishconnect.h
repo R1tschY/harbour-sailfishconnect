@@ -6,7 +6,7 @@
 namespace SailfishConnect {
 
 /**
- * @brief dbus service name of SailfishConnect
+ * @brief dbus service name of Sailfish Connect
  */
 extern QString DBUS_SERVICE_NAME;
 
@@ -16,7 +16,7 @@ extern QString DBUS_SERVICE_NAME;
 extern QString PACKAGE_NAME;
 
 /**
- * @brief pretty package name (normally Sailfish-Connect)
+ * @brief pretty package name (normally "Sailfish Connect")
  */
 extern QString PRETTY_PACKAGE_NAME;
 

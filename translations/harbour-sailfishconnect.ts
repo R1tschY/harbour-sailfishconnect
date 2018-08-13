@@ -12,14 +12,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;https://github.com/R1tschY/harbour-sailfishconnect/issues&quot;&gt;Bug reports on Github&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;https://github.com/R1tschY/harbour-sailfishconnect&quot;&gt;Source code on Github&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Licence</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29,6 +21,14 @@
     </message>
     <message>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bug reports on Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source code on Github</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -46,7 +46,7 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <source>Sailfish-Connect</source>
+        <source>Sailfish Connect</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -73,10 +73,6 @@
 </context>
 <context>
     <name>DeviceListPage</name>
-    <message>
-        <source>Sailfish-Connect</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Device Name</source>
         <translation type="unfinished"></translation>
@@ -107,6 +103,10 @@
     </message>
     <message>
         <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sailfish Connect</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

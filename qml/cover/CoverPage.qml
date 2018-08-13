@@ -22,7 +22,7 @@ CoverBackground {
     Label {
         id: label
         anchors.centerIn: parent
-        text: qsTr("Sailfish-Connect")
+        text: qsTr("Sailfish Connect")  // TODO: QT5.9: Qt.application.displayName
     }
 
 //    CoverActionList {

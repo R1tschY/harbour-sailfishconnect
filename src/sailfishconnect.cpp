@@ -58,7 +58,7 @@ QString PACKAGE_NAME =
         QStringLiteral("harbour-sailfishconnect");
 
 QString PRETTY_PACKAGE_NAME =
-        QStringLiteral("Sailfish-Connect");
+        QStringLiteral("Sailfish Connect");
 
 void logBacktrace()
 {

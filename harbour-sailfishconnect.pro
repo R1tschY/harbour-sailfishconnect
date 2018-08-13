@@ -72,7 +72,6 @@ DISTFILES += \
     rpm/harbour-sailfishconnect.yaml \
     rpm/harbour-sailfishconnect.spec \
     rpm/harbour-sailfishconnect.changes.in \
-    rpm/harbour-sailfishconnect.changes.run.in \
     qml/harbour-sailfishconnect.qml \
     harbour-sailfishconnect.desktop \
     src/plugins/battery/metadata.json \

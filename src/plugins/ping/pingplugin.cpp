@@ -18,6 +18,7 @@
 #include "pingplugin.h"
 
 #include <QLoggingCategory>
+#include <QCoreApplication>
 
 #include <core/networkpackage.h>
 
@@ -31,7 +32,7 @@ PingPlugin::PingPlugin(
     : KdeConnectPlugin(device, name, outgoingCapabilities)
 {
     // TODO: notification_.setAppIcon();
-    notification_.setAppName("Sailfish-Connect");
+    notification_.setAppName(qApp->applicationName());
     notification_.setBody("Ping!");
     notification_.setCategory("device");
     notification_.setUrgency(Notification::Low);

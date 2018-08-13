@@ -6,6 +6,7 @@
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QQmlContext>
+#include <QSettings>
 
 #include <sailfishapp.h>
 
@@ -27,6 +28,8 @@ UI::UI(AppDaemon* daemon, QObject *parent)
     : QObject(parent)
     , m_daemon(daemon)
 {
+    m_settings.beginGroup(QStringLiteral("UI"));
+
     auto sessionBus = QDBusConnection::sessionBus();
     sessionBus.registerObject(
         DBUS_PATH,
@@ -44,7 +47,9 @@ void UI::showMainWindow()
     }
 
     m_view = SailfishApp::createView();
-    m_view->installEventFilter(this);
+
+    setRunInBackground(
+        m_settings.value("runInBackground", m_runInBackground).toBool());
 
     connect(
         m_view, &QQuickView::destroyed,
@@ -52,6 +57,7 @@ void UI::showMainWindow()
 
     // view
     m_view->rootContext()->setContextProperty("daemon", m_daemon);
+    m_view->rootContext()->setContextProperty("ui", this);
     m_view->setSource(SailfishApp::pathToMainQml());
     m_view->showFullScreen();
 }
@@ -78,6 +84,30 @@ void UI::raise()
             << reply.error().name() << "/"
             << reply.error().message();
     }
+}
+
+bool UI::runInBackground()
+{
+    return m_runInBackground;
+}
+
+void UI::setRunInBackground(bool value)
+{
+    if (value == m_runInBackground)
+        return;
+
+    m_runInBackground = value;
+    m_settings.setValue("runInBackground", value);
+
+    qGuiApp->setQuitOnLastWindowClosed(!value);
+
+    if (value) {
+        m_view->installEventFilter(this);
+    } else {
+        m_view->removeEventFilter(this);
+    }
+
+    emit runInBackgroundChanged();
 }
 
 void UI::onMainWindowDestroyed()

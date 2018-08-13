@@ -105,6 +105,10 @@
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePage</name>
@@ -274,6 +278,21 @@
     </message>
     <message>
         <source>Allow sending of text messages.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPage</name>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run in background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Application runs in background after window is closed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

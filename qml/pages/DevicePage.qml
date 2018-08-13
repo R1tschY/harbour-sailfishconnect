@@ -35,7 +35,7 @@ Page {
     SilicaFlickable {
         id: deviceView
         anchors.fill: parent
-        contentHeight: deviceColumn.height + Theme.paddingLargeban
+        contentHeight: deviceColumn.height + Theme.paddingLarge
 
         Column {
             id: deviceColumn

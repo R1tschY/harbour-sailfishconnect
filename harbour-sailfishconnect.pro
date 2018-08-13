@@ -14,12 +14,14 @@ TARGET = harbour-sailfishconnect
 
 CONFIG += sailfishapp c++14
 QT += network dbus
+
 PKGCONFIG += openssl contextkit-statefs nemonotifications-qt5
 DEFINES += \
     QT_STATICPLUGIN \
     QT_DEPRECATED_WARNINGS \
     QT_DISABLE_DEPRECATED_BEFORE=0x050500 \
     QT_USE_QSTRINGBUILDER
+CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 INCLUDEPATH += src
 
 SOURCES += \
@@ -76,7 +78,8 @@ DISTFILES += \
     src/plugins/battery/metadata.json \
     src/plugins/ping/metadata.json \
     *.md \
-    qml/components/ClipboardUi.qml
+    qml/components/ClipboardUi.qml \
+    qml/pages/SettingsPage.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 

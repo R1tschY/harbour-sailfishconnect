@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QSettings>
 
 class QQuickView;
 
@@ -20,6 +21,13 @@ class UI : public QObject
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.harbour.SailfishConnect.UI")
+
+    Q_PROPERTY(
+            bool runInBackground
+            READ runInBackground
+            WRITE setRunInBackground
+            NOTIFY runInBackgroundChanged)
+
 public:
     static const QString DBUS_INTERFACE_NAME;
     static const QString DBUS_PATH;
@@ -31,6 +39,12 @@ public:
      */
     static void raise();
 
+    bool runInBackground();
+    void setRunInBackground(bool value);
+
+signals:
+    void runInBackgroundChanged();
+
 public slots:
     /**
      * @brief show the main window
@@ -40,6 +54,9 @@ public slots:
 private:
     QQuickView* m_view = nullptr;
     AppDaemon *m_daemon;
+
+    QSettings m_settings;
+    bool m_runInBackground = false;
 
     void onMainWindowDestroyed();
 

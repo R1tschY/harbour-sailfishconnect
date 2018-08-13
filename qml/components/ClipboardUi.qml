@@ -14,8 +14,8 @@ Column {
         width: mainColumn.width
         color: Theme.highlightColor
         font.pixelSize: Theme.fontSizeSmall
-        text: qsTr("To send the clipboard content this window " +
-                   "has to be in the foreground. For receiving " +
-                   "a clipboard content this is not required.")
+        text: qsTr("After copying open the Sailfish Connect window to send " +
+                   "the clipboard content. For receiving clipboard content " +
+                   "this is not required.")
     }
 }

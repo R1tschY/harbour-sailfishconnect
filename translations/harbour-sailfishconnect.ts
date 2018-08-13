@@ -39,7 +39,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>To send the clipboard content this window has to be in the foreground. For receiving a clipboard content this is not required.</source>
+        <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -12,7 +12,9 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Sun Apr 13 2014 Jack Tar <jack.tar@example.com> 0.0.1-1
-- Scrubbed the deck
-- Hoisted the sails
+* Mon Aug 13 2018 Richard Liebscher <r1tschy@yahoo.de> 0.2-0
+- Changed name to Sailfish Connect
+- Added setting to control running in background
+- Fixed qml layout issues
+- Clipboard: Added known issue description notice
 

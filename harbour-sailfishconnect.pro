@@ -71,14 +71,14 @@ DISTFILES += \
     qml/components/MprisUi.qml \
     rpm/harbour-sailfishconnect.yaml \
     rpm/harbour-sailfishconnect.spec \
-    rpm/harbour-sailfishconnect.changes.in \
     qml/harbour-sailfishconnect.qml \
     harbour-sailfishconnect.desktop \
     src/plugins/battery/metadata.json \
     src/plugins/ping/metadata.json \
     *.md \
     qml/components/ClipboardUi.qml \
-    qml/pages/SettingsPage.qml
+    qml/pages/SettingsPage.qml \
+    rpm/harbour-sailfishconnect.changes
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 

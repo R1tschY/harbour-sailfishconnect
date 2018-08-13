@@ -116,6 +116,9 @@ SilicaListView {
                 maximumValue: Math.max(player.length, 1)
                 value: 0
                 enabled: player.seekAllowed
+                onReleased: {
+                    player.position = positionSlider.value
+                }
 
                 Component.onCompleted: {
                     player.propertiesChanged.connect(updatePosition)

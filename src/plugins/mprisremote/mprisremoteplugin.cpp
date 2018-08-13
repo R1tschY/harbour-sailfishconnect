@@ -71,7 +71,7 @@ void MprisPlayer::setVolume(int value)
 void MprisPlayer::setPosition(int value)
 {
     if (seekAllowed()) {
-        m_parent->sendCommand(m_player, "setPosition", value);
+        m_parent->sendCommand(m_player, "SetPosition", value);
 
         m_lastPosition = value;
         m_lastPositionTime = QDateTime::currentMSecsSinceEpoch();

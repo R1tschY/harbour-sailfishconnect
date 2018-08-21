@@ -45,9 +45,6 @@ public slots:
 private slots:
     void startSmsSuccess();
     void startSmsError(const QDBusError& error);
-
-private:
-    QDBusInterface* m_qmlmessages;
 };
 
 

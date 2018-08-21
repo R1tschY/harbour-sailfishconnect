@@ -30,28 +30,28 @@ TelepathyPlugin::TelepathyPlugin(
         const QString &name,
         const QSet<QString> &outgoingCapabilities)
     : KdeConnectPlugin(device, name, outgoingCapabilities)
-    , m_qmlmessages(new QDBusInterface(
-                        QStringLiteral("org.nemomobile.qmlmessages"),
-                        QStringLiteral("/"),
-                        QStringLiteral("org.nemomobile.qmlmessages"),
-                        QDBusConnection::sessionBus(),
-                        this))
 { }
 
 bool TelepathyPlugin::receivePackage(const NetworkPackage &np)
 {
     if (np.get<bool>("sendSms")) {
+        QDBusInterface qmlmessages(
+                    QStringLiteral("org.nemomobile.qmlmessages"),
+                    QStringLiteral("/"),
+                    QStringLiteral("org.nemomobile.qmlmessages"),
+                    QDBusConnection::sessionBus());
+
         auto phoneNumber = np.get<QString>("phoneNumber");
         auto messageBody = np.get<QString>("messageBody");
 
-        if (!m_qmlmessages->isValid()) {
+        if (!qmlmessages.isValid()) {
             qCWarning(logger)
                     << "no connection to message app possible"
-                    << m_qmlmessages->lastError().message();
+                    << qmlmessages.lastError().message();
             return true;
         }
 
-        m_qmlmessages->callWithCallback(
+        qmlmessages.callWithCallback(
                     QStringLiteral("startSMS"),
                     { QStringList(phoneNumber), messageBody },
                     this,

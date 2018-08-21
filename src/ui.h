@@ -51,6 +51,8 @@ public slots:
      */
     Q_SCRIPTABLE void showMainWindow();
 
+    Q_SCRIPTABLE void quit();
+
 private:
     QQuickView* m_view = nullptr;
     AppDaemon *m_daemon;

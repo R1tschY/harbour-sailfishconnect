@@ -102,11 +102,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Settings</source>
+        <source>Sailfish Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sailfish Connect</source>
+        <source>Settings ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

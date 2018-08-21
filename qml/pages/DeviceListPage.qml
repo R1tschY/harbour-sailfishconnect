@@ -208,8 +208,14 @@ Page {
             }
 
             MenuItem {
-                text: qsTr("Settings")
+                text: qsTr("Settings ...")
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
+            }
+
+            MenuItem {
+                text: qsTr("Quit")
+                visible: ui.runInBackground
+                onClicked: ui.quit()
             }
 
             MenuItem {

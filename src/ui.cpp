@@ -62,6 +62,11 @@ void UI::showMainWindow()
     m_view->showFullScreen();
 }
 
+void UI::quit()
+{
+    QCoreApplication::quit();
+}
+
 void UI::raise()
 {
     auto sessionBus = QDBusConnection::sessionBus();

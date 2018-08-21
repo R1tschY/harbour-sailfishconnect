@@ -56,6 +56,7 @@ SilicaListView {
 
             Label {
                 text: playerName
+                color: Theme.highlightColor
                 width: listItem.width
                 truncationMode: TruncationMode.Fade
                 textFormat: Text.PlainText
@@ -63,6 +64,7 @@ SilicaListView {
 
             Label {
                 text: song
+                color: Theme.highlightColor
                 width: listItem.width
                 truncationMode: TruncationMode.Fade
                 textFormat: Text.PlainText

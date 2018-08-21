@@ -70,6 +70,7 @@ Page {
 
                     Label {
                         id: stateText
+                        color: Theme.highlightColor
                         text: qsTr("You don't trust this device")
                     }
 

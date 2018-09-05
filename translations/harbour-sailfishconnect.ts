@@ -301,6 +301,17 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::TouchpadPluginFactory</name>
+    <message>
+        <source>Touchpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control remote computer through mouse movements and clicks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
@@ -313,6 +324,24 @@
     <message>
         <source>Application runs in background after window is closed.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Touchpad</name>
+    <message>
+        <source>Touchpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TouchpadPage</name>
+    <message>
+        <source>Touchpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>

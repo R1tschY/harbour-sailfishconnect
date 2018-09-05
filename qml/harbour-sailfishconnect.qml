@@ -21,6 +21,7 @@ import "pages"
 
 ApplicationWindow
 {
+    id: window
     initialPage: Component { DeviceListPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations

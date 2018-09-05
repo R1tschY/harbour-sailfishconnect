@@ -42,8 +42,11 @@ public:
     bool runInBackground();
     void setRunInBackground(bool value);
 
+    static QVariant openDevicePageDbusAction(const QString &deviceId);
+
 signals:
     void runInBackgroundChanged();
+    Q_SCRIPTABLE void openingDevicePage(const QString& deviceId);
 
 public slots:
     /**
@@ -51,7 +54,16 @@ public slots:
      */
     Q_SCRIPTABLE void showMainWindow();
 
+    /**
+     * @brief quit application
+     */
     Q_SCRIPTABLE void quit();
+
+    /**
+     * @brief open page of device
+     * @param deviceId id of device
+     */
+    Q_SCRIPTABLE void openDevicePage(const QString& deviceId);
 
 private:
     QQuickView* m_view = nullptr;

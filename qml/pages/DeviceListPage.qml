@@ -226,5 +226,32 @@ Page {
 
         VerticalScrollDecorator {}
     }
+
+    Component.onCompleted: {
+        ui.openingDevicePage.connect(openDevicePage)
+    }
+
+    function openDevicePage(deviceId) {
+        if (typeof pageStack == "undefined")
+            return; // happens when using QmlLive
+
+        console.log("opening device " + deviceId)
+
+        window.activate()
+
+        var devicePage = pageStack.find(function(page) {
+            return page.objectName === "DevicePage"
+        })
+        if (devicePage !== null && devicePage.deviceId === deviceId) {
+            pageStack.pop(devicePage)
+            ui.showMainWindow()
+            return;
+        }
+
+        pageStack.pop(page, PageStackAction.Immediate)
+        pageStack.push(
+            Qt.resolvedUrl("DevicePage.qml"),
+            { deviceId: deviceId })
+    }
 }
 

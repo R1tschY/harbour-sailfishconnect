@@ -67,6 +67,20 @@ void UI::quit()
     QCoreApplication::quit();
 }
 
+void UI::openDevicePage(const QString &deviceId)
+{
+    if (m_daemon->getDevice(deviceId) == nullptr) {
+        // TODO: create device
+        qCWarning(logger)
+                << "while opening device page: device with id"
+                << deviceId << "does not exist.";
+        return;
+    }
+
+    qCDebug(logger) << "opening device page" << deviceId;
+    emit openingDevicePage(deviceId);
+}
+
 void UI::raise()
 {
     auto sessionBus = QDBusConnection::sessionBus();
@@ -113,6 +127,14 @@ void UI::setRunInBackground(bool value)
     }
 
     emit runInBackgroundChanged();
+}
+
+QVariant UI::openDevicePageDbusAction(const QString &deviceId)
+{
+    return Notification::remoteAction(
+            QStringLiteral("default"), QString("default"),
+            DBUS_SERVICE_NAME, UI::DBUS_PATH, UI::DBUS_INTERFACE_NAME,
+            QStringLiteral("openDevicePage"), { deviceId });
 }
 
 void UI::onMainWindowDestroyed()

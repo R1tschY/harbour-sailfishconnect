@@ -73,10 +73,24 @@ AppDaemon::AppDaemon(QObject *parent)
 
 void AppDaemon::askPairingConfirmation(Device *device)
 {    
-    notification_.setSummary(
-        tr("Pairing request from %1").arg(device->name()));
-    notification_.setOrigin(device->name());
-    notification_.publish();
+    Notification *notification = new Notification(this);
+
+    notification->setAppName(QCoreApplication::applicationName());
+    notification->setSummary(device->name());
+    notification->setBody(tr("Pending pairing request ..."));
+    notification->setPreviewSummary(device->name());
+    notification->setPreviewBody(tr("Pairing request"));
+    notification->setExpireTimeout(PairingHandler::pairingTimeoutMsec() * 0.75);
+    notification->setRemoteActions(
+                { UI::openDevicePageDbusAction(device->id()) });
+
+    connect(notification, &Notification::closed,
+            [=]( uint reason ) {
+                qDebug() << "Notification closed" << reason;
+                notification->deleteLater();
+            });
+
+    notification->publish();
 }
 
 void AppDaemon::reportError(const QString &title, const QString &description)

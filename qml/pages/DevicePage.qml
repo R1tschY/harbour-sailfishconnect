@@ -25,6 +25,7 @@ import "../components"
 
 Page {
     id: page
+    objectName: "DevicePage"
 
     property string deviceId
     property bool waitForAcceptedPairing: false

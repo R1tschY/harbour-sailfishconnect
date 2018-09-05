@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
 
     auto app = createApplication(argc, argv);
 
-    auto sessionBus = QDBusConnection::sessionBus();
+    QDBusConnection sessionBus = QDBusConnection::sessionBus();
     if (!sessionBus.registerService(DBUS_SERVICE_NAME)) {
         qCInfo(logger) << "Other daemon exists.";
         UI::raise();
@@ -138,7 +138,6 @@ int main(int argc, char *argv[])
 
     AppDaemon daemon;
     UI ui(&daemon);
-
     ui.showMainWindow();
 
     return app->exec();

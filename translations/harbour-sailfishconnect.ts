@@ -226,7 +226,11 @@
 <context>
     <name>SailfishConnect::AppDaemon</name>
     <message>
-        <source>Pairing request from %1</source>
+        <source>Pairing request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pending pairing request ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -85,10 +85,7 @@ void AppDaemon::askPairingConfirmation(Device *device)
                 { UI::openDevicePageDbusAction(device->id()) });
 
     connect(notification, &Notification::closed,
-            [=]( uint reason ) {
-                qDebug() << "Notification closed" << reason;
-                notification->deleteLater();
-            });
+            [=](uint reason) { notification->deleteLater(); });
 
     notification->publish();
 }

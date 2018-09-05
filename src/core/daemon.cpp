@@ -69,7 +69,7 @@ Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, QObject* parent, bool tes
     : QObject(parent)
     , d(new DaemonPrivate(std::move(systemInfo)))
 {
-    Q_ASSERT(!s_instance);
+    Q_ASSERT(s_instance == nullptr);
     s_instance = this;
     qCDebug(coreLogger) << "KdeConnect daemon starting";
 
@@ -232,7 +232,7 @@ QString Daemon::announcedName()
 
 QNetworkAccessManager* Daemon::networkAccessManager()
 {
-    static QPointer<QNetworkAccessManager> manager;
+    static QPointer<QNetworkAccessManager> manager; // TODO: make member
     if (!manager) {
         manager = new QNetworkAccessManager(this);
     }
@@ -288,7 +288,10 @@ QStringList Daemon::pairingRequests() const
     return ret;
 }
 
-Daemon::~Daemon() = default;
+Daemon::~Daemon() {
+    Q_ASSERT(s_instance == this);
+    s_instance = nullptr;
+}
 
 QString Daemon::selfId() const
 {

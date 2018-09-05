@@ -21,10 +21,14 @@
 #include <QTimer>
 #include <QSettings>
 #include <QFile>
+#include <QQmlEngine>
+#include <QCoreApplication>
 
+#include "core/backend/pairinghandler.h"
 #include "core/systeminfo.h"
 #include "utils/cpphelper.h"
 #include "sailfishconnect.h"
+#include "ui.h"
 
 namespace SailfishConnect {
 
@@ -93,6 +97,36 @@ void AppDaemon::askPairingConfirmation(Device *device)
 void AppDaemon::reportError(const QString &title, const QString &description)
 {
     qCCritical(logger) << title << description;
+}
+
+QQmlImageProviderBase *AppDaemon::imageProvider(const QString &providerId) const
+{
+    if (!m_qmlEngine)
+        return nullptr;
+
+    return m_qmlEngine->imageProvider(providerId);
+}
+
+void AppDaemon::setQmlEngine(QQmlEngine *qmlEngine)
+{
+    if (m_qmlEngine == qmlEngine)
+        return;
+
+    if (m_qmlEngine) {
+        m_qmlEngine->disconnect(this);
+    }
+
+    m_qmlEngine = qmlEngine;
+
+    if (m_qmlEngine) {
+        connect(m_qmlEngine, &QObject::destroyed,
+                this, [this]() { setQmlEngine(nullptr); });
+    }
+}
+
+AppDaemon *AppDaemon::instance()
+{
+    return static_cast<AppDaemon*>(Daemon::instance());
 }
 
 } // namespace SailfishConnect

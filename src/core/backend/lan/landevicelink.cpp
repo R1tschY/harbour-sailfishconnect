@@ -85,7 +85,11 @@ QString LanDeviceLink::name()
 bool LanDeviceLink::sendPackage(NetworkPackage& np)
 {
     if (np.hasPayload()) {
-        np.setPayloadTransferInfo(sendPayload(np)->transferInfo());
+        auto* uploadJob = sendPayload(np);
+        if (uploadJob->isRunning()) {
+            np.setPayloadTransferInfo(uploadJob->transferInfo());
+        }
+        // TODO: else return?
     }
 
     int written = m_socketLineReader->write(np.serialize());

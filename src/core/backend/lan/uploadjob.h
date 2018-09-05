@@ -35,7 +35,6 @@ class UploadJob : public SailfishConnect::Job
 public:
     explicit UploadJob(const QSharedPointer<QIODevice>& source, const QString& deviceId);
 
-    void doStart() override;
 
     QVariantMap transferInfo();
 
@@ -57,6 +56,9 @@ private Q_SLOTS:
 
     void socketFailed(QAbstractSocket::SocketError);
     void sslErrors(const QList<QSslError>& errors);
+
+private:
+    void doStart() override;
 };
 
 #endif // UPLOADJOB_H

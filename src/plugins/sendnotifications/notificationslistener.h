@@ -34,37 +34,53 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "notifyingapplication.h"
+#pragma once
 
-#include <QDebug>
-#include <QDataStream>
+#include <QtDBus/QDBusAbstractAdaptor>
+#include <QtDBus/QDBusArgument>
+#include <core/device.h>
+#include <QIODevice>
+#include <QSharedPointer>
+
+class KdeConnectPlugin;
 
 namespace SailfishConnect {
 
-QDataStream& operator<<(QDataStream& out, const NotifyingApplication& app)
-{
-    out << app.name << app.icon << app.active << app.blacklistExpression.pattern();
-    return out;
-}
+struct NotifyingApplication;
 
-QDataStream& operator>>(QDataStream& in, NotifyingApplication& app)
+// make singleton with shapedpointer/weakpointer
+class NotificationsListener : public QDBusAbstractAdaptor
 {
-    QString pattern;
-    in >> app.name;
-    in >> app.icon;
-    in >> app.active;
-    in >> pattern;
-    app.blacklistExpression.setPattern(pattern);
-    return in;
-}
+    Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.freedesktop.Notifications")
 
-QDebug operator<<(QDebug dbg, const NotifyingApplication& a) {
-    dbg.nospace() << "{ name=" << a.name
-                  << ", icon=" << a.icon
-                  << ", active=" << a.active
-                  << ", blacklistExpression =" << a.blacklistExpression
-                  << " }";
-    return dbg.space();
-}
+public:
+    explicit NotificationsListener(KdeConnectPlugin* aPlugin);
+    ~NotificationsListener() override;
+
+protected:
+    KdeConnectPlugin* m_plugin;
+    QHash<QString, NotifyingApplication> m_applications;
+
+    // virtual helper function to make testing possible (QDBusArgument can not
+    // be injected without making a DBUS-call):
+    virtual bool parseImageDataArgument(const QVariant& argument, int& width,
+                                        int& height, int& rowStride, int& bitsPerSample,
+                                        int& channels, bool& hasAlpha,
+                                        QByteArray& imageData) const;
+    QSharedPointer<QIODevice> iconForImageData(const QVariant& argument) const;
+    QSharedPointer<QIODevice> iconForIconName(const QString& iconName) const;
+
+public Q_SLOTS:
+    Q_SCRIPTABLE uint Notify(const QString&, uint, const QString&,
+                             const QString&, const QString&,
+                             const QStringList&, const QVariantMap&, int);
+
+private Q_SLOTS:
+    void loadApplications();
+
+private:
+    QSharedPointer<QIODevice> pngFromImage();
+};
 
 } // namespace SailfishConnect

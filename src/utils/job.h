@@ -44,6 +44,7 @@ public:
     qint64 totalBytes() const { return m_totalBytes; }
     qint64 processedBytes() const { return m_processedBytes; }
     Q_SCRIPTABLE bool wasCancelled() const { return m_wasCancelled; }
+    Q_SCRIPTABLE bool isRunning() const { return m_isRunning; }
 
 public slots:
     void start();

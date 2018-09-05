@@ -59,7 +59,11 @@ SOURCES += \
     src/plugins/mprisremote/mprisremoteplugin.cpp \
     src/ui/mprisplayersmodel.cpp \
     src/core/filetransferjob.cpp \
-    src/utils/job.cpp
+    src/utils/job.cpp \
+    src/plugins/sendnotifications/notificationslistener.cpp \
+    src/plugins/sendnotifications/notifyingapplication.cpp \
+    src/plugins/sendnotifications/sendnotificationsplugin.cpp \
+    src/plugins/touchpad/touchpadplugin.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -78,7 +82,11 @@ DISTFILES += \
     *.md \
     qml/components/ClipboardUi.qml \
     qml/pages/SettingsPage.qml \
-    rpm/harbour-sailfishconnect.changes
+    rpm/harbour-sailfishconnect.changes \
+    src/plugins/sendnotifications/metadata.json \
+    src/plugins/touchpad/metadata.json \
+    qml/components/Touchpad.qml \
+    qml/components/TouchpadPage.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
@@ -131,7 +139,11 @@ HEADERS += \
     src/plugins/mprisremote/mprisremoteplugin.h \
     src/ui/mprisplayersmodel.h \
     src/core/filetransferjob.h \
-    src/utils/job.h
+    src/utils/job.h \
+    src/plugins/sendnotifications/notificationslistener.h \
+    src/plugins/sendnotifications/notifyingapplication.h \
+    src/plugins/sendnotifications/sendnotificationsplugin.h \
+    src/plugins/touchpad/touchpadplugin.h
 
 SUBDIRS += \
     src/plugins/battery/SailfishConnectBatteryPlugin.pro

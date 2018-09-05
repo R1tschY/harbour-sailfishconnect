@@ -15,40 +15,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef APPDAEMON_H
-#define APPDAEMON_H
-
-#include "core/daemon.h"
-
-#include <notification.h>
-
-class QQmlEngine;
-class QQmlImageProviderBase;
+#include "sendnotificationsplugin.h"
 
 namespace SailfishConnect {
 
-class AppDaemon : public Daemon
+SendNotificationsPlugin::SendNotificationsPlugin(
+        Device* device,
+        const QString &name,
+        const QSet<QString> &outgoingCapabilities)
+    : KdeConnectPlugin(device, name, outgoingCapabilities),
+      m_listener(new NotificationsListener(this))
+{ }
+
+bool SendNotificationsPlugin::receivePackage(const NetworkPackage&)
 {
-    Q_OBJECT
-public:
-    AppDaemon(QObject* parent = nullptr);
+    return false;
+}
 
-    void askPairingConfirmation(Device* device) override;
+QString SendNotificationsPluginFactory::name() const
+{
+    return tr("Send notifcations");
+}
 
-    void reportError(const QString & title, const QString & description) override;
+QString SendNotificationsPluginFactory::description() const
+{
+    return tr("Send notifications to the remote computer.");
+}
 
-    QQmlImageProviderBase *imageProvider(const QString &providerId) const;
-
-    QQmlEngine *qmlEngine() const { return m_qmlEngine; }
-    void setQmlEngine(QQmlEngine *qmlEngine);
-
-    static AppDaemon* instance();
-
-private:
-    Notification notification_;
-    QQmlEngine* m_qmlEngine = nullptr;
-};
+QString SendNotificationsPluginFactory::iconUrl() const
+{
+    return "image://theme/icon-m-notifications";
+}
 
 } // namespace SailfishConnect
 
-#endif // APPDAEMON_H
+Q_IMPORT_PLUGIN(SendNotificationsPluginFactory)

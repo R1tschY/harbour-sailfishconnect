@@ -6,6 +6,7 @@
 #include <QSettings>
 
 class QQuickView;
+class QQmlImageProviderBase;
 
 namespace SailfishConnect {
 

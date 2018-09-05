@@ -34,37 +34,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "notifyingapplication.h"
+#pragma once
 
-#include <QDebug>
-#include <QDataStream>
+#include <QRegularExpression>
 
 namespace SailfishConnect {
 
-QDataStream& operator<<(QDataStream& out, const NotifyingApplication& app)
-{
-    out << app.name << app.icon << app.active << app.blacklistExpression.pattern();
-    return out;
-}
+struct NotifyingApplication {
+    QString name;
+    QString icon;
+    bool active;
+    QRegularExpression blacklistExpression;
 
-QDataStream& operator>>(QDataStream& in, NotifyingApplication& app)
-{
-    QString pattern;
-    in >> app.name;
-    in >> app.icon;
-    in >> app.active;
-    in >> pattern;
-    app.blacklistExpression.setPattern(pattern);
-    return in;
-}
+    bool operator==(const NotifyingApplication& other) const {
+        return (name == other.name);
+    }
+};
 
-QDebug operator<<(QDebug dbg, const NotifyingApplication& a) {
-    dbg.nospace() << "{ name=" << a.name
-                  << ", icon=" << a.icon
-                  << ", active=" << a.active
-                  << ", blacklistExpression =" << a.blacklistExpression
-                  << " }";
-    return dbg.space();
-}
+QDataStream& operator<<(QDataStream& out, const NotifyingApplication& app);
+QDataStream& operator>>(QDataStream& in, NotifyingApplication& app);
+QDebug operator<<(QDebug dbg, const NotifyingApplication& a);
 
 } // namespace SailfishConnect
+
+Q_DECLARE_METATYPE(SailfishConnect::NotifyingApplication);

@@ -10,7 +10,11 @@ Job::Job()
 
 void Job::start()
 {
+    if (m_isRunning)
+        return;
 
+    m_isRunning = true;
+    doStart();
 }
 
 void Job::setErrorString(const QString& errorString)

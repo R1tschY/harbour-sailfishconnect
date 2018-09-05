@@ -38,6 +38,7 @@
 #include "core/device.h"
 #include "core/kdeconnectplugin.h"
 #include "plugins/mprisremote/mprisremoteplugin.h"
+#include "plugins/touchpad/touchpadplugin.h"
 #include "ui/devicelistmodel.h"
 #include "ui/filtervalueproxymodel.h"
 #include "ui/devicepluginsmodel.h"
@@ -75,7 +76,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     case QtInfoMsg:
     case QtWarningMsg:
     case QtCriticalMsg:
-        if (msg.contains("BACKTRACE")) {
+        if (msg.contains("BACKTRACE")) { // XXX
             logBacktrace();
         }
         fprintf(stderr, "%s\n", localMsg.constData());
@@ -88,6 +89,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 }
 
 void registerQmlTypes() {
+    // TODO: register in plugin factories when possible
     qmlRegisterType<DeviceListModel>(
                 "SailfishConnect.UI", 0, 2, "DeviceListModel");
     qmlRegisterType<FilterValueProxyModel>(
@@ -105,7 +107,11 @@ void registerQmlTypes() {
 
     qmlRegisterUncreatableType<MprisPlayer>(
                 "SailfishConnect.Mpris", 0, 2, "MprisPlayer",
-                QStringLiteral("not intented to be created from users (MprisPlayer)"));
+                QStringLiteral("not intented to be created from users"));
+    qmlRegisterUncreatableType<TouchpadPlugin>(
+                "SailfishConnect.RemoteControl", 0, 2, "RemoteControlPlugin",
+                QStringLiteral("not intented to be created from users"));
+
 }
 
 std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)

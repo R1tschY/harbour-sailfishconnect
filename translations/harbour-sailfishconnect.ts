@@ -279,6 +279,17 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::SendNotificationsPluginFactory</name>
+    <message>
+        <source>Send notifcations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send notifications to the remote computer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::TelepathyPluginFactory</name>
     <message>
         <source>Send SMS</source>

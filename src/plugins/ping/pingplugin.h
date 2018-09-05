@@ -21,7 +21,7 @@
 #include <QObject>
 #include <QtPlugin>
 
-#include "../../core/kdeconnectplugin.h"
+#include <core/kdeconnectplugin.h>
 
 #include <notification.h>
 
@@ -51,9 +51,6 @@ public slots:
 
 private:
     Notification notification_;
-    int count_ = 0;
-
-    void resetCount();
 };
 
 

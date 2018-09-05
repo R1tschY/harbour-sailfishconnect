@@ -21,6 +21,8 @@
 #include <QCoreApplication>
 
 #include <core/networkpackage.h>
+#include <ui.h>
+#include <sailfishconnect.h>
 
 namespace SailfishConnect {
 
@@ -30,33 +32,29 @@ PingPlugin::PingPlugin(
         Device *device, const QString& name,
         const QSet<QString>& outgoingCapabilities)
     : KdeConnectPlugin(device, name, outgoingCapabilities)
-{
-    // TODO: notification_.setAppIcon();
-    notification_.setAppName(qApp->applicationName());
-    notification_.setBody("Ping!");
-    notification_.setCategory("device");
-    notification_.setUrgency(Notification::Low);
-
-    connect(&notification_, &Notification::clicked,
-            this, &PingPlugin::resetCount);
-    connect(&notification_, &Notification::closed,
-            this, &PingPlugin::resetCount);
-}
+{ }
 
 bool PingPlugin::receivePackage(const NetworkPackage& np)
 {
     QString message =
             np.get<QString>(QStringLiteral("message"), QStringLiteral("Ping!"));
 
-    qCInfo(logger) << "Ping:" << message << "from" << device()->name();
+    QString deviceName = device()->name();
+    QString deviceId = device()->id();
+    qCInfo(logger) << "Ping:" << message << "from" << deviceName;
 
-    count_ += 1;
-    notification_.setSummary(device()->name());
-    notification_.setBody(message);
-    notification_.setItemCount(count_);
-    notification_.publish();
 
-    // TODO: remoteAction: openDevice(device()->id())
+    Notification *notification = new Notification(this);
+    notification->setSummary(deviceName);
+    notification->setPreviewSummary(deviceName);
+    notification->setBody(message);
+    notification->setPreviewBody(message);
+    notification->setRemoteActions({ UI::openDevicePageDbusAction(deviceId) });
+
+    connect(notification, &Notification::closed,
+            this, [=](uint reason) { notification->deleteLater(); });
+
+    notification->publish();
 
     return true;
 }
@@ -76,11 +74,6 @@ void PingPlugin::sendPing(const QString& message)
     }
     bool success = sendPackage(np);
     qCDebug(logger).nospace() << "sendPing(" << message << "): " << success;
-}
-
-void PingPlugin::resetCount()
-{
-    count_ = 0;
 }
 
 QString PingPluginFactory::name() const

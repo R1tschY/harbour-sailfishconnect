@@ -39,7 +39,7 @@ QString SendNotificationsPluginFactory::name() const
 
 QString SendNotificationsPluginFactory::description() const
 {
-    return tr("Send notifications to the remote computer.");
+    return tr("Work in progress: Send notifications to the remote computer.");
 }
 
 QString SendNotificationsPluginFactory::iconUrl() const

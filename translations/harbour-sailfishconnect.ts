@@ -285,7 +285,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Send notifications to the remote computer.</source>
+        <source>Work in progress: Send notifications to the remote computer.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

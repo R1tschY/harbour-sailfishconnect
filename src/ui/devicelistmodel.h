@@ -41,6 +41,7 @@ public:
     };
 
     explicit DeviceListModel(QObject *parent = 0);
+    ~DeviceListModel();
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -52,6 +53,7 @@ public:
 private:
     Daemon* m_daemon;
     QList<Device*> m_devices;
+    QString m_model_uuid;
 
     void deviceIdAdded(const QString& id);
     void deviceIdRemoved(const QString& id);

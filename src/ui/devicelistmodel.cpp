@@ -19,6 +19,7 @@
 
 #include <QIcon>
 #include <QLoggingCategory>
+#include <QUuid>
 
 #include "../core/daemon.h"
 #include "../core/device.h"
@@ -30,6 +31,7 @@ static Q_LOGGING_CATEGORY(logger, "SailfishConnect.DeviceListModel")
 
 static QUrl deviceTypeToIcon(const QString& deviceType)
 {
+    // TODO: move to qml part
     if (deviceType == QLatin1String("smartphone")
             || deviceType == QLatin1String("phone"))
         return QStringLiteral("image://theme/icon-m-phone");
@@ -41,10 +43,12 @@ static QUrl deviceTypeToIcon(const QString& deviceType)
 }
 
 DeviceListModel::DeviceListModel(QObject *parent)
-    : QAbstractListModel(parent)
+    : QAbstractListModel(parent), m_uuid(QUuid().toString())
 {
     m_daemon = Daemon::instance();
-    m_devices = m_daemon->devicesList();
+
+    m_daemon->acquireDiscoveryMode(m_uuid);
+    m_devices = m_daemon->devicesList();       
 
     connect(m_daemon, &Daemon::deviceAdded, this, &DeviceListModel::deviceIdAdded);
     connect(m_daemon, &Daemon::deviceRemoved, this, &DeviceListModel::deviceIdRemoved);
@@ -52,6 +56,11 @@ DeviceListModel::DeviceListModel(QObject *parent)
     for (auto& device : asConst(m_devices)) {
         connectDevice(device);
     }
+}
+
+DeviceListModel::~DeviceListModel()
+{
+    m_daemon->releaseDiscoveryMode(m_uuid);
 }
 
 int DeviceListModel::rowCount(const QModelIndex &parent) const
@@ -92,12 +101,12 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> DeviceListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[NameRole] = "name";
-    roles[IdRole] = "id";
-    roles[IconUrlRole] = "iconUrl";
-    roles[TrustedRole] = "trusted";
-    roles[ReachableRole] = "reachable";
-    roles[HasPairingRequestsRole] = "hasPairingRequests";
+    roles.insert(NameRole, QLatin1String("name"));
+    roles.insert(IdRole, QLatin1String("id"));
+    roles.insert(IconUrlRole, QLatin1String("iconUrl"));
+    roles.insert(TrustedRole, QLatin1String("trusted"));
+    roles.insert(ReachableRole, QLatin1String("reachable"));
+    roles.insert(HasPairingRequestsRole, QLatin1String("hasPairingRequests"));
     return roles;
 }
 
@@ -109,7 +118,7 @@ void DeviceListModel::deviceIdAdded(const QString& id)
         return;
     }
     if (m_devices.contains(device)) {
-        qCDebug(logger) << "we have device already" << id;
+        qCDebug(logger) << "we have already device with id" << id;
         return;
     }
 
@@ -118,11 +127,6 @@ void DeviceListModel::deviceIdAdded(const QString& id)
         beginInsertRows(QModelIndex(), m_devices.length(), m_devices.length());
         m_devices.append(device);
         endInsertRows();
-    } else {
-        qCDebug(logger) << "device exists already";
-        disconnectDevice(m_devices[row]);
-        m_devices[row] = device;
-        dataChanged(index(row), index(row), {Qt::DisplayRole});
     }
 
     connectDevice(device);
@@ -177,13 +181,14 @@ void DeviceListModel::connectDevice(Device *device)
         deviceDataChanged(device, {HasPairingRequestsRole});
     });
     connect(device, &Device::destroyed, this, [=]{
+        qCCritical(logger) << "device destroyed with id" << id;
         deviceRemoved(device);
     });
 }
 
 void DeviceListModel::disconnectDevice(Device *device)
 {
-    disconnect(device, 0, this, 0);
+    disconnect(device, nullptr, this, nullptr);
 }
 
 int DeviceListModel::indexOfDevice(const QString &id)

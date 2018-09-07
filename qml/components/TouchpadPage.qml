@@ -60,25 +60,29 @@ Page {
     }
 
     MouseArea {
-        id: touchpad
+        id: touchpad        
         anchors {
             top: header.bottom
             left: page.left
             right: page.right
             bottom: page.bottom
         }
+
         hoverEnabled: true
         scrollGestureEnabled: true
+        propagateComposedEvents: false
+        preventStealing: true
+        acceptedButtons: Qt.AllButtons  // FIXME: is ignored
 
         onPositionChanged: {
             if (pressed) {
                 moved = true
                 if (lastX !== 0xDEAD) {
-                    plugin.move(mouseX - lastX, mouseY - lastY)
+                    plugin.move(mouse.x - lastX, mouse.y - lastY)
                 }
 
-                lastX = mouseX
-                lastY = mouseY
+                lastX = mouse.x
+                lastY = mouse.y
             }
         }
 
@@ -108,36 +112,10 @@ Page {
         }
 
         onWheel: {
-            // TODO: is not called
+            // FIXME: is ignored
             plugin.scroll(
                 wheel.angleDelta.x / 120,
                 wheel.angleDelta.y / 120)
-        }
-    }
-
-    // HACK: dirty hack to prevent sliding a page backward
-    // copied from https://github.com/KDE/kdeconnect-kde/blob/master/sfos/qml/pages/mousepad.qml
-    backNavigation: false
-
-    function _popPage() {
-        pageStack._pageStackIndicator._backPageIndicator().data[0].clicked.disconnect(_popPage)
-        pageStack.pop()
-    }
-
-    onStatusChanged: {
-        if (status == PageStatus.Active) {
-            pageStack._createPageIndicator()
-            pageStack._pageStackIndicator.clickablePageIndicators = true
-            pageStack._pageStackIndicator._backPageIndicator().backNavigation = true
-            pageStack._pageStackIndicator._backPageIndicator().data[0].clicked.connect(_popPage)
-        } else if (status == PageStatus.Deactivating) {
-            pageStack._pageStackIndicator.clickablePageIndicators = Qt.binding(function() {
-                return pageStack.currentPage ? pageStack.currentPage._clickablePageIndicators : true
-            })
-            pageStack._pageStackIndicator._backPageIndicator().backNavigation = Qt.binding(function() {
-                return pageStack._currentContainer && pageStack._currentContainer.page
-                        && pageStack._currentContainer.page.backNavigation && pageStack._currentContainer.pageStackIndex !== 0
-            })
         }
     }
 }

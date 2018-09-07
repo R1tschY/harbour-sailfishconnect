@@ -45,6 +45,7 @@ Page {
             PageHeader {
                 id: header
                 title: _device.name
+                _titleItem.textFormat: Text.PlainText
             }
 
             // Pairing UI

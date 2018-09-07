@@ -50,8 +50,10 @@ DeviceListModel::DeviceListModel(QObject *parent)
     m_daemon->acquireDiscoveryMode(m_uuid);
     m_devices = m_daemon->devicesList();       
 
-    connect(m_daemon, &Daemon::deviceAdded, this, &DeviceListModel::deviceIdAdded);
-    connect(m_daemon, &Daemon::deviceRemoved, this, &DeviceListModel::deviceIdRemoved);
+    connect(m_daemon, &Daemon::deviceAdded,
+            this, &DeviceListModel::deviceIdAdded);
+    connect(m_daemon, &Daemon::deviceRemoved,
+            this, &DeviceListModel::deviceIdRemoved);
 
     for (auto& device : asConst(m_devices)) {
         connectDevice(device);
@@ -101,12 +103,12 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> DeviceListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles.insert(NameRole, QLatin1String("name"));
-    roles.insert(IdRole, QLatin1String("id"));
-    roles.insert(IconUrlRole, QLatin1String("iconUrl"));
-    roles.insert(TrustedRole, QLatin1String("trusted"));
-    roles.insert(ReachableRole, QLatin1String("reachable"));
-    roles.insert(HasPairingRequestsRole, QLatin1String("hasPairingRequests"));
+    roles.insert(NameRole, "name");
+    roles.insert(IdRole, "id");
+    roles.insert(IconUrlRole, "iconUrl");
+    roles.insert(TrustedRole, "trusted");
+    roles.insert(ReachableRole, "reachable");
+    roles.insert(HasPairingRequestsRole, "hasPairingRequests");
     return roles;
 }
 
@@ -181,7 +183,7 @@ void DeviceListModel::connectDevice(Device *device)
         deviceDataChanged(device, {HasPairingRequestsRole});
     });
     connect(device, &Device::destroyed, this, [=]{
-        qCCritical(logger) << "device destroyed with id" << id;
+        qCCritical(logger) << "device destroyed with id" << device->id();
         deviceRemoved(device);
     });
 }

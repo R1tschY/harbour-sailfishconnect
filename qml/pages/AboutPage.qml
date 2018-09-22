@@ -91,7 +91,7 @@ Page {
                 x: Theme.horizontalPageMargin
                 width: page.width - 2 * Theme.horizontalPageMargin
                 wrapMode: Text.WordWrap
-                text: qsTr("This program is free software: you can redistribute it and/or modify" +
+                text: "This program is free software: you can redistribute it and/or modify" +
                     "it under the terms of the GNU General Public License as published by " +
                     "the Free Software Foundation, either version 3 of the License, or " +
                     "(at your option) any later version. <br/><br/>" +
@@ -102,7 +102,7 @@ Page {
                     "GNU General Public License for more details.<br/><br/>" +
 
                     "You should have received a copy of the GNU General Public License " +
-                    "along with this program. If not, see <a href=\"http://www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a>.")
+                    "along with this program. If not, see <a href=\"http://www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a>."
                 textFormat: Text.StyledText
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeSmall

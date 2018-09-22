@@ -24,8 +24,8 @@
 #include "socketlinereader.h"
 #include "lanlinkprovider.h"
 #include "../../corelogging.h"
-#include "uploadjob.h"
-#include "downloadjob.h"
+#include "lanuploadjob.h"
+#include "landownloadjob.h"
 
 using namespace SailfishConnect;
 
@@ -100,9 +100,9 @@ bool LanDeviceLink::sendPackage(NetworkPackage& np)
     return (written != -1);
 }
 
-UploadJob* LanDeviceLink::sendPayload(const NetworkPackage& np)
+LanUploadJob* LanDeviceLink::sendPayload(const NetworkPackage& np)
 {
-    UploadJob* job = new UploadJob(np.payload(), deviceId());
+    LanUploadJob* job = new LanUploadJob(np.payload(), deviceId());
     job->start();
     return job;
 }
@@ -129,7 +129,7 @@ void LanDeviceLink::dataReceived()
         //FIXME: The next two lines shouldn't be needed! Why are they here?
         transferInfo.insert(QStringLiteral("useSsl"), true);
         transferInfo.insert(QStringLiteral("deviceId"), deviceId());
-        DownloadJob* job = new DownloadJob(m_socketLineReader->peerAddress(), transferInfo);
+        LanDownloadJob* job = new LanDownloadJob(m_socketLineReader->peerAddress(), transferInfo);
         job->start();
         package.setPayload(job->getPayload(), package.payloadSize());
     }

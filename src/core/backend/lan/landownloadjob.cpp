@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "downloadjob.h"
+#include "landownloadjob.h"
 
 #ifndef Q_OS_WIN
 #include <sys/socket.h>
@@ -33,7 +33,7 @@
 
 using namespace SailfishConnect;
 
-DownloadJob::DownloadJob(const QHostAddress& address, const QVariantMap& transferInfo)
+LanDownloadJob::LanDownloadJob(const QHostAddress& address, const QVariantMap& transferInfo)
     : Job()
     , m_address(address)
     , m_port(transferInfo[QStringLiteral("port")].toInt())
@@ -42,37 +42,37 @@ DownloadJob::DownloadJob(const QHostAddress& address, const QVariantMap& transfe
     LanLinkProvider::configureSslSocket(m_socket.data(), transferInfo.value(QStringLiteral("deviceId")).toString(), true);
 
     connect(m_socket.data(), SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketFailed(QAbstractSocket::SocketError)));
-    connect(m_socket.data(), &QAbstractSocket::connected, this, &DownloadJob::socketConnected);
+    connect(m_socket.data(), &QAbstractSocket::connected, this, &LanDownloadJob::socketConnected);
     // emit readChannelFinished when the socket gets disconnected. This seems to be a bug in upstream QSslSocket.
     // Needs investigation and upstreaming of the fix. QTBUG-62257
     connect(m_socket.data(), &QAbstractSocket::disconnected, m_socket.data(), &QAbstractSocket::readChannelFinished);
 }
 
-DownloadJob::~DownloadJob()
+LanDownloadJob::~LanDownloadJob()
 {
 
 }
 
-void DownloadJob::doStart()
+void LanDownloadJob::doStart()
 {
     //TODO: Timeout?
     // Cannot use read only, might be due to ssl handshake, getting QIODevice::ReadOnly error and no connection
     m_socket->connectToHostEncrypted(m_address.toString(), m_port, QIODevice::ReadWrite);
 }
 
-void DownloadJob::socketFailed(QAbstractSocket::SocketError error)
+void LanDownloadJob::socketFailed(QAbstractSocket::SocketError error)
 {
     qWarning() << error << m_socket->errorString();
     setErrorString(m_socket->errorString());
     exit();
 }
 
-QSharedPointer<QIODevice> DownloadJob::getPayload()
+QSharedPointer<QIODevice> LanDownloadJob::getPayload()
 {
     return m_socket.staticCast<QIODevice>();
 }
 
-void DownloadJob::socketConnected()
+void LanDownloadJob::socketConnected()
 {
     exit();
 }

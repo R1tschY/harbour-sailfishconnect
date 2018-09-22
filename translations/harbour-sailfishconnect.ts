@@ -16,10 +16,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This program is free software: you can redistribute it and/or modifyit under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. &lt;br/&gt;&lt;br/&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.&lt;br/&gt;&lt;br/&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;http://www.gnu.org/licenses/&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -176,21 +172,6 @@
     </message>
 </context>
 <context>
-    <name>FileTransferJob</name>
-    <message>
-        <source>Receiving file over KDE Connect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filename already present</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Received incomplete file: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
@@ -209,6 +190,13 @@
     </message>
     <message>
         <source>Timed out</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LanUploadJob</name>
+    <message>
+        <source>Couldn&apos;t find an available port</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -257,6 +245,48 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::CopyJob</name>
+    <message>
+        <source>Read error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input stream is not readable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output stream is not writable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read more bytes of input stream than expected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Early end of input stream</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::DownloadJob</name>
+    <message>
+        <source>Receiving file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create destination folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not open file for writing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::MprisRemotePluginFactory</name>
     <message>
         <source>Multimedia controls</source>
@@ -286,6 +316,17 @@
     </message>
     <message>
         <source>Work in progress: Send notifications to the remote computer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::SharePluginFactory</name>
+    <message>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share files and URLs.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -342,13 +383,6 @@
     <message>
         <source></source>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>UploadJob</name>
-    <message>
-        <source>Couldn&apos;t find an available port</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -1,19 +1,27 @@
 #include "job.h"
 
+#include <QLoggingCategory>
+
 namespace SailfishConnect {
 
-Job::Job()
-    : QObject(JobManager::instance())
+static Q_LOGGING_CATEGORY(logger, "sailfishconnect.job")
+
+Job::Job(QObject *parent)
+    : QObject(parent)
+{ }
+
+Job::~Job()
 {
-    JobManager::instance()->addJob(this);
+    cancel();
 }
 
 void Job::start()
 {
-    if (m_isRunning)
+    if (m_state != State::Pending)
         return;
 
-    m_isRunning = true;
+    qCInfo(logger) << "Job" << m_title << "is starting";
+    m_state = State::Running;
     doStart();
 }
 
@@ -51,39 +59,60 @@ void Job::setProcessedBytes(qint64 processedBytes)
 
 void Job::exit()
 {
-    if (!m_isRunning)
+    if (isFinished())
         return;
 
-    m_isRunning = false;
+    m_state = State::Finished;
 
     if (m_errorString.isEmpty()) {
-        emit success();
+        onSuccess();
     } else {
-        emit error();
+        onError();
     }
 
-    emit finished();
+    onFinished();
+}
 
-    this->deleteLater();
+void Job::abort(const QString &error)
+{
+    setErrorString(error);
+    exit();
 }
 
 void Job::cancel()
 {
-    if (!m_isRunning)
+    if (isFinished())
         return;
 
+    qCInfo(logger) << "Job" << m_title << "was canceled by user";
     bool canceled = !doCancelling();
-    if (canceled || !m_isRunning) {
-        m_isRunning = false;
+    if (canceled || !isRunning()) {
+        m_state = State::Finished;
         m_wasCancelled = canceled;
-        emit finished();
-        this->deleteLater();
+        onFinished();
     }
 }
 
 bool Job::doCancelling()
 {
     return false;
+}
+
+void Job::onFinished()
+{
+    emit finished();
+}
+
+void Job::onSuccess()
+{
+    qCInfo(logger) << "Job" << m_title << "was successful";
+    emit success();
+}
+
+void Job::onError()
+{
+    qCWarning(logger) << "Job" << m_title << "failed with" << m_errorString;
+    emit error();
 }
 
 void Job::setTitle(const QString& title)

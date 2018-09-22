@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "uploadjob.h"
+#include "lanuploadjob.h"
 
 #include "lanlinkprovider.h"
 #include "../../kdeconnectconfig.h"
@@ -26,7 +26,7 @@
 
 using namespace SailfishConnect;
 
-UploadJob::UploadJob(const QSharedPointer<QIODevice>& source, const QString& deviceId)
+LanUploadJob::LanUploadJob(const QSharedPointer<QIODevice>& source, const QString& deviceId)
     : Job()
     , m_input(source)
     , m_server(new Server(this))
@@ -34,11 +34,11 @@ UploadJob::UploadJob(const QSharedPointer<QIODevice>& source, const QString& dev
     , m_port(0)
     , m_deviceId(deviceId) // We will use this info if link is on ssl, to send encrypted payload
 {
-    connect(m_input.data(), &QIODevice::readyRead, this, &UploadJob::startUploading);
-    connect(m_input.data(), &QIODevice::aboutToClose, this, &UploadJob::aboutToClose);
+    connect(m_input.data(), &QIODevice::readyRead, this, &LanUploadJob::startUploading);
+    connect(m_input.data(), &QIODevice::aboutToClose, this, &LanUploadJob::aboutToClose);
 }
 
-void UploadJob::doStart()
+void LanUploadJob::doStart()
 {
     m_port = MIN_PORT;
     while (!m_server->listen(QHostAddress::Any, m_port)) {
@@ -51,10 +51,10 @@ void UploadJob::doStart()
             return;
         }
     }
-    connect(m_server, &QTcpServer::newConnection, this, &UploadJob::newConnection);
+    connect(m_server, &QTcpServer::newConnection, this, &LanUploadJob::newConnection);
 }
 
-void UploadJob::newConnection()
+void LanUploadJob::newConnection()
 {
     if (!m_input->open(QIODevice::ReadOnly)) {
         qCWarning(coreLogger) << "error when opening the input to upload";
@@ -65,14 +65,14 @@ void UploadJob::newConnection()
 
     Server* server = qobject_cast<Server*>(sender());
     // FIXME : It is called again when payload sending is finished. Unsolved mystery :(
-    disconnect(m_server, &QTcpServer::newConnection, this, &UploadJob::newConnection);
+    disconnect(m_server, &QTcpServer::newConnection, this, &LanUploadJob::newConnection);
 
     m_socket = server->nextPendingConnection();
     m_socket->setParent(this);
-    connect(m_socket, &QSslSocket::disconnected, this, &UploadJob::cleanup);
+    connect(m_socket, &QSslSocket::disconnected, this, &LanUploadJob::cleanup);
     connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketFailed(QAbstractSocket::SocketError)));
     connect(m_socket, SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrors(QList<QSslError>)));
-    connect(m_socket, &QSslSocket::encrypted, this, &UploadJob::startUploading);
+    connect(m_socket, &QSslSocket::encrypted, this, &LanUploadJob::startUploading);
 //     connect(mSocket, &QAbstractSocket::stateChanged, [](QAbstractSocket::SocketState state){ qDebug() << "statechange" << state; });
 
     LanLinkProvider::configureSslSocket(m_socket, m_deviceId, true);
@@ -80,8 +80,9 @@ void UploadJob::newConnection()
     m_socket->startServerEncryption();
 }
 
-void UploadJob::startUploading()
+void LanUploadJob::startUploading()
 {
+    // TODO: make async
     while ( m_input->bytesAvailable() > 0 )
     {
         qint64 bytes = qMin(m_input->bytesAvailable(), (qint64)4096);
@@ -98,26 +99,26 @@ void UploadJob::startUploading()
     m_input->close();
 }
 
-void UploadJob::aboutToClose()
+void LanUploadJob::aboutToClose()
 {
     qDebug() << "closing...";
     m_socket->disconnectFromHost();
 }
 
-void UploadJob::cleanup()
+void LanUploadJob::cleanup()
 {
     m_socket->close();
     qDebug() << "closed!";
     exit();
 }
 
-QVariantMap UploadJob::transferInfo()
+QVariantMap LanUploadJob::transferInfo()
 {
     Q_ASSERT(m_port != 0);
     return {{"port", m_port}};
 }
 
-void UploadJob::socketFailed(QAbstractSocket::SocketError error)
+void LanUploadJob::socketFailed(QAbstractSocket::SocketError error)
 {
     qWarning() << "error uploading" << error;
     setErrorString(m_socket->errorString());
@@ -125,7 +126,7 @@ void UploadJob::socketFailed(QAbstractSocket::SocketError error)
     exit();
 }
 
-void UploadJob::sslErrors(const QList<QSslError>& errors)
+void LanUploadJob::sslErrors(const QList<QSslError>& errors)
 {
     qWarning() << "ssl errors" << errors;
 

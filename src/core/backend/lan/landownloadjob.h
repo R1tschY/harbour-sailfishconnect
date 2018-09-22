@@ -18,47 +18,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UPLOADJOB_H
-#define UPLOADJOB_H
+#ifndef DOWNLOADJOB_H
+#define DOWNLOADJOB_H
 
 #include <QThread>
 #include <QIODevice>
 #include <QVariantMap>
+#include <QHostAddress>
 #include <QSharedPointer>
 #include <QSslSocket>
+#include <QBuffer>
 #include <utils/job.h>
-#include "server.h"
 
-class UploadJob : public SailfishConnect::Job
+
+class LanDownloadJob : public SailfishConnect::Job
 {
     Q_OBJECT
 public:
-    explicit UploadJob(const QSharedPointer<QIODevice>& source, const QString& deviceId);
-
-
-    QVariantMap transferInfo();
+    LanDownloadJob(const QHostAddress& address, const QVariantMap& transferInfo);
+    ~LanDownloadJob() override;
+    void doStart() override;
+    QSharedPointer<QIODevice> getPayload();
 
 private:
-    const QSharedPointer<QIODevice> m_input;
-    Server * const m_server;
-    QSslSocket* m_socket;
-    quint16 m_port;
-    const QString m_deviceId;
-
-    const static quint16 MIN_PORT = 1739;
-    const static quint16 MAX_PORT = 1764;
+    QHostAddress m_address;
+    qint16 m_port;
+    QSharedPointer<QSslSocket> m_socket;
 
 private Q_SLOTS:
-    void startUploading();
-    void newConnection();
-    void aboutToClose();
-    void cleanup();
-
-    void socketFailed(QAbstractSocket::SocketError);
-    void sslErrors(const QList<QSslError>& errors);
-
-private:
-    void doStart() override;
+    void socketFailed(QAbstractSocket::SocketError error);
+    void socketConnected();
 };
 
 #endif // UPLOADJOB_H

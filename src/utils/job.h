@@ -36,7 +36,12 @@ class Job : public QObject
     Q_PROPERTY(qint64 totalBytes READ totalBytes NOTIFY totalBytesChanged)
     Q_PROPERTY(qint64 processedBytes READ processedBytes NOTIFY processedBytesChanged)
 public:
-    explicit Job();
+    enum class State {
+        Pending, Running, Finished
+    };
+
+    explicit Job(QObject* parent = nullptr);
+    ~Job();
 
     QString errorString() const { return m_errorString; }
     QString title() const { return m_title; }
@@ -44,7 +49,9 @@ public:
     qint64 totalBytes() const { return m_totalBytes; }
     qint64 processedBytes() const { return m_processedBytes; }
     Q_SCRIPTABLE bool wasCancelled() const { return m_wasCancelled; }
-    Q_SCRIPTABLE bool isRunning() const { return m_isRunning; }
+    Q_SCRIPTABLE bool isPending() const { return m_state == State::Pending; }
+    Q_SCRIPTABLE bool isRunning() const { return m_state == State::Running; }
+    Q_SCRIPTABLE bool isFinished() const { return m_state == State::Finished; }
 
 public slots:
     void start();
@@ -65,6 +72,10 @@ protected:
     virtual void doStart() = 0;
     virtual bool doCancelling();
 
+    virtual void onFinished();
+    virtual void onSuccess();
+    virtual void onError();
+
     void setTitle(const QString& title);
     void setErrorString(const QString& errorString);
     void setDescription(const QString& description);
@@ -73,14 +84,20 @@ protected:
 
     void exit();
 
+    /**
+     * @brief convenience function to exit job with a error
+     * @param error error message
+     */
+    void abort(const QString& error);
+
 private:
     QString m_errorString;
     QString m_title;
     QString m_description;
-    qint64 m_totalBytes;
-    qint64 m_processedBytes;
+    qint64 m_totalBytes = -1;
+    qint64 m_processedBytes = 0;
 
-    bool m_isRunning = false;
+    State m_state = State::Pending;
     bool m_wasCancelled = false;
 };
 

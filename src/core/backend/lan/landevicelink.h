@@ -30,7 +30,7 @@
 #include "../devicelink.h"
 
 class SocketLineReader;
-class UploadJob;
+class LanUploadJob;
 
 class LanDeviceLink
     : public DeviceLink
@@ -45,7 +45,7 @@ public:
 
     QString name() override;
     bool sendPackage(NetworkPackage& np) override;
-    UploadJob* sendPayload(const NetworkPackage& np);
+    LanUploadJob* sendPayload(const NetworkPackage& np);
 
     void userRequestsPair() override;
     void userRequestsUnpair() override;

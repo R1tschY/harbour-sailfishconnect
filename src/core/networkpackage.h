@@ -31,8 +31,9 @@
 #include <QSharedPointer>
 #include <QUrl>
 
-
-class FileTransferJob;
+namespace SailfishConnect {
+class DownloadJob;
+} // namespace SailfishConnect
 
 class NetworkPackage
 {
@@ -72,7 +73,7 @@ public:
     void setPayload(const QSharedPointer<QIODevice>& device, qint64 payloadSize) { m_payload = device; m_payloadSize = payloadSize; Q_ASSERT(m_payloadSize >= -1); }
     bool hasPayload() const { return (m_payloadSize != 0); }
     qint64 payloadSize() const { return m_payloadSize; } //-1 means it is an endless stream
-    FileTransferJob* createPayloadTransferJob(const QUrl& destination) const;
+    SailfishConnect::DownloadJob* createDownloadPayloadJob(const QString &destination) const;
 
     //To be called by a particular DeviceLink
     QVariantMap payloadTransferInfo() const { return m_payloadTransferInfo; }

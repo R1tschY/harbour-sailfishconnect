@@ -32,7 +32,7 @@
 #include "corelogging.h"
 #include "kdeconnectconfig.h"
 #include "pluginloader.h"
-#include "filetransferjob.h"
+#include "downloadjob.h"
 
 using namespace SailfishConnect;
 
@@ -153,19 +153,12 @@ bool NetworkPackage::unserialize(const QByteArray& a, NetworkPackage* np)
     }
     np->m_payloadTransferInfo = variant[QStringLiteral("payloadTransferInfo")].toMap(); //Will return an empty qvariantmap if was not present, which is ok
 
-    //Ids containing characters that are not allowed as dbus paths would make app crash
-    if (np->m_body.contains(QStringLiteral("deviceId")))
-    {
-        QString deviceId = np->get<QString>(QStringLiteral("deviceId"));
-        np->set(QStringLiteral("deviceId"), deviceId);
-    }
-
     return true;
-
 }
 
-FileTransferJob* NetworkPackage::createPayloadTransferJob(const QUrl& destination) const
+DownloadJob* NetworkPackage::createDownloadPayloadJob(
+        const QString& destination) const
 {
-    return new FileTransferJob(payload(), payloadSize(), destination);
+    return new DownloadJob(payload(), destination, payloadSize());
 }
 

@@ -1,0 +1,5 @@
+{
+    "Id": "SailfishConnect::SharePlugin",
+    "IncomingCapabilities": ["kdeconnect.share.request"],
+    "OutcomingCapabilities": ["kdeconnect.share.request"]
+}

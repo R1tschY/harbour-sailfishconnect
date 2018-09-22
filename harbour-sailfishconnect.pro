@@ -44,8 +44,6 @@ SOURCES += \
     src/utils/sslhelper.cpp \
     src/appdaemon.cpp \
     src/ui/devicelistmodel.cpp \
-    src/core/backend/lan/downloadjob.cpp \
-    src/core/backend/lan/uploadjob.cpp \
     src/sailfishconnect.cpp \
     src/core/pluginloader.cpp \
     src/plugins/battery/batteryplugin.cpp \
@@ -58,12 +56,17 @@ SOURCES += \
     src/plugins/telepathy/telepathyplugin.cpp \
     src/plugins/mprisremote/mprisremoteplugin.cpp \
     src/ui/mprisplayersmodel.cpp \
-    src/core/filetransferjob.cpp \
     src/utils/job.cpp \
     src/plugins/sendnotifications/notificationslistener.cpp \
     src/plugins/sendnotifications/notifyingapplication.cpp \
     src/plugins/sendnotifications/sendnotificationsplugin.cpp \
-    src/plugins/touchpad/touchpadplugin.cpp
+    src/plugins/touchpad/touchpadplugin.cpp \
+    src/plugins/share/shareplugin.cpp \
+    src/utils/filehelper.cpp \
+    src/utils/copyjob.cpp \
+    src/core/downloadjob.cpp \
+    src/core/backend/lan/landownloadjob.cpp \
+    src/core/backend/lan/lanuploadjob.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -86,7 +89,8 @@ DISTFILES += \
     src/plugins/sendnotifications/metadata.json \
     src/plugins/touchpad/metadata.json \
     qml/components/Touchpad.qml \
-    qml/components/TouchpadPage.qml
+    qml/components/TouchpadPage.qml \
+    src/plugins/share/metadata.json
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
@@ -123,8 +127,6 @@ HEADERS += \
     src/utils/sslhelper.h \
     src/appdaemon.h \
     src/ui/devicelistmodel.h \
-    src/core/backend/lan/downloadjob.h \
-    src/core/backend/lan/uploadjob.h \
     src/core/pluginloader.h \
     src/plugins/battery/batteryplugin.h \
     src/plugins/ping/pingplugin.h \
@@ -138,12 +140,17 @@ HEADERS += \
     src/plugins/telepathy/telepathyplugin.h \
     src/plugins/mprisremote/mprisremoteplugin.h \
     src/ui/mprisplayersmodel.h \
-    src/core/filetransferjob.h \
     src/utils/job.h \
     src/plugins/sendnotifications/notificationslistener.h \
     src/plugins/sendnotifications/notifyingapplication.h \
     src/plugins/sendnotifications/sendnotificationsplugin.h \
-    src/plugins/touchpad/touchpadplugin.h
+    src/plugins/touchpad/touchpadplugin.h \
+    src/plugins/share/shareplugin.h \
+    src/utils/filehelper.h \
+    src/utils/copyjob.h \
+    src/core/downloadjob.h \
+    src/core/backend/lan/landownloadjob.h \
+    src/core/backend/lan/lanuploadjob.h
 
 SUBDIRS += \
     src/plugins/battery/SailfishConnectBatteryPlugin.pro

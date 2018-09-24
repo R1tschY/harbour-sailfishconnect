@@ -25,8 +25,7 @@
 #include <QSslSocket>
 
 // This class overrides QTcpServer to bind QSslSocket to native socket descriptor instead of QTcpSocket
-class Server
-    : public QTcpServer
+class Server : public QTcpServer
 {
 
     Q_OBJECT

@@ -26,27 +26,19 @@
 #include <QVariantMap>
 #include <QSharedPointer>
 #include <QSslSocket>
-#include <utils/job.h>
+#include <utils/copyjob.h>
 #include "server.h"
 
-class LanUploadJob : public SailfishConnect::Job
+namespace SailfishConnect {
+
+class LanUploadJob : public CopyJob
 {
     Q_OBJECT
 public:
-    explicit LanUploadJob(const QSharedPointer<QIODevice>& source, const QString& deviceId);
-
+    explicit LanUploadJob(
+            const QSharedPointer<QIODevice>& source, const QString& deviceId);
 
     QVariantMap transferInfo();
-
-private:
-    const QSharedPointer<QIODevice> m_input;
-    Server * const m_server;
-    QSslSocket* m_socket;
-    quint16 m_port;
-    const QString m_deviceId;
-
-    const static quint16 MIN_PORT = 1739;
-    const static quint16 MAX_PORT = 1764;
 
 private Q_SLOTS:
     void startUploading();
@@ -58,7 +50,18 @@ private Q_SLOTS:
     void sslErrors(const QList<QSslError>& errors);
 
 private:
+    const QSharedPointer<QIODevice> m_input;
+    Server* m_server;
+    QSharedPointer<QSslSocket> m_socket;
+    quint16 m_port;
+    const QString m_deviceId;
+
+    const static quint16 MIN_PORT = 1739;
+    const static quint16 MAX_PORT = 1764;
+
     void doStart() override;
 };
+
+} // namespace SailfishConnect
 
 #endif // UPLOADJOB_H

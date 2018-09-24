@@ -52,6 +52,7 @@ private:
     qint64 m_size = -1;
     qint64 m_writtenBytes = 0;
     bool m_eof = false;
+    bool m_started = false;
 
     void poll();
     void pollAtEof();

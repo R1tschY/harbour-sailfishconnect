@@ -29,7 +29,7 @@ void CopyJob::close()
 
 void CopyJob::setDestination(const QSharedPointer<QIODevice> &destination)
 {
-    if (!isPending())
+    if (m_started)
         return;
 
     m_destination = destination;
@@ -37,7 +37,7 @@ void CopyJob::setDestination(const QSharedPointer<QIODevice> &destination)
 
 void CopyJob::setSource(const QSharedPointer<QIODevice> &source)
 {
-    if (!isPending())
+    if (m_started)
         return;
 
     m_source = source;
@@ -54,6 +54,8 @@ void CopyJob::doStart()
     if (!m_destination->isOpen() || !m_destination->isWritable()) {
         return abort(tr("Output stream is not writable."));
     }
+
+    m_started = true;
 
     setTotalBytes(
                 (m_size >= 0)
@@ -79,6 +81,7 @@ void CopyJob::poll()
         return;
 
     if (m_source->bytesAvailable() > 0) {
+        // TODO: read chunk-wise
         qint64 orig_buffer_size = m_buffer.size();
         m_buffer.resize(orig_buffer_size + m_source->bytesAvailable());
         qint64 bytes = m_source->read(m_buffer.data(), m_buffer.size());
@@ -95,7 +98,7 @@ void CopyJob::poll()
     }
 
     if (m_buffer.size() > 0) {
-        qint64 bytes = m_destination->write(m_buffer.data(), m_buffer.size());
+        qint64 bytes = m_destination->write(m_buffer);
         if (bytes < 0) {
             // write error
             abort(tr("Write error: %1").arg(m_source->errorString()));

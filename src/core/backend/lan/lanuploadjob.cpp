@@ -24,18 +24,22 @@
 #include "../../kdeconnectconfig.h"
 #include "../../corelogging.h"
 
-using namespace SailfishConnect;
+namespace SailfishConnect {
 
-LanUploadJob::LanUploadJob(const QSharedPointer<QIODevice>& source, const QString& deviceId)
-    : Job()
+LanUploadJob::LanUploadJob(
+        const QSharedPointer<QIODevice>& source, const QString& deviceId)
+    : CopyJob(source, QSharedPointer<QIODevice>())
     , m_input(source)
     , m_server(new Server(this))
     , m_socket(nullptr)
     , m_port(0)
-    , m_deviceId(deviceId) // We will use this info if link is on ssl, to send encrypted payload
+    // We will use this info if link is on ssl, to send encrypted payload
+    , m_deviceId(deviceId)
 {
-    connect(m_input.data(), &QIODevice::readyRead, this, &LanUploadJob::startUploading);
-    connect(m_input.data(), &QIODevice::aboutToClose, this, &LanUploadJob::aboutToClose);
+    connect(m_input.data(), &QIODevice::readyRead,
+            this, &LanUploadJob::startUploading);
+    connect(m_input.data(), &QIODevice::aboutToClose,
+            this, &LanUploadJob::aboutToClose);
 }
 
 void LanUploadJob::doStart()
@@ -43,15 +47,17 @@ void LanUploadJob::doStart()
     m_port = MIN_PORT;
     while (!m_server->listen(QHostAddress::Any, m_port)) {
         m_port++;
-        if (m_port > MAX_PORT) { //No ports available?
-            qCWarning(coreLogger) << "Error opening a port in range" << MIN_PORT << "-" << MAX_PORT;
+        if (m_port > MAX_PORT) {
+            // No ports available?
+            qCWarning(coreLogger)
+                    << "Error opening a port in range"
+                    << MIN_PORT << "-" << MAX_PORT;
             m_port = 0;
-            setErrorString(tr("Couldn't find an available port"));
-            exit();
-            return;
+            return abort(tr("Couldn't find an available port"));
         }
     }
-    connect(m_server, &QTcpServer::newConnection, this, &LanUploadJob::newConnection);
+    connect(m_server, &QTcpServer::newConnection,
+            this, &LanUploadJob::newConnection);
 }
 
 void LanUploadJob::newConnection()
@@ -62,41 +68,36 @@ void LanUploadJob::newConnection()
         cleanup();
         return;
     }
+    setSource(m_input);
 
     Server* server = qobject_cast<Server*>(sender());
     // FIXME : It is called again when payload sending is finished. Unsolved mystery :(
-    disconnect(m_server, &QTcpServer::newConnection, this, &LanUploadJob::newConnection);
+    disconnect(m_server, &QTcpServer::newConnection,
+               this, &LanUploadJob::newConnection);
 
-    m_socket = server->nextPendingConnection();
+    m_socket = QSharedPointer<QSslSocket>(server->nextPendingConnection());
     m_socket->setParent(this);
-    connect(m_socket, &QSslSocket::disconnected, this, &LanUploadJob::cleanup);
-    connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketFailed(QAbstractSocket::SocketError)));
-    connect(m_socket, SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrors(QList<QSslError>)));
-    connect(m_socket, &QSslSocket::encrypted, this, &LanUploadJob::startUploading);
-//     connect(mSocket, &QAbstractSocket::stateChanged, [](QAbstractSocket::SocketState state){ qDebug() << "statechange" << state; });
+    setDestination(m_socket);
 
-    LanLinkProvider::configureSslSocket(m_socket, m_deviceId, true);
+    connect(m_socket.data(), &QSslSocket::disconnected,
+            this, &LanUploadJob::cleanup);
+    connect(m_socket.data(), SIGNAL(error(QAbstractSocket::SocketError)),
+            this, SLOT(socketFailed(QAbstractSocket::SocketError)));
+    connect(m_socket.data(), SIGNAL(sslErrors(QList<QSslError>)),
+            this, SLOT(sslErrors(QList<QSslError>)));
+    connect(m_socket.data(), &QSslSocket::encrypted,
+            this, &LanUploadJob::startUploading);
+//     connect(mSocket, &QAbstractSocket::stateChanged,
+//             this, [](QAbstractSocket::SocketState state){
+//                  qDebug() << "statechange" << state; });
 
+    LanLinkProvider::configureSslSocket(m_socket.data(), m_deviceId, true);
     m_socket->startServerEncryption();
 }
 
 void LanUploadJob::startUploading()
 {
-    // TODO: make async
-    while ( m_input->bytesAvailable() > 0 )
-    {
-        qint64 bytes = qMin(m_input->bytesAvailable(), (qint64)4096);
-        int w = m_socket->write(m_input->read(bytes));
-        if (w<0) {
-            qCWarning(coreLogger) << "error when writing data to upload" << bytes << m_input->bytesAvailable();
-            break;
-        }
-        else
-        {
-            while ( m_socket->flush() );
-        }
-    }
-    m_input->close();
+    CopyJob::doStart();
 }
 
 void LanUploadJob::aboutToClose()
@@ -135,3 +136,5 @@ void LanUploadJob::sslErrors(const QList<QSslError>& errors)
     m_socket->close();
     exit();
 }
+
+} // namespace SailfishConnect

@@ -30,7 +30,10 @@
 #include "../devicelink.h"
 
 class SocketLineReader;
+
+namespace SailfishConnect {
 class LanUploadJob;
+} // namespace SailfishConnect
 
 class LanDeviceLink
     : public DeviceLink
@@ -45,7 +48,7 @@ public:
 
     QString name() override;
     bool sendPackage(NetworkPackage& np) override;
-    LanUploadJob* sendPayload(const NetworkPackage& np);
+    SailfishConnect::LanUploadJob* sendPayload(const NetworkPackage& np);
 
     void userRequestsPair() override;
     void userRequestsUnpair() override;

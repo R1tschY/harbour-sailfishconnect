@@ -187,6 +187,10 @@ PluginManager::PluginManager()
         }
     }
 
+    for (auto& keyValue : asConst(plugins)) {
+       keyValue.second.factory->registerTypes();
+    }
+
     qCDebug(coreLogger) << "loaded plugins:" << getPluginList();
 }
 

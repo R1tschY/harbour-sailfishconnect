@@ -45,6 +45,8 @@ public:
     virtual QString name() const = 0;
     virtual QString description() const = 0;
     virtual QString iconUrl() const = 0;
+
+    virtual void registerTypes();
 };
 
 #define SailfishConnectPlugin_iid "SailfishConnect.Plugin"

@@ -80,3 +80,8 @@ bool KdeConnectPlugin::sendPackage(NetworkPackage& np) const
     return d->m_device->sendPackage(np);
 }
 
+
+void SailfishConnectPluginFactory::registerTypes()
+{
+
+}

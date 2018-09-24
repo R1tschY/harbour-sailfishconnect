@@ -134,6 +134,7 @@ Page {
 
                 // Plugin UIs
 
+                ShareUi { id: shareUi }
                 MprisUi { id: mprisUi }
                 Touchpad { id: touchpad }
                 ClipboardUi { id: clipboardUi }

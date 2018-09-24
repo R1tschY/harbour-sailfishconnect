@@ -90,7 +90,8 @@ DISTFILES += \
     src/plugins/touchpad/metadata.json \
     qml/components/Touchpad.qml \
     qml/components/TouchpadPage.qml \
-    src/plugins/share/metadata.json
+    src/plugins/share/metadata.json \
+    qml/components/ShareUi.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 

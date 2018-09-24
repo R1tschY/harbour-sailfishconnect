@@ -24,6 +24,7 @@
 #include <QDateTime>
 #include <QTemporaryFile>
 #include <QDesktopServices>
+#include <QtQml>
 
 #include <core/downloadjob.h>
 #include <utils/filehelper.h>
@@ -67,7 +68,9 @@ bool SharePlugin::receivePackage(const NetworkPackage& np)
                     incomingPath() + "/" + filename);
         job->setParent(this);
         connect(job, &Job::finished, this, &SharePlugin::finishedFileTransfer);
-        // daemon->addJob(job);
+        // TODO: daemon->addJob(job);
+        // TODO: add to a job queue in which only x downloads/uploads are
+        // running in parallel
         job->start();
     } else if (np.has(QStringLiteral("text"))) {
         auto text = np.get<QString>(QStringLiteral("text"));
@@ -134,7 +137,7 @@ QString SharePluginFactory::name() const
 
 QString SharePluginFactory::description() const
 {
-    return tr("Share files and URLs.");
+    return tr("Send and receive files and URLs.");
 }
 
 QString SharePluginFactory::iconUrl() const
@@ -142,6 +145,14 @@ QString SharePluginFactory::iconUrl() const
     return "image://theme/icon-m-share";
 }
 
+void SharePluginFactory::registerTypes()
+{
+    qmlRegisterUncreatableType<SharePlugin>(
+                "SailfishConnect.Share", 0, 2, "SharePlugin",
+                QStringLiteral("not intented to be created from users"));
+}
+
 } // namespace SailfishConnect
 
 Q_IMPORT_PLUGIN(SharePluginFactory)
+

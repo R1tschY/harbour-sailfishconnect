@@ -61,6 +61,8 @@ public:
     QString name() const override;
     QString description() const override;
     QString iconUrl() const override;
+
+    void registerTypes() override;
 };
 
 } // namespace SailfishConnect

@@ -194,13 +194,6 @@
     </message>
 </context>
 <context>
-    <name>LanUploadJob</name>
-    <message>
-        <source>Couldn&apos;t find an available port</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MprisUi</name>
     <message>
         <source>No remote players</source>
@@ -287,6 +280,13 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::LanUploadJob</name>
+    <message>
+        <source>Couldn&apos;t find an available port</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::MprisRemotePluginFactory</name>
     <message>
         <source>Multimedia controls</source>
@@ -326,7 +326,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Share files and URLs.</source>
+        <source>Send and receive files and URLs.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -364,6 +364,13 @@
     </message>
     <message>
         <source>Application runs in background after window is closed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShareUi</name>
+    <message>
+        <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

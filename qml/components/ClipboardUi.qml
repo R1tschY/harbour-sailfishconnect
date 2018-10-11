@@ -25,7 +25,7 @@ Column {
         _device.supportedPlugins.indexOf(
             "SailfishConnect::ClipboardPlugin") >= 0
 
-    SectionHeader { text: qsTr("Copyboard") }
+    SectionHeader { text: qsTr("Clipboard") }
     Label {
         wrapMode: Text.Wrap
         width: mainColumn.width

@@ -31,11 +31,11 @@
 <context>
     <name>ClipboardUi</name>
     <message>
-        <source>Copyboard</source>
+        <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
+        <source>Clipboard</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

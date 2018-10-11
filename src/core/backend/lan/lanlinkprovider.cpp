@@ -497,19 +497,19 @@ void LanLinkProvider::configureSocket(QSslSocket* socket) {
 
     #ifdef TCP_KEEPIDLE
         // time to start sending keepalive packets (seconds)
-        int maxIdle = 10;
+        int maxIdle = 30;
         setsockopt(socket->socketDescriptor(), IPPROTO_TCP, TCP_KEEPIDLE, &maxIdle, sizeof(maxIdle));
     #endif
 
     #ifdef TCP_KEEPINTVL
         // interval between keepalive packets after the initial period (seconds)
-        int interval = 5;
+        int interval = 30;
         setsockopt(socket->socketDescriptor(), IPPROTO_TCP, TCP_KEEPINTVL, &interval, sizeof(interval));
     #endif
 
     #ifdef TCP_KEEPCNT
         // number of missed keepalive packets before disconnecting
-        int count = 3;
+        int count = 2;
         setsockopt(socket->socketDescriptor(), IPPROTO_TCP, TCP_KEEPCNT, &count, sizeof(count));
     #endif
 

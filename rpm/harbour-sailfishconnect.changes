@@ -15,6 +15,11 @@
 * Mon Aug 13 2018 Richard Liebscher <r1tschy@yahoo.de> 0.2-0
 - Changed name to Sailfish Connect
 - Added setting to control running in background
-- Fixed qml layout issues
-- Clipboard: Added known issue description notice
+- Added notifications for pairing and ping plugin
+- Added touchpad plugin
+- Added share plugin
+- Added notifications plugin prototype
+- Made few ui enhancements
+- Fixed several bugs
+- Added known issue description notice for clipboard plugin
 

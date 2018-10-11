@@ -1,6 +1,7 @@
 #include "filehelper.h"
 
 #include <QDir>
+#include <QRegularExpression>
 
 namespace SailfishConnect {
 
@@ -30,6 +31,14 @@ QFileInfo nonexistingFile(const QString& path) {
         }
         return result.filePath();
     }
+}
+
+QString escapeForFilePath(const QString& name)
+{
+    static QRegularExpression invalidChars(R"#([^\w -_\.)#");
+
+    QString result(name);
+    return result.replace(invalidChars, QStringLiteral("_"));
 }
 
 } // namespace SailfishConnect

@@ -7,6 +7,7 @@
 namespace SailfishConnect {
 
 QFileInfo nonexistingFile(const QString& path);
+QString escapeForFilePath(const QString& name);
 
 } // namespace SailfishConnect
 

@@ -60,12 +60,12 @@ QString SharePlugin::incomingPath() const
 bool SharePlugin::receivePackage(const NetworkPackage& np)
 {
     if (np.hasPayload()) {
-        const QString filename = np.get<QString>(
+        const QString filename = escapeForFilePath(np.get<QString>(
                     QStringLiteral("filename"),
-                    device()->name()); // TODO: escape name to alnum
+                    device()->name()));
 
         Job* job = np.createDownloadPayloadJob(
-                    incomingPath() + "/" + filename);
+                    incomingPath() % "/" % filename);
         job->setParent(this);
         connect(job, &Job::finished, this, &SharePlugin::finishedFileTransfer);
         // TODO: daemon->addJob(job);
@@ -74,10 +74,11 @@ bool SharePlugin::receivePackage(const NetworkPackage& np)
         job->start();
     } else if (np.has(QStringLiteral("text"))) {
         auto text = np.get<QString>(QStringLiteral("text"));
+        const QString filename = escapeForFilePath(device()->name());
+        const QString filepath = QStringLiteral("%1/%2.txt").arg(
+                    incomingPath(), filename);
 
-        QFile textFile(nonexistingFile(
-            QStringLiteral("%1/%2.txt").arg(
-                        incomingPath(), device()->name())).filePath()); // TODO: escape name to alnum
+        QFile textFile(nonexistingFile(filepath).filePath());
         if (!textFile.open(QIODevice::WriteOnly)) {
             qCWarning(logger)
                     << "Share failed: failed to create temporary text file"

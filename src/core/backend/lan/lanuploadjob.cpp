@@ -62,13 +62,13 @@ void LanUploadJob::doStart()
 
 void LanUploadJob::newConnection()
 {
+    qCDebug(coreLogger) << "connection for payload upload";
     if (!m_input->open(QIODevice::ReadOnly)) {
         qCWarning(coreLogger) << "error when opening the input to upload";
         setErrorString(m_input->errorString());
         cleanup();
         return;
     }
-    setSource(m_input);
 
     Server* server = qobject_cast<Server*>(sender());
     // FIXME : It is called again when payload sending is finished. Unsolved mystery :(
@@ -97,6 +97,7 @@ void LanUploadJob::newConnection()
 
 void LanUploadJob::startUploading()
 {
+    qCDebug(coreLogger) << "start payload upload";
     CopyJob::doStart();
 }
 

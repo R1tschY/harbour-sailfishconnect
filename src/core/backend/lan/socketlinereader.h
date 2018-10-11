@@ -26,6 +26,7 @@
 #include <QSslSocket>
 #include <QHostAddress>
 
+// TODO: inline class
 /*
  * Encapsulates a QTcpSocket and implements the same methods of its API that are
  * used by LanDeviceLink, but readyRead is emitted only when a newline is found.
@@ -44,6 +45,7 @@ public:
     QSslCertificate peerCertificate() const { return m_socket->peerCertificate(); }
     qint64 bytesAvailable() const { return m_packages.size(); }
 
+
     QSslSocket* m_socket;
     
 Q_SIGNALS:
@@ -53,7 +55,6 @@ private Q_SLOTS:
     void dataReceived();
 
 private:
-    QByteArray m_lastChunk;
     QQueue<QByteArray> m_packages;
 
 };

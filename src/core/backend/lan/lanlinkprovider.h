@@ -75,6 +75,8 @@ private Q_SLOTS:
     void sslErrors(const QList<QSslError>& errors);
     void broadcastToNetwork();
 
+    void error(QAbstractSocket::SocketError);
+
 private:
     LanPairingHandler* createPairingHandler(DeviceLink* link);
 

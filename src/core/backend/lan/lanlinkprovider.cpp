@@ -73,7 +73,33 @@ void LanLinkProvider::onNetworkConfigurationChanged(const QNetworkConfiguration&
 {
     if (m_lastConfig != config && config.state() == QNetworkConfiguration::Active) {
         m_lastConfig = config;
-        onNetworkChange();
+        qCInfo(coreLogger)
+                << "Network configuration changed"
+                << "QNetworkConfiguration("
+                << "name:" << config.name()
+                << "state:" << config.state()
+                << "id:" << config.identifier()
+                << "type:" << config.type()
+                << "bearerType:" << config.bearerType()
+                << "bearerTypeFamily:" << config.bearerTypeFamily()
+                << "bearerTypeName:" << config.bearerTypeName()
+                << "purpose:" << config.purpose()
+                << ")";
+
+        qCDebug(coreLogger)
+                << "old network config was"
+                << "QNetworkConfiguration("
+                << "name:" << config.name()
+                << "state:" << config.state()
+                << "id:" << config.identifier()
+                << "type:" << config.type()
+                << "bearerType:" << config.bearerType()
+                << "bearerTypeFamily:" << config.bearerTypeFamily()
+                << "bearerTypeName:" << config.bearerTypeName()
+                << "purpose:" << config.purpose()
+                << ")";
+
+        onNetworkChange("Network configuration changed");
     }
 }
 

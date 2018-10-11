@@ -208,41 +208,7 @@ static QSharedPointer<QIODevice> pathToPng(const QString& path) {
     return buffer;
 }
 
-QSharedPointer<QIODevice> NotificationsListener::iconForIconName(
-        const QString& iconName) const
-{
-    if (iconName.contains(QChar('/'))) {
-        auto url = QUrl::fromUserInput(
-            iconName, QString(), QUrl::AssumeLocalFile);
-
-        if (url.scheme() == QLatin1String("file")) {
-            return pathToPng(url.path());
-        } else if (url.scheme() == QLatin1String("image")) {
-            auto* imageProvider = static_cast<QQuickImageProvider*>(
-                    AppDaemon::instance()->imageProvider(url.host()));
-            if (!imageProvider) {
-                qCWarning(logger)
-                        << "No image provider" << url.host() << "found.";
-                return QSharedPointer<QIODevice>();
-            }
-
-            QSize size;
-            QSize requestedSize(128, 128);
-            switch (imageProvider->imageType()) {
-            case QQmlImageProviderBase::Image:
-                return imageToPng(imageProvider->requestImage(
-                    url.path(), &size, requestedSize));
-            case QQmlImageProviderBase::Pixmap:
-                return imageToPng(imageProvider->requestPixmap(
-                    url.path(), &size, requestedSize).toImage());
-            default:
-                qCWarning(logger)
-                        << "Not supported QQuickImageProvider image type";
-                return QSharedPointer<QIODevice>();
-            }
-        }
-    }
-
+static QSharedPointer<QIODevice> themeIconToPng(const QString& iconName) {
     QIcon icon = QIcon::fromTheme(iconName);
     QPixmap pixmap = icon.pixmap(128);
     auto buffer = imageToPng(pixmap.toImage());
@@ -252,6 +218,57 @@ QSharedPointer<QIODevice> NotificationsListener::iconForIconName(
                 << iconName;
     }
     return buffer;
+}
+
+QSharedPointer<QIODevice> NotificationsListener::iconForIconName(
+        const QString& iconName) const
+{
+    qCDebug(logger) << "convert icon name" << iconName << "to png";
+
+    if (!iconName.contains(QChar('/'))) {
+        return themeIconToPng(iconName);
+    } else {
+        auto url = QUrl::fromUserInput(
+            iconName, QString(), QUrl::AssumeLocalFile);
+
+        QString scheme = url.scheme();
+        if (scheme == QLatin1String("file")) {
+            return pathToPng(url.path());
+        } else if (scheme == QLatin1String("image")) {
+            if (url.host() == QLatin1String("theme")) {
+                return themeIconToPng(url.path());
+            } else {
+                // TODO: give up here?
+                auto* imageProvider = static_cast<QQuickImageProvider*>(
+                        AppDaemon::instance()->imageProvider(url.host()));
+                if (!imageProvider) {
+                    qCWarning(logger)
+                            << "No image provider" << url.host() << "found.";
+                    return QSharedPointer<QIODevice>();
+                }
+
+                QSize size;
+                QSize requestedSize(128, 128);
+                switch (imageProvider->imageType()) {
+                case QQmlImageProviderBase::Image:
+                    return imageToPng(imageProvider->requestImage(
+                        url.path(), &size, requestedSize));
+                case QQmlImageProviderBase::Pixmap:
+                    return imageToPng(imageProvider->requestPixmap(
+                        url.path(), &size, requestedSize).toImage());
+                default:
+                    qCWarning(logger)
+                            << "Not supported QQuickImageProvider image type:"
+                            << iconName;
+                    return QSharedPointer<QIODevice>();
+                }
+            }
+        } else {
+            qCWarning(logger)
+                    << "Not supported file scheme for icon file" << scheme;
+            return QSharedPointer<QIODevice>();
+        }
+    }
 }
 
 uint NotificationsListener::Notify(const QString& appName, uint replacesId,

@@ -415,15 +415,16 @@ void LanLinkProvider::dataReceived()
 void LanLinkProvider::deviceLinkDestroyed(QObject* destroyedDeviceLink)
 {
     const QString id = destroyedDeviceLink->property("deviceId").toString();
-    //qCDebug(coreLogger) << "deviceLinkDestroyed" << id;
+    qCDebug(coreLogger) << "deviceLinkDestroyed" << id;
     Q_ASSERT(m_links.key(static_cast<LanDeviceLink*>(destroyedDeviceLink)) == id);
     auto linkIterator = m_links.find(id);
     if (linkIterator != m_links.end()) {
         Q_ASSERT(linkIterator.value() == destroyedDeviceLink);
         m_links.erase(linkIterator);
-        m_pairingHandlers.take(id)->deleteLater();
+        LanPairingHandler* handler = m_pairingHandlers.take(id);
+        if (handler)
+            handler->deleteLater();
     }
-
 }
 
 void LanLinkProvider::configureSslSocket(QSslSocket* socket, const QString& deviceId, bool isDeviceTrusted)

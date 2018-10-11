@@ -30,6 +30,7 @@
 #include "../devicelink.h"
 
 class SocketLineReader;
+class QTimer;
 
 namespace SailfishConnect {
 class LanUploadJob;
@@ -61,11 +62,12 @@ public:
 
 private Q_SLOTS:
     void dataReceived();
+    void socketDisconnected();
 
 private:
     SocketLineReader* m_socketLineReader;
-    ConnectionStarted m_connectionSource;
     QHostAddress m_hostAddress;
+    QTimer* m_debounceTimer;
 };
 
 #endif

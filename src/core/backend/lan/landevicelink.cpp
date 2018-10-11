@@ -19,6 +19,9 @@
  */
 
 #include "landevicelink.h"
+
+#include <QTimer>
+
 #include "../../kdeconnectconfig.h"
 #include "../linkprovider.h"
 #include "socketlinereader.h"
@@ -26,35 +29,45 @@
 #include "../../corelogging.h"
 #include "lanuploadjob.h"
 #include "landownloadjob.h"
+#include <utils/cpphelper.h>
 
 using namespace SailfishConnect;
 
 LanDeviceLink::LanDeviceLink(const QString& deviceId, LinkProvider* parent, QSslSocket* socket, ConnectionStarted connectionSource)
     : DeviceLink(deviceId, parent)
     , m_socketLineReader(nullptr)
+    , m_debounceTimer(new QTimer(this))
 {
     reset(socket, connectionSource);
+
+    m_debounceTimer->setInterval(100);
+    m_debounceTimer->setSingleShot(true);
+    connect(m_debounceTimer, &QTimer::timeout,
+            this, &LanDeviceLink::socketDisconnected);
 }
 
 void LanDeviceLink::reset(QSslSocket* socket, ConnectionStarted connectionSource)
 {
+    Q_ASSERT(socket->state() != QAbstractSocket::UnconnectedState);
+    qCDebug(coreLogger) << "reseting device link";
+
     if (m_socketLineReader) {
-        disconnect(m_socketLineReader->m_socket, &QAbstractSocket::disconnected, this, &QObject::deleteLater);
+        disconnect(m_socketLineReader);
         delete m_socketLineReader;
     }
 
     m_socketLineReader = new SocketLineReader(socket, this);
 
-    connect(socket, &QAbstractSocket::disconnected, this, &QObject::deleteLater);
-    connect(m_socketLineReader, &SocketLineReader::readyRead, this, &LanDeviceLink::dataReceived);
+    connect(socket, &QAbstractSocket::disconnected,
+            m_debounceTimer, Overload<>::of(&QTimer::start));
+    connect(m_socketLineReader, &SocketLineReader::readyRead,
+            this, &LanDeviceLink::dataReceived);
 
     //We take ownership of the socket.
     //When the link provider destroys us,
     //the socket (and the reader) will be
     //destroyed as well
     socket->setParent(m_socketLineReader);
-
-    m_connectionSource = connectionSource;
 
     QString certString = KdeConnectConfig::instance()->getDeviceProperty(deviceId(), QStringLiteral("certificate"));
     DeviceLink::setPairStatus(certString.isEmpty()? PairStatus::NotPaired : PairStatus::Paired);
@@ -140,6 +153,16 @@ void LanDeviceLink::dataReceived()
         QMetaObject::invokeMethod(this, "dataReceived", Qt::QueuedConnection);
     }
 
+}
+
+void LanDeviceLink::socketDisconnected()
+{
+    // Maybe LanDeviceLink::reset was called
+    qCDebug(coreLogger) << "socket has disconnected";
+    if (m_socketLineReader->m_socket->state()
+            == QAbstractSocket::UnconnectedState) {
+        delete this;
+    }
 }
 
 void LanDeviceLink::userRequestsPair()

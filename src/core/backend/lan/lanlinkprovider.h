@@ -60,7 +60,7 @@ public:
     const static quint16 MAX_TCP_PORT = 1764;
 
 public Q_SLOTS:
-    void onNetworkChange() override;
+    void onNetworkChange(const QString &reason) override;
     void onStart() override;
     void onStop() override;
     void connected();

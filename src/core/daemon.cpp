@@ -113,7 +113,7 @@ void Daemon::acquireDiscoveryMode(const QString& key)
     d->m_discoveryModeAcquisitions.insert(key);
 
     if (oldState != d->m_discoveryModeAcquisitions.isEmpty()) {
-        forceOnNetworkChange();
+        forceOnNetworkChange("discovery mode started with key " + key);
     }
 }
 
@@ -149,11 +149,13 @@ void Daemon::cleanDevices()
     }
 }
 
-void Daemon::forceOnNetworkChange()
+void Daemon::forceOnNetworkChange(const QString& reason)
 {
-    qCDebug(coreLogger) << "Sending onNetworkChange to " << d->m_linkProviders.size() << " LinkProviders";
+    qCDebug(coreLogger)
+            << "Sending onNetworkChange to"
+            << d->m_linkProviders.size() << "LinkProviders";
     for (LinkProvider* a : asConst(d->m_linkProviders)) {
-        a->onNetworkChange();
+        a->onNetworkChange(reason);
     }
 }
 
@@ -220,7 +222,7 @@ void Daemon::setAnnouncedName(const QString& name)
     if (name != KdeConnectConfig::instance()->name()) {
         qCDebug(coreLogger()) << "Announcing name";
         KdeConnectConfig::instance()->setName(name);
-        forceOnNetworkChange();
+        forceOnNetworkChange("device name changed");
         Q_EMIT announcedNameChanged(name);
     }
 }

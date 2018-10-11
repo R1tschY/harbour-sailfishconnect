@@ -64,7 +64,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE void acquireDiscoveryMode(const QString& id);
     Q_SCRIPTABLE void releaseDiscoveryMode(const QString& id);
 
-    Q_SCRIPTABLE void forceOnNetworkChange();
+    Q_SCRIPTABLE void forceOnNetworkChange(const QString& reason);
 
     ///don't try to turn into Q_PROPERTY, it doesn't work
     Q_SCRIPTABLE QString announcedName();

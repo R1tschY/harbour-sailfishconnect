@@ -220,7 +220,7 @@ Page {
 
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: daemon.forceOnNetworkChange()
+                onClicked: daemon.forceOnNetworkChange("user request")
             }
         }
 

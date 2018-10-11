@@ -96,7 +96,7 @@ void LanLinkProvider::onStart()
         }
     }
 
-    onNetworkChange();
+    onNetworkChange("starting up");
 }
 
 void LanLinkProvider::onStop()
@@ -106,8 +106,9 @@ void LanLinkProvider::onStop()
     m_server->close();
 }
 
-void LanLinkProvider::onNetworkChange()
+void LanLinkProvider::onNetworkChange(const QString& reason)
 {
+    qCInfo(coreLogger) << "Trying to send broadcast:" << reason;
     if (m_combineBroadcastsTimer.isActive()) {
         qCDebug(coreLogger()) << "Preventing duplicate broadcasts";
         return;

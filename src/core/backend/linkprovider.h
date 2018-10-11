@@ -48,7 +48,7 @@ public:
 public Q_SLOTS:
     virtual void onStart() = 0;
     virtual void onStop() = 0;
-    virtual void onNetworkChange() = 0;
+    virtual void onNetworkChange(const QString& reason) = 0;
 
 Q_SIGNALS:
     //NOTE: The provider will destroy the DeviceLink when it's no longer accessible,

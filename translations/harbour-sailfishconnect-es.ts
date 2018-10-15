@@ -16,10 +16,6 @@
         <translation>Licencia:</translation>
     </message>
     <message>
-        <source>This program is free software: you can redistribute it and/or modifyit under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. &lt;br/&gt;&lt;br/&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.&lt;br/&gt;&lt;br/&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;http://www.gnu.org/licenses/&lt;/a&gt;.</source>
-        <translation>Este es un programa libre: puedes redistribuirlo oh modificarlo bajo los términos de la licencia pública general de GNU publicado por la Free Software Foundation, ya sea la versión 3 de la licencia, o (a su opción) cualquier versión posterior. &lt;br/&gt;&lt;br/&gt;Este programa se distribuye con la esperanza de que será útil, pero sin ninguna garantía; sin ni siquiera la garantía implícita de comerciabilidad o idoneidad para un propósito en particular.  Para obtener más detalles, consulte la licencia pública general de GNU.&lt;br/&gt;&lt;br/&gt;debería haber recibido una copia de la licencia pública general GNU junto con este programa. Si no es así, ver &lt;a href="http://www.gnu.org/licenses/"&gt;http://www.gnu.org/licenses/&lt;/a&gt;.</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>Acercar de</translation>
     </message>
@@ -35,12 +31,12 @@
 <context>
     <name>ClipboardUi</name>
     <message>
-        <source>Copyboard</source>
-        <translation>Copiar al portapapeles</translation>
-    </message>
-    <message>
         <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
         <translation>Después de copiar, abrir la ventana de conexión de Sailfish para enviar el contenido del portapapeles. Para recibir el contenido del portapapeles esto no esta requerido.</translation>
+    </message>
+    <message>
+        <source>Clipboard</source>
+        <translation type="unfinished">Copiar al portapapeles</translation>
     </message>
 </context>
 <context>
@@ -102,12 +98,16 @@
         <translation>refrescar</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Ajustes</translation>
-    </message>
-    <message>
         <source>Sailfish Connect</source>
         <translation>Sailfish Connect</translation>
+    </message>
+    <message>
+        <source>Settings ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -172,21 +172,6 @@
     </message>
 </context>
 <context>
-    <name>FileTransferJob</name>
-    <message>
-        <source>Receiving file over KDE Connect</source>
-        <translation>Recibiendo archivo a través de KDE-Connect</translation>
-    </message>
-    <message>
-        <source>Filename already present</source>
-        <translation>Nombre de archivo ya presente</translation>
-    </message>
-    <message>
-        <source>Received incomplete file: %1</source>
-        <translation>Archivo incompleto recibido: %1</translation>
-    </message>
-</context>
-<context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
@@ -222,8 +207,12 @@
 <context>
     <name>SailfishConnect::AppDaemon</name>
     <message>
-        <source>Pairing request from %1</source>
-        <translation>Solicitud de vinculacion desde %1</translation>
+        <source>Pairing request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pending pairing request ...</source>
+        <translation type="unfinished">Solicicitud  de vinculación pendientes...</translation>
     </message>
 </context>
 <context>
@@ -249,6 +238,55 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::CopyJob</name>
+    <message>
+        <source>Read error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input stream is not readable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output stream is not writable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read more bytes of input stream than expected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Early end of input stream</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::DownloadJob</name>
+    <message>
+        <source>Receiving file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create destination folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not open file for writing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::LanUploadJob</name>
+    <message>
+        <source>Couldn&apos;t find an available port</source>
+        <translation type="unfinished">No se pudo encontrar un puerto disponible</translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::MprisRemotePluginFactory</name>
     <message>
         <source>Multimedia controls</source>
@@ -271,6 +309,28 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::SendNotificationsPluginFactory</name>
+    <message>
+        <source>Send notifcations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Work in progress: Send notifications to the remote computer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::SharePluginFactory</name>
+    <message>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send and receive files and URLs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::TelepathyPluginFactory</name>
     <message>
         <source>Send SMS</source>
@@ -279,6 +339,17 @@
     <message>
         <source>Allow sending of text messages.</source>
         <translation>Permitir el envío de mensajes de texto.</translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::TouchpadPluginFactory</name>
+    <message>
+        <source>Touchpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control remote computer through mouse movements and clicks.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -297,10 +368,28 @@
     </message>
 </context>
 <context>
-    <name>UploadJob</name>
+    <name>ShareUi</name>
     <message>
-        <source>Couldn&apos;t find an available port</source>
-        <translation>No se pudo encontrar un puerto disponible</translation>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Touchpad</name>
+    <message>
+        <source>Touchpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TouchpadPage</name>
+    <message>
+        <source>Touchpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 </TS>

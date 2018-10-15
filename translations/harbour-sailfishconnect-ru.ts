@@ -12,31 +12,38 @@
         <translation>Ссылки</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;https://github.com/R1tschY/harbour-sailfishconnect/issues&quot;&gt;Bug reports on Github&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/R1tschY/harbour-sailfishconnect/issues&quot;&gt;Сообщения об ошибках в Github&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;https://github.com/R1tschY/harbour-sailfishconnect&quot;&gt;Source code on Github&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/R1tschY/harbour-sailfishconnect&quot;&gt;Исходный код на Github&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Licence</source>
         <translation>Лицензия</translation>
-    </message>
-    <message>
-        <source>This program is free software: you can redistribute it and/or modifyit under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. &lt;br/&gt;&lt;br/&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.&lt;br/&gt;&lt;br/&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;http://www.gnu.org/licenses/&lt;/a&gt;.</source>
-        <translation>Это свободное программное обеспечение: вы можете распространять и/или изменять его в соответствии с условиями лицензии GNU General Public License от Free Software Foundation версии 3 или (по желанию) любой последующей. &lt;br/&gt;&lt;br/&gt;Надеемся, что данное ПО будет вам полезно, но оно предоставляется БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ; в том числе без гарантии ВЫГОДЫ или ПРИГОДНОСТИ ДЛЯ ПРАКТИЧЕСКОГО ПРИМЕНЕНИЯ.  Более подробная информация доступна в GNU General Public License.&lt;br/&gt;&lt;br/&gt;Копия лицензии GNU General Public License должна сопровождать данную программу. Если ее нет, см. &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;http://www.gnu.org/licenses/&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>About</source>
         <translation>О программе</translation>
     </message>
+    <message>
+        <source>Bug reports on Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source code on Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ClipboardUi</name>
+    <message>
+        <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clipboard</source>
+        <translation type="unfinished">Буфер обмена</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
     <message>
-        <source>Sailfish-Connect</source>
-        <translation>Связь с ПК</translation>
+        <source>Sailfish Connect</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -65,10 +72,6 @@
 <context>
     <name>DeviceListPage</name>
     <message>
-        <source>Sailfish-Connect</source>
-        <translation>Связь с ПК</translation>
-    </message>
-    <message>
         <source>Device Name</source>
         <translation>Имя устройства</translation>
     </message>
@@ -96,52 +99,64 @@
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Sailfish Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePage</name>
     <message>
-        <source>Plugins</source>
-        <translation>Модули</translation>
-    </message>
-    <message>
         <source>You don&apos;t trust this device</source>
-        <translation>Недоверенное устройство</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Request pairing</source>
-        <translation>Запросить связывание</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Принять</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation>Отклонить</translation>
-    </message>
-    <message>
-        <source>Unpair</source>
-        <translation>Отвязать</translation>
-    </message>
-    <message>
-        <source>Waiting for accepted pairing ...</source>
-        <translation>Ожидается согласие на связывание ...</translation>
-    </message>
-    <message>
-        <source>This device wants to pair with your device.</source>
-        <translation>Это устройство хочет связаться с вашим устройством.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You trust this device</source>
-        <translation>Доверенное устройство</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Send ping</source>
-        <translation>Послать пинг</translation>
+        <source>Waiting for accepted pairing ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This device wants to pair with your device.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Encryption info</source>
-        <translation>О шифровании</translation>
+        <translation type="unfinished">Шифрование</translation>
+    </message>
+    <message>
+        <source>Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unpair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send ping</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -156,21 +171,6 @@
     <message>
         <source>Encryption info</source>
         <translation>Шифрование</translation>
-    </message>
-</context>
-<context>
-    <name>FileTransferJob</name>
-    <message>
-        <source>Receiving file over KDE Connect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filename already present</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Received incomplete file: %1</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -198,15 +198,23 @@
 <context>
     <name>MprisUi</name>
     <message>
-        <source>No remote player</source>
+        <source>No remote players</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multimedia Controls</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::AppDaemon</name>
     <message>
-        <source>Pairing request from %1</source>
-        <translation>Запрос на связывание от %1</translation>
+        <source>Pairing request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pending pairing request ...</source>
+        <translation type="unfinished">Запрос на связывание ...</translation>
     </message>
 </context>
 <context>
@@ -232,6 +240,55 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::CopyJob</name>
+    <message>
+        <source>Read error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input stream is not readable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output stream is not writable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read more bytes of input stream than expected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Early end of input stream</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::DownloadJob</name>
+    <message>
+        <source>Receiving file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create destination folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not open file for writing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::LanUploadJob</name>
+    <message>
+        <source>Couldn&apos;t find an available port</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::MprisRemotePluginFactory</name>
     <message>
         <source>Multimedia controls</source>
@@ -254,6 +311,28 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::SendNotificationsPluginFactory</name>
+    <message>
+        <source>Send notifcations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Work in progress: Send notifications to the remote computer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::SharePluginFactory</name>
+    <message>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send and receive files and URLs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::TelepathyPluginFactory</name>
     <message>
         <source>Send SMS</source>
@@ -265,10 +344,54 @@
     </message>
 </context>
 <context>
-    <name>UploadJob</name>
+    <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
-        <source>Couldn&apos;t find an available port</source>
+        <source>Touchpad</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control remote computer through mouse movements and clicks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPage</name>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run in background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Application runs in background after window is closed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShareUi</name>
+    <message>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Touchpad</name>
+    <message>
+        <source>Touchpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TouchpadPage</name>
+    <message>
+        <source>Touchpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 </TS>

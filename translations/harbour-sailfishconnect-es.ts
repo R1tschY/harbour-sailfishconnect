@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="es">
 <context>
     <name>AboutPage</name>
     <message>
@@ -17,16 +17,16 @@
     </message>
     <message>
         <source>About</source>
-        <translation>Acercar de</translation>
+        <translation>Acerca de</translation>
     </message>
     <message>
         <source>Bug reports on Github</source>
-        <translation>Reportar bicho en Github</translation>
+        <translation>Bicho</translation>
     </message>
     <message>
         <source>Source code on Github</source>
-        <translation>Código fuente en Github</translation>
-    </message>
+        <translation>Fuente</translation>
+    </message
 </context>
 <context>
     <name>ClipboardUi</name>
@@ -36,7 +36,7 @@
     </message>
     <message>
         <source>Clipboard</source>
-        <translation type="unfinished">Copiar al portapapeles</translation>
+        <translation>Copiar al portapapeles</translation>
     </message>
 </context>
 <context>
@@ -87,7 +87,7 @@
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation>Solicicitud  de vinculación pendientes...</translation>
+        <translation>Solicicitud  de vinculación pendientes ...</translation>
     </message>
     <message>
         <source>About ...</source>
@@ -103,11 +103,11 @@
     </message>
     <message>
         <source>Settings ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Salir</translation>
     </message>
 </context>
 <context>
@@ -197,7 +197,7 @@
     <name>MprisUi</name>
     <message>
         <source>No remote players</source>
-        <translation>No hay jugadores remotos</translation>
+        <translation>No hay reproductores remotos</translation>
     </message>
     <message>
         <source>Multimedia Controls</source>
@@ -208,11 +208,11 @@
     <name>SailfishConnect::AppDaemon</name>
     <message>
         <source>Pairing request</source>
-        <translation type="unfinished"></translation>
+        <translation>Solicitud de emparejamiento</translation>
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation type="unfinished">Solicicitud  de vinculación pendientes...</translation>
+        <translation>Solicicitud de vinculación pendientes ...</translation>
     </message>
 </context>
 <context>
@@ -241,49 +241,49 @@
     <name>SailfishConnect::CopyJob</name>
     <message>
         <source>Read error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Leer error: %1</translation>
     </message>
     <message>
         <source>Write error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Escribir error: %1</translation>
     </message>
     <message>
         <source>Input stream is not readable.</source>
-        <translation type="unfinished"></translation>
+        <translation>La secuencia de entrada no es leíble.</translation>
     </message>
     <message>
         <source>Output stream is not writable.</source>
-        <translation type="unfinished"></translation>
+        <translation>La secuencia de salida no es escribible.</translation>
     </message>
     <message>
         <source>Read more bytes of input stream than expected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Leer más bytes de secuencia de entrada de lo esperado.</translation>
     </message>
     <message>
         <source>Early end of input stream</source>
-        <translation type="unfinished"></translation>
+        <translation>Final temprano de secuancia de entrada</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::DownloadJob</name>
     <message>
         <source>Receiving file</source>
-        <translation type="unfinished"></translation>
+        <translation>Recibiendo el archivo</translation>
     </message>
     <message>
         <source>Cannot create destination folder</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede crear la carpeta de destino</translation>
     </message>
     <message>
         <source>Could not open file for writing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo abrir el archivo para escribirla: </translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::LanUploadJob</name>
     <message>
         <source>Couldn&apos;t find an available port</source>
-        <translation type="unfinished">No se pudo encontrar un puerto disponible</translation>
+        <translation>No se pudo encontrar un puerto disponible</translation>
     </message>
 </context>
 <context>
@@ -312,22 +312,22 @@
     <name>SailfishConnect::SendNotificationsPluginFactory</name>
     <message>
         <source>Send notifcations</source>
-        <translation type="unfinished"></translation>
+        <translation>Enviar notificaciones</translation>
     </message>
     <message>
         <source>Work in progress: Send notifications to the remote computer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trabajo en curso: enviar notificaciones a computadora remoto.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::SharePluginFactory</name>
     <message>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>Compartir</translation>
     </message>
     <message>
         <source>Send and receive files and URLs.</source>
-        <translation type="unfinished"></translation>
+        <translation>Enviar y recibir archivos y LURs.</translation>
     </message>
 </context>
 <context>
@@ -345,11 +345,11 @@
     <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation>Mando táctil</translation>
     </message>
     <message>
         <source>Control remote computer through mouse movements and clicks.</source>
-        <translation type="unfinished"></translation>
+        <translation>Control remoto de la computadora a través de movimientos del ratón y clics.</translation>
     </message>
 </context>
 <context>
@@ -371,21 +371,21 @@
     <name>ShareUi</name>
     <message>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>Compartir</translation>
     </message>
 </context>
 <context>
     <name>Touchpad</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation>Mando táctil</translation>
     </message>
 </context>
 <context>
     <name>TouchpadPage</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation>Mando táctil</translation>
     </message>
     <message>
         <source></source>

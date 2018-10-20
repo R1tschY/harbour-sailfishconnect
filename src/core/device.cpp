@@ -438,6 +438,8 @@ void Device::setName(const QString& name)
 {
     if (m_deviceName != name) {
         m_deviceName = name;
+        KdeConnectConfig::instance()->setDeviceProperty(
+                    m_deviceId, QStringLiteral("name"), name);
         Q_EMIT nameChanged(name);
     }
 }

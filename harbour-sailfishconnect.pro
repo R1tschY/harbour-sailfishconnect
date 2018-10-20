@@ -66,7 +66,8 @@ SOURCES += \
     src/utils/copyjob.cpp \
     src/core/downloadjob.cpp \
     src/core/backend/lan/landownloadjob.cpp \
-    src/core/backend/lan/lanuploadjob.cpp
+    src/core/backend/lan/lanuploadjob.cpp \
+    src/core/backend/lan/lannetworklistener.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -151,7 +152,8 @@ HEADERS += \
     src/utils/copyjob.h \
     src/core/downloadjob.h \
     src/core/backend/lan/landownloadjob.h \
-    src/core/backend/lan/lanuploadjob.h
+    src/core/backend/lan/lanuploadjob.h \
+    src/core/backend/lan/lannetworklistener.h
 
 SUBDIRS += \
     src/plugins/battery/SailfishConnectBatteryPlugin.pro

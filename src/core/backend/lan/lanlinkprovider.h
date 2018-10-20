@@ -34,6 +34,7 @@
 #include "../linkprovider.h"
 #include "server.h"
 #include "landevicelink.h"
+#include "lannetworklistener.h"
 
 class LanPairingHandler;
 class LanLinkProvider
@@ -83,7 +84,7 @@ private:
     void onNetworkConfigurationChanged(const QNetworkConfiguration& config);
     void addLink(const QString& deviceId, QSslSocket* socket, NetworkPackage* receivedPackage, LanDeviceLink::ConnectionStarted connectionOrigin);
 
-    QList<QNetworkInterface> getUsefulNetworkInterfaces();
+    bool hasUsefulNetworkInterfaces();
 
     // TODO: use pimple
     Server* m_server;
@@ -98,11 +99,10 @@ private:
         QHostAddress sender;
     };
     QHash<QSslSocket*, PendingConnect> m_receivedIdentityPackages;
-    QNetworkConfiguration m_lastConfig;
     const bool m_testMode;
     QTimer m_combineBroadcastsTimer;
 
-    QNetworkConfigurationManager m_networkManager;
+    SailfishConnect::LanNetworkListener m_networkListener;
 };
 
 #endif

@@ -47,7 +47,7 @@ LanLinkProvider::LanLinkProvider(bool testMode)
     m_tcpPort = 0;
 
     // increase this if waiting a single event-loop iteration is not enough
-    m_combineBroadcastsTimer.setInterval(0);
+    m_combineBroadcastsTimer.setInterval(200);
     m_combineBroadcastsTimer.setSingleShot(true);
     connect(&m_combineBroadcastsTimer, &QTimer::timeout,
             this, &LanLinkProvider::broadcastToNetwork);
@@ -62,45 +62,8 @@ LanLinkProvider::LanLinkProvider(bool testMode)
 
     m_udpSocket.setProxy(QNetworkProxy::NoProxy);
 
-    // Detect when a network interface changes status, so we announce ourelves
-    // in the new network
-    connect(
-        &m_networkManager, &QNetworkConfigurationManager::configurationChanged,
-        this, &LanLinkProvider::onNetworkConfigurationChanged);
-}
-
-void LanLinkProvider::onNetworkConfigurationChanged(const QNetworkConfiguration& config)
-{
-    if (m_lastConfig != config && config.state() == QNetworkConfiguration::Active) {
-        m_lastConfig = config;
-        qCInfo(coreLogger)
-                << "Network configuration changed"
-                << "QNetworkConfiguration("
-                << "name:" << config.name()
-                << "state:" << config.state()
-                << "id:" << config.identifier()
-                << "type:" << config.type()
-                << "bearerType:" << config.bearerType()
-                << "bearerTypeFamily:" << config.bearerTypeFamily()
-                << "bearerTypeName:" << config.bearerTypeName()
-                << "purpose:" << config.purpose()
-                << ")";
-
-        qCDebug(coreLogger)
-                << "old network config was"
-                << "QNetworkConfiguration("
-                << "name:" << config.name()
-                << "state:" << config.state()
-                << "id:" << config.identifier()
-                << "type:" << config.type()
-                << "bearerType:" << config.bearerType()
-                << "bearerTypeFamily:" << config.bearerTypeFamily()
-                << "bearerTypeName:" << config.bearerTypeName()
-                << "purpose:" << config.purpose()
-                << ")";
-
-        onNetworkChange("Network configuration changed");
-    }
+    connect(&m_networkListener, &LanNetworkListener::networkChanged,
+            this, [this](){ onNetworkChange("network change"); });
 }
 
 LanLinkProvider::~LanLinkProvider()
@@ -168,8 +131,7 @@ void LanLinkProvider::broadcastToNetwork()
         return;
     }
 
-    auto interfaces = LanLinkProvider::getUsefulNetworkInterfaces();
-    if (!interfaces.empty()) {
+    if (LanLinkProvider::hasUsefulNetworkInterfaces()) {
         // TODO: support IPv6 with multicast FF02::1
         m_udpSocket.writeDatagram(
                     np.serialize(), QHostAddress::Broadcast, UDP_PORT);
@@ -182,9 +144,9 @@ void LanLinkProvider::error(QAbstractSocket::SocketError error)
     qCDebug(coreLogger) << socket << "TCP Error" << socket->errorString();
 }
 
-QList<QNetworkInterface> LanLinkProvider::getUsefulNetworkInterfaces() {
-    auto configs = m_networkManager.allConfigurations(
-                QNetworkConfiguration::Active);
+bool LanLinkProvider::hasUsefulNetworkInterfaces() {
+    auto configs = m_networkListener.networkManager().allConfigurations(
+                QNetworkConfiguration::Discovered);
 
     // only use Ethernet, WLAN or Bluetooth network
     configs.erase(std::remove_if(configs.begin(), configs.end(), [](const QNetworkConfiguration& config) {
@@ -195,11 +157,7 @@ QList<QNetworkInterface> LanLinkProvider::getUsefulNetworkInterfaces() {
         ;
     }), configs.end());
 
-    QList<QNetworkInterface> result;
-    for (auto& config : configs) {
-        result.push_back(QNetworkSession(config).interface());
-    }
-    return result;
+    return !configs.empty();
 }
 
 //I'm the existing device, a new device is kindly introducing itself.

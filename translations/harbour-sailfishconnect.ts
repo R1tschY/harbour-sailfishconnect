@@ -263,6 +263,10 @@
         <source>Early end of input stream</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Early end of output stream</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SailfishConnect::DownloadJob</name>

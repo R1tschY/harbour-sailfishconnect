@@ -51,11 +51,20 @@ private:
 
     qint64 m_size = -1;
     qint64 m_writtenBytes = 0;
-    bool m_eof = false;
+    qint64 m_flushedBytes = 0;
+    bool m_sourceEof = false;
     bool m_started = false;
 
     void poll();
-    void pollAtEof();
+    void pollAtSourceClose();
+    void pollAtDestinationClose();
+    void pollBytesWritten(qint64 bytes);
+
+    void closeSource();
+    void closeDestination();
+
+    void checkSource();
+    void checkDestination();
 };
 
 } // namespace SailfishConnect

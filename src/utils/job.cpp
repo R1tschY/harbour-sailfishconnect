@@ -75,6 +75,9 @@ void Job::exit()
 
 void Job::abort(const QString &error)
 {
+    if (isFinished())
+        return;
+
     setErrorString(error);
     exit();
 }

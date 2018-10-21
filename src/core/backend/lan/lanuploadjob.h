@@ -37,6 +37,7 @@ class LanUploadJob : public CopyJob
 public:
     explicit LanUploadJob(
             const QSharedPointer<QIODevice>& source, const QString& deviceId);
+    ~LanUploadJob();
 
     QVariantMap transferInfo();
 
@@ -44,7 +45,7 @@ private Q_SLOTS:
     void startUploading();
     void newConnection();
     void aboutToClose();
-    void cleanup();
+    void tearDown();
 
     void socketFailed(QAbstractSocket::SocketError);
     void sslErrors(const QList<QSslError>& errors);
@@ -60,6 +61,7 @@ private:
     const static quint16 MAX_PORT = 1764;
 
     void doStart() override;
+    void onFinished() override;
 };
 
 } // namespace SailfishConnect

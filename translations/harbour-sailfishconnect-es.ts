@@ -26,7 +26,7 @@
     <message>
         <source>Source code on Github</source>
         <translation>Fuente</translation>
-    </message
+    </message>
 </context>
 <context>
     <name>ClipboardUi</name>
@@ -262,6 +262,10 @@
     <message>
         <source>Early end of input stream</source>
         <translation>Final temprano de secuancia de entrada</translation>
+    </message>
+    <message>
+        <source>Early end of output stream</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

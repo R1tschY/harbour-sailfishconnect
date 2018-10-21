@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ru">
 <context>
     <name>AboutPage</name>
     <message>
@@ -29,12 +31,12 @@
 <context>
     <name>ClipboardUi</name>
     <message>
-        <source>Copyboard</source>
-        <translation>Буфер обмена</translation>
-    </message>
-    <message>
         <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
         <translation>После копирования откройте окно Sailfish Коннект для передачи содержимого буфера обмена. Получение содержимого буфера этого не требует.</translation>
+    </message>
+    <message>
+        <source>Clipboard</source>
+        <translation type="unfinished">Буфер обмена</translation>
     </message>
 </context>
 <context>
@@ -263,6 +265,10 @@
         <source>Early end of input stream</source>
         <translation>Поток данных на вход прерван</translation>
     </message>
+    <message>
+        <source>Early end of output stream</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SailfishConnect::DownloadJob</name>
@@ -323,7 +329,7 @@
     <name>SailfishConnect::SharePluginFactory</name>
     <message>
         <source>Share</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Send and receive files and URLs.</source>
@@ -345,7 +351,7 @@
     <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Control remote computer through mouse movements and clicks.</source>
@@ -371,25 +377,25 @@
     <name>ShareUi</name>
     <message>
         <source>Share</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Touchpad</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TouchpadPage</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source/>
-        <translation type="unfinished"/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 </TS>

@@ -50,7 +50,7 @@ namespace SailfishConnect {
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
 
 
-QString PACKAGE_VERSION = QStringLiteral("0.2");
+QString PACKAGE_VERSION = QStringLiteral("0.3");
 
 QString DBUS_SERVICE_NAME =
         QStringLiteral("org.harbour.SailfishConnect");
@@ -91,25 +91,25 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 void registerQmlTypes() {
     // TODO: register in plugin factories when possible
     qmlRegisterType<DeviceListModel>(
-                "SailfishConnect.UI", 0, 2, "DeviceListModel");
+                "SailfishConnect.UI", 0, 3, "DeviceListModel");
     qmlRegisterType<FilterValueProxyModel>(
-                "SailfishConnect.UI", 0, 2, "FilterValueProxyModel");
+                "SailfishConnect.UI", 0, 3, "FilterValueProxyModel");
     qmlRegisterType<DevicePluginsModel>(
-                "SailfishConnect.UI", 0, 2, "DevicePluginsModel");
+                "SailfishConnect.UI", 0, 3, "DevicePluginsModel");
     qmlRegisterType<MprisPlayersModel>(
-                "SailfishConnect.UI", 0, 2, "MprisPlayersModel");
+                "SailfishConnect.UI", 0, 3, "MprisPlayersModel");
 
     qmlRegisterType<Device>(
-                "SailfishConnect.Core", 0, 2, "Device");
+                "SailfishConnect.Core", 0, 3, "Device");
     qmlRegisterUncreatableType<KdeConnectPlugin>(
-                "SailfishConnect.Core", 0, 2, "Plugin",
+                "SailfishConnect.Core", 0, 3, "Plugin",
                 QStringLiteral("instance of abstract type cannot be created"));
 
     qmlRegisterUncreatableType<MprisPlayer>(
-                "SailfishConnect.Mpris", 0, 2, "MprisPlayer",
+                "SailfishConnect.Mpris", 0, 3, "MprisPlayer",
                 QStringLiteral("not intented to be created from users"));
     qmlRegisterUncreatableType<TouchpadPlugin>(
-                "SailfishConnect.RemoteControl", 0, 2, "RemoteControlPlugin",
+                "SailfishConnect.RemoteControl", 0, 3, "RemoteControlPlugin",
                 QStringLiteral("not intented to be created from users"));
 
 }

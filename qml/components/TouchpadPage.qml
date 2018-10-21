@@ -36,8 +36,8 @@
 
 import QtQuick 2.6
 import Sailfish.Silica 1.0
-import SailfishConnect.Core 0.2
-import SailfishConnect.RemoteControl 0.2
+import SailfishConnect.Core 0.3
+import SailfishConnect.RemoteControl 0.3
 
 Page {
     id: page

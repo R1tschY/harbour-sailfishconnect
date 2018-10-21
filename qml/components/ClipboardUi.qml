@@ -17,7 +17,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import SailfishConnect.Core 0.2
+import SailfishConnect.Core 0.3
 
 Column {
     visible:

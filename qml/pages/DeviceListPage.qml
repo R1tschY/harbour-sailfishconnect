@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Nemo.Notifications 1.0
-import SailfishConnect.UI 0.2
+import SailfishConnect.UI 0.3
 
 Page {
     id: page

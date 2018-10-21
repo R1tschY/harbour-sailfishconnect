@@ -149,7 +149,7 @@ QString SharePluginFactory::iconUrl() const
 void SharePluginFactory::registerTypes()
 {
     qmlRegisterUncreatableType<SharePlugin>(
-                "SailfishConnect.Share", 0, 2, "SharePlugin",
+                "SailfishConnect.Share", 0, 3, "SharePlugin",
                 QStringLiteral("not intented to be created from users"));
 }
 

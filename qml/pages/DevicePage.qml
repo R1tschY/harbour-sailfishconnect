@@ -17,9 +17,9 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import SailfishConnect.UI 0.2
-import SailfishConnect.Core 0.2
-import SailfishConnect.Mpris 0.2
+import SailfishConnect.UI 0.3
+import SailfishConnect.Core 0.3
+import SailfishConnect.Mpris 0.3
 import "../components"
 
 

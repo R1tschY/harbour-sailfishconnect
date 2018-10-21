@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
 <context>
     <name>AboutPage</name>
     <message>
@@ -21,29 +19,29 @@
     </message>
     <message>
         <source>Bug reports on Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Сообщения об ошибках на Github</translation>
     </message>
     <message>
         <source>Source code on Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Исходный код на Github</translation>
     </message>
 </context>
 <context>
     <name>ClipboardUi</name>
     <message>
-        <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
-        <translation type="unfinished"></translation>
+        <source>Copyboard</source>
+        <translation>Буфер обмена</translation>
     </message>
     <message>
-        <source>Clipboard</source>
-        <translation type="unfinished">Буфер обмена</translation>
+        <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
+        <translation>После копирования откройте окно Sailfish Коннект для передачи содержимого буфера обмена. Получение содержимого буфера этого не требует.</translation>
     </message>
 </context>
 <context>
     <name>CoverPage</name>
     <message>
         <source>Sailfish Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Sailfish Коннект</translation>
     </message>
 </context>
 <context>
@@ -97,66 +95,66 @@
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <source>Sailfish Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Sailfish Коннект</translation>
     </message>
     <message>
         <source>Settings ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройка ...</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Выход</translation>
     </message>
 </context>
 <context>
     <name>DevicePage</name>
     <message>
         <source>You don&apos;t trust this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Недоверенное устройство</translation>
     </message>
     <message>
         <source>Request pairing</source>
-        <translation type="unfinished"></translation>
+        <translation>Запросить связывание</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Принять</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation type="unfinished"></translation>
+        <translation>Отклонить</translation>
     </message>
     <message>
         <source>You trust this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Доверенное устройство</translation>
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ожидается согласие на связывание ...</translation>
     </message>
     <message>
         <source>This device wants to pair with your device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это устройство хочет связаться с вашим устройством.</translation>
     </message>
     <message>
         <source>Encryption info</source>
-        <translation type="unfinished">Шифрование</translation>
+        <translation>О шифровании</translation>
     </message>
     <message>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Модули</translation>
     </message>
     <message>
         <source>Unpair</source>
-        <translation type="unfinished"></translation>
+        <translation>Отвязать</translation>
     </message>
     <message>
         <source>Send ping</source>
-        <translation type="unfinished"></translation>
+        <translation>Послать пинг</translation>
     </message>
 </context>
 <context>
@@ -199,22 +197,22 @@
     <name>MprisUi</name>
     <message>
         <source>No remote players</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет удаленных проигрывателей</translation>
     </message>
     <message>
         <source>Multimedia Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Управление проигрывателем</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::AppDaemon</name>
     <message>
         <source>Pairing request</source>
-        <translation type="unfinished"></translation>
+        <translation>Запрос на связывание</translation>
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation type="unfinished">Запрос на связывание ...</translation>
+        <translation>Ожидание запроса на связывание ...</translation>
     </message>
 </context>
 <context>
@@ -243,53 +241,49 @@
     <name>SailfishConnect::CopyJob</name>
     <message>
         <source>Read error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка чтения: %1</translation>
     </message>
     <message>
         <source>Write error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка записи: %1</translation>
     </message>
     <message>
         <source>Input stream is not readable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Входной поток недоступен для чтения.</translation>
     </message>
     <message>
         <source>Output stream is not writable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходной поток недоступен для записи</translation>
     </message>
     <message>
         <source>Read more bytes of input stream than expected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Получено больше байтов из входного потока, чем ожидалось.</translation>
     </message>
     <message>
         <source>Early end of input stream</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Early end of output stream</source>
-        <translation type="unfinished"></translation>
+        <translation>Поток данных на вход прерван</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::DownloadJob</name>
     <message>
         <source>Receiving file</source>
-        <translation type="unfinished"></translation>
+        <translation>Получение файла</translation>
     </message>
     <message>
         <source>Cannot create destination folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно создать каталог назначения</translation>
     </message>
     <message>
         <source>Could not open file for writing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно открыть файл на запись: %1</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::LanUploadJob</name>
     <message>
         <source>Couldn&apos;t find an available port</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет доступных портов</translation>
     </message>
 </context>
 <context>
@@ -318,22 +312,22 @@
     <name>SailfishConnect::SendNotificationsPluginFactory</name>
     <message>
         <source>Send notifcations</source>
-        <translation type="unfinished"></translation>
+        <translation>Посылать уведомления</translation>
     </message>
     <message>
         <source>Work in progress: Send notifications to the remote computer.</source>
-        <translation type="unfinished"></translation>
+        <translation>В разработке: Функция передачи уведомлений на удаленный компьютер.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::SharePluginFactory</name>
     <message>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Send and receive files and URLs.</source>
-        <translation type="unfinished"></translation>
+        <translation>Отправка и получение файлов и URL.</translation>
     </message>
 </context>
 <context>
@@ -351,51 +345,51 @@
     <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Control remote computer through mouse movements and clicks.</source>
-        <translation type="unfinished"></translation>
+        <translation>Позволяет управлять удаленным компьютером путем эмуляции мыши.</translation>
     </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройка</translation>
     </message>
     <message>
         <source>Run in background</source>
-        <translation type="unfinished"></translation>
+        <translation>Работать в фоновом режиме</translation>
     </message>
     <message>
         <source>Application runs in background after window is closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Программа продолжит работать в фоне после закрытия её окна.</translation>
     </message>
 </context>
 <context>
     <name>ShareUi</name>
     <message>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Touchpad</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>TouchpadPage</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

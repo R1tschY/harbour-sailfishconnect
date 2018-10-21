@@ -12,7 +12,7 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Sun Oct 21 2018 Richard Liebscher <r1tschy@yahoo.de> 0.2-0
+* Sun Oct 21 2018 Richard Liebscher <r1tschy@yahoo.de> 0.2-2
 - Changed name to Sailfish Connect
 - Added setting to control running in background (new default is off)
 - Added notifications for pairing and ping plugin

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es">
+<TS version="2.1" language="es_GT">
 <context>
     <name>AboutPage</name>
     <message>
@@ -265,7 +265,7 @@
     </message>
     <message>
         <source>Early end of output stream</source>
-        <translation type="unfinished"></translation>
+        <translation>Final temprano del flujo de salida</translation>
     </message>
 </context>
 <context>

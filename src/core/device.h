@@ -43,6 +43,7 @@ class Device
     Q_PROPERTY(QString statusIconName READ statusIconName)
     Q_PROPERTY(bool isReachable READ isReachable NOTIFY reachableChanged)
     Q_PROPERTY(bool isTrusted READ isTrusted NOTIFY trustedChanged)
+    Q_PROPERTY(QStringList loadedPlugins READ loadedPlugins NOTIFY pluginsChanged)
     Q_PROPERTY(QStringList supportedPlugins READ supportedPlugins NOTIFY pluginsChanged)
     Q_PROPERTY(bool hasPairingRequests READ hasPairingRequests NOTIFY hasPairingRequestsChanged)
 

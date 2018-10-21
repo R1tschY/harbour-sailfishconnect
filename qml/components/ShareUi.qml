@@ -7,11 +7,8 @@ import Sailfish.Pickers 1.0
 Column {
     width: parent.width
     visible:
-        _device.isReachable && _device.isTrusted &&
-        _device.supportedPlugins.indexOf(
-            "SailfishConnect::SharePlugin") >= 0
-
-    property var plugin: _device.plugin("SailfishConnect::SharePlugin")
+        _device.isReachable && _device.isTrusted
+        && _device.loadedPlugins.indexOf("SailfishConnect::SharePlugin") >= 0
 
     SectionHeader { text: qsTr("Share") }
 
@@ -26,7 +23,9 @@ Column {
         ContentPickerPage {
             title: "Select file to send"
             onSelectedContentPropertiesChanged: {
-                plugin.share(selectedContentProperties.url)
+                _device
+                    .plugin("SailfishConnect::SharePlugin")
+                    .share(selectedContentProperties.url)
             }
         }
     }

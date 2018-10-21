@@ -77,7 +77,7 @@ Page {
         onPositionChanged: {
             if (pressed) {
                 moved = true
-                if (lastX !== 0xDEAD) {
+                if (lastX !== 0xDEAD && plugin !== null) {
                     plugin.move(mouse.x - lastX, mouse.y - lastY)
                 }
 
@@ -91,21 +91,21 @@ Page {
         }
 
         onClicked: {
-            if (!moved) {
+            if (!moved && plugin !== null) {
                 plugin.sendCommand("singleclick", true)
             }
             moved = false
         }
 
         onDoubleClicked: {
-            if (!moved) {
+            if (!moved && plugin !== null) {
                 plugin.sendCommand("doubleclick", true)
             }
             moved = false
         }
 
         onPressAndHold: {
-            if (!moved) {
+            if (!moved && plugin !== null) {
                 plugin.sendCommand("singlehold", true)
             }
             moved = false
@@ -113,9 +113,11 @@ Page {
 
         onWheel: {
             // FIXME: is ignored
-            plugin.scroll(
-                wheel.angleDelta.x / 120,
-                wheel.angleDelta.y / 120)
+            if (plugin !== null) {
+                plugin.scroll(
+                    wheel.angleDelta.x / 120,
+                    wheel.angleDelta.y / 120)
+            }
         }
     }
 }

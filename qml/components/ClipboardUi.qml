@@ -21,8 +21,8 @@ import SailfishConnect.Core 0.2
 
 Column {
     visible:
-        _device.isReachable && _device.isTrusted &&
-        _device.supportedPlugins.indexOf(
+        _device.isReachable && _device.isTrusted
+        && _device.loadedPlugins.indexOf(
             "SailfishConnect::ClipboardPlugin") >= 0
 
     SectionHeader { text: qsTr("Clipboard") }

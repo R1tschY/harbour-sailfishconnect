@@ -26,8 +26,8 @@ SilicaListView {
     width: parent.width
     height: Math.max(contentItem.childrenRect.height, Theme.itemSizeExtraLarge)
     visible:
-        _device.isReachable && _device.isTrusted &&
-        _device.supportedPlugins.indexOf(
+        _device.isReachable && _device.isTrusted
+        && _device.loadedPlugins.indexOf(
             "SailfishConnect::MprisRemotePlugin") >= 0
 
     header: SectionHeader {
@@ -136,7 +136,9 @@ SilicaListView {
                 value: 0
                 enabled: player.seekAllowed
                 onReleased: {
-                    player.position = positionSlider.value
+                    if (player) {
+                        player.position = positionSlider.value
+                    }
                 }
 
                 Component.onCompleted: {
@@ -146,7 +148,9 @@ SilicaListView {
                 }
 
                 function updatePosition() {
-                    positionSlider.value = player.position
+                    if (player) {
+                        positionSlider.value = player.position
+                    }
                 }
             }
 

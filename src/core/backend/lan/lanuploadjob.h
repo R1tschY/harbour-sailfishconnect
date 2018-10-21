@@ -37,7 +37,6 @@ class LanUploadJob : public CopyJob
 public:
     explicit LanUploadJob(
             const QSharedPointer<QIODevice>& source, const QString& deviceId);
-    ~LanUploadJob();
 
     QVariantMap transferInfo();
 

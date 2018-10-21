@@ -20,7 +20,7 @@ LanNetworkListener::LanNetworkListener(QObject *parent) : QObject(parent)
 //        &m_networkManager, &QNetworkConfigurationManager::configurationRemoved,
 //        this, &LanNetworkListener::onNetworkConfigurationRemoved);
 
-    qDebug(coreLogger) << "Discovered network configurations:";
+    qCDebug(coreLogger) << "Discovered network configurations:";
     auto allConfigs = m_networkManager.allConfigurations(
                 QNetworkConfiguration::Active);
     for (auto& config : asConst(allConfigs)) {
@@ -36,13 +36,13 @@ void LanNetworkListener::onNetworkConfigurationChanged(
     QString id = config.identifier();
 
     if (config.state().testFlag(QNetworkConfiguration::Active)) {
-        qDebug(coreLogger) << "New active network configuration:";
+        qCDebug(coreLogger) << "New active network configuration:";
         printConfig(config);
 
         m_activeConfigurations.insert(id);
     } else {
         if (m_activeConfigurations.contains(id)) {
-            qDebug(coreLogger) << "Inactivated network configuration:";
+            qCDebug(coreLogger) << "Inactivated network configuration:";
             printConfig(config);
             m_activeConfigurations.remove(id);
         }
@@ -64,11 +64,11 @@ void LanNetworkListener::onNetworkConfigurationRemoved(
 
 void LanNetworkListener::printConfig(const QNetworkConfiguration &config)
 {
-    qDebug(coreLogger) << " " << config.name();
-    qDebug(coreLogger) << "    id:" << config.identifier();
-    qDebug(coreLogger) << "    bearer type:" << config.bearerTypeName();
-    qDebug(coreLogger) << "    purpose:" << config.purpose();
-    qDebug(coreLogger) << "    state:" << config.state();
+    qCDebug(coreLogger) << " " << config.name();
+    qCDebug(coreLogger) << "    id:" << config.identifier();
+    qCDebug(coreLogger) << "    bearer type:" << config.bearerTypeName();
+    qCDebug(coreLogger) << "    purpose:" << config.purpose();
+    qCDebug(coreLogger) << "    state:" << config.state();
 }
 
 } // namespace SailfishConnect

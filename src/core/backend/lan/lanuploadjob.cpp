@@ -42,11 +42,6 @@ LanUploadJob::LanUploadJob(
             this, &LanUploadJob::aboutToClose);
 }
 
-LanUploadJob::~LanUploadJob()
-{
-    qDebug(coreLogger) << "~LanUploadJob";
-}
-
 void LanUploadJob::doStart()
 {
     m_port = MIN_PORT;

@@ -190,7 +190,7 @@ void CopyJob::pollBytesWritten(qint64 bytes)
     m_flushedBytes += bytes;
     setProcessedBytes(m_flushedBytes);
 
-    qDebug(logger) << "Send" << bytes << "Bytes ->"
+    qCDebug(logger) << "Send" << bytes << "Bytes ->"
                    << m_flushedBytes << "/" << m_size;
 
     poll();

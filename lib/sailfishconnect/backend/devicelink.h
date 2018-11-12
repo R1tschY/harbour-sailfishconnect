@@ -31,6 +31,11 @@ class NetworkPackage;
 class LinkProvider;
 class Device;
 
+namespace SailfishConnect {
+class JobManager;
+} // namespace SailfishConnect
+
+
 class DeviceLink
     : public QObject
 {
@@ -47,7 +52,7 @@ public:
     const QString& deviceId() const { return m_deviceId; }
     LinkProvider* provider() { return m_linkProvider; }
 
-    virtual bool sendPackage(NetworkPackage& np) = 0;
+    virtual bool sendPackage(NetworkPackage& np, SailfishConnect::JobManager* jobMgr = nullptr) = 0;
 
     //user actions
     virtual void userRequestsPair() = 0;

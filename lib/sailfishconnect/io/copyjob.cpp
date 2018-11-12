@@ -8,7 +8,7 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.io")
 
-static qint64 maxBufferSize = 512 * 1024; // 100kB
+static qint64 maxBufferSize = 512 * 1024; // 512kB
 
 
 CopyJob::CopyJob(

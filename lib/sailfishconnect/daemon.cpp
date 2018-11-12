@@ -34,7 +34,8 @@
 #include "backend/devicelink.h"
 #include "backend/linkprovider.h"
 #include "corelogging.h"
-#include <sailfishconnect/helper/cpphelper.h>
+#include "helper/cpphelper.h"
+#include "io/jobmanager.h"
 #include "kdeconnectconfig.h"
 #include "systeminfo.h"
 
@@ -53,6 +54,7 @@ struct DaemonPrivate
     QSet<QString> m_discoveryModeAcquisitions;
 
     KdeConnectConfig m_config;
+    JobManager* m_jobManager;
 
     DaemonPrivate(std::unique_ptr<SystemInfo> systemInfo)
     : m_config(std::move(systemInfo))
@@ -72,6 +74,8 @@ Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, QObject* parent, bool tes
     Q_ASSERT(s_instance == nullptr);
     s_instance = this;
     qCDebug(coreLogger) << "KdeConnect daemon starting";
+
+    d->m_jobManager = new JobManager(this);
 
     // Loading config
     auto* config = KdeConnectConfig::instance();
@@ -249,6 +253,11 @@ QList<Device*> Daemon::devicesList() const
 KdeConnectConfig *Daemon::config()
 {
     return &d->m_config;
+}
+
+JobManager *Daemon::jobManager()
+{
+    return d->m_jobManager;
 }
 
 bool Daemon::isDiscoveringDevices() const

@@ -38,7 +38,8 @@ SOURCES += \
     sailfishconnect/downloadjob.cpp \
     sailfishconnect/backend/lan/landownloadjob.cpp \
     sailfishconnect/backend/lan/lanuploadjob.cpp \
-    sailfishconnect/backend/lan/lannetworklistener.cpp
+    sailfishconnect/backend/lan/lannetworklistener.cpp \
+    sailfishconnect/io/jobmanager.cpp
 
 
 # German translation is enabled as an example. If you aren't
@@ -78,4 +79,5 @@ HEADERS += \
     sailfishconnect/downloadjob.h \
     sailfishconnect/backend/lan/landownloadjob.h \
     sailfishconnect/backend/lan/lanuploadjob.h \
-    sailfishconnect/backend/lan/lannetworklistener.h
+    sailfishconnect/backend/lan/lannetworklistener.h \
+    sailfishconnect/io/jobmanager.h

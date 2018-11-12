@@ -34,6 +34,7 @@ class KdeConnectConfig;
 
 namespace SailfishConnect {
 class SystemInfo;
+class JobManager;
 } // namespace SailfishConnect
 
 class Daemon : public QObject
@@ -50,6 +51,7 @@ public:
 
     QList<Device*> devicesList() const;
     KdeConnectConfig* config();
+    SailfishConnect::JobManager* jobManager();
 
     virtual void askPairingConfirmation(Device* device) = 0;
     virtual void reportError(const QString& title, const QString& description) = 0;

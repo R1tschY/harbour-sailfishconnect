@@ -310,7 +310,7 @@ void Device::removeLink(DeviceLink* link)
     }
 }
 
-bool Device::sendPackage(NetworkPackage& np)
+bool Device::sendPackage(NetworkPackage& np, JobManager* jobMgr)
 {
     Q_ASSERT(np.type() != PACKAGE_TYPE_PAIR);
     Q_ASSERT(isTrusted());
@@ -318,7 +318,7 @@ bool Device::sendPackage(NetworkPackage& np)
     // Maybe we could block here any package that is not an identity or a
     // pairing package to prevent sending non encrypted data
     for (DeviceLink* dl : asConst(m_deviceLinks)) {
-        if (dl->sendPackage(np)) return true;
+        if (dl->sendPackage(np, jobMgr)) return true;
     }
 
     return false;

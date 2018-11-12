@@ -85,7 +85,7 @@ public:
 
     const Device* device() const;
 
-    bool sendPackage(NetworkPackage& np) const;
+    bool sendPackage(NetworkPackage& np, SailfishConnect::JobManager *jobMgr = nullptr) const;
 
     SailfishConnectPluginConfig* config() const;
 

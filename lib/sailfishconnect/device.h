@@ -33,6 +33,10 @@
 class DeviceLink;
 class KdeConnectPlugin;
 
+namespace SailfishConnect {
+class JobManager;
+} // namespace SailfishConnect
+
 class Device
     : public QObject
 {
@@ -123,7 +127,7 @@ public:
 public Q_SLOTS:
     ///sends a @p np package to the device
     ///virtual for testing purposes.
-    virtual bool sendPackage(NetworkPackage& np);
+    virtual bool sendPackage(NetworkPackage& np, SailfishConnect::JobManager *jobMgr = nullptr);
 
     //Dbus operations
 public Q_SLOTS:

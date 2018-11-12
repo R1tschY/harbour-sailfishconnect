@@ -30,6 +30,7 @@
 #include "lanuploadjob.h"
 #include "landownloadjob.h"
 #include <sailfishconnect/helper/cpphelper.h>
+#include <sailfishconnect/io/jobmanager.h>
 
 using namespace SailfishConnect;
 
@@ -95,10 +96,10 @@ QString LanDeviceLink::name()
     return QStringLiteral("LanLink"); // Should be same in both android and kde version
 }
 
-bool LanDeviceLink::sendPackage(NetworkPackage& np)
+bool LanDeviceLink::sendPackage(NetworkPackage& np, JobManager* jobMgr)
 {
     if (np.hasPayload()) {
-        auto* uploadJob = sendPayload(np);
+        auto* uploadJob = sendPayload(np, jobMgr);
         if (uploadJob->isRunning()) {
             np.setPayloadTransferInfo(uploadJob->transferInfo());
         }
@@ -113,10 +114,14 @@ bool LanDeviceLink::sendPackage(NetworkPackage& np)
     return (written != -1);
 }
 
-LanUploadJob* LanDeviceLink::sendPayload(const NetworkPackage& np)
+LanUploadJob* LanDeviceLink::sendPayload(const NetworkPackage& np, JobManager* jobMgr)
 {
     LanUploadJob* job = new LanUploadJob(np.payload(), deviceId());
     job->start();
+    if (jobMgr) {
+        jobMgr->addJob(job, deviceId());
+    }
+
     return job;
 }
 

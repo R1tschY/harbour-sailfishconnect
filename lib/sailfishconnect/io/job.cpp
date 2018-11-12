@@ -126,20 +126,4 @@ void Job::setTitle(const QString& title)
     }
 }
 
-JobManager::JobManager()
-{
-
-}
-
-JobManager* JobManager::instance()
-{
-    static JobManager instance;
-    return &instance;
-}
-
-void JobManager::addJob(Job *job)
-{
-
-}
-
 } // namespace SailfishConnect

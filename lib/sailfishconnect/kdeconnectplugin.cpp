@@ -66,7 +66,7 @@ const Device* KdeConnectPlugin::device() const
     return d->m_device;
 }
 
-bool KdeConnectPlugin::sendPackage(NetworkPackage& np) const
+bool KdeConnectPlugin::sendPackage(NetworkPackage& np, JobManager* jobMgr) const
 {
     if (!d->m_outgoingCapabilties.contains(np.type())) {
         qCWarning(coreLogger).nospace()
@@ -77,7 +77,7 @@ bool KdeConnectPlugin::sendPackage(NetworkPackage& np) const
     }
     qCDebug(coreLogger) << metaObject()->className() << "sends" << np.type();
     qCDebug(coreLogger) << "data:" << np.serialize().data();
-    return d->m_device->sendPackage(np);
+    return d->m_device->sendPackage(np, jobMgr);
 }
 
 

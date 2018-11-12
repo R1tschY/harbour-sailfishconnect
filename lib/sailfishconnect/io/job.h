@@ -5,27 +5,6 @@
 
 namespace SailfishConnect {
 
-class Job;
-
-
-class JobManager : public QObject
-{
-    Q_OBJECT
-
-    JobManager();
-public:
-    static JobManager* instance();
-
-    QList<Job*> jobs() const;
-
-    void addJob(Job* job);
-
-signals:
-    void jobAdded(Job*);
-    void jobRemoved(Job*);
-};
-
-
 class Job : public QObject
 {
     Q_OBJECT
@@ -48,6 +27,7 @@ public:
     QString description() const { return m_description; }
     qint64 totalBytes() const { return m_totalBytes; }
     qint64 processedBytes() const { return m_processedBytes; }
+    State state() const { return m_state; }
     Q_SCRIPTABLE bool wasCancelled() const { return m_wasCancelled; }
     Q_SCRIPTABLE bool isPending() const { return m_state == State::Pending; }
     Q_SCRIPTABLE bool isRunning() const { return m_state == State::Running; }

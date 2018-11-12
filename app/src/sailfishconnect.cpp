@@ -43,6 +43,7 @@
 #include "ui/filtervalueproxymodel.h"
 #include "ui/devicepluginsmodel.h"
 #include "ui/mprisplayersmodel.h"
+#include "ui/jobsmodel.h"
 #include "ui.h"
 
 namespace SailfishConnect {
@@ -96,6 +97,8 @@ void registerQmlTypes() {
                 "SailfishConnect.UI", 0, 3, "FilterValueProxyModel");
     qmlRegisterType<DevicePluginsModel>(
                 "SailfishConnect.UI", 0, 3, "DevicePluginsModel");
+    qmlRegisterType<JobsModel>(
+                "SailfishConnect.UI", 0, 3, "JobsModel");
     qmlRegisterType<MprisPlayersModel>(
                 "SailfishConnect.UI", 0, 3, "MprisPlayersModel");
 

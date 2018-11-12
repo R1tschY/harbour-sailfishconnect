@@ -29,6 +29,8 @@
 #include <sailfishconnect/downloadjob.h>
 #include <sailfishconnect/helper/filehelper.h>
 #include <sailfishconnect/io/copyjob.h>
+#include <sailfishconnect/io/jobmanager.h>
+#include <sailfishconnect/daemon.h>
 
 namespace SailfishConnect {
 
@@ -67,6 +69,7 @@ bool SharePlugin::receivePackage(const NetworkPackage& np)
         Job* job = np.createDownloadPayloadJob(
                     incomingPath() % "/" % filename);
         job->setParent(this);
+        Daemon::instance()->jobManager()->addJob(job, device()->id());
         connect(job, &Job::finished, this, &SharePlugin::finishedFileTransfer);
         // TODO: daemon->addJob(job);
         // TODO: add to a job queue in which only x downloads/uploads are
@@ -108,10 +111,11 @@ void SharePlugin::share(const QUrl& url)
         QSharedPointer<QIODevice> localFile(new QFile(url.toLocalFile()));
         packet.setPayload(localFile, localFile->size());
         packet.set<QString>(QStringLiteral("filename"), url.fileName());
+        sendPackage(packet, Daemon::instance()->jobManager());
     } else {
         packet.set<QString>(QStringLiteral("url"), url.toString());
+        sendPackage(packet, nullptr);
     }
-    sendPackage(packet);
 }
 
 void SharePlugin::finishedFileTransfer()

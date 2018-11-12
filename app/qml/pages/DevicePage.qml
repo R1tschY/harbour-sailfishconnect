@@ -59,6 +59,7 @@ Page {
                 _device.trustedChanged.connect(updateState)
             }
 
+            // TODO: remove this text entry and replace with placeholder
             Column {
                 id: mainColumn
                 width: parent.width - Theme.paddingLarge * 2

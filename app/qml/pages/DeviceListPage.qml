@@ -213,6 +213,11 @@ Page {
             }
 
             MenuItem {
+                text: qsTr("Transfers ...")
+                onClicked: pageStack.push(Qt.resolvedUrl("TransfersPage.qml"))
+            }
+
+            MenuItem {
                 text: qsTr("Quit")
                 visible: ui.runInBackground
                 onClicked: ui.quit()

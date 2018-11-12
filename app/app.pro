@@ -42,7 +42,8 @@ SOURCES += \
     src/plugins/sendnotifications/notifyingapplication.cpp \
     src/plugins/sendnotifications/sendnotificationsplugin.cpp \
     src/plugins/touchpad/touchpadplugin.cpp \
-    src/plugins/share/shareplugin.cpp
+    src/plugins/share/shareplugin.cpp \
+    src/ui/jobsmodel.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -67,7 +68,8 @@ DISTFILES += \
     qml/components/Touchpad.qml \
     qml/components/TouchpadPage.qml \
     src/plugins/share/metadata.json \
-    qml/components/ShareUi.qml
+    qml/components/ShareUi.qml \
+    qml/pages/TransfersPage.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
@@ -100,4 +102,5 @@ HEADERS += \
     src/plugins/sendnotifications/notifyingapplication.h \
     src/plugins/sendnotifications/sendnotificationsplugin.h \
     src/plugins/touchpad/touchpadplugin.h \
-    src/plugins/share/shareplugin.h
+    src/plugins/share/shareplugin.h \
+    src/ui/jobsmodel.h

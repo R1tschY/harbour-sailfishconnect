@@ -47,6 +47,7 @@ signals:
     void descriptionChanged();
     void totalBytesChanged();
     void processedBytesChanged();
+    void stateChanged();
 
 protected:
     virtual void doStart() = 0;

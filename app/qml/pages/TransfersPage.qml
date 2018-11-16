@@ -20,6 +20,7 @@ import Sailfish.Silica 1.0
 import SailfishConnect.UI 0.3
 
 Page {
+    id: page
 
     allowedOrientations: Orientation.All
 
@@ -40,17 +41,17 @@ Page {
             ProgressCircle {
                 id: progress
 
-                inAlternateCycle: true
+                // inAlternateCycle: true
 
                 x: Theme.horizontalPageMargin
                 anchors.verticalCenter: parent.verticalCenter
                 width: Theme.iconSizeMedium
                 height: Theme.iconSizeMedium
 
-                value: processedBytes * 100.0 / totalBytes
+                value: processedBytes / totalBytes
 
                 Image {
-                    source: "image://theme/icon-s-device-download"
+                    source: "image://theme/icon-s-device-download" // TODO
                     anchors { centerIn: progress }
                 }
             }
@@ -58,18 +59,18 @@ Page {
             Label {
                 id: jobTitle
                 anchors {
-                    left: icon.right
-                    leftMargin: Theme.paddingLarge
+                    left: parent.left
+                    leftMargin: Theme.horizontalPageMargin
+                                + Theme.iconSizeMedium + Theme.paddingMedium
                     right: parent.right
-                    rightMargin: Theme.horizontalPageMargin
+                    top: parent.top
                 }
-                y: listItem.contentHeight / 2 - implicitHeight / 2
-                   - (deviceStatusLabel.implicitHeight / 2)
 
-                text: name
+                text: title
                 color: listItem.highlighted
                        ? Theme.highlightColor
                        : Theme.primaryColor
+                width: parent.width - Theme.iconSizeMedium
                 truncationMode: TruncationMode.Fade
                 textFormat: Text.PlainText
             }
@@ -80,7 +81,6 @@ Page {
                     left: jobTitle.left
                     top: jobTitle.bottom
                     right: parent.right
-                    rightMargin: Theme.horizontalPageMargin
                 }
 
                 text: description
@@ -89,7 +89,7 @@ Page {
                        : Theme.secondaryColor
                 truncationMode: TruncationMode.Fade
                 font.pixelSize: Theme.fontSizeExtraSmall
-                width: parent.width
+                width: parent.width - Theme.iconSizeMedium
                 textFormat: Text.PlainText
             }
         }

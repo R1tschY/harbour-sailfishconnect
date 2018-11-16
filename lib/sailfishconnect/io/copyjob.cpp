@@ -69,8 +69,8 @@ void CopyJob::doStart()
 
     connect(m_source.data(), &QIODevice::readChannelFinished,
             this, &CopyJob::pollAtSourceClose);
-    connect(m_source.data(), &QIODevice::readyRead,
-            this, &CopyJob::poll);
+//    connect(m_source.data(), &QIODevice::readyRead,
+//            this, &CopyJob::poll);
     connect(m_destination.data(), &QIODevice::bytesWritten,
             this, &CopyJob::pollBytesWritten);
     connect(m_destination.data(), &QIODevice::aboutToClose,
@@ -99,9 +99,9 @@ void CopyJob::poll()
                 return;
             }
             m_buffer.resize(orig_buffer_size + bytes);
-            qCDebug(logger)
-                    << "Read" << bytes
-                    << "bytes. Buffer size:" << m_buffer.size();
+//            qCDebug(logger)
+//                    << "Read" << bytes
+//                    << "bytes. Buffer size:" << m_buffer.size();
 
             if (!m_source->isSequential() && m_source->atEnd()) {
                 // random access file that is at end of file
@@ -127,12 +127,13 @@ void CopyJob::poll()
 
         if (m_destination->bytesToWrite() == 0) {
             m_flushedBytes = m_writtenBytes;
+            setProcessedBytes(m_flushedBytes); // TODO: use timer for better performance
         }
 
-        qCDebug(logger)
-                << "Written" << bytes
-                << "bytes. Buffer size:" << m_buffer.size()
-                << "Waiting for" << m_destination->bytesToWrite() << "bytes";
+//        qCDebug(logger)
+//                << "Written" << bytes
+//                << "bytes. Buffer size:" << m_buffer.size()
+//                << "Waiting for" << m_destination->bytesToWrite() << "bytes";
     }
 
     if (m_source
@@ -190,8 +191,8 @@ void CopyJob::pollBytesWritten(qint64 bytes)
     m_flushedBytes += bytes;
     setProcessedBytes(m_flushedBytes);
 
-    qCDebug(logger) << "Send" << bytes << "Bytes ->"
-                   << m_flushedBytes << "/" << m_size;
+//    qCDebug(logger) << "Send" << bytes << "Bytes ->"
+//                   << m_flushedBytes << "/" << m_size;
 
     poll();
 }

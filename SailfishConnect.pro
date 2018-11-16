@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
 
-SUBDIRS = app lib tests
+SUBDIRS = lib app tests
 
 app.depends = lib

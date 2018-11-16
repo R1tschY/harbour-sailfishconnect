@@ -42,6 +42,9 @@ private:
     void addJob(JobInfo* job);
     void connectJob(JobInfo* job);
     void jobChanged(JobInfo *job, int role);
+
+    JobInfo* rowToJob(const QModelIndex& row) const;
+    int jobToRow(JobInfo* job) const;
 };
 
 } // namespace SailfishConnect

@@ -15,6 +15,12 @@ JobInfo::JobInfo(Job *job, QString deviceId, QObject *parent)
     connect(job, &Job::destroyed, this, &JobInfo::onJobDestroyed);
     connect(job, &Job::finished, this, &JobInfo::onJobFinished);
     connect(job, &Job::titleChanged, this, &JobInfo::titleChanged);
+    connect(job, &Job::descriptionChanged, this, &JobInfo::descriptionChanged);
+    connect(job, &Job::totalBytesChanged, this, &JobInfo::totalBytesChanged);
+    connect(job, &Job::processedBytesChanged,
+            this, &JobInfo::processedBytesChanged);
+    connect(job, &Job::stateChanged, this, &JobInfo::stateChanged);
+    //connect(job, &Job::errorStringChanged, this, &JobInfo::errorStringChanged);
 }
 
 QString JobInfo::title() const {

@@ -84,10 +84,28 @@ void JobsModel::connectJob(JobInfo *job)
 
 void JobsModel::jobChanged(JobInfo *job, int role)
 {
-    int row = m_jobs.indexOf(job);
-    if (row > 0) {
+    int row = jobToRow(job);
+    if (row >= 0) {
         auto i = index(row);
         emit dataChanged(i, i, QVector<int>() << role);
+    }
+}
+
+JobInfo *JobsModel::rowToJob(const QModelIndex &index) const
+{
+    if (index.row() < 0 || index.row() >= m_jobs.length())
+        return nullptr;
+
+    return m_jobs[m_jobs.length() - index.row() - 1];
+}
+
+int JobsModel::jobToRow(JobInfo *job) const
+{
+    int row = m_jobs.indexOf(job);
+    if (row >= 0) {
+        return m_jobs.length() - row - 1;
+    } else {
+        return -1;
     }
 }
 
@@ -96,10 +114,10 @@ QVariant JobsModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (index.row() >= m_jobs.length())
+    auto* job = rowToJob(index);
+    if (!job)
         return QVariant();
 
-    auto* job = m_jobs[m_jobs.length() - index.row() - 1];
     switch (role) {
     case TitleRole:
         return job->title();

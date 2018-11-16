@@ -21,7 +21,10 @@ void Job::start()
         return;
 
     qCInfo(logger) << "Job" << m_title << "is starting";
+
     m_state = State::Running;
+    emit stateChanged();
+
     doStart();
 }
 
@@ -104,6 +107,7 @@ bool Job::doCancelling()
 void Job::onFinished()
 {
     emit finished();
+    emit stateChanged();
 }
 
 void Job::onSuccess()

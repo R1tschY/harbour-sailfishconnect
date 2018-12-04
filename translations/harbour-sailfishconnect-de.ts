@@ -111,6 +111,10 @@
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
+    <message>
+        <source>Transfers ...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePage</name>
@@ -396,6 +400,13 @@
     <message>
         <source></source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>TransfersPage</name>
+    <message>
+        <source>Transfers</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

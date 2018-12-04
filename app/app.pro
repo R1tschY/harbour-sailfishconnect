@@ -47,7 +47,6 @@ SOURCES += \
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
-    translations/*.ts \
     qml/pages/DevicePage.qml \
     qml/pages/DeviceListPage.qml \
     qml/pages/AboutPage.qml \
@@ -59,7 +58,6 @@ DISTFILES += \
     harbour-sailfishconnect.desktop \
     src/plugins/battery/metadata.json \
     src/plugins/ping/metadata.json \
-    *.md \
     qml/components/ClipboardUi.qml \
     qml/pages/SettingsPage.qml \
     rpm/harbour-sailfishconnect.changes \
@@ -72,18 +70,6 @@ DISTFILES += \
     qml/pages/TransfersPage.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
-
-# to disable building translations every time, comment out the
-# following CONFIG line
-CONFIG += sailfishapp_i18n
-
-# German translation is enabled as an example. If you aren't
-# planning to localize your app, remember to comment out the
-# following TRANSLATIONS line. And also do not forget to
-# modify the localized app name in the the .desktop file.
-TRANSLATIONS += translations/harbour-sailfishconnect-de.ts
-TRANSLATIONS += translations/harbour-sailfishconnect-ru.ts
-TRANSLATIONS += translations/harbour-sailfishconnect-es.ts
 
 HEADERS += \
     src/appdaemon.h \

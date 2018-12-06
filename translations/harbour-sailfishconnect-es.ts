@@ -111,7 +111,7 @@
     </message>
     <message>
         <source>Transfers ...</source>
-        <translation type="unfinished"></translation>
+        <translation>tranferencias ...</translation>
     </message>
 </context>
 <context>
@@ -404,7 +404,7 @@
     <name>TransfersPage</name>
     <message>
         <source>Transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Transferencias</translation>
     </message>
 </context>
 </TS>

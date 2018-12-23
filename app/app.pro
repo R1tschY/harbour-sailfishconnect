@@ -24,6 +24,7 @@ DEFINES += \
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 INCLUDEPATH += src ../lib
 LIBS += -L../lib -lsailfishconnect
+PRE_TARGETDEPS += $$OUT_PWD/../lib/libsailfishconnect.a
 
 SOURCES += \
     src/appdaemon.cpp \

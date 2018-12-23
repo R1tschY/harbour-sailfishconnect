@@ -1,9 +1,12 @@
 TEMPLATE = subdirs
 
-SUBDIRS = lib app tests
-
-app.depends = lib
+SUBDIRS = lib tests
 tests.depends = lib
+
+packagesExist(libsailfishapp) {
+    SUBDIRS += app
+    app.depends = lib
+}
 
 # Translations
 

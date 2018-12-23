@@ -1,6 +1,7 @@
 #include "filehelper.h"
 
 #include <QDir>
+#include <QDebug>
 #include <QRegularExpression>
 
 namespace SailfishConnect {
@@ -8,37 +9,46 @@ namespace SailfishConnect {
 QFileInfo nonexistingFile(const QString& path) {
     QFileInfo result(path);
     const QString prefix = result.baseName();
-    const QString suffix = result.completeSuffix();
+    QString suffix = result.completeSuffix();
+    if (path.contains(QChar('.'))) {
+        suffix.insert(0, QChar('.'));
+    }
 
-    if (!prefix.isEmpty() && !suffix.isEmpty()) {
+    if (!prefix.isEmpty()) {
         int i = 0;
         while (result.exists()) {
             i += 1;
             result.setFile(
                 result.dir(),
-                QStringLiteral("%1 (%2).%3").arg(
+                QStringLiteral("%1 (%2)%3").arg(
                     prefix, QString::number(i), suffix));
         }
-        return result.filePath();
+        return result;
     } else {
-        QString name = prefix.isEmpty() ? suffix : prefix;
         int i = 0;
         while (result.exists()) {
             i += 1;
             result.setFile(
                 result.dir(),
-                QStringLiteral(".%1 (%2)").arg(name, QString::number(i)));
+                QStringLiteral("%1 (%2)").arg(suffix, QString::number(i)));
         }
-        return result.filePath();
+        return result;
     }
 }
 
 QString escapeForFilePath(const QString& name)
 {
-    static QRegularExpression invalidChars(R"#([^\w -_\.)#");
+    QString result = name.trimmed();
+    result.replace(QChar('/'), QString());
+    result.replace(QChar('\0'), QString());
 
-    QString result(name);
-    return result.replace(invalidChars, QStringLiteral("_"));
+    if (result.isEmpty()
+            || result == QLatin1String(".")
+            || result == QLatin1String("..")) {
+        return QStringLiteral("_");
+    } else {
+        return result;
+    }
 }
 
 } // namespace SailfishConnect

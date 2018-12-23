@@ -4,8 +4,13 @@ TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG += thread
-CONFIG -= qt
 
-HEADERS +=     tst_y.h
+INCLUDEPATH += ../lib
+LIBS += -L../lib -lsailfishconnect
+PRE_TARGETDEPS += $$OUT_PWD/../lib/libsailfishconnect.a
 
-SOURCES +=     main.cpp
+HEADERS += \
+    test.h
+
+SOURCES += main.cpp \
+    test_filehelper.cpp

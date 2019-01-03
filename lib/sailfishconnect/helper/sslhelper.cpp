@@ -127,15 +127,15 @@ QSslCertificate CertificateBuilder::selfSigned(const QSslKey &key) const
     X509Ptr cert(X509_new());
 
     // serial number
-    ASN1_INTEGER_set(X509_get_serialNumber(cert.get()), serialNumber);
+    ASN1_INTEGER_set(X509_get_serialNumber(cert.get()), m_serialNumber);
 
     // notBefore / notAfter
     ASN1_TIME_set(
        X509_get_notBefore(cert.get()),
-       notBefore.toMSecsSinceEpoch() / 1000);
+       m_notBefore.toMSecsSinceEpoch() / 1000);
     ASN1_TIME_set(
        X509_get_notAfter(cert.get()),
-       notAfter.toMSecsSinceEpoch() / 1000);
+       m_notAfter.toMSecsSinceEpoch() / 1000);
 
     // key
     EvpPkeyPtr pkey(EVP_PKEY_new());
@@ -161,13 +161,13 @@ QSslCertificate CertificateBuilder::selfSigned(const QSslKey &key) const
     X509_NAME* name;
     name = X509_get_subject_name(cert.get());
 
-    addInfoEntry(name, NID_commonName, info.value(CommonName));
-    addInfoEntry(name, NID_countryName, info.value(Country));
-    addInfoEntry(name, NID_localityName, info.value(Locality));
-    addInfoEntry(name, NID_stateOrProvinceName, info.value(State));
-    addInfoEntry(name, NID_organizationName, info.value(Organization));
+    addInfoEntry(name, NID_commonName, m_info.value(CommonName));
+    addInfoEntry(name, NID_countryName, m_info.value(Country));
+    addInfoEntry(name, NID_localityName, m_info.value(Locality));
+    addInfoEntry(name, NID_stateOrProvinceName, m_info.value(State));
+    addInfoEntry(name, NID_organizationName, m_info.value(Organization));
     addInfoEntry(name, NID_organizationalUnitName,
-                info.value(OrganizationalUnit));
+                 m_info.value(OrganizationalUnit));
 
     // subject == issuer
     X509_set_issuer_name(cert.get(), name);

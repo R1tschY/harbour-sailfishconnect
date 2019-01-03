@@ -45,8 +45,6 @@ class NetworkPackage
     Q_PROPERTY( qint64 payloadSize READ payloadSize WRITE setPayloadSize )
 
 public:
-
-    //const static QCA::EncryptionAlgorithm EncryptionAlgorithm;
     const static int s_protocolVersion;
 
     explicit NetworkPackage(const QString& type, const QVariantMap& body = {});

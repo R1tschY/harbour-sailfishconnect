@@ -81,3 +81,6 @@ HEADERS += \
     sailfishconnect/backend/lan/lanuploadjob.h \
     sailfishconnect/backend/lan/lannetworklistener.h \
     sailfishconnect/io/jobmanager.h
+
+DISTFILES += \
+    lib.pri

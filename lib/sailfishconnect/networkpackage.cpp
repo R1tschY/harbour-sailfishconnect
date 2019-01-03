@@ -67,7 +67,7 @@ void NetworkPackage::createIdentityPackage(NetworkPackage* np)
     np->set(QStringLiteral("deviceId"), config->deviceId());
     np->set(QStringLiteral("deviceName"), config->name());
     np->set(QStringLiteral("deviceType"), config->deviceType());
-    np->set(QStringLiteral("protocolVersion"),  NetworkPackage::s_protocolVersion);
+    np->set(QStringLiteral("protocolVersion"), NetworkPackage::s_protocolVersion);
     np->set(QStringLiteral("incomingCapabilities"), PluginManager::instance()->incomingCapabilities());
     np->set(QStringLiteral("outgoingCapabilities"), PluginManager::instance()->outgoingCapabilities());
 

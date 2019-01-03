@@ -154,16 +154,18 @@ void KdeConnectConfig::createCertificate()
         Ssl::CertificateInfo certificateInfo;
         certificateInfo.insert(Ssl::CommonName, d->m_deviceId);
         certificateInfo.insert(
-            Ssl::Organization, QStringLiteral("Richard Liebscher")); // TODO
+            Ssl::Organization, QStringLiteral("Richard Liebscher"));
+        certificateInfo.insert(
+            Ssl::OrganizationalUnit, QStringLiteral("SailfishConnect"));
 
-        Ssl::CertificateBuilder certificateBuilder;
-        certificateBuilder.setInfo(certificateInfo);
-        certificateBuilder.setSerialNumber(10);
         QDateTime startTime = QDateTime::currentDateTime().addYears(-1);
-        certificateBuilder.setNotBefore(startTime);
-        certificateBuilder.setNotAfter(startTime.addYears(10));
 
-        d->m_certificate = certificateBuilder.selfSigned(d->m_privateKey);
+        d->m_certificate = Ssl::CertificateBuilder()
+                .info(certificateInfo)
+                .serialNumber(10)
+                .notBefore(startTime)
+                .notAfter(startTime.addYears(10))
+                .selfSigned(d->m_privateKey);
         if (d->m_certificate.isNull()) {
             qCCritical(coreLogger) << "generating certificate failed";
             return;

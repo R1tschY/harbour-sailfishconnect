@@ -31,6 +31,7 @@ class DeviceLink;
 class Device;
 class QNetworkAccessManager;
 class KdeConnectConfig;
+class LinkProvider;
 
 namespace SailfishConnect {
 class SystemInfo;
@@ -44,7 +45,14 @@ class Daemon : public QObject
     Q_PROPERTY(QStringList pairingRequests READ pairingRequests NOTIFY pairingRequestsChanged)
 
 public:
-    explicit Daemon(std::unique_ptr<SailfishConnect::SystemInfo> systemInfo, QObject* parent, bool testMode = false);
+    explicit Daemon(
+            std::unique_ptr<SailfishConnect::SystemInfo> systemInfo,
+            QObject* parent);
+
+    explicit Daemon(
+            std::unique_ptr<SailfishConnect::SystemInfo> systemInfo,
+            QList<LinkProvider*> link_providers,
+            QObject* parent);
     ~Daemon() override;
 
     static Daemon* instance();
@@ -93,6 +101,8 @@ private:
     bool isDiscoveringDevices() const;
     void removeDevice(Device* d);
     void cleanDevices();
+
+    static QList<LinkProvider*> standardLinkProviders();
 
     QScopedPointer<struct DaemonPrivate> d;
 };

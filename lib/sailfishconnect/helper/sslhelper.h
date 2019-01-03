@@ -44,25 +44,33 @@ using CertificateInfo = QMap<CertificateInfoType, QString>;
 
 class CertificateBuilder {
 public:
-    CertificateInfo getInfo() const { return info; }
-    void setInfo(const CertificateInfo &value) { info = value; }
+    CertificateBuilder& info(const CertificateInfo &value) {
+        m_info = value;
+        return *this;
+    }
 
-    int getSerialNumber() const { return serialNumber; }
-    void setSerialNumber(int value) { serialNumber = value; }
+    CertificateBuilder& serialNumber(int value) {
+        m_serialNumber = value;
+        return *this;
+    }
 
-    QDateTime getNotBefore() const { return notBefore; }
-    void setNotBefore(const QDateTime &value) { notBefore = value; }
+    CertificateBuilder& notBefore(const QDateTime &value) {
+        m_notBefore = value;
+        return *this;
+    }
 
-    QDateTime getNotAfter() const { return notAfter; }
-    void setNotAfter(const QDateTime &value) { notAfter = value; }
+    CertificateBuilder& notAfter(const QDateTime &value) {
+        m_notAfter = value;
+        return *this;
+    }
 
     QSslCertificate selfSigned(const QSslKey& key) const;
 
 private:
-    CertificateInfo info;
-    int serialNumber;
-    QDateTime notBefore;
-    QDateTime notAfter;
+    CertificateInfo m_info;
+    int m_serialNumber;
+    QDateTime m_notBefore;
+    QDateTime m_notAfter;
 };
 
 } // namespace Ssl

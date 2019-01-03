@@ -32,6 +32,7 @@
 
 class DeviceLink;
 class KdeConnectPlugin;
+class KdeConnectConfig;
 
 namespace SailfishConnect {
 class JobManager;
@@ -68,14 +69,16 @@ public:
      *
      * We already know it but we need to wait for an incoming DeviceLink to communicate
      */
-    Device(QObject* parent, const QString& id);
+    Device(QObject* parent, KdeConnectConfig* config, const QString& id);
+
+    Device(QObject* parent, KdeConnectConfig *config, const QString& id, const QString& name, const QString &type);
 
     /**
      * Device known via an incoming connection sent to us via a devicelink.
      *
      * We know everything but we don't trust it yet
      */
-    Device(QObject* parent, const NetworkPackage& np, DeviceLink* dl);
+    Device(QObject* parent, KdeConnectConfig *config, const NetworkPackage& np, DeviceLink* dl);
 
     ~Device() override;
 
@@ -175,6 +178,8 @@ private: //Fields (TODO: dPointer!)
     QMultiMap<QString, KdeConnectPlugin*> m_pluginsByIncomingCapability;
     QSet<QString> m_supportedPlugins;
     QSet<PairingHandler*> m_pairRequests;
+
+    KdeConnectConfig* m_config;
 };
 
 Q_DECLARE_METATYPE(Device*)

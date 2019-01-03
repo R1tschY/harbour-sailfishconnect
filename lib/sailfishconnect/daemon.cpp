@@ -46,7 +46,7 @@ static Daemon* s_instance = nullptr;
 struct DaemonPrivate
 {
     //Different ways to find devices and connect to them
-    QSet<LinkProvider*> m_linkProviders;
+    QList<LinkProvider*> m_linkProviders;
 
     //Every known device
     QHash<QString, Device*> m_devices;
@@ -67,7 +67,11 @@ Daemon* Daemon::instance()
     return s_instance;
 }
 
-Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, QObject* parent, bool testMode)
+Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, QObject *parent)
+    : Daemon(std::move(systemInfo), standardLinkProviders(), parent)
+{ }
+
+Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, QList<LinkProvider*> link_providers, QObject* parent)
     : QObject(parent)
     , d(new DaemonPrivate(std::move(systemInfo)))
 {
@@ -78,26 +82,17 @@ Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, QObject* parent, bool tes
     d->m_jobManager = new JobManager(this);
 
     // Loading config
-    auto* config = KdeConnectConfig::instance();
-    if (!config->valid()) {
+    if (!d->m_config.valid()) {
         qCCritical(coreLogger) << "no valid configuation. aborting!";
         return;
     }
 
-    //Load backends
-//    if (testMode)
-        /*d->m_linkProviders.insert(new LoopbackLinkProvider());
-    else*/ //{
-        d->m_linkProviders.insert(new LanLinkProvider());
-        #ifdef KDECONNECT_BLUETOOTH
-            d->m_linkProviders.insert(new BluetoothLinkProvider());
-        #endif
-//    }
+    d->m_linkProviders = link_providers;
 
     //Read remebered paired devices
-    const QStringList& list = KdeConnectConfig::instance()->trustedDevices();
+    const QStringList& list = d->m_config.trustedDevices();
     for (const QString& id : list) {
-        addDevice(new Device(this, id));
+        addDevice(new Device(this, &d->m_config, id));
     }
 
     //Listen to new devices
@@ -153,6 +148,16 @@ void Daemon::cleanDevices()
     }
 }
 
+QList<LinkProvider *> Daemon::standardLinkProviders()
+{
+    QList<LinkProvider*> result;
+    result.append(new LanLinkProvider());
+#ifdef KDECONNECT_BLUETOOTH
+    result.insert(new BluetoothLinkProvider());
+#endif
+    return result;
+}
+
 void Daemon::forceOnNetworkChange(const QString& reason)
 {
     qCDebug(coreLogger)
@@ -200,7 +205,7 @@ void Daemon::onNewDeviceLink(const NetworkPackage& identityPackage, DeviceLink* 
         }
     } else {
         qCDebug(coreLogger) << "It is a new device" << identityPackage.get<QString>(QStringLiteral("deviceName"));
-        Device* device = new Device(this, identityPackage, dl);
+        Device* device = new Device(this, &d->m_config, identityPackage, dl);
 
         //we discard the connections that we created but it's not paired.
         if (!isDiscoveringDevices() && !device->isTrusted() && !dl->linkShouldBeKeptAlive()) {
@@ -223,9 +228,9 @@ void Daemon::onDeviceStatusChanged()
 
 void Daemon::setAnnouncedName(const QString& name)
 {
-    if (name != KdeConnectConfig::instance()->name()) {
+    if (name != d->m_config.name()) {
         qCDebug(coreLogger()) << "Announcing name";
-        KdeConnectConfig::instance()->setName(name);
+        d->m_config.setName(name);
         forceOnNetworkChange("device name changed");
         Q_EMIT announcedNameChanged(name);
     }
@@ -233,7 +238,7 @@ void Daemon::setAnnouncedName(const QString& name)
 
 QString Daemon::announcedName()
 {
-    return KdeConnectConfig::instance()->name();
+    return d->m_config.name();
 }
 
 QNetworkAccessManager* Daemon::networkAccessManager()
@@ -306,5 +311,5 @@ Daemon::~Daemon() {
 
 QString Daemon::selfId() const
 {
-    return KdeConnectConfig::instance()->deviceId();
+    return d->m_config.deviceId();
 }

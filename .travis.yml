@@ -1,16 +1,19 @@
 language: cpp
 compiler: g++
 sudo: required
-dist: xenial
+dist: trusty
  
 addons:
   apt:
+    source:
+    - ppa:beineri/opt-qt593-trusty
     packages:
-    - qt5-default 
-    - qttools5-dev-tools
+    - qt59base
+    - qt59tools
     - libssl-dev
 
 script:
+  - source /opt/qt59/bin/qt59-env.sh
   - mkdir build
   - cd build
   - qmake ..

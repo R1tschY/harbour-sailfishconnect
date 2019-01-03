@@ -4,7 +4,7 @@ TEMPLATE = lib
 CONFIG += staticlib c++14
 QT += network dbus
 
-PKGCONFIG += openssl contextkit-statefs nemonotifications-qt5
+PKGCONFIG += openssl
 DEFINES += \
     QT_DEPRECATED_WARNINGS \
     QT_DISABLE_DEPRECATED_BEFORE=0x050600 \

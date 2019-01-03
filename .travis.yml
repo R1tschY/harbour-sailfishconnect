@@ -1,0 +1,17 @@
+language: cpp
+compiler: g++
+sudo: required
+dist: xenial
+ 
+addons:
+  apt:
+    packages:
+    - qt5-default 
+    - qttools5-dev-tools
+    - libssl-dev
+
+script:
+  - mkdir build
+  - cd build
+  - qmake ..
+  - make

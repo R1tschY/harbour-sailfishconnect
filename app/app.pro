@@ -23,6 +23,7 @@ DEFINES += \
     QT_USE_QSTRINGBUILDER
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 include(../lib/lib.pri)
+INCLUDEPATH += $$PWD/src
 
 SOURCES += \
     src/appdaemon.cpp \

@@ -1,20 +1,12 @@
 language: cpp
-compiler: g++
 sudo: required
-dist: trusty
+dist: xenial
+services:
+  - docker
+  
+install:
+  - docker pull coderus/sailfishos-platform-sdk
  
-addons:
-  apt:
-    source:
-    - ppa:beineri/opt-qt593-trusty
-    packages:
-    - qt59base
-    - qt59tools
-    - libssl-dev
-
 script:
-  - source /opt/qt59/bin/qt59-env.sh
-  - mkdir build
-  - cd build
-  - qmake ..
-  - make
+  - chmod -R a+rwx .
+  - docker run --volume "$PWD:/home/src1" -w /home/src1 coderus/sailfishos-platform-sdk mb2 -t SailfishOS-3.0.0.8-armv7hl build

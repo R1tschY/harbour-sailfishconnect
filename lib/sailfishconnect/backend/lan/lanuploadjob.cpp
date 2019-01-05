@@ -75,12 +75,11 @@ void LanUploadJob::newConnection()
         return;
     }
 
-    Server* server = qobject_cast<Server*>(sender());
     // FIXME : It is called again when payload sending is finished. Unsolved mystery :(
     disconnect(m_server, &QTcpServer::newConnection,
                this, &LanUploadJob::newConnection);
 
-    m_socket = QSharedPointer<QSslSocket>(server->nextPendingConnection());
+    m_socket = QSharedPointer<QSslSocket>(m_server->nextPendingConnection());
     setDestination(m_socket);
 
     connect(m_socket.data(), &QSslSocket::disconnected,

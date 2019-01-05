@@ -203,6 +203,8 @@ TEST_F(DeviceTests, changeNameTypeUnpaired)
 
     EXPECT_EQ(device.name(), "old name");
     EXPECT_EQ(device.type(), "desktop");
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
 
     device.removeLink(&link);
     auto identityPackage2 = createIdentityPackage(
@@ -211,4 +213,6 @@ TEST_F(DeviceTests, changeNameTypeUnpaired)
 
     EXPECT_EQ(device.name(), "new name");
     EXPECT_EQ(device.type(), "laptop");
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
 }

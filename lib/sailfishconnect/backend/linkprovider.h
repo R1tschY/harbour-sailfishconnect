@@ -35,15 +35,15 @@ class LinkProvider
 
 public:
 
-    const static int PRIORITY_LOW = 0;      //eg: 3g internet
-    const static int PRIORITY_MEDIUM = 50;  //eg: internet
+    const static int PRIORITY_LOW = 0;      // TODO: unused: //eg: 3g internet
+    const static int PRIORITY_MEDIUM = 50;  // TODO: unused: //eg: internet
     const static int PRIORITY_HIGH = 100;   //eg: lan
 
     LinkProvider();
     ~LinkProvider() override = default;
 
-    virtual QString name() = 0;
-    virtual int priority() = 0;
+    virtual QString name() = 0;  // TODO: make const
+    virtual int priority() = 0;  // TODO: make const?
 
 public Q_SLOTS:
     virtual void onStart() = 0;

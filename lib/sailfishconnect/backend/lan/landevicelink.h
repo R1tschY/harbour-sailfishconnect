@@ -43,7 +43,7 @@ class LanDeviceLink
     Q_OBJECT
 
 public:
-    enum ConnectionStarted : bool { Locally, Remotely };
+    enum ConnectionStarted : bool { Locally, Remotely };  // TODO: remove?
 
     LanDeviceLink(const QString& deviceId, LinkProvider* parent, QSslSocket* socket, ConnectionStarted connectionSource);
     void reset(QSslSocket* socket, ConnectionStarted connectionSource);

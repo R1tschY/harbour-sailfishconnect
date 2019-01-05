@@ -327,6 +327,11 @@ bool Device::hasPairingRequests() const
     return !d->m_pairRequests.isEmpty();
 }
 
+QString Device::pluginIconName(const QString &pluginName)
+{
+    return PluginManager::instance()->pluginIconUrl(pluginName);
+}
+
 void Device::acceptPairing()
 {
     if (d->m_pairRequests.isEmpty())

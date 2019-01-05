@@ -24,10 +24,10 @@
 #include <QObject>
 #include <QSslKey>
 
-#include "../networkpackage.h"
+#include "../networkpacket.h"
 
 class PairingHandler;
-class NetworkPackage;
+class NetworkPacket;
 class LinkProvider;
 class Device;
 
@@ -52,7 +52,7 @@ public:
     const QString& deviceId() const { return m_deviceId; }
     LinkProvider* provider() { return m_linkProvider; }
 
-    virtual bool sendPackage(NetworkPackage& np, SailfishConnect::JobManager* jobMgr = nullptr) = 0;
+    virtual bool sendPacket(NetworkPacket& np, SailfishConnect::JobManager* jobMgr = nullptr) = 0;
 
     //user actions
     virtual void userRequestsPair() = 0;
@@ -69,7 +69,7 @@ Q_SIGNALS:
     void pairingRequestExpired(PairingHandler* handler);
     void pairStatusChanged(DeviceLink::PairStatus status);
     void pairingError(const QString& error);
-    void receivedPackage(const NetworkPackage& np);
+    void receivedPacket(const NetworkPacket& np);
 
 private:
     const QString m_deviceId;

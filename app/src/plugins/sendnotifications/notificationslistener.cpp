@@ -338,7 +338,7 @@ uint NotificationsListener::Notify(const QString& appName, uint replacesId,
         return 0;
 
     //qCDebug(logger) << "Sending notification from" << appName << ":" <<ticker << "; appIcon=" << appIcon;
-    NetworkPackage np("kdeconnect.notification", {
+    NetworkPacket np("kdeconnect.notification", {
         {"id", QString::number(id)},
         {"appName", appName},
         {"ticker", ticker},
@@ -372,7 +372,7 @@ uint NotificationsListener::Notify(const QString& appName, uint replacesId,
             np.setPayload(iconSource, iconSource->size());
     }
 
-    m_plugin->sendPackage(np);
+    m_plugin->sendPacket(np);
 
     return id;
 }

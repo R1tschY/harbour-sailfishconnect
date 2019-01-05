@@ -29,8 +29,8 @@
 #include <sailfishconnect/device.h>
 #include <sailfishconnect/systeminfo.h>
 #include <sailfishconnect/helper/cpphelper.h>
-#include <sailfishconnect/networkpackage.h>
-#include <sailfishconnect/networkpackagetypes.h>
+#include <sailfishconnect/networkpacket.h>
+#include <sailfishconnect/networkpackettypes.h>
 
 #include "mock_devicelink.h"
 #include "mock_linkprovider.h"
@@ -39,21 +39,21 @@ using namespace SailfishConnect;
 using ::testing::Return;
 using ::testing::NiceMock;
 
-NetworkPackage createIdentityPackage(
+NetworkPacket createIdentityPacket(
     QString deviceId, QString deviceName, QString deviceType
 ) {
-    NetworkPackage identityPackage(PACKAGE_TYPE_IDENTITY);
-    identityPackage.set(QStringLiteral("deviceId"), deviceId);
-    identityPackage.set(QStringLiteral("deviceName"), deviceName);
-    identityPackage.set(QStringLiteral("deviceType"), deviceType);
-    identityPackage.set(
+    NetworkPacket identityPacket(PACKET_TYPE_IDENTITY);
+    identityPacket.set(QStringLiteral("deviceId"), deviceId);
+    identityPacket.set(QStringLiteral("deviceName"), deviceName);
+    identityPacket.set(QStringLiteral("deviceType"), deviceType);
+    identityPacket.set(
                 QStringLiteral("protocolVersion"),
-                NetworkPackage::s_protocolVersion);
-    identityPackage.set(
+                NetworkPacket::s_protocolVersion);
+    identityPacket.set(
                 QStringLiteral("incomingCapabilities"), QStringList());
-    identityPackage.set(
+    identityPacket.set(
                 QStringLiteral("outgoingCapabilities"), QStringList());
-    return identityPackage;
+    return identityPacket;
 }
 
 
@@ -64,15 +64,15 @@ protected:
           deviceName(QStringLiteral("Test Device")),
           deviceType(QStringLiteral("smartphone")),
           kcc(makeUniquePtr<SystemInfo>()),
-          identityPackage(
-              createIdentityPackage(deviceId, deviceName, deviceType))
+          identityPacket(
+              createIdentityPacket(deviceId, deviceName, deviceType))
     { }
 
     QString deviceId;
     QString deviceName;
     QString deviceType;
     KdeConnectConfig kcc;
-    NetworkPackage identityPackage;
+    NetworkPacket identityPacket;
 };
 
 TEST_F(DeviceTests, addRemoveLinkToPairedDevice) {
@@ -96,7 +96,7 @@ TEST_F(DeviceTests, addRemoveLinkToPairedDevice) {
     MockLinkProvider linkProvider;
     MockDeviceLink link(deviceId, &linkProvider);
 
-    device.addLink(identityPackage, &link);
+    device.addLink(identityPacket, &link);
 
     EXPECT_EQ(device.isReachable(), true);
     EXPECT_EQ(device.availableLinks().contains(linkProvider.name()), true);
@@ -119,7 +119,7 @@ TEST_F(DeviceTests, addRemoveLinkToUnpairedDevice)
     MockDeviceLink link(deviceId, &linkProvider);
 
     // add link through ctor
-    Device device(nullptr, &kcc, identityPackage, &link);
+    Device device(nullptr, &kcc, identityPacket, &link);
 
     EXPECT_EQ(device.id(), deviceId);
     EXPECT_EQ(device.name(), deviceName);
@@ -137,7 +137,7 @@ TEST_F(DeviceTests, addRemoveLinkToUnpairedDevice)
     EXPECT_EQ(device.availableLinks().contains(linkProvider.name()), false);
 
     // add link
-    device.addLink(identityPackage, &link);
+    device.addLink(identityPacket, &link);
 
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
@@ -166,9 +166,9 @@ TEST_F(DeviceTests, changeNameTypePaired1)
         MockLinkProvider linkProvider;
         MockDeviceLink link(deviceId, &linkProvider);
 
-        auto identityPackage1 = createIdentityPackage(
+        auto identityPacket1 = createIdentityPacket(
                     deviceId, "new name", "laptop");
-        device.addLink(identityPackage1, &link);
+        device.addLink(identityPacket1, &link);
 
         EXPECT_EQ(device.name(), "new name");
         EXPECT_EQ(device.type(), "laptop");
@@ -228,9 +228,9 @@ TEST_F(DeviceTests, changeNameTypeUnpaired)
     MockDeviceLink link(deviceId, &linkProvider);
 
     // add link through ctor
-    auto identityPackage1 = createIdentityPackage(
+    auto identityPacket1 = createIdentityPacket(
                 deviceId, "old name", "desktop");
-    Device device(nullptr, &kcc, identityPackage1, &link);
+    Device device(nullptr, &kcc, identityPacket1, &link);
 
     EXPECT_EQ(device.name(), "old name");
     EXPECT_EQ(device.type(), "desktop");
@@ -238,9 +238,9 @@ TEST_F(DeviceTests, changeNameTypeUnpaired)
     EXPECT_EQ(device.isReachable(), true);
 
     device.removeLink(&link);
-    auto identityPackage2 = createIdentityPackage(
+    auto identityPacket2 = createIdentityPacket(
                 deviceId, "new name", "laptop");
-    device.addLink(identityPackage2, &link);
+    device.addLink(identityPacket2, &link);
 
     EXPECT_EQ(device.name(), "new name");
     EXPECT_EQ(device.type(), "laptop");

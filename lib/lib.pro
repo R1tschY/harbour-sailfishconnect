@@ -25,7 +25,6 @@ SOURCES += \
     sailfishconnect/kdeconnectconfig.cpp \
     sailfishconnect/kdeconnectplugin.cpp \
     sailfishconnect/kdeconnectpluginconfig.cpp \
-    sailfishconnect/networkpackage.cpp \
     sailfishconnect/corelogging.cpp \
     sailfishconnect/backend/lan/server.cpp \
     sailfishconnect/daemon.cpp \
@@ -39,7 +38,8 @@ SOURCES += \
     sailfishconnect/backend/lan/landownloadjob.cpp \
     sailfishconnect/backend/lan/lanuploadjob.cpp \
     sailfishconnect/backend/lan/lannetworklistener.cpp \
-    sailfishconnect/io/jobmanager.cpp
+    sailfishconnect/io/jobmanager.cpp \
+    sailfishconnect/networkpacket.cpp
 
 
 # German translation is enabled as an example. If you aren't
@@ -64,8 +64,6 @@ HEADERS += \
     sailfishconnect/kdeconnectconfig.h \
     sailfishconnect/kdeconnectplugin.h \
     sailfishconnect/kdeconnectpluginconfig.h \
-    sailfishconnect/networkpackage.h \
-    sailfishconnect/networkpackagetypes.h \
     sailfishconnect/corelogging.h \
     sailfishconnect/backend/lan/server.h \
     sailfishconnect/daemon.h \
@@ -80,7 +78,9 @@ HEADERS += \
     sailfishconnect/backend/lan/landownloadjob.h \
     sailfishconnect/backend/lan/lanuploadjob.h \
     sailfishconnect/backend/lan/lannetworklistener.h \
-    sailfishconnect/io/jobmanager.h
+    sailfishconnect/io/jobmanager.h \
+    sailfishconnect/networkpacket.h \
+    sailfishconnect/networkpackettypes.h
 
 DISTFILES += \
     lib.pri

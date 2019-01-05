@@ -38,7 +38,7 @@ public:
     QString incomingPath() const;
 
 public slots:
-    bool receivePackage(const NetworkPackage &np) override;
+    bool receivePacket(const NetworkPacket &np) override;
     Q_SCRIPTABLE void share(const QUrl &url);
 
 signals:

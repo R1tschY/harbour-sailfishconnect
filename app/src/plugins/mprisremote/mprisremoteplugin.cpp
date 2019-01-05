@@ -28,10 +28,10 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "kdeconnect.plugin.mprisremote")
 
-static const QString PACKAGE_TYPE_MPRIS_REQUEST =
+static const QString PACKET_TYPE_MPRIS_REQUEST =
         QStringLiteral("kdeconnect.mpris.request");
 
-static const QString PACKAGE_TYPE_MPRIS =
+static const QString PACKET_TYPE_MPRIS =
         QStringLiteral("kdeconnect.mpris");
 
 // MprisPlayer
@@ -80,7 +80,7 @@ void MprisPlayer::setPosition(int value)
     }
 }
 
-void MprisPlayer::receivePackage(const NetworkPackage &np)
+void MprisPlayer::receivePacket(const NetworkPacket &np)
 {
     m_currentSong =
             np.get<QString>(QStringLiteral("nowPlaying"), m_currentSong);
@@ -172,7 +172,7 @@ MprisRemotePlugin::MprisRemotePlugin(Device* device,
     requestPlayerList();
 }
 
-bool MprisRemotePlugin::receivePackage(const NetworkPackage& np)
+bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
 {
     if (np.get<bool>("transferringAlbumArt", false)) {
         // TODO: not supported yet
@@ -183,7 +183,7 @@ bool MprisRemotePlugin::receivePackage(const NetworkPackage& np)
         MprisPlayer* player = m_players.value(
                     np.get<QString>(QStringLiteral("player")), nullptr);
         if (player) {
-            player->receivePackage(np);
+            player->receivePacket(np);
         }
     }
 
@@ -224,19 +224,19 @@ bool MprisRemotePlugin::receivePackage(const NetworkPackage& np)
 void MprisRemotePlugin::sendCommand(
         const QString& player, const QString& method, const QString& value)
 {
-    NetworkPackage np(PACKAGE_TYPE_MPRIS_REQUEST);
+    NetworkPacket np(PACKET_TYPE_MPRIS_REQUEST);
     np.set("player", player);
     np.set(method, value);
-    sendPackage(np);
+    sendPacket(np);
 }
 
 void MprisRemotePlugin::sendCommand(
         const QString& player, const QString& method, int value)
 {
-    NetworkPackage np(PACKAGE_TYPE_MPRIS_REQUEST);
+    NetworkPacket np(PACKET_TYPE_MPRIS_REQUEST);
     np.set("player", player);
     np.set(method, value);
-    sendPackage(np);
+    sendPacket(np);
 }
 
 QStringList MprisRemotePlugin::players() const
@@ -253,18 +253,18 @@ MprisPlayer* MprisRemotePlugin::player(const QString &name) const
 
 void MprisRemotePlugin::requestPlayerList()
 {
-    NetworkPackage np(PACKAGE_TYPE_MPRIS_REQUEST);
+    NetworkPacket np(PACKET_TYPE_MPRIS_REQUEST);
     np.set("requestPlayerList", true);
-    sendPackage(np);
+    sendPacket(np);
 }
 
 void MprisRemotePlugin::requestPlayerStatus(const QString& player)
 {
-    NetworkPackage np(PACKAGE_TYPE_MPRIS_REQUEST);
+    NetworkPacket np(PACKET_TYPE_MPRIS_REQUEST);
     np.set("player", player);
     np.set("requestNowPlaying", true);
     np.set("requestVolume", true);
-    sendPackage(np);
+    sendPacket(np);
 }
 
 QString MprisRemotePluginFactory::name() const

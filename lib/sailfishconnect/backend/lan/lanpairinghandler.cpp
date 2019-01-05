@@ -21,7 +21,7 @@
 #include "../../kdeconnectconfig.h"
 #include "landevicelink.h"
 #include "lanpairinghandler.h"
-#include "../../networkpackagetypes.h"
+#include "../../networkpackettypes.h"
 #include "../../corelogging.h"
 
 using namespace SailfishConnect;
@@ -35,7 +35,7 @@ LanPairingHandler::LanPairingHandler(DeviceLink* deviceLink)
     connect(&m_pairingTimeout, &QTimer::timeout, this, &LanPairingHandler::pairingTimeout);
 }
 
-void LanPairingHandler::packageReceived(const NetworkPackage& np)
+void LanPairingHandler::packetReceived(const NetworkPacket& np)
 {
     bool wantsPair = np.get<bool>(QStringLiteral("pair"));
 
@@ -79,8 +79,8 @@ bool LanPairingHandler::requestPairing()
         return acceptPairing();
     }
 
-    NetworkPackage np(PACKAGE_TYPE_PAIR, {{"pair", true}});
-    const bool success = deviceLink()->sendPackage(np);
+    NetworkPacket np(PACKET_TYPE_PAIR, {{"pair", true}});
+    const bool success = deviceLink()->sendPacket(np);
     if (success) {
         setInternalPairStatus(Requested);
     }
@@ -89,8 +89,8 @@ bool LanPairingHandler::requestPairing()
 
 bool LanPairingHandler::acceptPairing()
 {
-    NetworkPackage np(PACKAGE_TYPE_PAIR, {{"pair", true}});
-    bool success = deviceLink()->sendPackage(np);
+    NetworkPacket np(PACKET_TYPE_PAIR, {{"pair", true}});
+    bool success = deviceLink()->sendPacket(np);
     if (success) {
         setInternalPairStatus(Paired);
     }
@@ -99,21 +99,21 @@ bool LanPairingHandler::acceptPairing()
 
 void LanPairingHandler::rejectPairing()
 {
-    NetworkPackage np(PACKAGE_TYPE_PAIR, {{"pair", false}});
-    deviceLink()->sendPackage(np);
+    NetworkPacket np(PACKET_TYPE_PAIR, {{"pair", false}});
+    deviceLink()->sendPacket(np);
     setInternalPairStatus(NotPaired);
 }
 
 void LanPairingHandler::unpair() {
-    NetworkPackage np(PACKAGE_TYPE_PAIR, {{"pair", false}});
-    deviceLink()->sendPackage(np);
+    NetworkPacket np(PACKET_TYPE_PAIR, {{"pair", false}});
+    deviceLink()->sendPacket(np);
     setInternalPairStatus(NotPaired);
 }
 
 void LanPairingHandler::pairingTimeout()
 {
-    NetworkPackage np(PACKAGE_TYPE_PAIR, {{"pair", false}});
-    deviceLink()->sendPackage(np);
+    NetworkPacket np(PACKET_TYPE_PAIR, {{"pair", false}});
+    deviceLink()->sendPacket(np);
     setInternalPairStatus(NotPaired); //Will emit the change as well
     Q_EMIT pairingError(tr("Timed out"));
 }

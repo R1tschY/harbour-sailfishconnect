@@ -36,7 +36,7 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "SailfishConnect.Share")
 
-static QString packageType = QStringLiteral("kdeconnect.share.request");
+static QString packetType = QStringLiteral("kdeconnect.share.request");
 
 SharePlugin::SharePlugin(
         Device* device,
@@ -59,7 +59,7 @@ QString SharePlugin::incomingPath() const
     return dir;
 }
 
-bool SharePlugin::receivePackage(const NetworkPackage& np)
+bool SharePlugin::receivePacket(const NetworkPacket& np)
 {
     if (np.hasPayload()) {
         const QString filename = escapeForFilePath(np.get<QString>(
@@ -106,15 +106,15 @@ bool SharePlugin::receivePackage(const NetworkPackage& np)
 
 void SharePlugin::share(const QUrl& url)
 {
-    NetworkPackage packet(packageType);
+    NetworkPacket packet(packetType);
     if (url.isLocalFile()) {
         QSharedPointer<QIODevice> localFile(new QFile(url.toLocalFile()));
         packet.setPayload(localFile, localFile->size());
         packet.set<QString>(QStringLiteral("filename"), url.fileName());
-        sendPackage(packet, Daemon::instance()->jobManager());
+        sendPacket(packet, Daemon::instance()->jobManager());
     } else {
         packet.set<QString>(QStringLiteral("url"), url.toString());
-        sendPackage(packet, nullptr);
+        sendPacket(packet, nullptr);
     }
 }
 

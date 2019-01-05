@@ -58,7 +58,7 @@ public:
     void setVolume(int value);
     void setPosition(int value);
 
-    void receivePackage(const NetworkPackage& np);
+    void receivePacket(const NetworkPacket& np);
 
 public slots:
     Q_SCRIPTABLE void playPause();
@@ -115,7 +115,7 @@ public:
             const QSet<QString> &outgoingCapabilities);
 
 
-    bool receivePackage(const NetworkPackage& np) override;
+    bool receivePacket(const NetworkPacket& np) override;
 
     void sendCommand(
             const QString& player, const QString& method, const QString& value);

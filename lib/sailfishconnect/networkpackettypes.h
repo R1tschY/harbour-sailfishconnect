@@ -18,10 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NETWORKPACKAGETYPES_H
-#define NETWORKPACKAGETYPES_H
+#ifndef NETWORKPACKETTYPES_H
+#define NETWORKPACKETTYPES_H
 
-#define PACKAGE_TYPE_IDENTITY QStringLiteral("kdeconnect.identity")
-#define PACKAGE_TYPE_PAIR QStringLiteral("kdeconnect.pair")
+#define PACKET_TYPE_IDENTITY QStringLiteral("kdeconnect.identity")
+#define PACKET_TYPE_PAIR QStringLiteral("kdeconnect.pair")
 
-#endif // NETWORKPACKAGETYPES_H
+#endif // NETWORKPACKETTYPES_H

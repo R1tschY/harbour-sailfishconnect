@@ -20,7 +20,7 @@
 #include <QLoggingCategory>
 #include <QCoreApplication>
 
-#include <sailfishconnect/networkpackage.h>
+#include <sailfishconnect/networkpacket.h>
 #include <ui.h>
 #include <sailfishconnect.h>
 
@@ -34,7 +34,7 @@ PingPlugin::PingPlugin(
     : KdeConnectPlugin(device, name, outgoingCapabilities)
 { }
 
-bool PingPlugin::receivePackage(const NetworkPackage& np)
+bool PingPlugin::receivePacket(const NetworkPacket& np)
 {
     QString message =
             np.get<QString>(QStringLiteral("message"), QStringLiteral("Ping!"));
@@ -61,18 +61,18 @@ bool PingPlugin::receivePackage(const NetworkPackage& np)
 
 void PingPlugin::sendPing()
 {
-    NetworkPackage np(QStringLiteral("kdeconnect.ping"));
-    bool success = sendPackage(np);
+    NetworkPacket np(QStringLiteral("kdeconnect.ping"));
+    bool success = sendPacket(np);
     qCDebug(logger) << "sendPing:" << success;
 }
 
 void PingPlugin::sendPing(const QString& message)
 {
-    NetworkPackage np(QStringLiteral("kdeconnect.ping"));
+    NetworkPacket np(QStringLiteral("kdeconnect.ping"));
     if (!message.isEmpty()) {
         np.set(QStringLiteral("message"), message);
     }
-    bool success = sendPackage(np);
+    bool success = sendPacket(np);
     qCDebug(logger).nospace() << "sendPing(" << message << "): " << success;
 }
 

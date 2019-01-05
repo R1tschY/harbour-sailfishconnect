@@ -41,7 +41,7 @@ public:
             const QSet<QString> &outgoingCapabilities);
 
 public slots:
-    bool receivePackage(const NetworkPackage &np) override;
+    bool receivePacket(const NetworkPacket &np) override;
 
 private:
     NotificationsListener* m_listener;

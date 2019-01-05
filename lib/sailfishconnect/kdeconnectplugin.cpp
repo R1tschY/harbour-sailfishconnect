@@ -66,18 +66,18 @@ const Device* KdeConnectPlugin::device() const
     return d->m_device;
 }
 
-bool KdeConnectPlugin::sendPackage(NetworkPackage& np, JobManager* jobMgr) const
+bool KdeConnectPlugin::sendPacket(NetworkPacket& np, JobManager* jobMgr) const
 {
     if (!d->m_outgoingCapabilties.contains(np.type())) {
         qCWarning(coreLogger).nospace()
                 << metaObject()->className()
-                << " tried to send an unsupported package type " << np.type()
+                << " tried to send an unsupported packet type " << np.type()
                 << ". Supported: " << d->m_outgoingCapabilties;
         return false;
     }
     qCDebug(coreLogger) << metaObject()->className() << "sends" << np.type();
     qCDebug(coreLogger) << "data:" << np.serialize().data();
-    return d->m_device->sendPackage(np, jobMgr);
+    return d->m_device->sendPacket(np, jobMgr);
 }
 
 

@@ -32,7 +32,7 @@ TelepathyPlugin::TelepathyPlugin(
     : KdeConnectPlugin(device, name, outgoingCapabilities)
 { }
 
-bool TelepathyPlugin::receivePackage(const NetworkPackage &np)
+bool TelepathyPlugin::receivePacket(const NetworkPacket &np)
 {
     if (np.get<bool>("sendSms")) {
         QDBusInterface qmlmessages(

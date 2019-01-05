@@ -20,7 +20,7 @@
 #include <QtGlobal>
 
 #include <contextproperty.h>
-#include <sailfishconnect/networkpackage.h>
+#include <sailfishconnect/networkpacket.h>
 #include <sailfishconnect/helper/cpphelper.h>
 
 
@@ -29,7 +29,7 @@ namespace SailfishConnect {
 BatteryPlugin::BatteryPlugin(
         Device *device, QString name, QSet<QString> outgoingCapabilities)
     : KdeConnectPlugin(device, name, outgoingCapabilities),
-      batteryPackage_(QStringLiteral("kdeconnect.battery")),
+      batteryPacket_(QStringLiteral("kdeconnect.battery")),
       chargePercentage_(new ContextProperty(
                        QStringLiteral("Battery.ChargePercentage"), this)),
       isCharging_(new ContextProperty(
@@ -57,7 +57,7 @@ BatteryPlugin::BatteryPlugin(
     debounceTimer_.start();
 }
 
-bool BatteryPlugin::receivePackage(const NetworkPackage &np)
+bool BatteryPlugin::receivePacket(const NetworkPacket &np)
 {
     if (np.get<bool>(QStringLiteral("request"))) {
         debounceTimer_.start();
@@ -81,7 +81,7 @@ void BatteryPlugin::sendStatus()
         QStringLiteral("thresholdEvent"), lowBattery_->value(),
         ThresholdNone, ThresholdBatteryLow);
 
-    sendPackage(batteryPackage_);
+    sendPacket(batteryPacket_);
 }
 
 void BatteryPlugin::setCheckedStatus(
@@ -93,9 +93,9 @@ void BatteryPlugin::setCheckedStatus(
     bool okay = false;
     auto intValue = value.toInt(&okay);
     if (okay && intValue >= min && intValue <= max) {
-        batteryPackage_.set(name, intValue);
+        batteryPacket_.set(name, intValue);
     } else {
-        batteryPackage_.remove(name);
+        batteryPacket_.remove(name);
     }
 }
 

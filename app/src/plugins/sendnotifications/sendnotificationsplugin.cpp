@@ -27,7 +27,7 @@ SendNotificationsPlugin::SendNotificationsPlugin(
       m_listener(new NotificationsListener(this))
 { }
 
-bool SendNotificationsPlugin::receivePackage(const NetworkPackage&)
+bool SendNotificationsPlugin::receivePacket(const NetworkPacket&)
 {
     return false;
 }

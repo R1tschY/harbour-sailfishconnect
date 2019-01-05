@@ -23,7 +23,7 @@
 
 #include <QObject>
 
-#include "../networkpackage.h"
+#include "../networkpacket.h"
 #include "pairinghandler.h"
 
 class DeviceLink;
@@ -54,7 +54,7 @@ Q_SIGNALS:
     //NOTE: The provider will destroy the DeviceLink when it's no longer accessible,
     //      and every user should listen to the destroyed signal to remove its references.
     //      That's the reason because there is no "onConnectionLost".
-    void onConnectionReceived(const NetworkPackage& identityPackage, DeviceLink*) const;
+    void onConnectionReceived(const NetworkPacket& identityPacket, DeviceLink*) const;
 
 };
 

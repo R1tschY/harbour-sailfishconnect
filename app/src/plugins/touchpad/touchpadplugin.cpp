@@ -32,34 +32,34 @@ TouchpadPlugin::TouchpadPlugin(
     : KdeConnectPlugin(device, name, outgoingCapabilities)
 { }
 
-bool TouchpadPlugin::receivePackage(const NetworkPackage &)
+bool TouchpadPlugin::receivePacket(const NetworkPacket &)
 {
     return false;
 }
 
 void TouchpadPlugin::move(int dx, int dy)
 {
-    NetworkPackage np("kdeconnect.mousepad.request", {
+    NetworkPacket np("kdeconnect.mousepad.request", {
         {"dx", dx},
         {"dy", dy}
     });
-    sendPackage(np);
+    sendPacket(np);
 }
 
 void TouchpadPlugin::scroll(float dx, float dy)
 {
-    NetworkPackage np("kdeconnect.mousepad.request", {
+    NetworkPacket np("kdeconnect.mousepad.request", {
         {"scroll", true},
         {"dx", dx},
         {"dy", dy}
     });
-    sendPackage(np);
+    sendPacket(np);
 }
 
 void TouchpadPlugin::sendCommand(const QString &name, bool val)
 {
-    NetworkPackage np("kdeconnect.mousepad.request", {{ name, val }});
-    sendPackage(np);
+    NetworkPacket np("kdeconnect.mousepad.request", {{ name, val }});
+    sendPacket(np);
 }
 
 QString TouchpadPluginFactory::name() const

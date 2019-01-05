@@ -27,7 +27,7 @@
 #include <QSet>
 #include <QHostAddress>
 
-#include "networkpackage.h"
+#include "networkpacket.h"
 #include "backend/devicelink.h"
 
 class DeviceLink;
@@ -78,7 +78,7 @@ public:
      */
     Device(QObject* parent, KdeConnectConfig *config, const QString& id, const QString& name, const QString &type);
 
-    Device(QObject* parent, KdeConnectConfig *config, const NetworkPackage& np, DeviceLink* dl);
+    Device(QObject* parent, KdeConnectConfig *config, const NetworkPacket& np, DeviceLink* dl);
 
     ~Device() override;
 
@@ -91,7 +91,7 @@ public:
     Q_SCRIPTABLE QString encryptionInfo() const;
 
     //Add and remove links
-    void addLink(const NetworkPackage& identityPackage, DeviceLink*);
+    void addLink(const NetworkPacket& identityPacket, DeviceLink*);
     void removeLink(DeviceLink*);
 
     Q_SCRIPTABLE bool isTrusted() const;
@@ -128,9 +128,9 @@ public:
     static QString sanitizeDeviceId(const QString& deviceId);
 
 public Q_SLOTS:
-    ///sends a @p np package to the device
+    ///sends a @p np packet to the device
     ///virtual for testing purposes.
-    virtual bool sendPackage(NetworkPackage& np, SailfishConnect::JobManager *jobMgr = nullptr);
+    virtual bool sendPacket(NetworkPacket& np, SailfishConnect::JobManager *jobMgr = nullptr);
 
     //Dbus operations
 public Q_SLOTS:
@@ -143,7 +143,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE bool hasPairingRequests() const;
 
 private Q_SLOTS:
-    void privateReceivedPackage(const NetworkPackage& np);
+    void privateReceivedPacket(const NetworkPacket& np);
     void linkDestroyed(QObject* o);
     void pairStatusChanged(DeviceLink::PairStatus current);
     void addPairingRequest(PairingHandler* handler);

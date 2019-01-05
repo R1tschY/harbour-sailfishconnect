@@ -33,7 +33,7 @@ public:
             const QString &name,
             const QSet<QString> &outgoingCapabilities);
 
-    bool receivePackage(const NetworkPackage&) override;
+    bool receivePacket(const NetworkPacket&) override;
 
     Q_SCRIPTABLE void move(int dx, int dy);
     Q_SCRIPTABLE void scroll(float dx, float dy);

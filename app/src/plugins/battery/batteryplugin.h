@@ -43,11 +43,11 @@ public:
             QSet<QString> outgoingCapabilities);
 
 public slots:
-    bool receivePackage(const NetworkPackage &np) override;
+    bool receivePacket(const NetworkPacket &np) override;
     void connected() override;
 
 private:
-    NetworkPackage batteryPackage_;
+    NetworkPacket batteryPacket_;
     ContextProperty* chargePercentage_;
     ContextProperty* isCharging_;
     ContextProperty* lowBattery_;

@@ -22,7 +22,7 @@
 
 namespace SailfishConnect {
 
-static QString packageType = QStringLiteral("kdeconnect.clipboard");
+static QString packetType = QStringLiteral("kdeconnect.clipboard");
 
 ClipboardPlugin::ClipboardPlugin(
         Device* device,
@@ -36,7 +36,7 @@ ClipboardPlugin::ClipboardPlugin(
         this, &ClipboardPlugin::dataChanged);
 }
 
-bool ClipboardPlugin::receivePackage(const NetworkPackage &np)
+bool ClipboardPlugin::receivePacket(const NetworkPacket &np)
 {
     QString content = np.get<QString>(QStringLiteral("content"));
     m_lastClipboardText = content;
@@ -52,8 +52,8 @@ void ClipboardPlugin::dataChanged()
         return;
 
     m_lastClipboardText = clipboardText;
-    NetworkPackage np(packageType, {{"content", clipboardText}});
-    sendPackage(np);
+    NetworkPacket np(packetType, {{"content", clipboardText}});
+    sendPacket(np);
 }
 
 QString ClipboardPluginFactory::name() const

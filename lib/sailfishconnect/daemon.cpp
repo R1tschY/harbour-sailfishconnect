@@ -26,7 +26,7 @@
 
 #include "corelogging.h"
 #include "kdeconnectconfig.h"
-#include "networkpackage.h"
+#include "networkpacket.h"
 
 #include "backend/lan/lanlinkprovider.h"
 //#include "backend/loopback/loopbacklinkprovider.h"
@@ -189,23 +189,23 @@ QStringList Daemon::devices(bool onlyReachable, bool onlyTrusted) const
     return ret;
 }
 
-void Daemon::onNewDeviceLink(const NetworkPackage& identityPackage, DeviceLink* dl)
+void Daemon::onNewDeviceLink(const NetworkPacket& identityPacket, DeviceLink* dl)
 {
-    const QString& id = identityPackage.get<QString>(QStringLiteral("deviceId"));
+    const QString& id = identityPacket.get<QString>(QStringLiteral("deviceId"));
 
     qCDebug(coreLogger) << "Device discovered" << id << "via" << dl->provider()->name();
 
     if (d->m_devices.contains(id)) {
-        qCDebug(coreLogger) << "It is a known device" << identityPackage.get<QString>(QStringLiteral("deviceName"));
+        qCDebug(coreLogger) << "It is a known device" << identityPacket.get<QString>(QStringLiteral("deviceName"));
         Device* device = d->m_devices[id];
         bool wasReachable = device->isReachable();
-        device->addLink(identityPackage, dl);
+        device->addLink(identityPacket, dl);
         if (!wasReachable) {
             Q_EMIT deviceVisibilityChanged(id, true);
         }
     } else {
-        qCDebug(coreLogger) << "It is a new device" << identityPackage.get<QString>(QStringLiteral("deviceName"));
-        Device* device = new Device(this, &d->m_config, identityPackage, dl);
+        qCDebug(coreLogger) << "It is a new device" << identityPacket.get<QString>(QStringLiteral("deviceName"));
+        Device* device = new Device(this, &d->m_config, identityPacket, dl);
 
         //we discard the connections that we created but it's not paired.
         if (!isDiscoveringDevices() && !device->isTrusted() && !dl->linkShouldBeKeptAlive()) {

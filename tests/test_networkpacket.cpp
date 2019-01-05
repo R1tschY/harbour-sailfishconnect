@@ -36,14 +36,14 @@
 
 #include <test.h>
 
-#include <sailfishconnect/networkpackage.h>
-#include <sailfishconnect/networkpackagetypes.h>
+#include <sailfishconnect/networkpacket.h>
+#include <sailfishconnect/networkpackettypes.h>
 
 using namespace SailfishConnect;
 
 
 TEST(NetworkPacketTests, networkPacketTest) {
-    NetworkPackage np(QStringLiteral("com.test"));
+    NetworkPacket np(QStringLiteral("com.test"));
 
     np.set(QStringLiteral("hello"),"hola");
     EXPECT_EQ(np.get<QString>("hello", "bye") , QString("hola"));
@@ -57,8 +57,8 @@ TEST(NetworkPacketTests, networkPacketTest) {
     np.set(QStringLiteral("foo"), "bar");
     QByteArray ba = np.serialize();
     //qDebug() << "Serialized packet:" << ba;
-    NetworkPackage np2(QLatin1String(""));
-    NetworkPackage::unserialize(ba, &np2);
+    NetworkPacket np2(QLatin1String(""));
+    NetworkPacket::unserialize(ba, &np2);
 
     EXPECT_EQ(np.id(), np2.id());
     EXPECT_EQ(np.type(), np2.type());
@@ -66,7 +66,7 @@ TEST(NetworkPacketTests, networkPacketTest) {
 
     QByteArray json("{\"id\":\"123\",\"type\":\"test\",\"body\":{\"testing\":true}}");
     //qDebug() << json;
-    NetworkPackage::unserialize(json, &np2);
+    NetworkPacket::unserialize(json, &np2);
     EXPECT_EQ(np2.id(), QString("123"));
     EXPECT_EQ((np2.get<bool>("testing")), true);
     EXPECT_EQ((np2.get<bool>("not_testing")), false);
@@ -74,10 +74,10 @@ TEST(NetworkPacketTests, networkPacketTest) {
 }
 
 TEST(NetworkPacketTests, DISABLED_networkPacketIdentityTest) {
-    NetworkPackage np(QLatin1String(""));
-    NetworkPackage::createIdentityPackage(&np);  // fix dependency injuection ;)
+    NetworkPacket np(QLatin1String(""));
+    NetworkPacket::createIdentityPacket(&np);  // fix dependency injuection ;)
 
     EXPECT_EQ(np.get<int>("protocolVersion", -1),
-              NetworkPackage::s_protocolVersion);
-    EXPECT_EQ(np.type(), PACKAGE_TYPE_IDENTITY);
+              NetworkPacket::s_protocolVersion);
+    EXPECT_EQ(np.type(), PACKET_TYPE_IDENTITY);
 }

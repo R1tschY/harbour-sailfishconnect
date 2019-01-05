@@ -49,8 +49,8 @@ public:
     void reset(QSslSocket* socket, ConnectionStarted connectionSource);
 
     QString name() override;
-    bool sendPackage(NetworkPackage& np, SailfishConnect::JobManager* jobMgr) override;
-    SailfishConnect::LanUploadJob* sendPayload(const NetworkPackage& np, SailfishConnect::JobManager *jobMgr = nullptr);
+    bool sendPacket(NetworkPacket& np, SailfishConnect::JobManager* jobMgr) override;
+    SailfishConnect::LanUploadJob* sendPayload(const NetworkPacket& np, SailfishConnect::JobManager *jobMgr = nullptr);
 
     void userRequestsPair() override;
     void userRequestsUnpair() override;

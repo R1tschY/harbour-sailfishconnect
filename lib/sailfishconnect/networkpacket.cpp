@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "networkpackage.h"
+#include "networkpacket.h"
 
 #include <QMetaObject>
 #include <QMetaProperty>
@@ -36,9 +36,9 @@
 
 using namespace SailfishConnect;
 
-QDebug operator<<(QDebug s, const NetworkPackage& pkg)
+QDebug operator<<(QDebug s, const NetworkPacket& pkg)
 {
-    s.nospace() << "NetworkPackage(" << pkg.type() << ':' << pkg.body();
+    s.nospace() << "NetworkPacket(" << pkg.type() << ':' << pkg.body();
     if (pkg.hasPayload()) {
         s.nospace() << ":withpayload";
     }
@@ -46,9 +46,9 @@ QDebug operator<<(QDebug s, const NetworkPackage& pkg)
     return s.space();
 }
 
-const int NetworkPackage::s_protocolVersion = 7;
+const int NetworkPacket::s_protocolVersion = 7;
 
-NetworkPackage::NetworkPackage(const QString& type, const QVariantMap& body)
+NetworkPacket::NetworkPacket(const QString& type, const QVariantMap& body)
     : m_id(QString::number(QDateTime::currentMSecsSinceEpoch()))
     , m_type(type)
     , m_body(body)
@@ -57,21 +57,21 @@ NetworkPackage::NetworkPackage(const QString& type, const QVariantMap& body)
 {
 }
 
-void NetworkPackage::createIdentityPackage(NetworkPackage* np)
+void NetworkPacket::createIdentityPacket(NetworkPacket* np)
 {
     KdeConnectConfig* config = KdeConnectConfig::instance();
     np->m_id = QString::number(QDateTime::currentMSecsSinceEpoch());
-    np->m_type = PACKAGE_TYPE_IDENTITY;
+    np->m_type = PACKET_TYPE_IDENTITY;
     np->m_payload = QSharedPointer<QIODevice>();
     np->m_payloadSize = 0;
     np->set(QStringLiteral("deviceId"), config->deviceId());
     np->set(QStringLiteral("deviceName"), config->name());
     np->set(QStringLiteral("deviceType"), config->deviceType());
-    np->set(QStringLiteral("protocolVersion"), NetworkPackage::s_protocolVersion);
+    np->set(QStringLiteral("protocolVersion"), NetworkPacket::s_protocolVersion);
     np->set(QStringLiteral("incomingCapabilities"), PluginManager::instance()->incomingCapabilities());
     np->set(QStringLiteral("outgoingCapabilities"), PluginManager::instance()->outgoingCapabilities());
 
-    //qCDebug(coreLogger) << "createIdentityPackage" << np->serialize();
+    //qCDebug(coreLogger) << "createIdentityPacket" << np->serialize();
 }
 
 template<class T>
@@ -87,7 +87,7 @@ QVariantMap qobject2qvariant(const T* object)
     return map;
 }
 
-QByteArray NetworkPackage::serialize() const
+QByteArray NetworkPacket::serialize() const
 {
     //Object -> QVariant
     //QVariantMap variant;
@@ -108,7 +108,7 @@ QByteArray NetworkPackage::serialize() const
     if (json.isEmpty()) {
         qCDebug(coreLogger) << "Serialization error";
     } else {
-        //qCDebug(coreLogger) << "Serialized package:" << json;
+        //qCDebug(coreLogger) << "Serialized packet:" << json;
         json.append('\n');
     }
 
@@ -134,7 +134,7 @@ void qvariant2qobject(const QVariantMap& variant, T* object)
     }
 }
 
-bool NetworkPackage::unserialize(const QByteArray& a, NetworkPackage* np)
+bool NetworkPacket::unserialize(const QByteArray& a, NetworkPacket* np)
 {
     //Json -> QVariant
     QJsonParseError parseError;
@@ -156,7 +156,7 @@ bool NetworkPackage::unserialize(const QByteArray& a, NetworkPackage* np)
     return true;
 }
 
-DownloadJob* NetworkPackage::createDownloadPayloadJob(
+DownloadJob* NetworkPacket::createDownloadPayloadJob(
         const QString& destination) const
 {
     return new DownloadJob(payload(), destination, payloadSize());

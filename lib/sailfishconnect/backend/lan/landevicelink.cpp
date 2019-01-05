@@ -96,7 +96,7 @@ QString LanDeviceLink::name()
     return QStringLiteral("LanLink"); // Should be same in both android and kde version
 }
 
-bool LanDeviceLink::sendPackage(NetworkPackage& np, JobManager* jobMgr)
+bool LanDeviceLink::sendPacket(NetworkPacket& np, JobManager* jobMgr)
 {
     if (np.hasPayload()) {
         auto* uploadJob = sendPayload(np, jobMgr);
@@ -108,13 +108,13 @@ bool LanDeviceLink::sendPackage(NetworkPackage& np, JobManager* jobMgr)
 
     int written = m_socketLineReader->write(np.serialize());
 
-    //Actually we can't detect if a package is received or not. We keep TCP
+    //Actually we can't detect if a packet is received or not. We keep TCP
     //"ESTABLISHED" connections that look legit (return true when we use them),
     //but that are actually broken (until keepalive detects that they are down).
     return (written != -1);
 }
 
-LanUploadJob* LanDeviceLink::sendPayload(const NetworkPackage& np, JobManager* jobMgr)
+LanUploadJob* LanDeviceLink::sendPayload(const NetworkPacket& np, JobManager* jobMgr)
 {
     LanUploadJob* job = new LanUploadJob(np.payload(), deviceId());
     job->start();
@@ -129,30 +129,30 @@ void LanDeviceLink::dataReceived()
 {
     if (m_socketLineReader->bytesAvailable() == 0) return;
 
-    const QByteArray serializedPackage = m_socketLineReader->readLine();
-    NetworkPackage package(QString::null);
-    NetworkPackage::unserialize(serializedPackage, &package);
+    const QByteArray serializedPacket = m_socketLineReader->readLine();
+    NetworkPacket packet(QString::null);
+    NetworkPacket::unserialize(serializedPacket, &packet);
 
-    qCDebug(coreLogger) << "LanDeviceLink dataReceived" << serializedPackage;
+    qCDebug(coreLogger) << "LanDeviceLink dataReceived" << serializedPacket;
 
-    if (package.type() == PACKAGE_TYPE_PAIR) {
+    if (packet.type() == PACKET_TYPE_PAIR) {
         //TODO: Handle pair/unpair requests and forward them (to the pairing handler?)
-        qobject_cast<LanLinkProvider*>(provider())->incomingPairPackage(this, package);
+        qobject_cast<LanLinkProvider*>(provider())->incomingPairPacket(this, packet);
         return;
     }
 
-    if (package.hasPayloadTransferInfo()) {
+    if (packet.hasPayloadTransferInfo()) {
         qCDebug(coreLogger) << "HasPayloadTransferInfo";
-        QVariantMap transferInfo = package.payloadTransferInfo();
+        QVariantMap transferInfo = packet.payloadTransferInfo();
         //FIXME: The next two lines shouldn't be needed! Why are they here?
         transferInfo.insert(QStringLiteral("useSsl"), true);
         transferInfo.insert(QStringLiteral("deviceId"), deviceId());
         LanDownloadJob* job = new LanDownloadJob(m_socketLineReader->peerAddress(), transferInfo);
         job->start();
-        package.setPayload(job->getPayload(), package.payloadSize());
+        packet.setPayload(job->getPayload(), packet.payloadSize());
     }
 
-    Q_EMIT receivedPackage(package);
+    Q_EMIT receivedPacket(packet);
 
     if (m_socketLineReader->bytesAvailable() > 0) {
         QMetaObject::invokeMethod(this, "dataReceived", Qt::QueuedConnection);

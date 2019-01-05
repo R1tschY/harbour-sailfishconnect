@@ -34,7 +34,7 @@
 #include "backend/devicelink.h"
 #include "backend/lan/landevicelink.h"
 #include "backend/linkprovider.h"
-#include "networkpackage.h"
+#include "networkpacket.h"
 #include "kdeconnectconfig.h"
 #include "corelogging.h"
 #include "pluginloader.h"
@@ -43,7 +43,7 @@
 using namespace SailfishConnect;
 
 Device::Device()
-    : m_protocolVersion(NetworkPackage::s_protocolVersion)
+    : m_protocolVersion(NetworkPacket::s_protocolVersion)
 { }
 
 Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id)
@@ -53,7 +53,7 @@ Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id)
 Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id, const QString& name, const QString& type)
     : QObject(parent)
     , m_deviceId(sanitizeDeviceId(id))
-    , m_protocolVersion(NetworkPackage::s_protocolVersion) //We don't know it yet
+    , m_protocolVersion(NetworkPacket::s_protocolVersion) //We don't know it yet
     , m_config(config)
 {
     Q_ASSERT(config != nullptr);
@@ -83,15 +83,15 @@ Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id, con
     });
 }
 
-Device::Device(QObject* parent, KdeConnectConfig* config, const NetworkPackage& identityPackage, DeviceLink* dl)
+Device::Device(QObject* parent, KdeConnectConfig* config, const NetworkPacket& identityPacket, DeviceLink* dl)
     : Device(
           parent,
           config,
-          identityPackage.get<QString>(QStringLiteral("deviceId")),
-          identityPackage.get<QString>(QStringLiteral("deviceName")),
-          identityPackage.get<QString>(QStringLiteral("deviceType")))
+          identityPacket.get<QString>(QStringLiteral("deviceId")),
+          identityPacket.get<QString>(QStringLiteral("deviceName")),
+          identityPacket.get<QString>(QStringLiteral("deviceType")))
 {
-    addLink(identityPackage, dl);
+    addLink(identityPacket, dl);
 }
 
 Device::~Device() = default;
@@ -208,22 +208,22 @@ static bool lessThan(DeviceLink* p1, DeviceLink* p2)
     return p1->provider()->priority() > p2->provider()->priority();
 }
 
-void Device::addLink(const NetworkPackage& identityPackage, DeviceLink* link)
+void Device::addLink(const NetworkPacket& identityPacket, DeviceLink* link)
 {
     qCDebug(coreLogger) << "Adding link to" << id() << "via" << link->provider();
 
-    Q_ASSERT(sanitizeDeviceId(identityPackage.get<QString>(QStringLiteral("deviceId")))
+    Q_ASSERT(sanitizeDeviceId(identityPacket.get<QString>(QStringLiteral("deviceId")))
              == m_deviceId);
 
-    setName(identityPackage.get<QString>(QStringLiteral("deviceName")));
-    setType(identityPackage.get<QString>(QStringLiteral("deviceType")));
+    setName(identityPacket.get<QString>(QStringLiteral("deviceName")));
+    setType(identityPacket.get<QString>(QStringLiteral("deviceType")));
 
     if (m_deviceLinks.contains(link))
         return;
 
-    m_protocolVersion = identityPackage.get<int>(QStringLiteral("protocolVersion"), -1);
-    if (m_protocolVersion != NetworkPackage::s_protocolVersion) {
-        qCWarning(coreLogger) << m_deviceName << "- warning, device uses a different protocol version" << m_protocolVersion << "expected" << NetworkPackage::s_protocolVersion;
+    m_protocolVersion = identityPacket.get<int>(QStringLiteral("protocolVersion"), -1);
+    if (m_protocolVersion != NetworkPacket::s_protocolVersion) {
+        qCWarning(coreLogger) << m_deviceName << "- warning, device uses a different protocol version" << m_protocolVersion << "expected" << NetworkPacket::s_protocolVersion;
     }
 
     connect(link, &QObject::destroyed,
@@ -235,15 +235,15 @@ void Device::addLink(const NetworkPackage& identityPackage, DeviceLink* link)
     // the old one before this is called), so we do not have to worry about destroying old links.
     // -- Actually, we should not destroy them or the provider will store an invalid ref!
 
-    connect(link, &DeviceLink::receivedPackage,
-            this, &Device::privateReceivedPackage);
+    connect(link, &DeviceLink::receivedPacket,
+            this, &Device::privateReceivedPacket);
 
     std::sort(m_deviceLinks.begin(), m_deviceLinks.end(), lessThan);
 
-    const bool capabilitiesSupported = identityPackage.has(QStringLiteral("incomingCapabilities")) || identityPackage.has(QStringLiteral("outgoingCapabilities"));
+    const bool capabilitiesSupported = identityPacket.has(QStringLiteral("incomingCapabilities")) || identityPacket.has(QStringLiteral("outgoingCapabilities"));
     if (capabilitiesSupported) {
-        const QSet<QString> outgoingCapabilities = identityPackage.get<QStringList>(QStringLiteral("outgoingCapabilities")).toSet()
-                          , incomingCapabilities = identityPackage.get<QStringList>(QStringLiteral("incomingCapabilities")).toSet();
+        const QSet<QString> outgoingCapabilities = identityPacket.get<QStringList>(QStringLiteral("outgoingCapabilities")).toSet()
+                          , incomingCapabilities = identityPacket.get<QStringList>(QStringLiteral("incomingCapabilities")).toSet();
 
         m_supportedPlugins = PluginManager::instance()->pluginsForCapabilities(incomingCapabilities, outgoingCapabilities);
         qDebug() << "new plugins for" << m_deviceName << m_supportedPlugins << incomingCapabilities << outgoingCapabilities;
@@ -325,33 +325,33 @@ void Device::removeLink(DeviceLink* link)
     }
 }
 
-bool Device::sendPackage(NetworkPackage& np, JobManager* jobMgr)
+bool Device::sendPacket(NetworkPacket& np, JobManager* jobMgr)
 {
-    Q_ASSERT(np.type() != PACKAGE_TYPE_PAIR);
+    Q_ASSERT(np.type() != PACKET_TYPE_PAIR);
     Q_ASSERT(isTrusted());
 
-    // Maybe we could block here any package that is not an identity or a
-    // pairing package to prevent sending non encrypted data
+    // Maybe we could block here any packet that is not an identity or a
+    // pairing packet to prevent sending non encrypted data
     for (DeviceLink* dl : asConst(m_deviceLinks)) {
-        if (dl->sendPackage(np, jobMgr)) return true;
+        if (dl->sendPacket(np, jobMgr)) return true;
     }
 
     return false;
 }
 
-void Device::privateReceivedPackage(const NetworkPackage& np)
+void Device::privateReceivedPacket(const NetworkPacket& np)
 {
-    Q_ASSERT(np.type() != PACKAGE_TYPE_PAIR);
+    Q_ASSERT(np.type() != PACKET_TYPE_PAIR);
     if (isTrusted()) {
         const QList<KdeConnectPlugin*> plugins = m_pluginsByIncomingCapability.values(np.type());
         if (plugins.isEmpty()) {
-            qWarning() << "discarding unsupported package" << np.type() << "for" << name();
+            qWarning() << "discarding unsupported packet" << np.type() << "for" << name();
         }
         for (KdeConnectPlugin* plugin : plugins) {
-            plugin->receivePackage(np);
+            plugin->receivePacket(np);
         }
     } else {
-        qCDebug(coreLogger) << "device" << name() << "not paired, ignoring package" << np.type();
+        qCDebug(coreLogger) << "device" << name() << "not paired, ignoring packet" << np.type();
         unpair();
     }
 

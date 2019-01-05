@@ -88,11 +88,7 @@ Device::Device(QObject* parent, KdeConnectConfig* config, const NetworkPackage& 
     addLink(identityPackage, dl);
 }
 
-Device::~Device()
-{
-    qDeleteAll(m_deviceLinks);
-    m_deviceLinks.clear();
-}
+Device::~Device() = default;
 
 bool Device::hasPlugin(const QString& name) const
 {
@@ -209,6 +205,9 @@ static bool lessThan(DeviceLink* p1, DeviceLink* p2)
 void Device::addLink(const NetworkPackage& identityPackage, DeviceLink* link)
 {
     qCDebug(coreLogger) << "Adding link to" << id() << "via" << link->provider();
+
+    Q_ASSERT(identityPackage.get<QString>(QStringLiteral("deviceId"))
+             == m_deviceId);
 
     setName(identityPackage.get<QString>(QStringLiteral("deviceName")));
     m_deviceType = str2type(identityPackage.get<QString>(QStringLiteral("deviceType")));

@@ -144,7 +144,7 @@ TEST_F(DeviceTests, addRemoveLinkToUnpairedDevice)
     EXPECT_EQ(device.availableLinks().contains(linkProvider.name()), true);
 }
 
-TEST_F(DeviceTests, changeNameTypePaired)
+TEST_F(DeviceTests, changeNameTypePaired1)
 {
     kcc.addTrustedDevice(deviceId, "old name", "desktop");
     // Using same certificate from kcc, instead of generating one
@@ -156,7 +156,7 @@ TEST_F(DeviceTests, changeNameTypePaired)
     {
         Device device(nullptr, &kcc, deviceId);
 
-        EXPECT_EQ(device.name(), "old type");
+        EXPECT_EQ(device.name(), "old name");
         EXPECT_EQ(device.type(), "desktop");
 
         EXPECT_EQ(device.isTrusted(), true);
@@ -168,12 +168,43 @@ TEST_F(DeviceTests, changeNameTypePaired)
 
         auto identityPackage1 = createIdentityPackage(
                     deviceId, "new name", "laptop");
-        device.addLink(identityPackage, &link);
+        device.addLink(identityPackage1, &link);
 
         EXPECT_EQ(device.name(), "new name");
         EXPECT_EQ(device.type(), "laptop");
 
         EXPECT_EQ(device.isReachable(), true);
+        EXPECT_EQ(device.isTrusted(), true);
+    }
+
+    // remove device to check that name and type are persisted
+    {
+        Device device(nullptr, &kcc, deviceId);
+
+        EXPECT_EQ(device.name(), "new name");
+        EXPECT_EQ(device.type(), "laptop");
+
+        EXPECT_EQ(device.isTrusted(), true);
+        EXPECT_EQ(device.isReachable(), false);
+    }
+}
+
+TEST_F(DeviceTests, changeNameTypePaired2)
+{
+    kcc.addTrustedDevice(deviceId, "old name", "desktop");
+    // Using same certificate from kcc, instead of generating one
+    kcc.setDeviceProperty(
+                deviceId,
+                QStringLiteral("certificate"),
+                QString::fromLatin1(kcc.certificate().toPem()));
+
+    {
+        Device device(nullptr, &kcc, deviceId, "new name", "laptop");
+
+        EXPECT_EQ(device.name(), "new name");
+        EXPECT_EQ(device.type(), "laptop");
+
+        EXPECT_EQ(device.isReachable(), false);
         EXPECT_EQ(device.isTrusted(), true);
     }
 

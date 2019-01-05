@@ -53,8 +53,6 @@ Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id)
 Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id, const QString& name, const QString& type)
     : QObject(parent)
     , m_deviceId(sanitizeDeviceId(id))
-    , m_deviceName(name)
-    , m_deviceType(str2type(type))
     , m_protocolVersion(NetworkPackage::s_protocolVersion) //We don't know it yet
     , m_config(config)
 {
@@ -70,7 +68,7 @@ Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id, con
             setName(name);  // name may changed and should be emitted
         }
         if (!type.isEmpty()) {
-            m_deviceType = str2type(type); // TODO: add setter
+            setType(type);
         }
     } else {
         m_deviceName = !name.isEmpty() ? name : QStringLiteral("unnamed");
@@ -218,7 +216,7 @@ void Device::addLink(const NetworkPackage& identityPackage, DeviceLink* link)
              == m_deviceId);
 
     setName(identityPackage.get<QString>(QStringLiteral("deviceName")));
-    m_deviceType = str2type(identityPackage.get<QString>(QStringLiteral("deviceType")));
+    setType(identityPackage.get<QString>(QStringLiteral("deviceType")));
 
     if (m_deviceLinks.contains(link))
         return;
@@ -458,6 +456,16 @@ void Device::setName(const QString& name)
         m_config->setDeviceProperty(
                     m_deviceId, QStringLiteral("name"), name);
         Q_EMIT nameChanged(name);
+    }
+}
+
+void Device::setType(const QString &strtype)
+{
+    auto type = str2type(strtype);
+    if (m_deviceType != type) {
+        m_deviceType = type;
+        m_config->setDeviceProperty(
+                    m_deviceId, QStringLiteral("type"), type2str(type));
     }
 }
 

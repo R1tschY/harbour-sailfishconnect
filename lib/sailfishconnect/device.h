@@ -163,6 +163,7 @@ private: //Methods
     static QString type2str(DeviceType deviceType);
 
     void setName(const QString& name);
+    void setType(const QString& type);
     QString iconForStatus(bool reachable, bool paired) const;
 
 private: //Fields (TODO: dPointer!)

@@ -143,7 +143,7 @@ void MprisPlayersModel::setPlugin(MprisRemotePlugin* plugin)
     beginResetModel();
     if (m_plugin) {
         m_plugin->disconnect(this);
-        for (auto player : m_players) {
+        for (auto player : asConst(m_players)) {
             m_plugin->player(player)->disconnect(this);
         }
         m_players.clear();
@@ -159,7 +159,7 @@ void MprisPlayersModel::setPlugin(MprisRemotePlugin* plugin)
                 this, &MprisPlayersModel::playerRemoved);
 
         m_players = m_plugin->players();
-        for (auto player : m_players) {
+        for (auto player : asConst(m_players)) {
             connectPlayer(player);
         }
     }

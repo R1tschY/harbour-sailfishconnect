@@ -201,19 +201,19 @@ bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
 
         oldPlayerList.subtract(newPlayerList);
 
-        for (auto addedPlayer : addedPlayers) {
+        for (auto addedPlayer : asConst(addedPlayers)) {
             m_players.insert(addedPlayer, new MprisPlayer(this, addedPlayer));
             requestPlayerStatus(addedPlayer);
         }
-        for (auto removedPlayer : oldPlayerList) {
+        for (auto removedPlayer : asConst(oldPlayerList)) {
             m_players[removedPlayer]->deleteLater();
             m_players.remove(removedPlayer);
         }
 
-        for (auto addedPlayer : addedPlayers) {
+        for (auto addedPlayer : asConst(addedPlayers)) {
             emit playerAdded(addedPlayer);
         }
-        for (auto removedPlayer : oldPlayerList) {
+        for (auto removedPlayer : asConst(oldPlayerList)) {
             emit playerRemoved(removedPlayer);
         }
     }

@@ -447,7 +447,7 @@ QStringList Device::supportedPlugins() const {
 
 QHostAddress Device::getLocalIpAddress() const
 {
-    for (DeviceLink* dl : d->m_deviceLinks) {
+    for (DeviceLink* dl : asConst(d->m_deviceLinks)) {
         LanDeviceLink* ldl = dynamic_cast<LanDeviceLink*>(dl);
         if (ldl) {
             return ldl->hostAddress();

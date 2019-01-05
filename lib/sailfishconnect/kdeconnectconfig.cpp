@@ -244,11 +244,6 @@ QString KdeConnectConfig::privateKeyPath() const
     return baseConfigDir().absoluteFilePath(QStringLiteral("privateKey.pem"));
 }
 
-QSslKey KdeConnectConfig::privateKey() const
-{
-    return d->m_privateKey;
-}
-
 QString KdeConnectConfig::certificatePath() const
 {
     return baseConfigDir().absoluteFilePath(QStringLiteral("certificate.pem"));

@@ -55,7 +55,6 @@ public:
     QString deviceType() const;
 
     QString privateKeyPath() const;
-    QSslKey privateKey() const;
 
     QString certificatePath() const;
     QSslCertificate certificate() const;

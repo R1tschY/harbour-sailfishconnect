@@ -403,6 +403,7 @@ Device::DeviceType Device::str2type(const QString& deviceType) {
     if (deviceType == QLatin1String("laptop")) return Laptop;
     if (deviceType == QLatin1String("smartphone") || deviceType == QLatin1String("phone")) return Phone;
     if (deviceType == QLatin1String("tablet")) return Tablet;
+    if (deviceType == QLatin1String("tv")) return Tv;
     return Unknown;
 }
 
@@ -411,6 +412,7 @@ QString Device::type2str(Device::DeviceType deviceType) {
     if (deviceType == Laptop) return QStringLiteral("laptop");
     if (deviceType == Phone) return QStringLiteral("smartphone");
     if (deviceType == Tablet) return QStringLiteral("tablet");
+    if (deviceType == Tv) return QStringLiteral("tv");
     return QStringLiteral("unknown");
 }
 

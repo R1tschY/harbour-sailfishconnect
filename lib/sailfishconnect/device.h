@@ -60,6 +60,7 @@ public:
         Laptop,
         Phone,
         Tablet,
+        Tv,
     };
 
     Device();

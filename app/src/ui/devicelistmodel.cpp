@@ -39,6 +39,8 @@ static QUrl deviceTypeToIcon(const QString& deviceType)
     if (deviceType == QLatin1String("tablet"))
         return QStringLiteral("image://theme/icon-m-tablet");
 
+    // FUTURE-TODO: use a television icon for "tv" when it exists
+
     return QStringLiteral("image://theme/icon-m-computer");
 }
 

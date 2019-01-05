@@ -55,7 +55,7 @@ LanLinkProvider::LanLinkProvider(bool testMode)
     connect(&m_udpSocket, &QIODevice::readyRead,
             this, &LanLinkProvider::newUdpConnection);
 
-    m_server = new Server(this);    
+    m_server = new Server(this);
     m_server->setProxy(QNetworkProxy::NoProxy);
     connect(m_server, &QTcpServer::newConnection,
             this, &LanLinkProvider::newConnection);
@@ -422,14 +422,15 @@ void LanLinkProvider::deviceLinkDestroyed(QObject* destroyedDeviceLink)
 {
     const QString id = destroyedDeviceLink->property("deviceId").toString();
     qCDebug(coreLogger) << "deviceLinkDestroyed" << id;
-    Q_ASSERT(m_links.key(static_cast<LanDeviceLink*>(destroyedDeviceLink)) == id);
     auto linkIterator = m_links.find(id);
+    Q_ASSERT(linkIterator != m_links.end());
     if (linkIterator != m_links.end()) {
         Q_ASSERT(linkIterator.value() == destroyedDeviceLink);
         m_links.erase(linkIterator);
-        LanPairingHandler* handler = m_pairingHandlers.take(id);
-        if (handler)
-            handler->deleteLater();
+        auto pairingHandler = m_pairingHandlers.take(id);
+        if (pairingHandler) {
+            pairingHandler->deleteLater();
+        }
     }
 }
 

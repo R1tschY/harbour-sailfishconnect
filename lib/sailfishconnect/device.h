@@ -71,13 +71,13 @@ public:
      */
     Device(QObject* parent, KdeConnectConfig* config, const QString& id);
 
-    Device(QObject* parent, KdeConnectConfig *config, const QString& id, const QString& name, const QString &type);
-
     /**
      * Device known via an incoming connection sent to us via a devicelink.
      *
      * We know everything but we don't trust it yet
      */
+    Device(QObject* parent, KdeConnectConfig *config, const QString& id, const QString& name, const QString &type);
+
     Device(QObject* parent, KdeConnectConfig *config, const NetworkPackage& np, DeviceLink* dl);
 
     ~Device() override;

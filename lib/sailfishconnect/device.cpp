@@ -42,13 +42,12 @@
 
 using namespace SailfishConnect;
 
-static void warn(const QString& info)
-{
-    qWarning() << "Device pairing error" << info;
-}
-
 Device::Device()
     : m_protocolVersion(NetworkPackage::s_protocolVersion)
+{ }
+
+Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id)
+    : Device(parent, config, id, QString(), QString())
 { }
 
 Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id, const QString& name, const QString& type)
@@ -59,31 +58,40 @@ Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id, con
     , m_protocolVersion(NetworkPackage::s_protocolVersion) //We don't know it yet
     , m_config(config)
 {
-    Q_ASSERT(config);
+    Q_ASSERT(config != nullptr);
+    Q_ASSERT(!id.isEmpty());
+
+    if (isTrusted()) {
+        KdeConnectConfig::DeviceInfo info = m_config->getTrustedDevice(id);
+        m_deviceName = info.deviceName;
+        m_deviceType = str2type(info.deviceType);
+
+        if (!name.isEmpty()) {
+            setName(name);  // name may changed and should be emitted
+        }
+        if (!type.isEmpty()) {
+            m_deviceType = str2type(type); // TODO: add setter
+        }
+    } else {
+        m_deviceName = !name.isEmpty() ? name : QStringLiteral("unnamed");
+        m_deviceType = !type.isEmpty() ? str2type(type) : Device::Unknown;
+    }
 
     //Assume every plugin is supported until addLink is called and we can get the actual list
     m_supportedPlugins = PluginManager::instance()->getPluginList().toSet();
 
-    connect(this, &Device::pairingError, this, &warn);
-}
-
-Device::Device(QObject* parent, KdeConnectConfig* config, const QString& id)
-    : Device(parent, config, id, QString(), QString())
-{
-    KdeConnectConfig::DeviceInfo info = m_config->getTrustedDevice(id);
-
-    m_deviceName = info.deviceName;
-    m_deviceType = str2type(info.deviceType);
-
-    //Assume every plugin is supported until addLink is called and we can get the actual list
-    m_supportedPlugins = PluginManager::instance()->getPluginList().toSet();
+    connect(this, &Device::pairingError, this, [](const QString& info) {
+        qWarning() << "Device pairing error" << info;
+    });
 }
 
 Device::Device(QObject* parent, KdeConnectConfig* config, const NetworkPackage& identityPackage, DeviceLink* dl)
-    : QObject(parent)
-    , m_deviceId(sanitizeDeviceId(
-          identityPackage.get<QString>(QStringLiteral("deviceId"))))
-    , m_config(config)
+    : Device(
+          parent,
+          config,
+          identityPackage.get<QString>(QStringLiteral("deviceId")),
+          identityPackage.get<QString>(QStringLiteral("deviceName")),
+          identityPackage.get<QString>(QStringLiteral("deviceType")))
 {
     addLink(identityPackage, dl);
 }
@@ -206,7 +214,7 @@ void Device::addLink(const NetworkPackage& identityPackage, DeviceLink* link)
 {
     qCDebug(coreLogger) << "Adding link to" << id() << "via" << link->provider();
 
-    Q_ASSERT(identityPackage.get<QString>(QStringLiteral("deviceId"))
+    Q_ASSERT(sanitizeDeviceId(identityPackage.get<QString>(QStringLiteral("deviceId")))
              == m_deviceId);
 
     setName(identityPackage.get<QString>(QStringLiteral("deviceName")));

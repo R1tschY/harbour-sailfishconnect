@@ -90,7 +90,7 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
     case IdRole:
         return device->id();
     case IconUrlRole:
-        return deviceTypeToIcon(device->id());
+        return deviceTypeToIcon(device->type());
     case TrustedRole:
         return device->isTrusted();
     case ReachableRole:

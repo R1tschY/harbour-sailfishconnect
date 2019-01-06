@@ -127,7 +127,7 @@ void LanDeviceLink::dataReceived()
     if (m_socketLineReader->bytesAvailable() == 0) return;
 
     const QByteArray serializedPacket = m_socketLineReader->readLine();
-    NetworkPacket packet{QString()};
+    NetworkPacket packet;
     NetworkPacket::unserialize(serializedPacket, &packet);
 
     qCDebug(coreLogger) << "LanDeviceLink dataReceived" << serializedPacket;

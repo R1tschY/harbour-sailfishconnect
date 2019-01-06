@@ -35,6 +35,7 @@
 #include "server.h"
 #include "landevicelink.h"
 #include "lannetworklistener.h"
+#include <sailfishconnect/networkpacket.h>
 
 class LanPairingHandler;
 class LanLinkProvider
@@ -95,7 +96,7 @@ private:
     QHash<QString, LanPairingHandler*> m_pairingHandlers;
 
     struct PendingConnect {
-        NetworkPacket* np;
+        NetworkPacket np;
         QHostAddress sender;
     };
     QHash<QSslSocket*, PendingConnect> m_receivedIdentityPackets;

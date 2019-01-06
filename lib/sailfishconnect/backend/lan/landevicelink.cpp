@@ -47,28 +47,25 @@ LanDeviceLink::LanDeviceLink(const QString& deviceId, LinkProvider* parent, QSsl
             this, &LanDeviceLink::socketDisconnected);
 }
 
+LanDeviceLink::~LanDeviceLink() = default;
+
 void LanDeviceLink::reset(QSslSocket* socket, ConnectionStarted connectionSource)
 {
     Q_ASSERT(socket->state() != QAbstractSocket::UnconnectedState);
     qCDebug(coreLogger) << "reseting device link";
 
-    if (m_socketLineReader) {
-        disconnect(m_socketLineReader);
-        delete m_socketLineReader;
-    }
-
-    m_socketLineReader = new SocketLineReader(socket, this);
+    m_socketLineReader.reset(new SocketLineReader(socket, this));
 
     connect(socket, &QAbstractSocket::disconnected,
             m_debounceTimer, Overload<>::of(&QTimer::start));
-    connect(m_socketLineReader, &SocketLineReader::readyRead,
+    connect(m_socketLineReader.data(), &SocketLineReader::readyRead,
             this, &LanDeviceLink::dataReceived);
 
     //We take ownership of the socket.
     //When the link provider destroys us,
     //the socket (and the reader) will be
     //destroyed as well
-    socket->setParent(m_socketLineReader);
+    socket->setParent(m_socketLineReader.data());
 
     QString certString = KdeConnectConfig::instance()->getDeviceProperty(deviceId(), QStringLiteral("certificate"));
     DeviceLink::setPairStatus(certString.isEmpty()? PairStatus::NotPaired : PairStatus::Paired);

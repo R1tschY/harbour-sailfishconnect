@@ -46,6 +46,8 @@ public:
     enum ConnectionStarted : bool { Locally, Remotely };  // TODO: remove?
 
     LanDeviceLink(const QString& deviceId, LinkProvider* parent, QSslSocket* socket, ConnectionStarted connectionSource);
+    ~LanDeviceLink();
+
     void reset(QSslSocket* socket, ConnectionStarted connectionSource);
 
     QString name() override;
@@ -66,7 +68,7 @@ private Q_SLOTS:
     void socketDisconnected();
 
 private:
-    SocketLineReader* m_socketLineReader;
+    QScopedPointer<SocketLineReader> m_socketLineReader;
     QHostAddress m_hostAddress;
     QTimer* m_debounceTimer;
 };

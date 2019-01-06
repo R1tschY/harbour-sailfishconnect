@@ -119,6 +119,11 @@ Device::Device(QObject* parent, KdeConnectConfig* config, const NetworkPacket& i
     addLink(identityPacket, dl);
 }
 
+Device::~Device() {
+    // every link is now useless
+    qDeleteAll(d->m_deviceLinks);
+}
+
 QString Device::id() const {
     return d->m_deviceId;
 }
@@ -134,8 +139,6 @@ QString Device::dbusPath() const {
 QString Device::type() const {
     return type2str(d->m_deviceType);
 }
-
-Device::~Device() = default;
 
 bool Device::hasPlugin(const QString& name) const
 {

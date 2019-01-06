@@ -48,7 +48,6 @@ public:
     const static int s_protocolVersion;
 
     explicit NetworkPacket(const QString& type = QStringLiteral("empty"), const QVariantMap& body = {});
-    NetworkPacket(const NetworkPacket& other); // Copy constructor, required for QMetaType and queued signals
 
     static void createIdentityPacket(NetworkPacket*);
 

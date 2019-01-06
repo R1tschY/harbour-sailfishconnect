@@ -109,6 +109,8 @@ TEST_F(DeviceTests, addRemoveLinkToPairedDevice) {
 
     device.unpair();
     EXPECT_EQ(device.isTrusted(), false);
+
+    device.removeLink(&link);
 }
 
 TEST_F(DeviceTests, addRemoveLinkToUnpairedDevice)
@@ -142,6 +144,8 @@ TEST_F(DeviceTests, addRemoveLinkToUnpairedDevice)
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
     EXPECT_EQ(device.availableLinks().contains(linkProvider.name()), true);
+
+    device.removeLink(&link);
 }
 
 TEST_F(DeviceTests, changeNameTypePaired1)
@@ -246,4 +250,6 @@ TEST_F(DeviceTests, changeNameTypeUnpaired)
     EXPECT_EQ(device.type(), "laptop");
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
+
+    device.removeLink(&link);
 }

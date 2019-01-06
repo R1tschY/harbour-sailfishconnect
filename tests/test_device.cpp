@@ -24,6 +24,7 @@
 
 #include <QSslCertificate>
 #include <QUuid>
+#include <QSignalSpy>
 
 #include <sailfishconnect/kdeconnectconfig.h>
 #include <sailfishconnect/device.h>
@@ -248,6 +249,40 @@ TEST_F(DeviceTests, changeNameTypeUnpaired)
 
     EXPECT_EQ(device.name(), "new name");
     EXPECT_EQ(device.type(), "laptop");
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
+
+    device.removeLink(&link);
+}
+
+TEST_F(DeviceTests, unpair)
+{
+    kcc.addTrustedDevice(deviceId, deviceName, deviceType);
+    // Using same certificate from kcc, instead of generating one
+    kcc.setDeviceProperty(
+                deviceId,
+                QStringLiteral("certificate"),
+                QString::fromLatin1(kcc.certificate().toPem()));
+
+    MockLinkProvider linkProvider;
+    MockDeviceLink link(deviceId, &linkProvider);
+
+    // add link through ctor
+    auto identityPacket = createIdentityPacket(
+                deviceId, deviceName, deviceType);
+    Device device(nullptr, &kcc, identityPacket, &link);
+
+    EXPECT_EQ(device.isTrusted(), true);
+    EXPECT_EQ(device.isReachable(), true);
+
+    EXPECT_CALL(link, userRequestsUnpair()).Times(1);
+    QSignalSpy spy(&device, SIGNAL(trustedChanged(bool)));
+
+    device.unpair();
+
+    ASSERT_EQ(spy.count(), 1);
+    EXPECT_EQ(spy.takeFirst(), QList<QVariant>{false});
+
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
 

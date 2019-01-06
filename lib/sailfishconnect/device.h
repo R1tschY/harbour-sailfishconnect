@@ -114,8 +114,6 @@ public:
     int protocolVersion();
     QStringList supportedPlugins() const;
 
-    QHostAddress getLocalIpAddress() const;
-
     /**
      * @brief sanitize device id
      *

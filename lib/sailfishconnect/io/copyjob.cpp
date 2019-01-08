@@ -139,7 +139,8 @@ void CopyJob::poll()
     if (m_source
             && m_source->bytesAvailable() > 0
             && m_buffer.size() != maxBufferSize) {
-        QTimer::singleShot(0, this, &CopyJob::poll);
+        QMetaObject::invokeMethod(this, "poll", Qt::QueuedConnection);
+        // QTimer::singleShot(0, this, &CopyJob::poll);
     }
 
     if (m_sourceEof && m_writtenBytes == m_flushedBytes) {

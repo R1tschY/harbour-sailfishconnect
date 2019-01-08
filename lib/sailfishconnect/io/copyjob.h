@@ -55,7 +55,6 @@ private:
     bool m_sourceEof = false;
     bool m_started = false;
 
-    void poll();
     void pollAtSourceClose();
     void pollAtDestinationClose();
     void pollBytesWritten(qint64 bytes);
@@ -65,6 +64,9 @@ private:
 
     void checkSource();
     void checkDestination();
+
+private slots:
+    void poll();
 };
 
 } // namespace SailfishConnect

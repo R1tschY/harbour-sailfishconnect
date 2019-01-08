@@ -91,11 +91,14 @@ void Job::cancel()
         return;
 
     qCInfo(logger) << "Job" << m_title << "was canceled by user";
-    bool canceled = !doCancelling();
+    bool canceled = isRunning() ? doCancelling() : true;
     if (canceled || !isRunning()) {
+        auto old_state = m_state;
         m_state = State::Finished;
         m_wasCancelled = canceled;
-        onFinished();
+        if (old_state != State::Finished) {
+            onFinished();
+        }
     }
 }
 

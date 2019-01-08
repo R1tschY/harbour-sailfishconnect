@@ -10,7 +10,9 @@ include(../lib/lib.pri)
 HEADERS += \
     test.h \
     mock_devicelink.h \
-    mock_linkprovider.h
+    mock_linkprovider.h \
+    mock_pairinghandler.h \
+    mock_job.h
 
 SOURCES += main.cpp \
     test_filehelper.cpp \
@@ -18,4 +20,8 @@ SOURCES += main.cpp \
     test_connectconfig.cpp \
     test_device.cpp \
     mock_devicelink.cpp \
-    mock_linkprovider.cpp
+    mock_linkprovider.cpp \
+    mock_pairinghandler.cpp \
+    test.cpp \
+    test_job.cpp \
+    mock_job.cpp

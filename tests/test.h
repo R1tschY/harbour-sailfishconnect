@@ -19,14 +19,20 @@
 #define TEST_H
 
 #include <QtCore>
+#include <QList>
+#include <initializer_list>
+#include <tuple>
 
 #include <gtest/gtest.h>
 
 QT_BEGIN_NAMESPACE
-inline void PrintTo(const QString& str, ::std::ostream *os)
-{
-    *os << '"' << qPrintable(str) << '"';
-}
+void PrintTo(const QString& str, ::std::ostream *os);
+void PrintTo(const QVariant& x, ::std::ostream *os);
 QT_END_NAMESPACE
+
+
+QList<QList<QVariant>> toVVList(
+        std::initializer_list<std::initializer_list<QVariant>> x);
+
 
 #endif // TEST_H

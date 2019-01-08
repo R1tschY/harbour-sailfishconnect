@@ -25,6 +25,7 @@
 #include <QSslCertificate>
 #include <QUuid>
 #include <QSignalSpy>
+#include <QVariant>
 
 #include <sailfishconnect/kdeconnectconfig.h>
 #include <sailfishconnect/device.h>
@@ -35,9 +36,13 @@
 
 #include "mock_devicelink.h"
 #include "mock_linkprovider.h"
+#include "mock_slot.h"
+#include "mock_pairinghandler.h"
 
 using namespace SailfishConnect;
 using ::testing::Return;
+using ::testing::InvokeWithoutArgs;
+using ::testing::_;
 using ::testing::NiceMock;
 
 NetworkPacket createIdentityPacket(
@@ -66,7 +71,8 @@ protected:
           deviceType(QStringLiteral("smartphone")),
           kcc(makeUniquePtr<SystemInfo>()),
           identityPacket(
-              createIdentityPacket(deviceId, deviceName, deviceType))
+              createIdentityPacket(deviceId, deviceName, deviceType)),
+          link(deviceId, &linkProvider)
     { }
 
     QString deviceId;
@@ -74,16 +80,34 @@ protected:
     QString deviceType;
     KdeConnectConfig kcc;
     NetworkPacket identityPacket;
+    MockLinkProvider linkProvider;
+    MockDeviceLink link;
 };
 
-TEST_F(DeviceTests, addRemoveLinkToPairedDevice) {
-    kcc.addTrustedDevice(deviceId, deviceName, deviceType);
-    // Using same certificate from kcc, instead of generating one
-    kcc.setDeviceProperty(
-                deviceId,
-                QStringLiteral("certificate"),
-                QString::fromLatin1(kcc.certificate().toPem()));
+class PairedDeviceTests : public DeviceTests {
+protected:
+    PairedDeviceTests()
+    {
+        kcc.addTrustedDevice(deviceId, deviceName, deviceType);
+        // Using same certificate from kcc, instead of generating one
+        kcc.setDeviceProperty(
+                    deviceId,
+                    QStringLiteral("certificate"),
+                    QString::fromLatin1(kcc.certificate().toPem()));
+    }
+};
 
+class UnpairedDeviceTests : public DeviceTests {
+protected:
+    UnpairedDeviceTests()
+    {
+        kcc.removeTrustedDevice(deviceId);
+    }
+};
+
+
+
+TEST_F(PairedDeviceTests, addRemoveLinkToPairedDevice) {
     Device device(nullptr, &kcc, deviceId);
 
     EXPECT_EQ(device.id(), deviceId);
@@ -94,9 +118,6 @@ TEST_F(DeviceTests, addRemoveLinkToPairedDevice) {
     EXPECT_EQ(device.isReachable(), false);
 
     // Add link
-    MockLinkProvider linkProvider;
-    MockDeviceLink link(deviceId, &linkProvider);
-
     device.addLink(identityPacket, &link);
 
     EXPECT_EQ(device.isReachable(), true);
@@ -114,13 +135,8 @@ TEST_F(DeviceTests, addRemoveLinkToPairedDevice) {
     device.removeLink(&link);
 }
 
-TEST_F(DeviceTests, addRemoveLinkToUnpairedDevice)
+TEST_F(UnpairedDeviceTests, addRemoveLinkToUnpairedDevice)
 {
-    kcc.removeTrustedDevice(deviceId);
-
-    MockLinkProvider linkProvider;
-    MockDeviceLink link(deviceId, &linkProvider);
-
     // add link through ctor
     Device device(nullptr, &kcc, identityPacket, &link);
 
@@ -168,9 +184,6 @@ TEST_F(DeviceTests, changeNameTypePaired1)
         EXPECT_EQ(device.isReachable(), false);
 
         // Add link
-        MockLinkProvider linkProvider;
-        MockDeviceLink link(deviceId, &linkProvider);
-
         auto identityPacket1 = createIdentityPacket(
                     deviceId, "new name", "laptop");
         device.addLink(identityPacket1, &link);
@@ -180,6 +193,8 @@ TEST_F(DeviceTests, changeNameTypePaired1)
 
         EXPECT_EQ(device.isReachable(), true);
         EXPECT_EQ(device.isTrusted(), true);
+
+        device.removeLink(&link);
     }
 
     // remove device to check that name and type are persisted
@@ -194,15 +209,8 @@ TEST_F(DeviceTests, changeNameTypePaired1)
     }
 }
 
-TEST_F(DeviceTests, changeNameTypePaired2)
+TEST_F(PairedDeviceTests, changeNameTypePaired2)
 {
-    kcc.addTrustedDevice(deviceId, "old name", "desktop");
-    // Using same certificate from kcc, instead of generating one
-    kcc.setDeviceProperty(
-                deviceId,
-                QStringLiteral("certificate"),
-                QString::fromLatin1(kcc.certificate().toPem()));
-
     {
         Device device(nullptr, &kcc, deviceId, "new name", "laptop");
 
@@ -225,13 +233,8 @@ TEST_F(DeviceTests, changeNameTypePaired2)
     }
 }
 
-TEST_F(DeviceTests, changeNameTypeUnpaired)
+TEST_F(UnpairedDeviceTests, changeNameTypeUnpaired)
 {
-    kcc.removeTrustedDevice(deviceId);
-
-    MockLinkProvider linkProvider;
-    MockDeviceLink link(deviceId, &linkProvider);
-
     // add link through ctor
     auto identityPacket1 = createIdentityPacket(
                 deviceId, "old name", "desktop");
@@ -255,19 +258,8 @@ TEST_F(DeviceTests, changeNameTypeUnpaired)
     device.removeLink(&link);
 }
 
-TEST_F(DeviceTests, unpair)
+TEST_F(PairedDeviceTests, unpair)
 {
-    kcc.addTrustedDevice(deviceId, deviceName, deviceType);
-    // Using same certificate from kcc, instead of generating one
-    kcc.setDeviceProperty(
-                deviceId,
-                QStringLiteral("certificate"),
-                QString::fromLatin1(kcc.certificate().toPem()));
-
-    MockLinkProvider linkProvider;
-    MockDeviceLink link(deviceId, &linkProvider);
-
-    // add link through ctor
     auto identityPacket = createIdentityPacket(
                 deviceId, deviceName, deviceType);
     Device device(nullptr, &kcc, identityPacket, &link);
@@ -276,13 +268,143 @@ TEST_F(DeviceTests, unpair)
     EXPECT_EQ(device.isReachable(), true);
 
     EXPECT_CALL(link, userRequestsUnpair()).Times(1);
-    QSignalSpy spy(&device, SIGNAL(trustedChanged(bool)));
+    QSignalSpy spy(&device, &Device::trustedChanged);
 
     device.unpair();
 
-    ASSERT_EQ(spy.count(), 1);
-    EXPECT_EQ(spy.takeFirst(), QList<QVariant>{false});
+    EXPECT_EQ(spy, toVVList({{false}}));
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
 
+    device.removeLink(&link);
+}
+
+TEST_F(UnpairedDeviceTests, pair)
+{
+    auto identityPacket = createIdentityPacket(
+                deviceId, deviceName, deviceType);
+    Device device(nullptr, &kcc, identityPacket, &link);
+
+    // request pair (on local side)
+
+    EXPECT_CALL(link, userRequestsPair()).Times(1);
+
+    device.requestPair();
+
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
+
+    // accept pair (on remote side)
+
+    QSignalSpy spy(&device, &Device::trustedChanged);
+    link.pairStatusChanged(DeviceLink::Paired);
+
+    EXPECT_EQ(spy, toVVList({{true}}));
+    EXPECT_EQ(device.isTrusted(), true);
+    EXPECT_EQ(device.isReachable(), true);
+
+    device.removeLink(&link);
+}
+
+TEST_F(UnpairedDeviceTests, acceptPair)
+{
+    auto identityPacket = createIdentityPacket(
+                deviceId, deviceName, deviceType);
+    Device device(nullptr, &kcc, identityPacket, &link);
+    QSignalSpy spy_pairing(&device, &Device::hasPairingRequestsChanged);
+
+    // request pair (on remote side)
+
+    auto* pairingHandler = new MockPairingHandler(&link);
+    emit link.pairingRequest(pairingHandler);
+    emit link.pairStatusChanged(DeviceLink::NotPaired);
+
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.hasPairingRequests(), true);
+    EXPECT_EQ(spy_pairing, toVVList({{true}}));
+    spy_pairing.clear();
+
+    // accept pair (on local side)
+
+    QSignalSpy spy_trusted(&device, &Device::trustedChanged);
+    EXPECT_CALL(*pairingHandler, acceptPairing()).WillOnce(
+                InvokeWithoutArgs([this, pairingHandler](){
+        emit link.pairingRequestExpired(pairingHandler);
+        emit link.pairStatusChanged(DeviceLink::Paired);
+        return true;
+    }));
+    device.acceptPairing();
+
+    EXPECT_EQ(spy_trusted, toVVList({{true}}));
+    EXPECT_EQ(device.isTrusted(), true);
+    EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.hasPairingRequests(), false);
+    EXPECT_EQ(spy_pairing, toVVList({{false}}));
+
+    device.removeLink(&link);
+}
+
+TEST_F(UnpairedDeviceTests, rejectPair)
+{
+    auto identityPacket = createIdentityPacket(
+                deviceId, deviceName, deviceType);
+    Device device(nullptr, &kcc, identityPacket, &link);
+    QSignalSpy spy_pairing(&device, &Device::hasPairingRequestsChanged);
+
+    // request pair (on remote side)
+
+    auto* pairingHandler = new MockPairingHandler(&link);
+    emit link.pairingRequest(pairingHandler);
+    emit link.pairStatusChanged(DeviceLink::NotPaired);
+
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.hasPairingRequests(), true);
+    EXPECT_EQ(spy_pairing, toVVList({{true}}));
+    spy_pairing.clear();
+
+    // reject pair (on local side)
+
+    QSignalSpy spy_trusted(&device, &Device::trustedChanged);
+    EXPECT_CALL(*pairingHandler, acceptPairing()).WillOnce(
+                InvokeWithoutArgs([this, pairingHandler](){
+        emit link.pairingRequestExpired(pairingHandler);
+        emit link.pairStatusChanged(DeviceLink::NotPaired);
+        return true;
+    }));
+    device.acceptPairing();
+
+    EXPECT_EQ(spy_trusted, toVVList({{false}}));
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.hasPairingRequests(), false);
+    EXPECT_EQ(spy_pairing, toVVList({{false}}));
+
+    device.removeLink(&link);
+}
+
+TEST_F(UnpairedDeviceTests, rejectedPair)
+{
+    auto identityPacket = createIdentityPacket(
+                deviceId, deviceName, deviceType);
+    Device device(nullptr, &kcc, identityPacket, &link);
+
+    // request pair (on local side)
+
+    EXPECT_CALL(link, userRequestsPair()).Times(1);
+
+    device.requestPair();
+
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
+
+    // reject pair (on remote side)
+
+    QSignalSpy spy(&device, &Device::trustedChanged);
+    emit link.pairStatusChanged(DeviceLink::NotPaired);
+
+    EXPECT_EQ(spy, toVVList({{false}}));
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
 

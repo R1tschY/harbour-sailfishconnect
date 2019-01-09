@@ -39,7 +39,8 @@ SOURCES += \
     sailfishconnect/backend/lan/lanuploadjob.cpp \
     sailfishconnect/backend/lan/lannetworklistener.cpp \
     sailfishconnect/io/jobmanager.cpp \
-    sailfishconnect/networkpacket.cpp
+    sailfishconnect/networkpacket.cpp \
+    sailfishconnect/helper/humanize.cpp
 
 
 # German translation is enabled as an example. If you aren't
@@ -80,7 +81,8 @@ HEADERS += \
     sailfishconnect/backend/lan/lannetworklistener.h \
     sailfishconnect/io/jobmanager.h \
     sailfishconnect/networkpacket.h \
-    sailfishconnect/networkpackettypes.h
+    sailfishconnect/networkpackettypes.h \
+    sailfishconnect/helper/humanize.h
 
 DISTFILES += \
     lib.pri

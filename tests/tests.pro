@@ -24,4 +24,5 @@ SOURCES += main.cpp \
     mock_pairinghandler.cpp \
     test.cpp \
     test_job.cpp \
-    mock_job.cpp
+    mock_job.cpp \
+    test_humanize.cpp

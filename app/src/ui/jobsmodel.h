@@ -17,7 +17,9 @@ public:
         DestinationRole,
         ProcessedBytesRole,
         TotalBytesRole,
-        RunningRole,
+        StateRole,
+        CanceledRole,
+        ErrorRole,
     };
 
     explicit JobsModel(QObject *parent = nullptr);
@@ -42,6 +44,7 @@ private:
     void addJob(JobInfo* job);
     void connectJob(JobInfo* job);
     void jobChanged(JobInfo *job, int role);
+    void jobChanged(JobInfo *job, const QVector<int>& roles);
 
     JobInfo* rowToJob(const QModelIndex& row) const;
     int jobToRow(JobInfo* job) const;

@@ -32,7 +32,6 @@ void Job::setErrorString(const QString& errorString)
 {
     if (m_errorString != errorString) {
         m_errorString = errorString;
-        emit errorStringChanged();
     }
 }
 
@@ -95,7 +94,7 @@ void Job::cancel()
     if (canceled || !isRunning()) {
         auto old_state = m_state;
         m_state = State::Finished;
-        m_wasCancelled = canceled;
+        m_wasCanceled = canceled;
         if (old_state != State::Finished) {
             onFinished();
         }

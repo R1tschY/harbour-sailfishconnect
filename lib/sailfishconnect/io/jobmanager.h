@@ -18,6 +18,8 @@ class JobInfo : public QObject {
     Q_PROPERTY(qint64 totalBytes READ totalBytes NOTIFY totalBytesChanged)
     Q_PROPERTY(qint64 processedBytes READ processedBytes NOTIFY processedBytesChanged)
     Q_PROPERTY(Job::State state READ state NOTIFY stateChanged)
+    Q_PROPERTY(bool wasCanceled READ wasCanceled NOTIFY stateChanged)
+    Q_PROPERTY(QString errorString READ errorString NOTIFY stateChanged)
 
 public:
     JobInfo(Job* job, QString deviceId, QObject* parent);
@@ -30,6 +32,8 @@ public:
     QString deviceId() const { return m_deviceId; }
 
     Job::State state() const;
+    bool wasCanceled() const;
+    QString errorString() const;
 
     void cancel();
 
@@ -51,9 +55,10 @@ private:
     qint64 m_processedBytes;
     Job::State m_state;
     QString m_deviceId;
+    bool m_wasCanceled;
+    QString m_errorString;
 
     void onJobDestroyed();
-    void onJobFinished();
 };
 
 class JobManager : public QObject

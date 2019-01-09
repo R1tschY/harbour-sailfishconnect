@@ -9,15 +9,18 @@ class Job : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString errorString READ errorString NOTIFY errorStringChanged)
+    Q_PROPERTY(QString errorString READ errorString NOTIFY stateChanged)
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
     Q_PROPERTY(qint64 totalBytes READ totalBytes NOTIFY totalBytesChanged)
     Q_PROPERTY(qint64 processedBytes READ processedBytes NOTIFY processedBytesChanged)
+    Q_PROPERTY(State state READ state NOTIFY stateChanged)
+    Q_PROPERTY(bool wasCanceled READ wasCanceled NOTIFY stateChanged)
 public:
     enum class State {
         Pending, Running, Finished
     };
+    Q_ENUM(State)
 
     explicit Job(QObject* parent = nullptr);
     ~Job();
@@ -28,7 +31,7 @@ public:
     qint64 totalBytes() const { return m_totalBytes; }
     qint64 processedBytes() const { return m_processedBytes; }
     State state() const { return m_state; }
-    Q_SCRIPTABLE bool wasCancelled() const { return m_wasCancelled; }
+    bool wasCanceled() const { return m_wasCanceled; }
     Q_SCRIPTABLE bool isPending() const { return m_state == State::Pending; }
     Q_SCRIPTABLE bool isRunning() const { return m_state == State::Running; }
     Q_SCRIPTABLE bool isFinished() const { return m_state == State::Finished; }
@@ -42,7 +45,6 @@ signals:
     void success();
     void error();
 
-    void errorStringChanged();
     void titleChanged();
     void descriptionChanged();
     void totalBytesChanged();
@@ -79,7 +81,7 @@ private:
     qint64 m_processedBytes = 0;
 
     State m_state = State::Pending;
-    bool m_wasCancelled = false;
+    bool m_wasCanceled = false;
 };
 
 } // namespace SailfishConnect

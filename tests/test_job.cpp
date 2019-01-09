@@ -16,7 +16,7 @@ public:
 
 TEST_F(JobTests, initState) {
     EXPECT_EQ(job.state(), Job::State::Pending);
-    EXPECT_EQ(job.wasCancelled(), false);
+    EXPECT_EQ(job.wasCanceled(), false);
 }
 
 
@@ -28,7 +28,7 @@ TEST_F(JobTests, multipleStart) {
     job.start();
 
     EXPECT_EQ(job.state(), Job::State::Running);
-    EXPECT_EQ(job.wasCancelled(), false);
+    EXPECT_EQ(job.wasCanceled(), false);
 }
 
 TEST_F(JobTests, success) {
@@ -40,7 +40,7 @@ TEST_F(JobTests, success) {
     job.exit();
 
     EXPECT_EQ(job.state(), Job::State::Finished);
-    EXPECT_EQ(job.wasCancelled(), false);
+    EXPECT_EQ(job.wasCanceled(), false);
     EXPECT_EQ(job.errorString(), QString());
 }
 
@@ -54,7 +54,7 @@ TEST_F(JobTests, error) {
 
     EXPECT_EQ(job.state(), Job::State::Finished);
     EXPECT_EQ(job.errorString(), "my fault");
-    EXPECT_EQ(job.wasCancelled(), false);
+    EXPECT_EQ(job.wasCanceled(), false);
 }
 
 TEST_F(JobTests, cancel) {
@@ -67,7 +67,7 @@ TEST_F(JobTests, cancel) {
 
     EXPECT_EQ(job.state(), Job::State::Finished);
     EXPECT_EQ(job.errorString(), QString());
-    EXPECT_EQ(job.wasCancelled(), true);
+    EXPECT_EQ(job.wasCanceled(), true);
 }
 
 TEST_F(JobTests, rejectedCancel) {
@@ -79,7 +79,7 @@ TEST_F(JobTests, rejectedCancel) {
 
     EXPECT_EQ(job.state(), Job::State::Running);
     EXPECT_EQ(job.errorString(), QString());
-    EXPECT_EQ(job.wasCancelled(), false);
+    EXPECT_EQ(job.wasCanceled(), false);
 }
 
 TEST_F(JobTests, cancelFinished) {
@@ -94,7 +94,7 @@ TEST_F(JobTests, cancelFinished) {
 
     EXPECT_EQ(job.state(), Job::State::Finished);
     EXPECT_EQ(job.errorString(), QString());
-    EXPECT_EQ(job.wasCancelled(), false);
+    EXPECT_EQ(job.wasCanceled(), false);
 }
 
 TEST_F(JobTests, cancelPending) {
@@ -105,7 +105,7 @@ TEST_F(JobTests, cancelPending) {
 
     EXPECT_EQ(job.state(), Job::State::Finished);
     EXPECT_EQ(job.errorString(), QString());
-    EXPECT_EQ(job.wasCancelled(), true);
+    EXPECT_EQ(job.wasCanceled(), true);
 }
 
 TEST_F(JobTests, exitWhileCancelling) {
@@ -122,7 +122,7 @@ TEST_F(JobTests, exitWhileCancelling) {
     job.cancel();
 
     EXPECT_EQ(job.state(), Job::State::Finished);
-    EXPECT_EQ(job.wasCancelled(), false);
+    EXPECT_EQ(job.wasCanceled(), false);
 }
 
 TEST_F(JobTests, exitWhileCancelling2) {
@@ -139,5 +139,5 @@ TEST_F(JobTests, exitWhileCancelling2) {
     job.cancel();
 
     EXPECT_EQ(job.state(), Job::State::Finished);
-    EXPECT_EQ(job.wasCancelled(), true);
+    EXPECT_EQ(job.wasCanceled(), true);
 }

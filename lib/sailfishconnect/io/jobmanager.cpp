@@ -13,14 +13,12 @@ JobInfo::JobInfo(Job *job, QString deviceId, QObject *parent)
     Q_ASSERT(job);
 
     connect(job, &Job::destroyed, this, &JobInfo::onJobDestroyed);
-    connect(job, &Job::finished, this, &JobInfo::onJobFinished);
     connect(job, &Job::titleChanged, this, &JobInfo::titleChanged);
     connect(job, &Job::descriptionChanged, this, &JobInfo::descriptionChanged);
     connect(job, &Job::totalBytesChanged, this, &JobInfo::totalBytesChanged);
     connect(job, &Job::processedBytesChanged,
             this, &JobInfo::processedBytesChanged);
     connect(job, &Job::stateChanged, this, &JobInfo::stateChanged);
-    //connect(job, &Job::errorStringChanged, this, &JobInfo::errorStringChanged);
 }
 
 QString JobInfo::title() const {
@@ -43,6 +41,16 @@ Job::State JobInfo::state() const {
     return m_impl ? m_impl->state() : m_state;
 }
 
+bool JobInfo::wasCanceled() const
+{
+    return m_impl ? m_impl->wasCanceled() : m_wasCanceled;
+}
+
+QString JobInfo::errorString() const
+{
+    return m_impl ? m_impl->errorString() : m_errorString;
+}
+
 void JobInfo::cancel()
 {
     if (m_impl) {
@@ -60,22 +68,14 @@ void JobInfo::onJobDestroyed()
     m_totalBytes = job->totalBytes();
     m_processedBytes = job->processedBytes();
     m_state = job->state();
+    m_wasCanceled = job->wasCanceled();
+    m_errorString = job->errorString();
 
     if (!m_impl->isFinished()) {
         qCWarning(logger) << "unfinished job destroyed";
-        onJobFinished();
+        m_state = Job::State::Finished;
+        emit stateChanged();
     }
-}
-
-void JobInfo::onJobFinished()
-{
-    m_state = Job::State::Finished;
-//    if (!m_impl->errorString().isEmpty()) {
-//        m_description = m_impl->errorString();
-//    }
-
-    emit stateChanged();
-    emit descriptionChanged();
 }
 
 JobManager::JobManager(QObject *parent)

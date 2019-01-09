@@ -69,8 +69,8 @@ void CopyJob::doStart()
 
     connect(m_source.data(), &QIODevice::readChannelFinished,
             this, &CopyJob::pollAtSourceClose);
-//    connect(m_source.data(), &QIODevice::readyRead,
-//            this, &CopyJob::poll);
+    connect(m_source.data(), &QIODevice::readyRead,
+            this, &CopyJob::poll);
     connect(m_destination.data(), &QIODevice::bytesWritten,
             this, &CopyJob::pollBytesWritten);
     connect(m_destination.data(), &QIODevice::aboutToClose,
@@ -143,7 +143,7 @@ void CopyJob::poll()
         // QTimer::singleShot(0, this, &CopyJob::poll);
     }
 
-    if (m_sourceEof && m_writtenBytes == m_flushedBytes) {
+    if (m_sourceEof && m_source->bytesAvailable() == 0 && m_writtenBytes == m_flushedBytes) {
         qCDebug(logger) << "EOF";
 
         // success

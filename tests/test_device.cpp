@@ -23,7 +23,6 @@
 #include <gmock/gmock.h>
 
 #include <QSslCertificate>
-#include <QUuid>
 #include <QSignalSpy>
 #include <QVariant>
 
@@ -36,7 +35,6 @@
 
 #include "mock_devicelink.h"
 #include "mock_linkprovider.h"
-#include "mock_slot.h"
 #include "mock_pairinghandler.h"
 
 using namespace SailfishConnect;

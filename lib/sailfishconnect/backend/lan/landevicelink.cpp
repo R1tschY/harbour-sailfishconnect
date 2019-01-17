@@ -29,6 +29,7 @@
 #include "../../corelogging.h"
 #include "lanuploadjob.h"
 #include "landownloadjob.h"
+#include <sailfishconnect/device.h>
 #include <sailfishconnect/helper/cpphelper.h>
 #include <sailfishconnect/io/jobmanager.h>
 
@@ -160,7 +161,7 @@ void LanDeviceLink::dataReceived()
 void LanDeviceLink::socketDisconnected()
 {
     // Maybe LanDeviceLink::reset was called
-    qCDebug(coreLogger) << "socket has disconnected";
+    qCDebug(coreLogger) << QObject::sender() << "has disconnected";
     if (m_socketLineReader->m_socket->state()
             == QAbstractSocket::UnconnectedState) {
         delete this;
@@ -183,16 +184,32 @@ void LanDeviceLink::userRequestsUnpair()
 
 void LanDeviceLink::setPairStatus(PairStatus status)
 {
-    if (status == Paired && m_socketLineReader->peerCertificate().isNull()) {
-        Q_EMIT pairingError(tr("This device cannot be paired because it is running an old version of KDE Connect."));
-        return;
+    if (status == Paired) {
+        QSslCertificate cert = m_socketLineReader->peerCertificate();
+        if (cert.isNull()) {
+            Q_EMIT pairingError(tr("This device cannot be paired because it is "
+                                   "running an old version of KDE Connect."));
+            return;
+        }
+
+        // check for common name that is used for peer verify
+        // it is the unsanitized device id which is used at restart to set the
+        // right peer verify name
+        QStringList commonName = cert.issuerInfo(QSslCertificate::CommonName);
+        if (commonName.length() != 1
+                || Device::sanitizeDeviceId(commonName.first()) != deviceId()) {
+            Q_EMIT pairingError(tr("This device cannot be paired because it "
+                                   "sends a strange ssl certificate."));
+            return;
+        }
     }
 
     DeviceLink::setPairStatus(status);
     if (status == Paired) {
         Q_ASSERT(KdeConnectConfig::instance()->trustedDevices().contains(deviceId()));
         Q_ASSERT(!m_socketLineReader->peerCertificate().isNull());
-        KdeConnectConfig::instance()->setDeviceProperty(deviceId(), QStringLiteral("certificate"), m_socketLineReader->peerCertificate().toPem());
+        KdeConnectConfig::instance()->setDeviceProperty(
+                    deviceId(), QStringLiteral("certificate"), m_socketLineReader->peerCertificate().toPem());
     }
 }
 

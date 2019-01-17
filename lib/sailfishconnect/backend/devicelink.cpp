@@ -21,6 +21,7 @@
 #include "devicelink.h"
 #include "../kdeconnectconfig.h"
 #include "linkprovider.h"
+#include "../device.h"
 
 
 DeviceLink::DeviceLink(const QString& deviceId, LinkProvider* parent)
@@ -30,6 +31,7 @@ DeviceLink::DeviceLink(const QString& deviceId, LinkProvider* parent)
     , m_pairStatus(NotPaired)
 {
     Q_ASSERT(!deviceId.isEmpty());
+    Q_ASSERT(Device::sanitizeDeviceId(deviceId) == deviceId);
 
     setProperty("deviceId", deviceId);
 }

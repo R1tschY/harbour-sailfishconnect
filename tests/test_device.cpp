@@ -408,3 +408,14 @@ TEST_F(UnpairedDeviceTests, rejectedPair)
 
     device.removeLink(&link);
 }
+
+TEST_F(UnpairedDeviceTests, sanitizeDeviceId)
+{
+    auto identityPacket = createIdentityPacket(
+                "{012-abc}", deviceName, deviceType);
+    Device device(nullptr, &kcc, identityPacket, &link);
+
+    EXPECT_EQ(device.id(), "_012_abc_");
+
+    device.removeLink(&link);
+}

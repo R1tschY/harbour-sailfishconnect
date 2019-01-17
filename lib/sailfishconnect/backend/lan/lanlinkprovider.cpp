@@ -36,6 +36,7 @@
 #include "../../daemon.h"
 #include "landevicelink.h"
 #include "lanpairinghandler.h"
+#include <sailfishconnect/helper/cpphelper.h>
 
 #define MIN_VERSION_WITH_SSL_SUPPORT 6
 
@@ -193,6 +194,9 @@ void LanLinkProvider::newUdpConnection() //udpBroadcastReceived
             continue;
         }
 
+        deviceId = Device::sanitizeDeviceId(deviceId);
+        receivedPacket.set<QString>(QStringLiteral("deviceId"), deviceId);
+
         if (deviceId == KdeConnectConfig::instance()->deviceId()) {
             qCDebug(coreLogger) << "Ignoring my own broadcast";
             continue;
@@ -255,7 +259,7 @@ void LanLinkProvider::connected()
     connect(socket, &QAbstractSocket::disconnected, socket, &QObject::deleteLater);
 
     const NetworkPacket& receivedPacket = m_receivedIdentityPackets[socket].np;
-    const QString& deviceId = receivedPacket.get<QString>(QStringLiteral("deviceId"));
+    QString deviceId = receivedPacket.get<QString>(QStringLiteral("deviceId"));
     qCDebug(coreLogger) << "Connected" << socket << socket->isWritable();
 
     // If network is on ssl, do not believe when they are connected, believe when handshake is completed
@@ -315,7 +319,7 @@ void LanLinkProvider::encrypted()
     LanDeviceLink::ConnectionStarted connectionOrigin = (socket->mode() == QSslSocket::SslClientMode)? LanDeviceLink::Locally : LanDeviceLink::Remotely;
 
     PendingConnect pending = m_receivedIdentityPackets.take(socket);
-    const QString& deviceId = pending.np.get<QString>(QStringLiteral("deviceId"));
+    QString deviceId = pending.np.get<QString>(QStringLiteral("deviceId"));
 
     addLink(deviceId, socket, &pending.np, connectionOrigin);
 }
@@ -383,7 +387,10 @@ void LanLinkProvider::dataReceived()
                    << "uses an old protocol version, this won't work";
     }
 
-    const QString& deviceId = np.get<QString>(QStringLiteral("deviceId"));
+    QString deviceId = Device::sanitizeDeviceId(
+                np.get<QString>(QStringLiteral("deviceId")));
+    np.set<QString>(QStringLiteral("deviceId"), deviceId);
+
     qCDebug(coreLogger) << "Handshaking done (i'm the new device)" << deviceId;
 
     // Needed in "encrypted" if ssl is used, similar to "connected"
@@ -412,7 +419,10 @@ void LanLinkProvider::dataReceived()
 
 void LanLinkProvider::deviceLinkDestroyed(QObject* destroyedDeviceLink)
 {
-    const QString id = destroyedDeviceLink->property("deviceId").toString();
+    auto* deviceLink = static_cast<LanDeviceLink*>(destroyedDeviceLink);
+    Q_ASSERT(deviceLink);
+
+    const QString id = deviceLink->deviceId();
     qCDebug(coreLogger) << "deviceLinkDestroyed" << id;
     auto linkIterator = m_links.find(id);
     Q_ASSERT(linkIterator != m_links.end());
@@ -452,13 +462,15 @@ void LanLinkProvider::configureSslSocket(QSslSocket* socket, const QString& devi
         socket->setPeerVerifyMode(QSslSocket::QueryPeer);
     }
 
-    //Usually SSL errors are only bad for trusted devices. Uncomment this section to log errors in any case, for debugging.
-    QObject::connect(socket, static_cast<void (QSslSocket::*)(const QList<QSslError>&)>(&QSslSocket::sslErrors), [socket](const QList<QSslError>& errors)
+#ifndef QT_NO_DEBUG_OUTPUT
+    // Usually SSL errors are only bad for trusted devices.
+    QObject::connect(socket, Overload<const QList<QSslError>&>::of(&QSslSocket::sslErrors), [socket](const QList<QSslError>& errors)
     {
         Q_FOREACH (const QSslError& error, errors) {
             qCDebug(coreLogger) << socket << "SSL Error:" << error.errorString();
         }
     });
+#endif
 }
 
 void LanLinkProvider::configureSocket(QSslSocket* socket) {

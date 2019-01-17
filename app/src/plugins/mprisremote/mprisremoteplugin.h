@@ -123,7 +123,7 @@ public:
             const QString& player, const QString& method, int value);
 
     QStringList players() const;
-    Q_SCRIPTABLE MprisPlayer* player(const QString& name) const;
+    MprisPlayer* player(const QString& name) const;
 
 signals:
     void playerAdded(const QString& player);

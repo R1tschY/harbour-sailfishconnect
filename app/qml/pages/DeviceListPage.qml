@@ -232,8 +232,9 @@ Page {
         VerticalScrollDecorator {}
     }
 
-    Component.onCompleted: {
-        ui.openingDevicePage.connect(openDevicePage)
+    Connections {
+        target: ui
+        onOpeningDevicePage: openDevicePage(deviceId)
     }
 
     function openDevicePage(deviceId) {

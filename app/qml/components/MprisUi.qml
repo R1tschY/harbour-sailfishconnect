@@ -141,9 +141,12 @@ SilicaListView {
                     }
                 }
 
-                Component.onCompleted: {
-                    player.propertiesChanged.connect(updatePosition)
+                Connections {
+                    target: player
+                    onPropertiesChanged: updatePosition()
+                }
 
+                Component.onCompleted: {
                     updatePosition()
                 }
 

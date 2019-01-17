@@ -50,13 +50,10 @@ Page {
 
             // Pairing UI
 
-            function updateState() {
-                waitForAcceptedPairing = false
-            }
-
-            Component.onCompleted: {
-                _device.pairingError.connect(updateState)
-                _device.trustedChanged.connect(updateState)
+            Connections {
+                target: _device
+                onPairingError: waitForAcceptedPairing = false
+                onTrustedChanged: waitForAcceptedPairing = false
             }
 
             // TODO: remove this text entry and replace with placeholder

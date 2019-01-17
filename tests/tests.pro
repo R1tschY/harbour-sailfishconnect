@@ -1,7 +1,7 @@
 include(gtest_dependency.pri)
 
 TEMPLATE = app
-CONFIG += console c++11 thread testcase
+CONFIG += console c++11 thread testcase no_testcase_installs
 CONFIG -= app_bundle
 QT += testlib
 

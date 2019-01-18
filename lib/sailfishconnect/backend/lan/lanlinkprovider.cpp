@@ -202,12 +202,6 @@ void LanLinkProvider::newUdpConnection() //udpBroadcastReceived
             continue;
         }
 
-        if (m_links.contains(deviceId)) {
-            qCInfo(coreLogger) << "Ignoring broadcast of linked device"
-                                << deviceId;
-            continue;
-        }
-
         int tcpPort = receivedPacket.get<int>(QStringLiteral("tcpPort"));
 
         qCDebug(coreLogger)
@@ -535,7 +529,7 @@ LanPairingHandler* LanLinkProvider::createPairingHandler(DeviceLink* link)
     if (!ph) {
         ph = new LanPairingHandler(link);
         qCDebug(coreLogger) << "creating pairing handler for" << link->deviceId();
-        connect (ph, &LanPairingHandler::pairingError, link, &DeviceLink::pairingError);
+        connect(ph, &LanPairingHandler::pairingError, link, &DeviceLink::pairingError);
         m_pairingHandlers[link->deviceId()] = ph;
     }
     return ph;

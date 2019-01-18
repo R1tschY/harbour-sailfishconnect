@@ -1,54 +1,67 @@
 # Sailfish Connect
 
-SailfishOS client for KDE-Connect
-
-## Install
-
-* Openrepos: https://openrepos.net/content/r1tschy/sailfish-connect
-* Harbour: *in the future* (when app is stable)
-
-## Features
-
-* Core
-    * :heavy_check_mark: Pairing
-    * :heavy_check_mark: Plugin management
-    * :heavy_check_mark: Use background daemon
-    * :construction: Downloads/Uploads (Payload)
-
-* Plugins
-    * :heavy_check_mark: Battery
-    * :heavy_check_mark: Clipboard
-    * :heavy_check_mark: Telepathy
-    * :heavy_check_mark: Mpris
-    * :heavy_check_mark: Ping
-    * :construction: Share
-    * :construction: Touchpad
-    * :construction: SendNotifications
-    * :o: FindMyPhone
-    * :o: RemoteKeyboard
-    * :o: ReceiseNotifications
-    * :o: Telephony
-    * :o: RunCommand
-    * :o: Sftp
-
-* UI
-    * :heavy_check_mark: Device list
-    * :heavy_check_mark: Pairing
-    * :heavy_check_mark: Plugin management
-    * :heavy_check_mark: Edit device name
-    * :construction: SSL key hash view
-    * :construction: Device view
-
-* Backend
-    * :construction: LAN (some bugs exist)
-    * :x: Bluetooth (no QtBluetooth in Harhour allowed)
-
+An alternative SailfishOS client for [KDE Connect](https://community.kde.org/KDEConnect)
 
 ## Screenshots
 
 ![Screenshot 1](/doc/Screenshot_1.png)
 ![Screenshot 2](/doc/Screenshot_2.png)
 ![Screenshot 3](/doc/Screenshot_3.png)
+
+## Install
+
+* Openrepos: https://openrepos.net/content/r1tschy/sailfish-connect
+* Harbour: *in the future* (when app is stable)
+
+## KDE Connect Clients
+
+* [KDE Connect KDE](https://github.com/KDE/kdeconnect-kde): Desktop client mainly written for KDE
+* [KDE Connect Android](https://f-droid.org/packages/org.kde.kdeconnect_tp)
+* [GSConnect](https://extensions.gnome.org/extension/1319/gsconnect/): Desktop client written for GNOME Shell
+
+## Features
+
+### Plugins
+
+Name | Status | Description
+-----|--------|------------
+Battery | :heavy_check_mark: | :battery: Share battery status with your computer.
+Clipboard | :heavy_check_mark: | :clipboard: Share clipboard text content.
+Telepathy | :heavy_check_mark: | :speech_balloon: Send SMS messages from your computer.
+Mpris | :heavy_check_mark: | :play_or_pause_button: Control multimedia player from your computer.
+Ping | :heavy_check_mark: | :wave: Check connection with a ping.
+Share | :construction: | Send and receive files, text and URLs.
+Touchpad | :construction: | :computer_mouse: Create mouse input from your phone.
+SendNotifications | :construction: | Share notifications of your phone.
+Telephony | :o: | :telephone_receiver: Share call status (incoming or active) with your computer.
+RemoteKeyboard | :o: | :keyboard: Create keyboard input from your phone.
+RunCommand | :o: | Run user-defined commands on your computer.
+Sftp | :o: | :open_file_folder: Provide access to local files from your computer.
+FindMyPhone | :o: | :vibration_mode: Make finding your phone easier.
+SystemVolume | :o: | :sound: Share control of system volume.
+ReceiseNotifications | :o: | Receive notifications of your computer.
+Contacts | :o: | :busts_in_silhouette: Share contacts with your computer.
+MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control with your computer.
+
+
+### Core
+* :heavy_check_mark: Pairing
+* :heavy_check_mark: Plugin management
+* :heavy_check_mark: Use background daemon
+* :construction: Downloads/Uploads (Payload)
+
+### UI
+* :heavy_check_mark: Device list
+* :heavy_check_mark: Pairing
+* :heavy_check_mark: Plugin management
+* :heavy_check_mark: Edit device name
+* :construction: SSL key hash view
+* :construction: Device view
+* :construction: Show progress of file transfers
+
+### Backend
+* :heavy_check_mark: LAN
+* :x: Bluetooth (no QtBluetooth in Harhour allowed)
 
 ## Contribute
 
@@ -65,4 +78,4 @@ SailfishOS client for KDE-Connect
 
 ## Credits
 
-Uses a modified pure-Qt core library from the KDE-Connect desktop client.
+Sailfish Connect uses an own fork of the core library of the [KDE Connect desktop client](https://cgit.kde.org/kdeconnect-kde.git/). It was ported to use only Qt.

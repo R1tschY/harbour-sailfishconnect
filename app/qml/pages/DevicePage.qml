@@ -28,7 +28,6 @@ Page {
     objectName: "DevicePage"
 
     property string deviceId
-    property bool waitForAcceptedPairing: false
     property Device _device: daemon.getDevice(deviceId)
 
     property bool connected: _device.isTrusted && _device.isReachable
@@ -49,12 +48,6 @@ Page {
             }
 
             // Pairing UI
-
-            Connections {
-                target: _device
-                onPairingError: waitForAcceptedPairing = false
-                onTrustedChanged: waitForAcceptedPairing = false
-            }
 
             // TODO: remove this text entry and replace with placeholder
             Column {
@@ -81,7 +74,6 @@ Page {
 
                         text: qsTr("Request pairing")
                         onClicked: {
-                            waitForAcceptedPairing = true
                             _device.requestPair()
                         }
                     }
@@ -114,7 +106,7 @@ Page {
                         },
                         State {
                             name: "waitForAcceptedPairing"
-                            when: waitForAcceptedPairing
+                            when: _device.waitsForPairing
                             PropertyChanges {
                                 target: stateText;
                                 text: qsTr("Waiting for accepted pairing ...")}

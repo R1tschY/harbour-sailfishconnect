@@ -51,6 +51,7 @@ class Device
     Q_PROPERTY(QStringList loadedPlugins READ loadedPlugins NOTIFY pluginsChanged)
     Q_PROPERTY(QStringList supportedPlugins READ supportedPlugins NOTIFY pluginsChanged)
     Q_PROPERTY(bool hasPairingRequests READ hasPairingRequests NOTIFY hasPairingRequestsChanged)
+    Q_PROPERTY(bool waitsForPairing READ waitsForPairing NOTIFY waitsForPairingChanged)
 
 public:
 
@@ -95,7 +96,9 @@ public:
     void addLink(const NetworkPacket& identityPacket, DeviceLink*);
     void removeLink(DeviceLink*);
 
-    Q_SCRIPTABLE bool isTrusted() const;
+    bool isTrusted() const;
+    bool hasPairingRequests() const;
+    bool waitsForPairing() const;
 
     Q_SCRIPTABLE QStringList availableLinks() const;
     bool isReachable() const;
@@ -139,7 +142,6 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE void acceptPairing();
     Q_SCRIPTABLE void rejectPairing();
-    Q_SCRIPTABLE bool hasPairingRequests() const;
 
     /**
      * @brief just to be compatible with KDE-Connect Interface
@@ -162,6 +164,7 @@ Q_SIGNALS:
     Q_SCRIPTABLE void nameChanged(const QString& name);
 
     Q_SCRIPTABLE void hasPairingRequestsChanged(bool hasPairingRequests);
+    Q_SCRIPTABLE void waitsForPairingChanged(bool waitsForPairing);
 
 private: //Methods
     static DeviceType str2type(const QString& deviceType);
@@ -169,6 +172,7 @@ private: //Methods
 
     void setName(const QString& name);
     void setType(const QString& type);
+    void setWaitsForPairing(bool value);
     QString iconForStatus(bool reachable, bool paired) const;
 
 private:

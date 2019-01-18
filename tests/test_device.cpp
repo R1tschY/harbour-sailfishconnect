@@ -291,6 +291,7 @@ TEST_F(UnpairedDeviceTests, pair)
 
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.waitsForPairing(), true);
 
     // accept pair (on remote side)
 
@@ -300,6 +301,7 @@ TEST_F(UnpairedDeviceTests, pair)
     EXPECT_EQ(spy, toVVList({{true}}));
     EXPECT_EQ(device.isTrusted(), true);
     EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.waitsForPairing(), false);
 
     device.removeLink(&link);
 }
@@ -320,6 +322,7 @@ TEST_F(UnpairedDeviceTests, acceptPair)
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
     EXPECT_EQ(device.hasPairingRequests(), true);
+    EXPECT_EQ(device.waitsForPairing(), false);
     EXPECT_EQ(spy_pairing, toVVList({{true}}));
     spy_pairing.clear();
 
@@ -338,6 +341,7 @@ TEST_F(UnpairedDeviceTests, acceptPair)
     EXPECT_EQ(device.isTrusted(), true);
     EXPECT_EQ(device.isReachable(), true);
     EXPECT_EQ(device.hasPairingRequests(), false);
+    EXPECT_EQ(device.waitsForPairing(), false);
     EXPECT_EQ(spy_pairing, toVVList({{false}}));
 
     device.removeLink(&link);
@@ -359,6 +363,7 @@ TEST_F(UnpairedDeviceTests, rejectPair)
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
     EXPECT_EQ(device.hasPairingRequests(), true);
+    EXPECT_EQ(device.waitsForPairing(), false);
     EXPECT_EQ(spy_pairing, toVVList({{true}}));
     spy_pairing.clear();
 
@@ -377,6 +382,7 @@ TEST_F(UnpairedDeviceTests, rejectPair)
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
     EXPECT_EQ(device.hasPairingRequests(), false);
+    EXPECT_EQ(device.waitsForPairing(), false);
     EXPECT_EQ(spy_pairing, toVVList({{false}}));
 
     device.removeLink(&link);
@@ -396,6 +402,8 @@ TEST_F(UnpairedDeviceTests, rejectedPair)
 
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.hasPairingRequests(), false);
+    EXPECT_EQ(device.waitsForPairing(), true);
 
     // reject pair (on remote side)
 
@@ -405,8 +413,66 @@ TEST_F(UnpairedDeviceTests, rejectedPair)
     EXPECT_EQ(spy, toVVList({{false}}));
     EXPECT_EQ(device.isTrusted(), false);
     EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.hasPairingRequests(), false);
+    EXPECT_EQ(device.waitsForPairing(), false);
 
     device.removeLink(&link);
+}
+
+TEST_F(UnpairedDeviceTests, rejectedOwnPair)
+{
+    auto identityPacket = createIdentityPacket(
+                deviceId, deviceName, deviceType);
+    Device device(nullptr, &kcc, identityPacket, &link);
+
+    // request pair (on local side)
+
+    EXPECT_CALL(link, userRequestsPair()).Times(1);
+
+    device.requestPair();
+
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.hasPairingRequests(), false);
+    EXPECT_EQ(device.waitsForPairing(), true);
+
+    // reject pair (on local side)
+
+    EXPECT_CALL(link, userRequestsUnpair()).Times(1);
+
+    device.unpair();
+
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.hasPairingRequests(), false);
+    EXPECT_EQ(device.waitsForPairing(), false);
+
+    device.removeLink(&link);
+}
+
+TEST_F(UnpairedDeviceTests, pairAndDisconnect)
+{
+    auto identityPacket = createIdentityPacket(
+                deviceId, deviceName, deviceType);
+    Device device(nullptr, &kcc, identityPacket, &link);
+
+    // request pair (on local side)
+
+    EXPECT_CALL(link, userRequestsPair()).Times(1);
+
+    device.requestPair();
+
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), true);
+    EXPECT_EQ(device.waitsForPairing(), true);
+
+    // disconnect
+
+    device.removeLink(&link);
+
+    EXPECT_EQ(device.isTrusted(), false);
+    EXPECT_EQ(device.isReachable(), false);
+    EXPECT_EQ(device.waitsForPairing(), false);
 }
 
 TEST_F(UnpairedDeviceTests, sanitizeDeviceId)

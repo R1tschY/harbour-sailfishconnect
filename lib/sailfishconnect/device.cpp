@@ -54,6 +54,7 @@ struct DevicePrivate {
     QMultiMap<QString, KdeConnectPlugin*> m_pluginsByIncomingCapability;
     QSet<QString> m_supportedPlugins;
     QSet<PairingHandler*> m_pairRequests;
+    bool m_waitsForPairing = false;
 
     KdeConnectConfig* m_config;
 
@@ -211,6 +212,8 @@ void Device::requestPair()
         return;
     }
 
+    setWaitsForPairing(true);
+
     for (DeviceLink* dl : asConst(d->m_deviceLinks)) {
         dl->userRequestsPair();
     }
@@ -218,15 +221,21 @@ void Device::requestPair()
 
 void Device::unpair()
 {
+    setWaitsForPairing(false);
+
     for (DeviceLink* dl : asConst(d->m_deviceLinks)) {
         dl->userRequestsUnpair();
     }
+
     d->m_config->removeTrustedDevice(id());
     Q_EMIT trustedChanged(false);
 }
 
 void Device::pairStatusChanged(DeviceLink::PairStatus status)
 {
+    // FIXME: check all pairing handlers
+    setWaitsForPairing(false);
+
     if (status == DeviceLink::NotPaired) {
         d->m_config->removeTrustedDevice(id());
 
@@ -304,6 +313,9 @@ void Device::addLink(const NetworkPacket& identityPacket, DeviceLink* link)
     connect(link, &DeviceLink::pairingRequest, this, &Device::addPairingRequest);
     connect(link, &DeviceLink::pairingRequestExpired, this, &Device::removePairingRequest);
     connect(link, &DeviceLink::pairingError, this, &Device::pairingError);
+    connect(link, &DeviceLink::pairingError, this, [this]{
+        setWaitsForPairing(false);
+    });
 }
 
 void Device::addPairingRequest(PairingHandler* handler)
@@ -327,6 +339,11 @@ void Device::removePairingRequest(PairingHandler* handler)
 bool Device::hasPairingRequests() const
 {
     return !d->m_pairRequests.isEmpty();
+}
+
+bool Device::waitsForPairing() const
+{
+    return d->m_waitsForPairing;
 }
 
 QString Device::pluginIconName(const QString &pluginName)
@@ -368,6 +385,7 @@ void Device::removeLink(DeviceLink* link)
     qCDebug(coreLogger) << "RemoveLink" << d->m_deviceLinks.size() << "links remaining";
 
     if (d->m_deviceLinks.isEmpty()) {
+        setWaitsForPairing(false);
         reloadPlugins();
         Q_EMIT reachableChanged(false);
     }
@@ -517,6 +535,14 @@ void Device::setType(const QString &strtype)
         d->m_deviceType = type;
         d->m_config->setDeviceProperty(
                     d->m_deviceId, QStringLiteral("type"), type2str(type));
+    }
+}
+
+void Device::setWaitsForPairing(bool value)
+{
+    if (value != d->m_waitsForPairing) {
+        d->m_waitsForPairing = value;
+        Q_EMIT waitsForPairingChanged(value);
     }
 }
 

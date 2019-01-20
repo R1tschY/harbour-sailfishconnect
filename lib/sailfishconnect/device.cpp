@@ -260,6 +260,19 @@ static bool lessThan(DeviceLink* p1, DeviceLink* p2)
     return p1->provider()->priority() > p2->provider()->priority();
 }
 
+static void printCapabilities(
+        const QSet<QString>& localCapabilities,
+        const QSet<QString>& remoteCapabilities
+) {
+    for (auto& rc : remoteCapabilities) {
+        if (localCapabilities.contains(rc)) {
+            qDebug().noquote() << "  [X]" << rc;
+        } else {
+            qDebug().noquote() << "  [ ]" << rc;
+        }
+    }
+}
+
 void Device::addLink(const NetworkPacket& identityPacket, DeviceLink* link)
 {
     qCDebug(coreLogger) << "Adding link to" << id() << "via" << link->provider();
@@ -294,11 +307,30 @@ void Device::addLink(const NetworkPacket& identityPacket, DeviceLink* link)
 
     const bool capabilitiesSupported = identityPacket.has(QStringLiteral("incomingCapabilities")) || identityPacket.has(QStringLiteral("outgoingCapabilities"));
     if (capabilitiesSupported) {
-        const QSet<QString> outgoingCapabilities = identityPacket.get<QStringList>(QStringLiteral("outgoingCapabilities")).toSet()
-                          , incomingCapabilities = identityPacket.get<QStringList>(QStringLiteral("incomingCapabilities")).toSet();
+        const QSet<QString> outgoingCapabilities =
+                identityPacket.get<QStringList>(
+                    QStringLiteral("outgoingCapabilities")).toSet();
+        const QSet<QString> incomingCapabilities =
+                identityPacket.get<QStringList>(
+                    QStringLiteral("incomingCapabilities")).toSet();
 
-        d->m_supportedPlugins = PluginManager::instance()->pluginsForCapabilities(incomingCapabilities, outgoingCapabilities);
-        qDebug() << "new plugins for" << d->m_deviceName << d->m_supportedPlugins << incomingCapabilities << outgoingCapabilities;
+        d->m_supportedPlugins =
+                PluginManager::instance()->pluginsForCapabilities(
+                    incomingCapabilities, outgoingCapabilities);
+
+#ifndef QT_NO_DEBUG_OUTPUT
+        qDebug() << "Outgoing capabilities for" << d->m_deviceName;
+        printCapabilities(
+                    PluginManager::instance()->outgoingCapabilities().toSet(),
+                    outgoingCapabilities);
+
+        qDebug() << "Incoming capabilities for" << d->m_deviceName;
+        printCapabilities(
+                    PluginManager::instance()->incomingCapabilities().toSet(),
+                    incomingCapabilities);
+
+        qDebug() << "Plugins for" << d->m_deviceName << d->m_supportedPlugins;
+#endif
     } else {
         d->m_supportedPlugins = PluginManager::instance()->getPluginList().toSet();
     }

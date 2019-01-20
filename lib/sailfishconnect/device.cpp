@@ -38,6 +38,7 @@
 #include "corelogging.h"
 #include "pluginloader.h"
 #include <sailfishconnect/helper/cpphelper.h>
+#include <sailfishconnect/helper/functools.h>
 
 using namespace SailfishConnect;
 
@@ -255,11 +256,6 @@ void Device::pairStatusChanged(DeviceLink::PairStatus status)
     Q_ASSERT(isTrusted == this->isTrusted());
 }
 
-static bool lessThan(DeviceLink* p1, DeviceLink* p2)
-{
-    return p1->provider()->priority() > p2->provider()->priority();
-}
-
 static void printCapabilities(
         const QSet<QString>& localCapabilities,
         const QSet<QString>& remoteCapabilities
@@ -303,7 +299,9 @@ void Device::addLink(const NetworkPacket& identityPacket, DeviceLink* link)
     connect(link, &DeviceLink::receivedPacket,
             this, &Device::privateReceivedPacket);
 
-    std::sort(d->m_deviceLinks.begin(), d->m_deviceLinks.end(), lessThan);
+    std::sort(
+        d->m_deviceLinks.begin(), d->m_deviceLinks.end(),
+        byKeyDesc([](DeviceLink* p) { return p->provider()->priority(); }));
 
     const bool capabilitiesSupported = identityPacket.has(QStringLiteral("incomingCapabilities")) || identityPacket.has(QStringLiteral("outgoingCapabilities"));
     if (capabilitiesSupported) {

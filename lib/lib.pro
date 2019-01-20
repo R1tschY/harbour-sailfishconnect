@@ -82,7 +82,8 @@ HEADERS += \
     sailfishconnect/io/jobmanager.h \
     sailfishconnect/networkpacket.h \
     sailfishconnect/networkpackettypes.h \
-    sailfishconnect/helper/humanize.h
+    sailfishconnect/helper/humanize.h \
+    sailfishconnect/helper/functools.h
 
 DISTFILES += \
     lib.pri

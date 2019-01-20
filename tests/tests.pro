@@ -25,4 +25,5 @@ SOURCES += main.cpp \
     test.cpp \
     test_job.cpp \
     mock_job.cpp \
-    test_humanize.cpp
+    test_humanize.cpp \
+    test_functools.cpp

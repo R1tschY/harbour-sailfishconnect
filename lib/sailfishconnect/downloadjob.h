@@ -18,6 +18,7 @@ public:
     QString destination() const;
 
 protected:
+    void doStart() override;
     bool doCancelling() override;
     void onFinished() override;
 

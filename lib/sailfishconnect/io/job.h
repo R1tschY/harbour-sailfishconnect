@@ -10,12 +10,12 @@ class Job : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString errorString READ errorString NOTIFY stateChanged)
-    Q_PROPERTY(QString title READ title NOTIFY titleChanged)
-    Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
+    Q_PROPERTY(QString target READ target NOTIFY targetChanged)
+    Q_PROPERTY(QString action READ action NOTIFY actionChanged)
     Q_PROPERTY(qint64 totalBytes READ totalBytes NOTIFY totalBytesChanged)
     Q_PROPERTY(qint64 processedBytes READ processedBytes NOTIFY processedBytesChanged)
     Q_PROPERTY(State state READ state NOTIFY stateChanged)
-    Q_PROPERTY(bool wasCanceled READ wasCanceled NOTIFY stateChanged)
+    Q_PROPERTY(bool canceled READ canceled NOTIFY stateChanged)
 public:
     enum class State {
         Pending, Running, Finished
@@ -25,13 +25,18 @@ public:
     explicit Job(QObject* parent = nullptr);
     ~Job();
 
-    QString errorString() const { return m_errorString; }
-    QString title() const { return m_title; }
-    QString description() const { return m_description; }
+    /// \brief an uri to the target file.
+    ///
+    /// possibilities:
+    ///   local:/home/user/Downloads/file.ext
+    ///   remote:file.ext
+    QString target() const { return m_target; }
+    QString action() const { return m_action; }
     qint64 totalBytes() const { return m_totalBytes; }
     qint64 processedBytes() const { return m_processedBytes; }
     State state() const { return m_state; }
-    bool wasCanceled() const { return m_wasCanceled; }
+    bool canceled() const { return m_canceled; }
+    QString errorString() const { return m_errorString; }
     Q_SCRIPTABLE bool isPending() const { return m_state == State::Pending; }
     Q_SCRIPTABLE bool isRunning() const { return m_state == State::Running; }
     Q_SCRIPTABLE bool isFinished() const { return m_state == State::Finished; }
@@ -45,8 +50,8 @@ signals:
     void success();
     void error();
 
-    void titleChanged();
-    void descriptionChanged();
+    void targetChanged();
+    void actionChanged();
     void totalBytesChanged();
     void processedBytesChanged();
     void stateChanged();
@@ -59,9 +64,9 @@ protected:
     virtual void onSuccess();
     virtual void onError();
 
-    void setTitle(const QString& title);
+    void setTarget(const QString& target);
     void setErrorString(const QString& errorString);
-    void setDescription(const QString& description);
+    void setAction(const QString& action);
     void setTotalBytes(qint64 totalBytes);
     void setProcessedBytes(qint64 processedBytes);
 
@@ -75,13 +80,13 @@ protected:
 
 private:
     QString m_errorString;
-    QString m_title;
-    QString m_description;
+    QString m_target;
+    QString m_action;
     qint64 m_totalBytes = -1;
     qint64 m_processedBytes = 0;
 
     State m_state = State::Pending;
-    bool m_wasCanceled = false;
+    bool m_canceled = false;
 };
 
 } // namespace SailfishConnect

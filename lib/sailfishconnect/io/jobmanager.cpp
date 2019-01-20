@@ -13,20 +13,20 @@ JobInfo::JobInfo(Job *job, QString deviceId, QObject *parent)
     Q_ASSERT(job);
 
     connect(job, &Job::destroyed, this, &JobInfo::onJobDestroyed);
-    connect(job, &Job::titleChanged, this, &JobInfo::titleChanged);
-    connect(job, &Job::descriptionChanged, this, &JobInfo::descriptionChanged);
+    connect(job, &Job::targetChanged, this, &JobInfo::targetChanged);
+    connect(job, &Job::actionChanged, this, &JobInfo::actionChanged);
     connect(job, &Job::totalBytesChanged, this, &JobInfo::totalBytesChanged);
     connect(job, &Job::processedBytesChanged,
             this, &JobInfo::processedBytesChanged);
     connect(job, &Job::stateChanged, this, &JobInfo::stateChanged);
 }
 
-QString JobInfo::title() const {
-    return m_impl ? m_impl->title() : m_title;
+QString JobInfo::target() const {
+    return m_impl ? m_impl->target() : m_target;
 }
 
-QString JobInfo::description() const {
-    return m_impl ? m_impl->description() : m_description;
+QString JobInfo::action() const {
+    return m_impl ? m_impl->action() : m_action;
 }
 
 qint64 JobInfo::totalBytes() const {
@@ -41,9 +41,9 @@ Job::State JobInfo::state() const {
     return m_impl ? m_impl->state() : m_state;
 }
 
-bool JobInfo::wasCanceled() const
+bool JobInfo::canceled() const
 {
-    return m_impl ? m_impl->wasCanceled() : m_wasCanceled;
+    return m_impl ? m_impl->canceled() : m_canceled;
 }
 
 QString JobInfo::errorString() const
@@ -63,12 +63,12 @@ void JobInfo::onJobDestroyed()
     auto* job = m_impl;
     m_impl = nullptr;
 
-    m_title = job->title();
-    m_description = job->description();
+    m_target = job->target();
+    m_action = job->action();
     m_totalBytes = job->totalBytes();
     m_processedBytes = job->processedBytes();
     m_state = job->state();
-    m_wasCanceled = job->wasCanceled();
+    m_canceled = job->canceled();
     m_errorString = job->errorString();
 
     if (!m_impl->isFinished()) {

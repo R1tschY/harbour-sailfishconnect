@@ -22,13 +22,12 @@ int JobsModel::rowCount(const QModelIndex &parent) const
 QHash<int, QByteArray> JobsModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles.insert(TitleRole, "title");
-    roles.insert(DescriptionRole, "description");
-    roles.insert(DestinationRole, "destination");
+    roles.insert(TargetRole, "target");
+    roles.insert(ActionRole, "action");
     roles.insert(ProcessedBytesRole, "processedBytes");
     roles.insert(TotalBytesRole, "totalBytes");
     roles.insert(StateRole, "currentState");
-    roles.insert(CanceledRole, "wasCanceled");
+    roles.insert(CanceledRole, "canceled");
     roles.insert(ErrorRole, "error");
     return roles;
 }
@@ -72,12 +71,10 @@ void JobsModel::addJob(JobInfo *job)
 
 void JobsModel::connectJob(JobInfo *job)
 {
-    connect(job, &JobInfo::titleChanged,
-            this, [=](){ jobChanged(job, TitleRole); });
-    connect(job, &JobInfo::descriptionChanged,
-            this, [=](){ jobChanged(job, DescriptionRole); });
-    connect(job, &JobInfo::destinationChanged,
-            this, [=](){ jobChanged(job, DestinationRole); });
+    connect(job, &JobInfo::targetChanged,
+            this, [=](){ jobChanged(job, TargetRole); });
+    connect(job, &JobInfo::actionChanged,
+            this, [=](){ jobChanged(job, ActionRole); });
     connect(job, &JobInfo::processedBytesChanged,
             this, [=](){ jobChanged(job, ProcessedBytesRole); });
     connect(job, &JobInfo::totalBytesChanged,
@@ -88,7 +85,7 @@ void JobsModel::connectJob(JobInfo *job)
         if (!job->errorString().isEmpty()) {
             roles.append(ErrorRole);
         }
-        if (job->wasCanceled()) {
+        if (job->canceled()) {
             roles.append(CanceledRole);
         }
         jobChanged(job, roles);
@@ -106,7 +103,7 @@ void JobsModel::jobChanged(JobInfo *job, const QVector<int>& roles)
 
 void JobsModel::jobChanged(JobInfo *job, int role)
 {
-    jobChanged(job, { role });
+    jobChanged(job, QVector<int> { role });
 }
 
 JobInfo *JobsModel::rowToJob(const QModelIndex &index) const
@@ -137,12 +134,10 @@ QVariant JobsModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     switch (role) {
-    case TitleRole:
-        return job->title();
-    case DescriptionRole:
-        return job->description();
-    case DestinationRole:
-        return job->destination();
+    case TargetRole:
+        return job->target();
+    case ActionRole:
+        return job->action();
     case ProcessedBytesRole:
         return job->processedBytes();
     case TotalBytesRole:
@@ -150,7 +145,7 @@ QVariant JobsModel::data(const QModelIndex &index, int role) const
     case StateRole:
         return int(job->state());
     case CanceledRole:
-        return job->wasCanceled();
+        return job->canceled();
     case ErrorRole:
         return job->errorString();
     }

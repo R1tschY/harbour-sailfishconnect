@@ -29,6 +29,8 @@
 #include <sailfishconnect/io/copyjob.h>
 #include "server.h"
 
+class NetworkPacket;
+
 namespace SailfishConnect {
 
 class LanUploadJob : public CopyJob
@@ -36,7 +38,7 @@ class LanUploadJob : public CopyJob
     Q_OBJECT
 public:
     explicit LanUploadJob(
-            const QSharedPointer<QIODevice>& source, const QString& deviceId);
+            const NetworkPacket& np, const QString& deviceId);
 
     QVariantMap transferInfo();
 
@@ -50,7 +52,6 @@ private Q_SLOTS:
     void sslErrors(const QList<QSslError>& errors);
 
 private:
-    const QSharedPointer<QIODevice> m_input;
     Server* m_server;
     QSharedPointer<QSslSocket> m_socket;
     quint16 m_port;

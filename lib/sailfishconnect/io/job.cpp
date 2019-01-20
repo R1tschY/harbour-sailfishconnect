@@ -8,6 +8,7 @@ static Q_LOGGING_CATEGORY(logger, "sailfishconnect.job")
 
 Job::Job(QObject *parent)
     : QObject(parent)
+    , m_action(tr("Pending"))
 { }
 
 Job::~Job()
@@ -20,12 +21,16 @@ void Job::start()
     if (m_state != State::Pending)
         return;
 
-    qCInfo(logger) << "Job" << m_title << "is starting";
+    qCInfo(logger) << "Job" << m_target << "is starting";
 
     m_state = State::Running;
     emit stateChanged();
 
     doStart();
+
+    if (m_action == tr("Pending")) {
+        setAction(tr("Running"));
+    }
 }
 
 void Job::setErrorString(const QString& errorString)
@@ -35,11 +40,11 @@ void Job::setErrorString(const QString& errorString)
     }
 }
 
-void Job::setDescription(const QString& description)
+void Job::setAction(const QString& action)
 {
-    if (m_description != description) {
-        m_description = description;
-        emit descriptionChanged();
+    if (m_action != action) {
+        m_action = action;
+        emit actionChanged();
     }
 }
 
@@ -89,12 +94,12 @@ void Job::cancel()
     if (isFinished())
         return;
 
-    qCInfo(logger) << "Job" << m_title << "was canceled by user";
+    qCInfo(logger) << "Job" << m_target << "was canceled by user";
     bool canceled = isRunning() ? doCancelling() : true;
     if (canceled || !isRunning()) {
         auto old_state = m_state;
         m_state = State::Finished;
-        m_wasCanceled = canceled;
+        m_canceled = canceled;
         if (old_state != State::Finished) {
             onFinished();
         }
@@ -110,25 +115,33 @@ void Job::onFinished()
 {
     emit finished();
     emit stateChanged();
+
+    if (m_canceled) {
+        setAction(tr("Canceled"));
+    } else if (!m_errorString.isEmpty()) {
+        setAction(tr("Failed"));
+    } else {
+        setAction(tr("Succeeded"));
+    }
 }
 
 void Job::onSuccess()
 {
-    qCInfo(logger) << "Job" << m_title << "was successful";
+    qCInfo(logger) << "Job" << m_target << "was successful";
     emit success();
 }
 
 void Job::onError()
 {
-    qCWarning(logger) << "Job" << m_title << "failed with" << m_errorString;
+    qCWarning(logger) << "Job" << m_target << "failed with" << m_errorString;
     emit error();
 }
 
-void Job::setTitle(const QString& title)
+void Job::setTarget(const QString& target)
 {
-    if (m_title != title) {
-        m_title = title;
-        emit titleChanged();
+    if (m_target != target) {
+        m_target = target;
+        emit targetChanged();
     }
 }
 

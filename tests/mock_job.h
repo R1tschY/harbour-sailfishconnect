@@ -18,9 +18,9 @@ public:
 
     using SailfishConnect::Job::exit;
     using SailfishConnect::Job::abort;
-    using SailfishConnect::Job::setTitle;
+    using SailfishConnect::Job::setTarget;
     using SailfishConnect::Job::setErrorString;
-    using SailfishConnect::Job::setDescription;
+    using SailfishConnect::Job::setAction;
     using SailfishConnect::Job::setTotalBytes;
     using SailfishConnect::Job::setProcessedBytes;
 };

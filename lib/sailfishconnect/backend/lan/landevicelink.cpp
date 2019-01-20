@@ -114,7 +114,7 @@ bool LanDeviceLink::sendPacket(NetworkPacket& np, JobManager* jobMgr)
 
 LanUploadJob* LanDeviceLink::sendPayload(const NetworkPacket& np, JobManager* jobMgr)
 {
-    LanUploadJob* job = new LanUploadJob(np.payload(), deviceId());
+    LanUploadJob* job = new LanUploadJob(np, deviceId());
     job->start();
     if (jobMgr) {
         jobMgr->addJob(job, deviceId());

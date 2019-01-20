@@ -66,7 +66,7 @@ Page {
                     top: parent.top
                 }
 
-                text: title
+                text: target
                 color: listItem.highlighted
                        ? Theme.highlightColor
                        : Theme.primaryColor
@@ -83,7 +83,7 @@ Page {
                     right: parent.right
                 }
 
-                text: description
+                text: action
                 color: listItem.highlighted
                        ? Theme.secondaryHighlightColor
                        : Theme.secondaryColor

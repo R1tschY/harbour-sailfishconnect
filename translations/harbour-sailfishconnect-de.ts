@@ -274,10 +274,6 @@
 <context>
     <name>SailfishConnect::DownloadJob</name>
     <message>
-        <source>Receiving file</source>
-        <translation>Erhalte Datei</translation>
-    </message>
-    <message>
         <source>Cannot create destination folder</source>
         <translation>Kann Zielordner nicht erstellen</translation>
     </message>
@@ -285,12 +281,43 @@
         <source>Could not open file for writing: %1</source>
         <translation>Kann Datei nicht zum Schreiben öffnen: %1</translation>
     </message>
+    <message>
+        <source>Receiving</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::Job</name>
+    <message>
+        <source>Pending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Succeeded</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SailfishConnect::LanUploadJob</name>
     <message>
         <source>Couldn&apos;t find an available port</source>
         <translation>Kann keinen freien Port finden</translation>
+    </message>
+    <message>
+        <source>Sending</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

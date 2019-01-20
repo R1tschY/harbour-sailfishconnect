@@ -26,24 +26,26 @@
 
 namespace SailfishConnect {
 
-LanUploadJob::LanUploadJob(
-        const QSharedPointer<QIODevice>& source, const QString& deviceId)
-    : CopyJob(source, QSharedPointer<QIODevice>())
-    , m_input(source)
+LanUploadJob::LanUploadJob(const NetworkPacket &np, const QString& deviceId)
+    : CopyJob(np.payload(), QSharedPointer<QIODevice>())
     , m_server(new Server(this))
     , m_socket(nullptr)
     , m_port(0)
     // We will use this info if link is on ssl, to send encrypted payload
     , m_deviceId(deviceId)
 {
-    connect(m_input.data(), &QIODevice::readyRead,
+    setTarget(QStringLiteral("remote:")
+              + np.get<QString>(QStringLiteral("filename")));
+    connect(source().data(), &QIODevice::readyRead,
             this, &LanUploadJob::startUploading);
-    connect(m_input.data(), &QIODevice::aboutToClose,
+    connect(source().data(), &QIODevice::aboutToClose,
             this, &LanUploadJob::aboutToClose);
 }
 
 void LanUploadJob::doStart()
 {
+    setAction(tr("Sending"));
+
     m_port = MIN_PORT;
     while (!m_server->listen(QHostAddress::Any, m_port)) {
         m_port++;
@@ -69,9 +71,9 @@ void LanUploadJob::onFinished()
 void LanUploadJob::newConnection()
 {
     qCDebug(coreLogger) << "connection for payload upload";
-    if (!m_input->open(QIODevice::ReadOnly)) {
+    if (!source()->open(QIODevice::ReadOnly)) {
         qCWarning(coreLogger) << "error when opening the input to upload";
-        abort(m_input->errorString());
+        abort(source()->errorString());
         return;
     }
 

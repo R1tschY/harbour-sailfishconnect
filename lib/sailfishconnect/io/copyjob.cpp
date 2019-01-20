@@ -51,6 +51,7 @@ void CopyJob::setSource(const QSharedPointer<QIODevice> &source)
 
 void CopyJob::doStart()
 {
+    qCDebug(logger) << "CopyJob::doStart";
     Q_ASSERT(!m_source.isNull());
     Q_ASSERT(!m_destination.isNull());
 
@@ -84,6 +85,8 @@ void CopyJob::poll()
     if (!isRunning())
         return;
 
+    qCDebug(logger) << "poll";
+
     if (m_source && m_source->bytesAvailable() > 0) {
         qint64 chunkSize = std::min(
                     m_source->bytesAvailable(),
@@ -99,9 +102,9 @@ void CopyJob::poll()
                 return;
             }
             m_buffer.resize(orig_buffer_size + bytes);
-//            qCDebug(logger)
-//                    << "Read" << bytes
-//                    << "bytes. Buffer size:" << m_buffer.size();
+            qCDebug(logger)
+                    << "Read" << bytes
+                    << "bytes. Buffer size:" << m_buffer.size();
 
             if (!m_source->isSequential() && m_source->atEnd()) {
                 // random access file that is at end of file
@@ -130,10 +133,10 @@ void CopyJob::poll()
             setProcessedBytes(m_flushedBytes); // TODO: use timer for better performance
         }
 
-//        qCDebug(logger)
-//                << "Written" << bytes
-//                << "bytes. Buffer size:" << m_buffer.size()
-//                << "Waiting for" << m_destination->bytesToWrite() << "bytes";
+        qCDebug(logger)
+                << "Written" << bytes
+                << "bytes. Buffer size:" << m_buffer.size()
+                << "Waiting for" << m_destination->bytesToWrite() << "bytes";
     }
 
     if (m_source

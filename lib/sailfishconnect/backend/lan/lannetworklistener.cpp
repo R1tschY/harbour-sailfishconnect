@@ -8,7 +8,7 @@ namespace SailfishConnect {
 
 LanNetworkListener::LanNetworkListener(QObject *parent) : QObject(parent)
 {
-    // Detect when a network interface changes status, so we announce ourelves
+    // Detect when a network interface changes status, so we announce ourselves
     // in the new network
     connect(
         &m_networkManager, &QNetworkConfigurationManager::configurationChanged,
@@ -36,16 +36,21 @@ void LanNetworkListener::onNetworkConfigurationChanged(
     QString id = config.identifier();
 
     if (config.state().testFlag(QNetworkConfiguration::Active)) {
-        qCDebug(coreLogger) << "New active network configuration:";
-        printConfig(config);
-
         m_activeConfigurations.insert(id);
+#ifndef QT_NO_DEBUG_OUTPUT
+        if (!m_activeConfigurations.contains(id)) {
+            qCDebug(coreLogger) << "New active network configuration:";
+            printConfig(config);
+        }
+#endif
     } else {
+        m_activeConfigurations.remove(id);
+#ifndef QT_NO_DEBUG_OUTPUT
         if (m_activeConfigurations.contains(id)) {
             qCDebug(coreLogger) << "Inactivated network configuration:";
             printConfig(config);
-            m_activeConfigurations.remove(id);
         }
+#endif
     }
 
     int newActiveConfigs = m_activeConfigurations.size();

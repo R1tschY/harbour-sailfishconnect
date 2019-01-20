@@ -53,7 +53,7 @@ public:
 private:
     Daemon* m_daemon;
     QList<Device*> m_devices;
-    QString m_uuid;
+    QString m_id;
 
     void deviceIdAdded(const QString& id);
     void deviceIdRemoved(const QString& id);

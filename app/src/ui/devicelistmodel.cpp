@@ -19,7 +19,7 @@
 
 #include <QIcon>
 #include <QLoggingCategory>
-#include <QUuid>
+#include <cstdint>
 
 #include <sailfishconnect/daemon.h>
 #include <sailfishconnect/device.h>
@@ -45,11 +45,13 @@ static QUrl deviceTypeToIcon(const QString& deviceType)
 }
 
 DeviceListModel::DeviceListModel(QObject *parent)
-    : QAbstractListModel(parent), m_uuid(QUuid().toString())
+    : QAbstractListModel(parent), m_id()
 {
     m_daemon = Daemon::instance();
 
-    m_daemon->acquireDiscoveryMode(m_uuid);
+    m_id = QString("DeviceListModel{0x%1}").arg(
+                reinterpret_cast<std::uintptr_t>(this), 0, 16);
+    m_daemon->acquireDiscoveryMode(m_id);
     m_devices = m_daemon->devicesList();       
 
     connect(m_daemon, &Daemon::deviceAdded,
@@ -64,7 +66,7 @@ DeviceListModel::DeviceListModel(QObject *parent)
 
 DeviceListModel::~DeviceListModel()
 {
-    m_daemon->releaseDiscoveryMode(m_uuid);
+    m_daemon->releaseDiscoveryMode(m_id);
 }
 
 int DeviceListModel::rowCount(const QModelIndex &parent) const

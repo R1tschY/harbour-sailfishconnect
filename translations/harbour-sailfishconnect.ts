@@ -40,13 +40,6 @@
     </message>
 </context>
 <context>
-    <name>CoverPage</name>
-    <message>
-        <source>Sailfish Connect</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Device</name>
     <message>
         <source>Already paired</source>
@@ -179,6 +172,10 @@
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This device cannot be paired because it sends a strange ssl certificate.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

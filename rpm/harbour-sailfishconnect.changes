@@ -1,16 +1,11 @@
-# Rename this file as SailfishConnect.changes to include changelog
-# entries in your RPM file.
-#
-# Add new changelog entries following the format below.
-# Add newest entries to the top of the list.
-# Separate entries from eachother with a blank line.
-#
-# Alternatively, if your changelog is automatically generated (e.g. with
-# the git-change-log command provided with Sailfish OS SDK), create a
-# SailfishConnect.changes.run script to let mb2 run the required commands for you.
-
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+
+* Thu Jan 22 2019 Richard Liebscher <r1tschy@yahoo.de> 0.3-1
+- Added page to show file transfers
+- Fixed various bugs to support GSConnect
+- Fixed bug when unpairing
+- Fixed various small bugs
 
 * Sun Oct 21 2018 Richard Liebscher <r1tschy@yahoo.de> 0.2-2
 - Changed name to Sailfish Connect

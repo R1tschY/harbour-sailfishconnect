@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QUrl>
 #include <QString>
+#include <QElapsedTimer>
 
 namespace SailfishConnect {
 
@@ -86,6 +87,7 @@ private:
     QString m_action;
     qint64 m_totalBytes = -1;
     qint64 m_processedBytes = 0;
+    QElapsedTimer m_timer;
 
     State m_state = State::Pending;
     bool m_canceled = false;

@@ -21,7 +21,8 @@ void Job::start()
     if (m_state != State::Pending)
         return;
 
-    qCInfo(logger) << "Job" << m_target << "is starting";
+    m_timer.start();
+    qCInfo(logger) << "Job" << m_target.toString() << "is starting";
 
     m_state = State::Running;
     emit stateChanged();
@@ -94,7 +95,7 @@ void Job::cancel()
     if (isFinished())
         return;
 
-    qCInfo(logger) << "Job" << m_target << "was canceled by user";
+    qCInfo(logger) << "Job" << m_target.toString() << "was canceled by user";
     bool canceled = isRunning() ? doCancelling() : true;
     if (canceled || !isRunning()) {
         auto old_state = m_state;
@@ -127,13 +128,15 @@ void Job::onFinished()
 
 void Job::onSuccess()
 {
-    qCInfo(logger) << "Job" << m_target << "was successful";
+    qCInfo(logger) << "Job" << m_target.toString() << "was successful in "
+                   << m_timer.elapsed() << "ms";
     emit success();
 }
 
 void Job::onError()
 {
-    qCWarning(logger) << "Job" << m_target << "failed with" << m_errorString;
+    qCWarning(logger) << "Job" << m_target.toString()
+                      << "failed with" << m_errorString;
     emit error();
 }
 

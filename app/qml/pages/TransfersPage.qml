@@ -18,6 +18,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import SailfishConnect.UI 0.3
+import SailfishConnect.Core 0.3
+import SailfishConnect.Qml 0.3
 
 Page {
     id: page
@@ -30,13 +32,13 @@ Page {
     }
 
     function targetFilename(target) {
-        // TODO: make it work:
-        if (target.scheme === "local:") {
-            return target.fileName
-        } else if (target.scheme === "remote:") {
-            return target.path
+        var url = Url.fromUrl(target)
+        if (url.scheme === "local") {
+            return url.fileName
+        } else if (url.scheme === "remote") {
+            return url.path
         } else {
-            return target.toString()
+            return url.toString()
         }
     }
 

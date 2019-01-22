@@ -46,6 +46,7 @@
 #include "ui/mprisplayersmodel.h"
 #include "ui/jobsmodel.h"
 #include "ui.h"
+#include "js/qmlregister.h"
 
 namespace SailfishConnect {
 
@@ -119,6 +120,7 @@ void registerQmlTypes() {
                 "SailfishConnect.RemoteControl", 0, 3, "RemoteControlPlugin",
                 QStringLiteral("not intented to be created from users"));
 
+    QmlJs::registerTypes();
 }
 
 std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)

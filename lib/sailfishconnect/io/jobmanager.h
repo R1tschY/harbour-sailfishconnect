@@ -12,7 +12,7 @@ namespace SailfishConnect {
 class JobInfo : public QObject {
     Q_OBJECT
 
-    Q_PROPERTY(QString target READ target NOTIFY targetChanged)
+    Q_PROPERTY(QUrl target READ target NOTIFY targetChanged)
     Q_PROPERTY(QString action READ action NOTIFY actionChanged)
     Q_PROPERTY(qint64 totalBytes READ totalBytes NOTIFY totalBytesChanged)
     Q_PROPERTY(qint64 processedBytes READ processedBytes NOTIFY processedBytesChanged)
@@ -23,7 +23,7 @@ class JobInfo : public QObject {
 public:
     JobInfo(Job* job, QString deviceId, QObject* parent);
 
-    QString target() const;
+    QUrl target() const;
     QString action() const;
     qint64 totalBytes() const;
     qint64 processedBytes() const;
@@ -45,7 +45,7 @@ signals:
 private:
     Job* m_impl = nullptr;
 
-    QString m_target;
+    QUrl m_target;
     QString m_action;
     qint64 m_totalBytes;
     qint64 m_processedBytes;

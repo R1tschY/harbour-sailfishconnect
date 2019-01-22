@@ -24,6 +24,30 @@ Page {
 
     allowedOrientations: Orientation.All
 
+    function stringStartsWith(s, start) {
+        // TODO: Qt 5.8: use s.startsWith(start)
+        return s.substring(0, start.length) === start
+    }
+
+    function targetFilename(target) {
+        // TODO: make it work:
+        if (target.scheme === "local:") {
+            return target.fileName
+        } else if (target.scheme === "remote:") {
+            return target.path
+        } else {
+            return target.toString()
+        }
+    }
+
+    function progressIcon(target) {
+        if (stringStartsWith(target.toString(), "remote:")) {
+            return "image://theme/icon-s-device-upload"
+        } else {
+            return "image://theme/icon-s-device-download"
+        }
+    }
+
     SilicaListView {
         id: listView
         model: JobsModel { }
@@ -47,17 +71,18 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
                 width: Theme.iconSizeMedium
                 height: Theme.iconSizeMedium
+//                visible: state === Job.State.Running
 
                 value: processedBytes / totalBytes
 
                 Image {
-                    source: "image://theme/icon-s-device-download" // TODO
+                    source: progressIcon(target)
                     anchors { centerIn: progress }
                 }
             }
 
             Label {
-                id: jobTitle
+                id: jobTarget
                 anchors {
                     left: parent.left
                     leftMargin: Theme.horizontalPageMargin
@@ -66,7 +91,7 @@ Page {
                     top: parent.top
                 }
 
-                text: target
+                text: targetFilename(target)
                 color: listItem.highlighted
                        ? Theme.highlightColor
                        : Theme.primaryColor
@@ -76,10 +101,10 @@ Page {
             }
 
             Label {
-                id: jobDescription
+                id: jobAction
                 anchors {
-                    left: jobTitle.left
-                    top: jobTitle.bottom
+                    left: jobTarget.left
+                    top: jobTarget.bottom
                     right: parent.right
                 }
 

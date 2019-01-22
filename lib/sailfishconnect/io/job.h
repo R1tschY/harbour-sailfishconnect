@@ -2,6 +2,8 @@
 #define JOB_H
 
 #include <QObject>
+#include <QUrl>
+#include <QString>
 
 namespace SailfishConnect {
 
@@ -10,7 +12,7 @@ class Job : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString errorString READ errorString NOTIFY stateChanged)
-    Q_PROPERTY(QString target READ target NOTIFY targetChanged)
+    Q_PROPERTY(QUrl target READ target NOTIFY targetChanged)
     Q_PROPERTY(QString action READ action NOTIFY actionChanged)
     Q_PROPERTY(qint64 totalBytes READ totalBytes NOTIFY totalBytesChanged)
     Q_PROPERTY(qint64 processedBytes READ processedBytes NOTIFY processedBytesChanged)
@@ -30,7 +32,7 @@ public:
     /// possibilities:
     ///   local:/home/user/Downloads/file.ext
     ///   remote:file.ext
-    QString target() const { return m_target; }
+    QUrl target() const { return m_target; }
     QString action() const { return m_action; }
     qint64 totalBytes() const { return m_totalBytes; }
     qint64 processedBytes() const { return m_processedBytes; }
@@ -80,7 +82,7 @@ protected:
 
 private:
     QString m_errorString;
-    QString m_target;
+    QUrl m_target;
     QString m_action;
     qint64 m_totalBytes = -1;
     qint64 m_processedBytes = 0;

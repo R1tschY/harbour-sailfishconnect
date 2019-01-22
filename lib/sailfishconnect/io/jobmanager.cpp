@@ -21,7 +21,7 @@ JobInfo::JobInfo(Job *job, QString deviceId, QObject *parent)
     connect(job, &Job::stateChanged, this, &JobInfo::stateChanged);
 }
 
-QString JobInfo::target() const {
+QUrl JobInfo::target() const {
     return m_impl ? m_impl->target() : m_target;
 }
 

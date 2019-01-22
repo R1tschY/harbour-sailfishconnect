@@ -43,7 +43,8 @@ SOURCES += \
     src/plugins/sendnotifications/sendnotificationsplugin.cpp \
     src/plugins/touchpad/touchpadplugin.cpp \
     src/plugins/share/shareplugin.cpp \
-    src/ui/jobsmodel.cpp
+    src/ui/jobsmodel.cpp \
+    src/js/url.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -89,4 +90,5 @@ HEADERS += \
     src/plugins/sendnotifications/sendnotificationsplugin.h \
     src/plugins/touchpad/touchpadplugin.h \
     src/plugins/share/shareplugin.h \
-    src/ui/jobsmodel.h
+    src/ui/jobsmodel.h \
+    src/js/url.h

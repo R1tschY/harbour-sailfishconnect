@@ -3,13 +3,12 @@
 #include <QIODevice>
 #include <QLoggingCategory>
 #include <QTimer>
+#include <QFile>
+#include <algorithm>
 
 namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.io")
-
-static qint64 maxBufferSize = 512 * 1024; // 512kB
-
 
 CopyJob::CopyJob(
         QSharedPointer<QIODevice> source,
@@ -18,12 +17,14 @@ CopyJob::CopyJob(
         QObject *parent)
     : Job(parent),
       m_source(source), m_destination(destination), m_buffer(), m_size(size)
-{ }
+{
+    m_timer.setInterval(100);
+    m_timer.setSingleShot(false);
+    connect(&m_timer, &QTimer::timeout, this, &CopyJob::poll);
+}
 
 void CopyJob::close()
 {
-    cancel();
-
     if (m_source) {
         m_source->close();
     }
@@ -61,6 +62,9 @@ void CopyJob::doStart()
     if (!m_destination->isOpen() || !m_destination->isWritable()) {
         return abort(tr("Output stream is not writable."));
     }
+    if (!m_source->isSequential()) {
+        m_sourceEof = true;
+    }
 
     m_started = true;
 
@@ -70,14 +74,11 @@ void CopyJob::doStart()
 
     connect(m_source.data(), &QIODevice::readChannelFinished,
             this, &CopyJob::pollAtSourceClose);
-    connect(m_source.data(), &QIODevice::readyRead,
-            this, &CopyJob::poll);
-    connect(m_destination.data(), &QIODevice::bytesWritten,
-            this, &CopyJob::pollBytesWritten);
     connect(m_destination.data(), &QIODevice::aboutToClose,
             this, &CopyJob::pollAtDestinationClose);
 
     poll();
+    m_timer.start();
 }
 
 void CopyJob::poll()
@@ -85,120 +86,103 @@ void CopyJob::poll()
     if (!isRunning())
         return;
 
-    qCDebug(logger) << "poll";
-
-    if (m_source && m_source->bytesAvailable() > 0) {
-        qint64 chunkSize = std::min(
-                    m_source->bytesAvailable(),
-                    maxBufferSize - m_buffer.size());
-        if (chunkSize > 0) {
-            qint64 orig_buffer_size = m_buffer.size();
-            m_buffer.resize(orig_buffer_size + chunkSize);
-            qint64 bytes = m_source->read(
-                        m_buffer.data() + orig_buffer_size, chunkSize);
-            if (bytes < 0) {
-                // read error
-                abort(tr("Read error: %1").arg(m_source->errorString()));
-                return;
-            }
-            m_buffer.resize(orig_buffer_size + bytes);
+    if (m_bufferSize < m_buffer.size()) {
+        qint64 bytes = m_source->read(
+                    m_buffer.data() + m_bufferSize, m_buffer.size() - m_bufferSize);
+        if (bytes == -1) {
+            // read error
+            abort(tr("Read error: %1").arg(m_source->errorString()));
+            return;
+        }
+        m_bufferSize += bytes;
             qCDebug(logger)
                     << "Read" << bytes
-                    << "bytes. Buffer size:" << m_buffer.size();
-
-            if (!m_source->isSequential() && m_source->atEnd()) {
-                // random access file that is at end of file
-                m_sourceEof = true;
-            }
-
-            if (m_size >= 0 && m_writtenBytes + m_buffer.size() > m_size) {
-                return abort(tr("Read more bytes of input stream than "
-                                "expected."));
-            }
-        }
+                    << "bytes. Buffer size:" << m_bufferSize;
     }
 
-    if (m_destination && m_buffer.size() > 0) {
-        qint64 bytes = m_destination->write(m_buffer);
-        if (bytes < 0) {
+    if (m_bufferSize != 0) {
+        qint64 bytes = m_destination->write(m_buffer.data(), m_bufferSize);
+        if (bytes == -1) {
             // write error
             abort(tr("Write error: %1").arg(m_destination->errorString()));
             return;
         }
-        m_buffer.remove(0, bytes);
+        std::move(m_buffer.begin() + bytes, m_buffer.begin() + m_bufferSize,
+                  m_buffer.begin());
+        m_bufferSize -= bytes;
         m_writtenBytes += bytes;
-
-        if (m_destination->bytesToWrite() == 0) {
-            m_flushedBytes = m_writtenBytes;
-            setProcessedBytes(m_flushedBytes); // TODO: use timer for better performance
-        }
 
         qCDebug(logger)
                 << "Written" << bytes
-                << "bytes. Buffer size:" << m_buffer.size()
+                << "bytes. Buffer size:" << m_bufferSize
                 << "Waiting for" << m_destination->bytesToWrite() << "bytes";
     }
 
-    if (m_source
-            && m_source->bytesAvailable() > 0
-            && m_buffer.size() != maxBufferSize) {
+    setProcessedBytes(m_writtenBytes - m_destination->bytesToWrite());
+
+    if (m_source->bytesAvailable() > 0 && m_bufferSize != m_buffer.size()) {
         QMetaObject::invokeMethod(this, "poll", Qt::QueuedConnection);
-        // QTimer::singleShot(0, this, &CopyJob::poll);
     }
 
-    if (m_sourceEof && m_source->bytesAvailable() == 0 && m_writtenBytes == m_flushedBytes) {
+    if (m_sourceEof
+            && m_source->bytesAvailable() == 0
+            && m_destination->bytesToWrite() == 0) {
         qCDebug(logger) << "EOF";
-
-        // success
-        exit();
-        return;
+        finish();
     }
 }
 
 void CopyJob::pollAtSourceClose()
 {
-    if (!isRunning() || !m_source)
+    if (!isRunning())
         return;
 
     qCDebug(logger) << "Detected source closing";
 
     m_sourceEof = true;
-
-    qint64 readBytes = m_writtenBytes + m_buffer.size();
-    if (m_source) readBytes += m_source->bytesAvailable();
-
-    if (m_size >= 0 && readBytes < m_size) {
-        return abort(tr("Early end of input stream"));
-    }
-
     poll();
 }
 
 void CopyJob::pollAtDestinationClose()
 {
-    if (!isRunning() || !m_destination)
-        return;
-
-    qCDebug(logger) << "Detected destination closing";
     if (isRunning()) {
-        // poll() exits/aborts or it will be aborted here
-        abort(tr("Early end of output stream"));
+        qCDebug(logger) << "Detected destination closing";
+        finish();
     }
 }
 
-void CopyJob::pollBytesWritten(qint64 bytes)
+void CopyJob::finish()
 {
-    if (!isRunning())
-        return;
+    if (m_bufferSize != 0) {
+        return abort(tr("Early end of output stream"));
+    }
 
+    if (m_writtenBytes > m_size) {
+        return abort(tr("Read more bytes of input stream than "
+                        "expected."));
+    }
 
-    m_flushedBytes += bytes;
-    setProcessedBytes(m_flushedBytes);
+    if (m_writtenBytes < m_size) {
+        return abort(tr("Early end of input stream"));
+    }
 
-//    qCDebug(logger) << "Send" << bytes << "Bytes ->"
-//                   << m_flushedBytes << "/" << m_size;
+    // success
+    exit();
+}
 
-    poll();
+void CopyJob::onError()
+{
+    QFile::remove(m_destination);
+    Job::onError();
+}
+
+bool CopyJob::doCancelling()
+{
+    close();
+    QFile::remove(m_destination);
+    return true;
 }
 
 } // namespace SailfishConnect
+
+

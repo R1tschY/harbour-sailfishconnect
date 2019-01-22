@@ -1,8 +1,11 @@
 #pragma once
 
+#include <array>
+
 #include <QSharedPointer>
 #include <QByteArray>
 #include <QString>
+#include <QTimer>
 
 #include "job.h"
 
@@ -39,31 +42,32 @@ public:
 protected:
     void close();
     void doStart() override;
-
-signals:
-    void readProgress(qint64 bytesWritten, qint64 bytesTotal);
-    void writeProgress(qint64 bytesWritten, qint64 bytesTotal);
+    void onError() override;
+    bool doCancelling() override;
 
 private:
     QSharedPointer<QIODevice> m_source;
     QSharedPointer<QIODevice> m_destination;
-    QByteArray m_buffer;
 
     qint64 m_size = -1;
     qint64 m_writtenBytes = 0;
-    qint64 m_flushedBytes = 0;
     bool m_sourceEof = false;
     bool m_started = false;
+    QTimer m_timer;
+
+    std::size_t m_bufferSize = 0;
+    std::array<char, 32 * 1024> m_buffer;
 
     void pollAtSourceClose();
     void pollAtDestinationClose();
-    void pollBytesWritten(qint64 bytes);
 
     void closeSource();
     void closeDestination();
 
     void checkSource();
     void checkDestination();
+
+    void finish();
 
 private slots:
     void poll();

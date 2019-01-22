@@ -60,6 +60,7 @@ void JobInfo::cancel()
 
 void JobInfo::onJobDestroyed()
 {
+    Q_ASSERT(m_impl);
     auto* job = m_impl;
     m_impl = nullptr;
 
@@ -71,7 +72,7 @@ void JobInfo::onJobDestroyed()
     m_canceled = job->canceled();
     m_errorString = job->errorString();
 
-    if (!m_impl->isFinished()) {
+    if (!job->isFinished()) {
         qCWarning(logger) << "unfinished job destroyed";
         m_state = Job::State::Finished;
         emit stateChanged();

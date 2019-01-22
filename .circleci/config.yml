@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: coderus/sailfishos-platform-sdk
+    steps:
+      - checkout
+      - run: mb2 -t SailfishOS-3.0.0.8-armv7hl build
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build

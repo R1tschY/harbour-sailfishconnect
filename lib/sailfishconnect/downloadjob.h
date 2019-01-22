@@ -21,6 +21,7 @@ protected:
     void doStart() override;
     bool doCancelling() override;
     void onFinished() override;
+    void onError() override;
 
 private:
     QString m_destination;

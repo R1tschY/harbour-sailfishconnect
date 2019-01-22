@@ -34,8 +34,11 @@ LanUploadJob::LanUploadJob(const NetworkPacket &np, const QString& deviceId)
     // We will use this info if link is on ssl, to send encrypted payload
     , m_deviceId(deviceId)
 {
-    setTarget(QStringLiteral("remote:")
-              + np.get<QString>(QStringLiteral("filename")));
+    QUrl target;
+    target.setScheme(QStringLiteral("remote"));
+    target.setPath(np.get<QString>(QStringLiteral("filename")));
+
+    setTarget(target);
     connect(source().data(), &QIODevice::readyRead,
             this, &LanUploadJob::startUploading);
     connect(source().data(), &QIODevice::aboutToClose,

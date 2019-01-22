@@ -7,7 +7,7 @@ using namespace testing;
 class JobTests : public Test {
 public:
     JobTests() {
-        job.setTarget("test job");
+        job.setTarget(QUrl::fromLocalFile("/test.file"));
     }
 
     StrictMock<MockJob> job;

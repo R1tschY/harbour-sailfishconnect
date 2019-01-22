@@ -140,7 +140,7 @@ void Job::onError()
     emit error();
 }
 
-void Job::setTarget(const QString& target)
+void Job::setTarget(const QUrl& target)
 {
     if (m_target != target) {
         m_target = target;

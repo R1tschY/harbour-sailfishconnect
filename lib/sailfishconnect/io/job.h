@@ -67,7 +67,7 @@ protected:
     virtual void onSuccess();
     virtual void onError();
 
-    void setTarget(const QString& target);
+    void setTarget(const QUrl &target);
     void setErrorString(const QString& errorString);
     void setAction(const QString& action);
     void setTotalBytes(qint64 totalBytes);

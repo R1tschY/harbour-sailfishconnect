@@ -14,8 +14,11 @@ DownloadJob::DownloadJob(const QSharedPointer<QIODevice>& origin,
     : CopyJob(origin, QSharedPointer<QIODevice>(), size, parent),
       m_destination(destination)
 {
-    setTarget(QStringLiteral("local:") + destination);
+    QUrl target;
+    target.setScheme(QStringLiteral("local"));
+    target.setPath(destination);
 
+    setTarget(target);
     if (QFileInfo::exists(m_destination)) {
         auto destination = nonexistingFile(m_destination);
 
@@ -41,11 +44,15 @@ DownloadJob::DownloadJob(const QSharedPointer<QIODevice>& origin,
         return;
     }
     setDestination(std::move(file));
+
+    target.setPath(m_destination);
+    setTarget(target);
 }
 
 bool DownloadJob::doCancelling()
 {
     close();
+    QFile::remove(m_destination);
     return true;
 }
 
@@ -64,6 +71,12 @@ void DownloadJob::doStart()
 {
     setAction(tr("Receiving"));
     CopyJob::doStart();
+}
+
+void DownloadJob::onError()
+{
+    QFile::remove(m_destination);
+    Job::onError();
 }
 
 } // namespace SailfishConnect

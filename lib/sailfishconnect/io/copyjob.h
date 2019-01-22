@@ -42,8 +42,6 @@ public:
 protected:
     void close();
     void doStart() override;
-    void onError() override;
-    bool doCancelling() override;
 
 private:
     QSharedPointer<QIODevice> m_source;
@@ -56,7 +54,7 @@ private:
     QTimer m_timer;
 
     std::size_t m_bufferSize = 0;
-    std::array<char, 32 * 1024> m_buffer;
+    std::array<char, 64 * 1024> m_buffer;
 
     void pollAtSourceClose();
     void pollAtDestinationClose();

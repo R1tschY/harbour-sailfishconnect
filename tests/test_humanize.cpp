@@ -40,10 +40,10 @@ TEST(Humanize, humanizeBytes_allbytes) {
     EXPECT_EQ(humanizeBytes(1024), "1.00 kB");
     EXPECT_EQ(humanizeBytes(1024 * 1024), "1.00 MB");
     EXPECT_EQ(humanizeBytes(1024 * 1024 * 1024), "1.00 GB");
-    EXPECT_EQ(humanizeBytes(1024L * 1024L * 1024L * 1024L), "1.00 TB");
+    EXPECT_EQ(humanizeBytes(1024LL * 1024LL * 1024LL * 1024LL), "1.00 TB");
 }
 
 TEST(Humanize, humanizeBytes_toobig) {
     EXPECT_EQ(humanizeBytes(
-                  1024L * 1024L * 1024L * 1024L * 1024L), "1024.00 TB");
+                  1024LL * 1024LL * 1024LL * 1024LL * 1024LL), "1024.00 TB");
 }

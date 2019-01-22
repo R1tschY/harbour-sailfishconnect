@@ -28,7 +28,6 @@
 #include "lanlinkprovider.h"
 #include "../../corelogging.h"
 #include "lanuploadjob.h"
-#include "landownloadjob.h"
 #include <sailfishconnect/device.h>
 #include <sailfishconnect/helper/cpphelper.h>
 #include <sailfishconnect/io/jobmanager.h>

@@ -25,13 +25,8 @@ CopyJob::CopyJob(
 
 void CopyJob::close()
 {
-    if (m_source) {
-        m_source->close();
-    }
-
-    if (m_destination) {
-        m_destination->close();
-    }
+    m_source->close();
+    m_destination->close();
 }
 
 void CopyJob::setDestination(const QSharedPointer<QIODevice> &destination)
@@ -95,9 +90,9 @@ void CopyJob::poll()
             return;
         }
         m_bufferSize += bytes;
-            qCDebug(logger)
-                    << "Read" << bytes
-                    << "bytes. Buffer size:" << m_bufferSize;
+//            qCDebug(logger)
+//                    << "Read" << bytes
+//                    << "bytes. Buffer size:" << m_bufferSize;
     }
 
     if (m_bufferSize != 0) {
@@ -112,10 +107,10 @@ void CopyJob::poll()
         m_bufferSize -= bytes;
         m_writtenBytes += bytes;
 
-        qCDebug(logger)
-                << "Written" << bytes
-                << "bytes. Buffer size:" << m_bufferSize
-                << "Waiting for" << m_destination->bytesToWrite() << "bytes";
+//        qCDebug(logger)
+//                << "Written" << bytes
+//                << "bytes. Buffer size:" << m_bufferSize
+//                << "Waiting for" << m_destination->bytesToWrite() << "bytes";
     }
 
     setProcessedBytes(m_writtenBytes - m_destination->bytesToWrite());
@@ -168,19 +163,6 @@ void CopyJob::finish()
 
     // success
     exit();
-}
-
-void CopyJob::onError()
-{
-    QFile::remove(m_destination);
-    Job::onError();
-}
-
-bool CopyJob::doCancelling()
-{
-    close();
-    QFile::remove(m_destination);
-    return true;
 }
 
 } // namespace SailfishConnect

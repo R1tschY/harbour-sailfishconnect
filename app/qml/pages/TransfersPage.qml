@@ -44,9 +44,35 @@ Page {
 
     function progressIcon(target) {
         if (stringStartsWith(target.toString(), "remote:")) {
-            return "image://theme/icon-s-device-upload"
-        } else {
             return "image://theme/icon-s-device-download"
+        } else {
+            return "image://theme/icon-s-device-upload"
+        }
+    }
+
+    function description(currentState, action, processedBytes, totalBytes, error) {
+        if (currentState === Job.Running) {
+            if (totalBytes < 0) {
+                return "%1 -- %2"
+                    .arg(action).arg(Humanize.bytes(processedBytes))
+            }
+
+            return qsTr("%1 -- %2 of %3")
+                .arg(action)
+                .arg(Humanize.bytes(processedBytes))
+                .arg(Humanize.bytes(totalBytes))
+        } else if (currentState === Job.Finished) {
+            if (error) {
+                return "%1 -- %2".arg(action).arg(error)
+            }
+
+            return "%1 -- %2".arg(action).arg(Humanize.bytes(processedBytes))
+        } else {
+            if (totalBytes < 0) {
+                return action
+            }
+
+            return "%1 -- %2".arg(action).arg(Humanize.bytes(totalBytes))
         }
     }
 
@@ -73,15 +99,22 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
                 width: Theme.iconSizeMedium
                 height: Theme.iconSizeMedium
-//                visible: state === Job.State.Running
+                visible: currentState === Job.Running && totalBytes > 0
 
-                value: processedBytes / totalBytes
-
-                Image {
-                    source: progressIcon(target)
-                    anchors { centerIn: progress }
-                }
+                value: totalBytes > 0 ? (processedBytes / totalBytes) : 0
             }
+
+            Image {
+                source: progressIcon(target)
+                anchors { centerIn: progress }
+            }
+
+            /* TODO Image {
+                source: "image://theme/icon-l-image"
+                anchors { centerIn: progress }
+                opacity: 0.3
+                visible: currentState === Job.Finished
+            }*/
 
             Label {
                 id: jobTarget
@@ -110,7 +143,7 @@ Page {
                     right: parent.right
                 }
 
-                text: action
+                text: description(currentState, action, processedBytes, totalBytes, error)
                 color: listItem.highlighted
                        ? Theme.secondaryHighlightColor
                        : Theme.secondaryColor

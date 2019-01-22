@@ -45,7 +45,8 @@ SOURCES += \
     src/plugins/share/shareplugin.cpp \
     src/ui/jobsmodel.cpp \
     src/js/url.cpp \
-    src/js/qmlregister.cpp
+    src/js/qmlregister.cpp \
+    src/js/humanize.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -93,4 +94,5 @@ HEADERS += \
     src/plugins/share/shareplugin.h \
     src/ui/jobsmodel.h \
     src/js/url.h \
-    src/js/qmlregister.h
+    src/js/qmlregister.h \
+    src/js/humanize.h

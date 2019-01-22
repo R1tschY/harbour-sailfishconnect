@@ -35,7 +35,6 @@ SOURCES += \
     sailfishconnect/helper/filehelper.cpp \
     sailfishconnect/io/copyjob.cpp \
     sailfishconnect/downloadjob.cpp \
-    sailfishconnect/backend/lan/landownloadjob.cpp \
     sailfishconnect/backend/lan/lanuploadjob.cpp \
     sailfishconnect/backend/lan/lannetworklistener.cpp \
     sailfishconnect/io/jobmanager.cpp \
@@ -76,7 +75,6 @@ HEADERS += \
     sailfishconnect/helper/filehelper.h \
     sailfishconnect/io/copyjob.h \
     sailfishconnect/downloadjob.h \
-    sailfishconnect/backend/lan/landownloadjob.h \
     sailfishconnect/backend/lan/lanuploadjob.h \
     sailfishconnect/backend/lan/lannetworklistener.h \
     sailfishconnect/io/jobmanager.h \

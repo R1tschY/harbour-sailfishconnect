@@ -140,14 +140,23 @@ void LanDeviceLink::dataReceived()
     }
 
     if (packet.hasPayloadTransferInfo()) {
-        qCDebug(coreLogger) << "HasPayloadTransferInfo";
-        QVariantMap transferInfo = packet.payloadTransferInfo();
-        //FIXME: The next two lines shouldn't be needed! Why are they here?
-        transferInfo.insert(QStringLiteral("useSsl"), true);
-        transferInfo.insert(QStringLiteral("deviceId"), deviceId());
-        LanDownloadJob* job = new LanDownloadJob(m_socketLineReader->peerAddress(), transferInfo);
-        job->start();
-        packet.setPayload(job->getPayload(), packet.payloadSize());
+        //qCDebug(coreLogger) << "HasPayloadTransferInfo";
+        const QVariantMap transferInfo = packet.payloadTransferInfo();
+
+        QSharedPointer<QSslSocket> socket(new QSslSocket);
+
+        LanLinkProvider::configureSslSocket(socket.data(), deviceId(), true);
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 9, 2)
+        // emit readChannelFinished when the socket gets disconnected. This seems to be a bug in upstream QSslSocket.
+        // Needs investigation and upstreaming of the fix. QTBUG-62257
+        connect(socket.data(), &QAbstractSocket::disconnected, socket.data(), &QAbstractSocket::readChannelFinished);
+#endif
+
+        const QString address = m_socketLineReader->peerAddress().toString();
+        const quint16 port = transferInfo[QStringLiteral("port")].toInt();
+        socket->connectToHostEncrypted(address, port, QIODevice::ReadWrite);
+        packet.setPayload(socket, packet.payloadSize());
     }
 
     Q_EMIT receivedPacket(packet);

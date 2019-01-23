@@ -7,7 +7,8 @@ jobs:
       - checkout
       - run: git submodule sync
       - run: git submodule update --init
-      - run: mb2 -t SailfishOS-3.0.1.11-armv7hl build
+      - run: git config user.email "root@example.com" && git config user.name "root"
+      - run: mb2 -t SailfishOS-3.0.1.11-armv7hl build -d
       - store_artifacts:
           path: /home/nemo/project/RPMS/
           destination: rpms

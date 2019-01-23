@@ -5,6 +5,8 @@ jobs:
       - image: r1tschy/sailfishos-platform-sdk:3.0.1.11
     steps:
       - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
       - run: mb2 -t SailfishOS-3.0.1.11-armv7hl build
       - store_artifacts:
           path: /home/nemo/project/RPMS/

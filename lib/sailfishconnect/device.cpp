@@ -29,6 +29,7 @@
 #include <QSettings>
 #include <QHostAddress>
 #include <QRegularExpression>
+#include <QDir>
 
 #include "kdeconnectplugin.h"
 #include "backend/devicelink.h"
@@ -37,6 +38,7 @@
 #include "kdeconnectconfig.h"
 #include "corelogging.h"
 #include "pluginloader.h"
+#include "backend/pairinghandler.h"
 #include <sailfishconnect/helper/cpphelper.h>
 #include <sailfishconnect/helper/functools.h>
 

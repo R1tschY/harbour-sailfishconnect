@@ -22,12 +22,8 @@
 
 #include <algorithm>
 
-#include <QHostInfo>
 #include <QTcpServer>
 #include <QNetworkProxy>
-#include <QUdpSocket>
-#include <QNetworkSession>
-#include <QNetworkConfigurationManager>
 #include <QSslCipher>
 #include <QSslConfiguration>
 

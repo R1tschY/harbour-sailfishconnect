@@ -21,15 +21,11 @@
 #ifndef LANLINKPROVIDER_H
 #define LANLINKPROVIDER_H
 
-#include <QHash>
-#include <QObject>
-#include <QTcpServer>
-#include <QSslSocket>
 #include <QUdpSocket>
+#include <QHash>
+#include <QString>
+#include <QHostAddress>
 #include <QTimer>
-#include <QNetworkSession>
-#include <QSslSocket>
-#include <QNetworkConfigurationManager>
 
 #include "../linkprovider.h"
 #include "server.h"

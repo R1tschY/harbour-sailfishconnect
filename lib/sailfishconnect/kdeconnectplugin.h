@@ -23,13 +23,19 @@
 
 #include <memory>
 #include <QObject>
-#include <QVariantList>
+#include <QSet>
+#include <QScopedPointer>
 
-#include "kdeconnectpluginconfig.h"
-#include "networkpacket.h"
-#include "device.h"
 
 struct KdeConnectPluginPrivate;
+class KdeConnectPlugin;
+class Device;
+class NetworkPacket;
+class SailfishConnectPluginConfig;
+
+namespace SailfishConnect {
+class JobManager;
+} // namespace SailfishConnect
 
 
 class SailfishConnectPluginFactory

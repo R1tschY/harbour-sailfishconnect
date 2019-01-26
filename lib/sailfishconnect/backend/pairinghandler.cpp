@@ -20,6 +20,8 @@
 
 #include "pairinghandler.h"
 
+#include "devicelink.h"
+
 PairingHandler::PairingHandler(DeviceLink* parent)
     : QObject(parent)
     , m_deviceLink(parent)

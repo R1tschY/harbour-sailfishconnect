@@ -21,8 +21,10 @@
 #ifndef KDECONNECT_PAIRINGHANDLER_H
 #define KDECONNECT_PAIRINGHANDLER_H
 
-#include "../networkpacket.h"
-#include "devicelink.h"
+#include <QObject>
+
+class DeviceLink;
+class NetworkPacket;
 
 /*
  * This class separates the pairing interface for each type of link.

@@ -21,6 +21,7 @@
 #include <QCoreApplication>
 
 #include <sailfishconnect/networkpacket.h>
+#include <sailfishconnect/device.h>
 #include <ui.h>
 #include <sailfishconnect.h>
 

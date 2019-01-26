@@ -23,13 +23,12 @@
 
 #include "networkpackettypes.h"
 
-#include <QObject>
 #include <QString>
-#include <QVariant>
-#include <QIODevice>
-//#include <QtCrypto>
+#include <QVariantMap>
 #include <QSharedPointer>
-#include <QUrl>
+
+class QIODevice;
+class QByteArray;
 
 namespace SailfishConnect {
 class Job;

@@ -23,6 +23,7 @@
 #include <QTimer>
 
 #include <sailfishconnect/kdeconnectplugin.h>
+#include <sailfishconnect/networkpacket.h>
 
 class ContextProperty;
 

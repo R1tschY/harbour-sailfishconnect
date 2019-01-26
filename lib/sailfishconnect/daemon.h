@@ -24,8 +24,6 @@
 #include <memory>
 #include <QObject>
 
-#include "device.h"
-
 class NetworkPacket;
 class DeviceLink;
 class Device;

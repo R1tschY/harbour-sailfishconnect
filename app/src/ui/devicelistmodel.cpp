@@ -20,6 +20,7 @@
 #include <QIcon>
 #include <QLoggingCategory>
 #include <cstdint>
+#include <QUrl>
 
 #include <sailfishconnect/daemon.h>
 #include <sailfishconnect/device.h>

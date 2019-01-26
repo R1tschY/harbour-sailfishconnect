@@ -21,16 +21,18 @@
 #ifndef LANDEVICELINK_H
 #define LANDEVICELINK_H
 
-#include <QObject>
-#include <QString>
-#include <QSslSocket>
-#include <QSslCertificate>
+#include <QScopedPointer>
 #include <QHostAddress>
 
 #include "../devicelink.h"
 
 class SocketLineReader;
 class QTimer;
+class QString;
+class QSslSocket;
+
+class LinkProvider;
+class NetworkPacket;
 
 namespace SailfishConnect {
 class LanUploadJob;

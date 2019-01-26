@@ -27,6 +27,7 @@
 #include <sailfishconnect/backend/pairinghandler.h>
 #include <sailfishconnect/systeminfo.h>
 #include <sailfishconnect/helper/cpphelper.h>
+#include <sailfishconnect/device.h>
 #include "sailfishconnect.h"
 #include "ui.h"
 

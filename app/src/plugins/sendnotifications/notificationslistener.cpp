@@ -47,10 +47,12 @@
 #include <QBuffer>
 #include <QPainter>
 #include <QQuickImageProvider>
+#include <QFile>
 
 #include <sailfishconnect/device.h>
 #include <sailfishconnect/kdeconnectplugin.h>
 #include <sailfishconnect/helper/cpphelper.h>
+#include <sailfishconnect/kdeconnectpluginconfig.h>
 #include <appdaemon.h>
 
 #include "notificationslistener.h"

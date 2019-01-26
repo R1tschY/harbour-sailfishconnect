@@ -22,10 +22,11 @@
 #define KDECONNECTPLUGINCONFIG_H
 
 #include <QObject>
-#include <QDir>
-#include <QString>
-#include <QStringList>
+#include <QScopedPointer>
 #include <QVariant>
+
+class QString;
+
 
 struct SailfishConnectPluginConfigPrivate;
 

@@ -21,12 +21,12 @@
 #ifndef UPLOADJOB_H
 #define UPLOADJOB_H
 
-#include <QThread>
-#include <QIODevice>
+#include <QString>
 #include <QVariantMap>
 #include <QSharedPointer>
-#include <QSslSocket>
+#include <QAbstractSocket>
 #include <sailfishconnect/io/copyjob.h>
+
 #include "server.h"
 
 class NetworkPacket;

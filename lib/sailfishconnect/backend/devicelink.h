@@ -22,7 +22,7 @@
 #define DEVICELINK_H
 
 #include <QObject>
-#include <QSslKey>
+#include <QString>
 
 #include "../networkpacket.h"
 

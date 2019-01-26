@@ -22,11 +22,11 @@
 #define KDECONNECTCONFIG_H
 
 #include <memory>
-#include <QDir>
 #include <QCoreApplication>
 
 class QSslCertificate;
 class QSslKey;
+class QDir;
 
 namespace SailfishConnect {
 class SystemInfo;

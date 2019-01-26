@@ -22,17 +22,17 @@
 #define DEVICE_H
 
 #include <QObject>
-#include <QString>
-#include <QVector>
-#include <QSet>
-#include <QHostAddress>
+#include <QScopedPointer>
 
-#include "networkpacket.h"
 #include "backend/devicelink.h"
 
 class DeviceLink;
 class KdeConnectPlugin;
 class KdeConnectConfig;
+class QString;
+class NetworkPacket;
+class QStringList;
+class PairingHandler;
 
 namespace SailfishConnect {
 class JobManager;

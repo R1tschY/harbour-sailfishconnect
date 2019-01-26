@@ -1,7 +1,9 @@
 #ifndef DOWNLOADJOB_H
 #define DOWNLOADJOB_H
 
+#include <QString>
 #include <sailfishconnect/io/copyjob.h>
+
 
 namespace SailfishConnect {
 

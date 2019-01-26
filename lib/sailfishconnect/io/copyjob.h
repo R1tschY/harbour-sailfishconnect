@@ -3,7 +3,6 @@
 #include <array>
 
 #include <QSharedPointer>
-#include <QByteArray>
 #include <QString>
 #include <QTimer>
 

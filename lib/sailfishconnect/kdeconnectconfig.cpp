@@ -52,6 +52,7 @@
 #include <sailfishconnect/helper/sslhelper.h>
 #include "systeminfo.h"
 #include "daemon.h"
+#include "device.h"
 
 using namespace SailfishConnect;
 

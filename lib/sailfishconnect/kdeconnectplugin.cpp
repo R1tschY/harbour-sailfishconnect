@@ -22,6 +22,9 @@
 
 #include <memory>
 #include "corelogging.h"
+#include "device.h"
+#include "networkpacket.h"
+#include "kdeconnectpluginconfig.h"
 
 using namespace SailfishConnect;
 

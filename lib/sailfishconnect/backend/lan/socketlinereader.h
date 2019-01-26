@@ -25,6 +25,8 @@
 #include <QQueue>
 #include <QSslSocket>
 #include <QHostAddress>
+#include <QSslCertificate>
+#include <QByteArray>
 
 // TODO: inline class
 /*

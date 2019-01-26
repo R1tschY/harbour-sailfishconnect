@@ -23,10 +23,8 @@
 
 #include <QObject>
 
-#include "../networkpacket.h"
-#include "pairinghandler.h"
-
 class DeviceLink;
+class NetworkPacket;
 
 class LinkProvider
     : public QObject

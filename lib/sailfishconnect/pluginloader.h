@@ -39,7 +39,6 @@
 
 #include <map>
 #include <memory>
-#include <QObject>
 #include <QSet>
 #include <QString>
 
@@ -49,6 +48,7 @@ class Device;
 class KdeConnectPlugin;
 class PluginLoader;
 class SailfishConnectPluginFactory;
+class QStringList;
 
 class PluginManager
 {

@@ -20,6 +20,7 @@
 
 #include <QDBusInterface>
 #include <QLoggingCategory>
+#include <sailfishconnect/networkpacket.h>
 
 namespace SailfishConnect {
 

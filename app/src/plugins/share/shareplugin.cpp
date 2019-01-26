@@ -26,11 +26,11 @@
 #include <QDesktopServices>
 #include <QtQml>
 
-#include <sailfishconnect/downloadjob.h>
 #include <sailfishconnect/helper/filehelper.h>
-#include <sailfishconnect/io/copyjob.h>
 #include <sailfishconnect/io/jobmanager.h>
 #include <sailfishconnect/daemon.h>
+#include <sailfishconnect/device.h>
+#include <sailfishconnect/kdeconnectpluginconfig.h>
 
 namespace SailfishConnect {
 
@@ -120,18 +120,18 @@ void SharePlugin::share(const QUrl& url)
 
 void SharePlugin::finishedFileTransfer()
 {
-    auto job = qobject_cast<DownloadJob*>(QObject::sender());
+    auto job = qobject_cast<Job*>(QObject::sender());
     Q_ASSERT(job != nullptr);
     if (job->errorString().isEmpty()) {
         // TODO: add notification
-        emit received(job->destination());
+        emit received(job->target().toString());
         qCDebug(logger)
-                << "Share succeeded:" << job->destination();
+                << "Share succeeded:" << job->target().toString();
     } else {
         qCWarning(logger)
                 << "Share failed:"
                 << job->errorString()
-                << job->destination();
+                << job->target().toString();
     }
 
     job->deleteLater();

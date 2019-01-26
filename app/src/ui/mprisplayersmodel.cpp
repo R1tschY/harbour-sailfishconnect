@@ -22,6 +22,7 @@
 #include <QLoggingCategory>
 
 #include <sailfishconnect/daemon.h>
+#include <sailfishconnect/device.h>
 #include <sailfishconnect/helper/cpphelper.h>
 #include "../plugins/mprisremote/mprisremoteplugin.h"
 

@@ -19,6 +19,7 @@
 
 #include <QGuiApplication>
 #include <QClipboard>
+#include <sailfishconnect/networkpacket.h>
 
 namespace SailfishConnect {
 

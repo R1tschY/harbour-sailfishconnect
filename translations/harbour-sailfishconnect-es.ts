@@ -423,12 +423,22 @@
         <source></source>
         <translation></translation>
     </message>
+    <message>
+        <source>Move finger on screen
+Tap for click
+Hold shortly for Drag&apos;n&apos;Drop</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TransfersPage</name>
     <message>
         <source>Transfers</source>
         <translation>Transferencias</translation>
+    </message>
+    <message>
+        <source>%1 -- %2 of %3</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

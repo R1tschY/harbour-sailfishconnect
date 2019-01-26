@@ -56,7 +56,11 @@ Page {
 
     InfoLabel {
         id: hintLabel
-        text: qsTr("")
+        text: qsTr(
+                  "Move finger on screen\n" +
+                  "Tap for click\n" +
+                  "Hold shortly for Drag'n'Drop")
+        anchors.verticalCenter: touchpad.verticalCenter
     }
 
     MouseArea {
@@ -65,12 +69,12 @@ Page {
             top: header.bottom
             left: page.left
             right: page.right
-            bottom: page.bottom
+            bottom: buttonRow.top
         }
 
-        hoverEnabled: true
-        scrollGestureEnabled: true
-        propagateComposedEvents: false
+//        hoverEnabled: true
+//        scrollGestureEnabled: true
+//        propagateComposedEvents: false
         preventStealing: true
         acceptedButtons: Qt.AllButtons  // FIXME: is ignored
 
@@ -118,6 +122,42 @@ Page {
                     wheel.angleDelta.x / 120,
                     wheel.angleDelta.y / 120)
             }
+        }
+    }
+
+    Row {
+        property double btnWidth: (page.width - Theme.paddingSmall * 4) / 3
+
+        id: buttonRow
+        anchors {
+            left: page.left
+            right: page.right
+
+
+            bottom: page.bottom
+            margins: Theme.paddingSmall
+        }
+        spacing: Theme.paddingSmall
+
+        Button {
+           text: ""
+           onClicked: plugin.sendCommand("singleclick", true)
+           preferredWidth: Theme.buttonWidthExtraSmall
+           width: parent.btnWidth
+        }
+
+        Button {
+           text: ""
+           onClicked: plugin.sendCommand("middleclick", true)
+           preferredWidth: Theme.buttonWidthExtraSmall
+           width: parent.btnWidth
+        }
+
+        Button {
+           text: ""
+           onClicked: plugin.sendCommand("rightclick", true)
+           preferredWidth: Theme.buttonWidthExtraSmall
+           width: parent.btnWidth
         }
     }
 }

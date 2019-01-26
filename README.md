@@ -30,8 +30,8 @@ Clipboard | :heavy_check_mark: | :clipboard: Share clipboard text content.
 Telepathy | :heavy_check_mark: | :speech_balloon: Send SMS messages from your computer.
 Mpris | :heavy_check_mark: | :play_or_pause_button: Control multimedia player from your computer.
 Ping | :heavy_check_mark: | :wave: Check connection with a ping.
+Touchpad | :heavy_check_mark: | :computer_mouse: Create mouse input from your phone.
 Share | :construction: | Send and receive files, text and URLs.
-Touchpad | :construction: | :computer_mouse: Create mouse input from your phone.
 SendNotifications | :construction: | Share notifications of your phone.
 Telephony | :o: | :telephone_receiver: Share call status (incoming or active) with your computer.
 RemoteKeyboard | :o: | :keyboard: Create keyboard input from your phone.
@@ -54,10 +54,10 @@ MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control wit
 * :heavy_check_mark: Device list
 * :heavy_check_mark: Pairing
 * :heavy_check_mark: Plugin management
-* :heavy_check_mark: Edit device name
 * :construction: SSL key hash view
 * :construction: Device view
 * :construction: Show progress of file transfers
+* :construction: Cover
 
 ### Backend
 * :heavy_check_mark: LAN
@@ -66,7 +66,7 @@ MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control wit
 ## Contribute
 
 * Translations: https://www.transifex.com/r1tschy/sailfish-connect
-* Code: You are welcome to make pull request in Github :)
+* Code: You are welcome to make pull request in Github :wink:
 
 ## Known Issues
 

@@ -143,14 +143,10 @@ SilicaListView {
 
                 Connections {
                     target: player
-                    onPropertiesChanged: updatePosition()
+                    onPropertiesChanged: positionSlider.value = player.position
                 }
 
                 Component.onCompleted: {
-                    updatePosition()
-                }
-
-                function updatePosition() {
                     if (player) {
                         positionSlider.value = player.position
                     }
@@ -162,7 +158,11 @@ SilicaListView {
                 repeat: true
                 running: isPlaying && player.hasPosition
                 triggeredOnStart: false
-                onTriggered: positionSlider.updatePosition()
+                onTriggered: {
+                    if (player) {
+                        positionSlider.value = player.position
+                    }
+                }
             }
         }
     }

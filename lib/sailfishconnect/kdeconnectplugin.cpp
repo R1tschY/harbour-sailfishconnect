@@ -79,7 +79,7 @@ bool KdeConnectPlugin::sendPacket(NetworkPacket& np, JobManager* jobMgr) const
         return false;
     }
     qCDebug(coreLogger) << metaObject()->className() << "sends" << np.type();
-    qCDebug(coreLogger) << "data:" << np.serialize().data();
+    qCDebug(coreLogger) << "data:" << np.serialize().constData();
     return d->m_device->sendPacket(np, jobMgr);
 }
 

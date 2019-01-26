@@ -77,11 +77,11 @@ TEST_F(ConnectConfigTests, generateCertificate) {
     QSslCertificate certificate = config.certificate();
     EXPECT_EQ(certificate.serialNumber().toInt(0, 16), 10);
     EXPECT_EQ(certificate.subjectInfo(
-                  QSslCertificate::SubjectInfo::CommonName).first(), config.deviceId());
+                  QSslCertificate::SubjectInfo::CommonName).constFirst(), config.deviceId());
     EXPECT_EQ(certificate.subjectInfo(
-                  QSslCertificate::SubjectInfo::Organization).first(), QString("Richard Liebscher"));
+                  QSslCertificate::SubjectInfo::Organization).constFirst(), QString("Richard Liebscher"));
     EXPECT_EQ(certificate.subjectInfo(
-                  QSslCertificate::OrganizationalUnitName).first(), QString("SailfishConnect"));
+                  QSslCertificate::OrganizationalUnitName).constFirst(), QString("SailfishConnect"));
 }
 
 TEST_F(ConnectConfigTests, removeTrustedDevice) {

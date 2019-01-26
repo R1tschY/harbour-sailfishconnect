@@ -70,8 +70,8 @@ public:
     void removeJob(JobInfo* job);
 
 signals:
-    void jobAdded(JobInfo*);
-    void jobRemoved(JobInfo*);
+    void jobAdded(SailfishConnect::JobInfo*);
+    void jobRemoved(SailfishConnect::JobInfo*);
 
 private:
     QList<JobInfo*> m_jobs;

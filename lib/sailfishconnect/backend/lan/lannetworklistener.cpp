@@ -55,7 +55,7 @@ void LanNetworkListener::onNetworkConfigurationChanged(
 
     int newActiveConfigs = m_activeConfigurations.size();
     if (newActiveConfigs > activeConfigs) {
-        networkChanged();
+        Q_EMIT networkChanged();
     }
 }
 

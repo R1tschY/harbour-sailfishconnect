@@ -119,7 +119,7 @@ QStringList toStringList(const QJsonValue& value)
 
     QStringList list;
     list.reserve(array.size());
-    for (auto entry : array) {
+    for (const auto& entry : array) {
         auto strEntry = entry.toString();
         if (!strEntry.isNull()) {
             list.append(entry.toString());

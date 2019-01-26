@@ -451,7 +451,7 @@ void LanLinkProvider::configureSslSocket(QSslSocket* socket, const QString& devi
         // use unsanitized device id as peer verify name
         QSslCertificate cert(certString.toLatin1());
         socket->setPeerVerifyName(
-                    cert.issuerInfo(QSslCertificate::CommonName).first());
+                    cert.issuerInfo(QSslCertificate::CommonName).constFirst());
         socket->addCaCertificate(cert);
         socket->setPeerVerifyMode(QSslSocket::VerifyPeer);
     } else {

@@ -296,7 +296,7 @@ TEST_F(UnpairedDeviceTests, pair)
     // accept pair (on remote side)
 
     QSignalSpy spy(&device, &Device::trustedChanged);
-    link.pairStatusChanged(DeviceLink::Paired);
+    emit link.pairStatusChanged(DeviceLink::Paired);
 
     EXPECT_EQ(spy, toVVList({{true}}));
     EXPECT_EQ(device.isTrusted(), true);

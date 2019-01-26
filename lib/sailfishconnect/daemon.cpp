@@ -179,7 +179,7 @@ Device* Daemon::getDevice(const QString& deviceId)
     return Q_NULLPTR;
 }
 
-QStringList Daemon::devices(bool onlyReachable, bool onlyTrusted) const
+QStringList Daemon::devices(bool onlyReachable, bool onlyTrusted)
 {
     QStringList ret;
     for (Device* device : asConst(d->m_devices)) {
@@ -273,7 +273,7 @@ bool Daemon::isDiscoveringDevices() const
     return !d->m_discoveryModeAcquisitions.isEmpty();
 }
 
-QString Daemon::deviceIdByName(const QString& name) const
+QString Daemon::deviceIdByName(const QString& name)
 {
     for (Device* device : asConst(d->m_devices)) {
         if (device->name() == name && device->isTrusted())

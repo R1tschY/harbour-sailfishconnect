@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ru">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
 <context>
     <name>AboutPage</name>
     <message>
@@ -36,7 +34,7 @@
     </message>
     <message>
         <source>Clipboard</source>
-        <translation type="unfinished">Буфер обмена</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -106,7 +104,7 @@
     </message>
     <message>
         <source>Transfers ...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -178,7 +176,7 @@
     </message>
     <message>
         <source>This device cannot be paired because it sends a strange ssl certificate.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -268,7 +266,7 @@
     </message>
     <message>
         <source>Early end of output stream</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -283,30 +281,30 @@
     </message>
     <message>
         <source>Receiving</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SailfishConnect::Job</name>
     <message>
         <source>Pending</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Running</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Succeeded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -317,7 +315,7 @@
     </message>
     <message>
         <source>Sending</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -357,11 +355,11 @@
     <name>SailfishConnect::SharePluginFactory</name>
     <message>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступ к файлам</translation>
     </message>
     <message>
         <source>Send and receive files and URLs.</source>
-        <translation>Отправка и получение файлов и URL.</translation>
+        <translation>Передача и получение файлов и URL.</translation>
     </message>
 </context>
 <context>
@@ -379,7 +377,7 @@
     <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation>Тачпад</translation>
     </message>
     <message>
         <source>Control remote computer through mouse movements and clicks.</source>
@@ -405,42 +403,42 @@
     <name>ShareUi</name>
     <message>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступ к файлам</translation>
     </message>
 </context>
 <context>
     <name>Touchpad</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation>Тачпад</translation>
     </message>
 </context>
 <context>
     <name>TouchpadPage</name>
     <message>
         <source>Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation>Тачпад</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Move finger on screen
 Tap for click
 Hold shortly for Drag&apos;n&apos;Drop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>TransfersPage</name>
     <message>
         <source>Transfers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>%1 -- %2 of %3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

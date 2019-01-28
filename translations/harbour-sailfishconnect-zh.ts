@@ -1,36 +1,36 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh" version="2.1">
 <context>
     <name>AboutPage</name>
     <message>
         <source>A KDE-Connect client for SailfishOS</source>
-        <translation>Ein KDE-Connect Client für SailfishOS</translation>
+        <translation>一个旗鱼系统 KDE-Connect客户端</translation>
     </message>
     <message>
         <source>Links</source>
-        <translation>Links</translation>
+        <translation>链接</translation>
     </message>
     <message>
         <source>Licence</source>
-        <translation>Lizenz</translation>
+        <translation>许可</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Info</translation>
+        <translation>关于</translation>
     </message>
     <message>
         <source>Bug reports on Github</source>
-        <translation>Fehlermeldungen auf Github</translation>
+        <translation>在 Github报告问题</translation>
     </message>
     <message>
         <source>Source code on Github</source>
-        <translation>Quellcode auf Github</translation>
+        <translation>Github上的源代码</translation>
     </message>
 </context>
 <context>
     <name>ClipboardUi</name>
     <message>
         <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
-        <translation>Zum Senden des Inhalts der Zwischenablage muss das Sailfish Connect Fenster nach dem Kopieren geöffnet werden. Zum Erhalten des Inhalts der entfernten Zwischenablage ist dies nicht notwendig.</translation>
+        <translation>复制后, 打开 &quot;旗鱼连接&quot; 窗口以发送剪贴板内容。对于接收剪贴板内容, 这不是必需的。</translation>
     </message>
     <message>
         <source>Clipboard</source>
@@ -41,66 +41,64 @@
     <name>Device</name>
     <message>
         <source>Already paired</source>
-        <translation>Bereits gekoppelt</translation>
+        <translation>已配对</translation>
     </message>
     <message>
         <source>Device not reachable</source>
-        <translation>Gerät nicht erreichbar</translation>
+        <translation>设备无法访问</translation>
     </message>
     <message>
         <source>SHA1 fingerprint of your device certificate is: %1
 </source>
-        <translation>SHA1-Fingerabdruck des Zertifikats deines Geräts ist: %1
-</translation>
+        <translation>你的设备证书的SHA1 指纹为:%1</translation>
     </message>
     <message>
         <source>SHA1 fingerprint of remote device certificate is: %1
 </source>
-        <translation>SHA1-Fingerabdruck des Zertifikats des entfernten Geräts ist: %1
-</translation>
+        <translation>远程设备证书的SHA1指纹为:% 1</translation>
     </message>
 </context>
 <context>
     <name>DeviceListPage</name>
     <message>
         <source>Device Name</source>
-        <translation>Gerätename</translation>
+        <translation>设备名称</translation>
     </message>
     <message>
         <source>Paired devices</source>
-        <translation>Gekoppelte Geräte</translation>
+        <translation>配对设备</translation>
     </message>
     <message>
         <source>Nearby devices</source>
-        <translation>Geräte in der Nähe</translation>
+        <translation>附近设备</translation>
     </message>
     <message>
         <source>Connected</source>
-        <translation>Verbunden</translation>
+        <translation>已连接</translation>
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation>Offene Kopplungsanfrage ...</translation>
+        <translation>等待配对请求......</translation>
     </message>
     <message>
         <source>About ...</source>
-        <translation>Info ...</translation>
+        <translation>关于 ...</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Aktualisieren</translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <source>Sailfish Connect</source>
-        <translation>Sailfish Connect</translation>
+        <translation>旗鱼连接</translation>
     </message>
     <message>
         <source>Settings ...</source>
-        <translation>Einstellungen ...</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Beenden</translation>
+        <translation>退出</translation>
     </message>
     <message>
         <source>Transfers ...</source>
@@ -111,68 +109,68 @@
     <name>DevicePage</name>
     <message>
         <source>You don&apos;t trust this device</source>
-        <translation>Es existiert keine Koppelung mit diesem Gerät.</translation>
+        <translation>你不信任此设备</translation>
     </message>
     <message>
         <source>Request pairing</source>
-        <translation>Kopplung anfordern</translation>
+        <translation>请求配对</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Annehmen</translation>
+        <translation>接受</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation>Ablehnen</translation>
+        <translation>拒绝</translation>
     </message>
     <message>
         <source>You trust this device</source>
-        <translation>Das Gerät ist gekoppelt.</translation>
+        <translation>你信任此设备</translation>
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation>Warten auf erfolgreiches Koppeln</translation>
+        <translation>等待接受配对………</translation>
     </message>
     <message>
         <source>This device wants to pair with your device.</source>
-        <translation>Dieses Gerät möchte sich mit deinem Gerät koppeln.</translation>
+        <translation>此设备希望和你的设备配对</translation>
     </message>
     <message>
         <source>Encryption info</source>
-        <translation>Verschlüsselungsinformationen</translation>
+        <translation>加密信息</translation>
     </message>
     <message>
         <source>Plugins</source>
-        <translation>Plugins</translation>
+        <translation>插件</translation>
     </message>
     <message>
         <source>Unpair</source>
-        <translation>Koppelung auflösen</translation>
+        <translation>取消配对</translation>
     </message>
     <message>
         <source>Send ping</source>
-        <translation>Ping senden</translation>
+        <translation>发送 ping</translation>
     </message>
 </context>
 <context>
     <name>DevicePluginsPage</name>
     <message>
         <source>Select Plugins</source>
-        <translation>Plugins auswählen</translation>
+        <translation>选择插件</translation>
     </message>
 </context>
 <context>
     <name>EncryptionInfoPage</name>
     <message>
         <source>Encryption info</source>
-        <translation>Verschlüsselungsinformationen</translation>
+        <translation>加密信息</translation>
     </message>
 </context>
 <context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
-        <translation>Mit diesem Gerät ist keine Verbindung möglich, da es eine zu alte Version von KDE Connect benutzt.</translation>
+        <translation>无法配对此设备, 因为它正在运行旧版本的  KDE连接。</translation>
     </message>
     <message>
         <source>This device cannot be paired because it sends a strange ssl certificate.</source>
@@ -183,86 +181,86 @@
     <name>LanPairingHandler</name>
     <message>
         <source>Canceled by other peer</source>
-        <translation>Abbruch durch andere Seite</translation>
+        <translation>已被其他对等方取消</translation>
     </message>
     <message>
         <source>%1: Already paired</source>
-        <translation>%1: Bereits gekoppelt</translation>
+        <translation>已配对%1: </translation>
     </message>
     <message>
         <source>Timed out</source>
-        <translation>Zeitüberschreitung</translation>
+        <translation>超时</translation>
     </message>
 </context>
 <context>
     <name>MprisUi</name>
     <message>
         <source>No remote players</source>
-        <translation>Keine entfernten Player</translation>
+        <translation>没有远程播放器</translation>
     </message>
     <message>
         <source>Multimedia Controls</source>
-        <translation>Multimedia Steuerung</translation>
+        <translation>多媒体控制</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::AppDaemon</name>
     <message>
         <source>Pairing request</source>
-        <translation>Kopplungsanfrage</translation>
+        <translation>配对请求</translation>
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation>Offene Kopplungsanfrage ...</translation>
+        <translation>等待配对请求......</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::BatteryPluginFactory</name>
     <message>
         <source>Battery report</source>
-        <translation>Batteriebericht</translation>
+        <translation>电池报告</translation>
     </message>
     <message>
         <source>Share battery charge state.</source>
-        <translation>Übermittelt den Akkustand</translation>
+        <translation>分享电池充电状态。</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::ClipboardPluginFactory</name>
     <message>
         <source>Clipboard</source>
-        <translation>Zwischenablage</translation>
+        <translation>剪贴板</translation>
     </message>
     <message>
         <source>Synchronize clipboard between devices.</source>
-        <translation>Synchronisiert den Textinhalt der Zwischenablage.</translation>
+        <translation>在设备之间同步剪贴板。</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::CopyJob</name>
     <message>
         <source>Read error: %1</source>
-        <translation>Lesefehler: %1</translation>
+        <translation>阅读错误：%1</translation>
     </message>
     <message>
         <source>Write error: %1</source>
-        <translation>Schreibfehler: %1</translation>
+        <translation>写入错误：%1</translation>
     </message>
     <message>
         <source>Input stream is not readable.</source>
-        <translation>Eingehender Datenstrom ist nicht lesbar.</translation>
+        <translation>输入流不可读取。</translation>
     </message>
     <message>
         <source>Output stream is not writable.</source>
-        <translation>Ausgehender Datenstrom ist nicht schreibbar.</translation>
+        <translation>输出流不可读取。</translation>
     </message>
     <message>
         <source>Read more bytes of input stream than expected.</source>
-        <translation>Mehr Bytes von eingehenden Datenstrom gelesen als erwartet.</translation>
+        <translation>读取比预期更多的输入流字节。</translation>
     </message>
     <message>
         <source>Early end of input stream</source>
-        <translation>Verfrühtes Ende des eingehenden Datenstroms.</translation>
+        <translation>输入流提前结束</translation>
     </message>
     <message>
         <source>Early end of output stream</source>
@@ -273,11 +271,11 @@
     <name>SailfishConnect::DownloadJob</name>
     <message>
         <source>Cannot create destination folder</source>
-        <translation>Zielordner kann nicht erstellt werden</translation>
+        <translation>无法创建目标文件夹</translation>
     </message>
     <message>
         <source>Could not open file for writing: %1</source>
-        <translation>Datei kann nicht zum Schreiben geöffnet werden: %1</translation>
+        <translation>无法打开要写入的文件:% 1</translation>
     </message>
     <message>
         <source>Receiving</source>
@@ -311,7 +309,7 @@
     <name>SailfishConnect::LanUploadJob</name>
     <message>
         <source>Couldn&apos;t find an available port</source>
-        <translation>Kann keinen freien Port finden</translation>
+        <translation>找不到可用的端口</translation>
     </message>
     <message>
         <source>Sending</source>
@@ -322,11 +320,11 @@
     <name>SailfishConnect::MprisRemotePluginFactory</name>
     <message>
         <source>Multimedia controls</source>
-        <translation>Multimedia Steuerung</translation>
+        <translation>多媒体控制</translation>
     </message>
     <message>
         <source>Control your media player from remote.</source>
-        <translation>Steuere Multimedia-Player aus der Ferne.</translation>
+        <translation>从远程控制媒体播放器。</translation>
     </message>
 </context>
 <context>
@@ -337,87 +335,87 @@
     </message>
     <message>
         <source>Ping other device and receive pings.</source>
-        <translation>Ermöglicht gegenseitiges Pingen.</translation>
+        <translation>Ping其他设备并接收Ping。</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::SendNotificationsPluginFactory</name>
     <message>
         <source>Send notifcations</source>
-        <translation>Sende Benachrichtigungen</translation>
+        <translation>发送通知</translation>
     </message>
     <message>
         <source>Work in progress: Send notifications to the remote computer.</source>
-        <translation>In Arbeit: Sende Benachrichtigungen zu anderem Gerät.</translation>
+        <translation>正在进行的工作: 将通知发送到远程计算机。</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::SharePluginFactory</name>
     <message>
         <source>Share</source>
-        <translation>Teilen</translation>
+        <translation>分享</translation>
     </message>
     <message>
         <source>Send and receive files and URLs.</source>
-        <translation>Versende und empfange Dateien und URLs.</translation>
+        <translation>发送和接收文件和网址链接</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TelepathyPluginFactory</name>
     <message>
         <source>Send SMS</source>
-        <translation>SMS versenden</translation>
+        <translation>发送短信</translation>
     </message>
     <message>
         <source>Allow sending of text messages.</source>
-        <translation>Erlaubt das Versenden von Textnachrichten.</translation>
+        <translation>允许发送短信。</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
         <source>Touchpad</source>
-        <translation>Touchpad</translation>
+        <translation>触摸板</translation>
     </message>
     <message>
         <source>Control remote computer through mouse movements and clicks.</source>
-        <translation>Steuere die Maus aus der Ferne.</translation>
+        <translation>通过鼠标移动和单击控制远程计算机。</translation>
     </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
-        <translation>Einstellungen</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <source>Run in background</source>
-        <translation>Laufe im Hintergrund</translation>
+        <translation>在后台运行</translation>
     </message>
     <message>
         <source>Application runs in background after window is closed.</source>
-        <translation>Die Anwendung läuft im Hintergrund weiter, wenn das Fenster geschlossen wird.</translation>
+        <translation>窗口关闭之后应用在后台运行</translation>
     </message>
 </context>
 <context>
     <name>ShareUi</name>
     <message>
         <source>Share</source>
-        <translation>Teilen</translation>
+        <translation>分享</translation>
     </message>
 </context>
 <context>
     <name>Touchpad</name>
     <message>
         <source>Touchpad</source>
-        <translation>Touchpad</translation>
+        <translation>触摸板</translation>
     </message>
 </context>
 <context>
     <name>TouchpadPage</name>
     <message>
         <source>Touchpad</source>
-        <translation>Touchpad</translation>
+        <translation>触摸板</translation>
     </message>
     <message>
         <source/>

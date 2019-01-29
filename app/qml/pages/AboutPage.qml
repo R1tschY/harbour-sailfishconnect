@@ -25,6 +25,7 @@ Page {
     allowedOrientations: Orientation.All
 
     SilicaFlickable {
+        id: flickable
         anchors.fill: parent
         contentHeight: content.height
 
@@ -102,7 +103,8 @@ Page {
                     "GNU General Public License for more details.<br/><br/>" +
 
                     "You should have received a copy of the GNU General Public License " +
-                    "along with this program. If not, see <a href=\"http://www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a>."
+                    "along with this program. If not, see <a href=\"http://www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a>." +
+                    "<br/><br/>"
                 textFormat: Text.StyledText
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeSmall
@@ -111,6 +113,6 @@ Page {
             }
         }
 
-        VerticalScrollDecorator {}
+        VerticalScrollDecorator { flickable: flickable }
     }
 }

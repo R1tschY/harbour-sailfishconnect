@@ -133,8 +133,6 @@ void SharePlugin::finishedFileTransfer()
                 << job->errorString()
                 << job->target().toString();
     }
-
-    job->deleteLater();
 }
 
 QString SharePluginFactory::name() const

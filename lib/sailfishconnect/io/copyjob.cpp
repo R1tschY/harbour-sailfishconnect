@@ -163,6 +163,7 @@ void CopyJob::finish()
 
     // success
     exit();
+    close();
 }
 
 } // namespace SailfishConnect

@@ -34,7 +34,7 @@
     </message>
     <message>
         <source>Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>剪贴板</translation>
     </message>
 </context>
 <context>
@@ -102,7 +102,7 @@
     </message>
     <message>
         <source>Transfers ...</source>
-        <translation type="unfinished"/>
+        <translation>传输…</translation>
     </message>
 </context>
 <context>
@@ -174,7 +174,7 @@
     </message>
     <message>
         <source>This device cannot be paired because it sends a strange ssl certificate.</source>
-        <translation type="unfinished"/>
+        <translation>无法配对该设备因为它寄送异常的ssl证书</translation>
     </message>
 </context>
 <context>
@@ -264,7 +264,7 @@
     </message>
     <message>
         <source>Early end of output stream</source>
-        <translation type="unfinished"/>
+        <translation>输入流提前结束</translation>
     </message>
 </context>
 <context>
@@ -279,30 +279,30 @@
     </message>
     <message>
         <source>Receiving</source>
-        <translation type="unfinished"/>
+        <translation>移除中</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::Job</name>
     <message>
         <source>Pending</source>
-        <translation type="unfinished"/>
+        <translation>等待中</translation>
     </message>
     <message>
         <source>Running</source>
-        <translation type="unfinished"/>
+        <translation>运行中</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"/>
+        <translation>已取消</translation>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"/>
+        <translation>失败</translation>
     </message>
     <message>
         <source>Succeeded</source>
-        <translation type="unfinished"/>
+        <translation>成功</translation>
     </message>
 </context>
 <context>
@@ -313,7 +313,7 @@
     </message>
     <message>
         <source>Sending</source>
-        <translation type="unfinished"/>
+        <translation>发送中</translation>
     </message>
 </context>
 <context>
@@ -425,18 +425,20 @@
         <source>Move finger on screen
 Tap for click
 Hold shortly for Drag&apos;n&apos;Drop</source>
-        <translation type="unfinished"/>
+        <translation>在屏幕移动手指
+轻扫以点击
+短暂按住 Drag&apos;n&apos;Drop</translation>
     </message>
 </context>
 <context>
     <name>TransfersPage</name>
     <message>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>传输</translation>
     </message>
     <message>
         <source>%1 -- %2 of %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 -- %2 of %3</translation>
     </message>
 </context>
 </TS>

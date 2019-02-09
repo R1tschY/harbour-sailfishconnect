@@ -34,7 +34,7 @@
     </message>
     <message>
         <source>Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Буфер обмена</translation>
     </message>
 </context>
 <context>
@@ -104,7 +104,7 @@
     </message>
     <message>
         <source>Transfers ...</source>
-        <translation type="unfinished"/>
+        <translation>Передачи...</translation>
     </message>
 </context>
 <context>
@@ -176,7 +176,7 @@
     </message>
     <message>
         <source>This device cannot be paired because it sends a strange ssl certificate.</source>
-        <translation type="unfinished"/>
+        <translation>Невозможно установить связь с устройством, потому что оно шлет странный SSL-сертификат.</translation>
     </message>
 </context>
 <context>
@@ -266,7 +266,7 @@
     </message>
     <message>
         <source>Early end of output stream</source>
-        <translation type="unfinished"/>
+        <translation>Поток данных на выход прерван</translation>
     </message>
 </context>
 <context>
@@ -281,30 +281,30 @@
     </message>
     <message>
         <source>Receiving</source>
-        <translation type="unfinished"/>
+        <translation>Получение</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::Job</name>
     <message>
         <source>Pending</source>
-        <translation type="unfinished"/>
+        <translation>Ожидает</translation>
     </message>
     <message>
         <source>Running</source>
-        <translation type="unfinished"/>
+        <translation>Выполняется</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"/>
+        <translation>Отменено</translation>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"/>
+        <translation>Завершено с ошибкой</translation>
     </message>
     <message>
         <source>Succeeded</source>
-        <translation type="unfinished"/>
+        <translation>Завершено успешно</translation>
     </message>
 </context>
 <context>
@@ -315,7 +315,7 @@
     </message>
     <message>
         <source>Sending</source>
-        <translation type="unfinished"/>
+        <translation>Передается</translation>
     </message>
 </context>
 <context>
@@ -427,18 +427,20 @@
         <source>Move finger on screen
 Tap for click
 Hold shortly for Drag&apos;n&apos;Drop</source>
-        <translation type="unfinished"/>
+        <translation>Проведите пальцем по экрану
+Коснитесь, чтобы выделить
+Подержите, чтобы перетащить</translation>
     </message>
 </context>
 <context>
     <name>TransfersPage</name>
     <message>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Передачи</translation>
     </message>
     <message>
         <source>%1 -- %2 of %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 -- %2 из %3</translation>
     </message>
 </context>
 </TS>

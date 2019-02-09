@@ -47,6 +47,7 @@
 #include "ui/jobsmodel.h"
 #include "ui.h"
 #include "js/qmlregister.h"
+#include "dbus/ofono.h"
 
 namespace SailfishConnect {
 
@@ -149,6 +150,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    Ofono::registerTypes();
     registerQmlTypes();
 
     AppDaemon daemon;

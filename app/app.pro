@@ -46,7 +46,9 @@ SOURCES += \
     src/ui/jobsmodel.cpp \
     src/js/url.cpp \
     src/js/qmlregister.cpp \
-    src/js/humanize.cpp
+    src/js/humanize.cpp \
+    src/plugins/telephony/telephonyplugin.cpp \
+    src/dbus/ofono.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -70,7 +72,9 @@ DISTFILES += \
     qml/components/TouchpadPage.qml \
     src/plugins/share/metadata.json \
     qml/components/ShareUi.qml \
-    qml/pages/TransfersPage.qml
+    qml/pages/TransfersPage.qml \
+    src/plugins/telephony/metadata.json \
+    src/dbus/ofono/org.ofono.Manager.xml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
@@ -95,4 +99,7 @@ HEADERS += \
     src/ui/jobsmodel.h \
     src/js/url.h \
     src/js/qmlregister.h \
-    src/js/humanize.h
+    src/js/humanize.h \
+    src/plugins/telephony/telephonyplugin.h \
+    src/dbus/tuple.h \
+    src/dbus/ofono.h

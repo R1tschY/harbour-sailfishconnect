@@ -92,6 +92,12 @@ public:
     const Device* device() const;
 
     bool sendPacket(NetworkPacket& np, SailfishConnect::JobManager *jobMgr = nullptr) const;
+    bool sendPacket(
+            NetworkPacket&& np,
+            SailfishConnect::JobManager *jobMgr = nullptr) const
+    {
+        return sendPacket(np, jobMgr);
+    }
 
     SailfishConnectPluginConfig* config() const;
 

@@ -1,0 +1,10 @@
+[main]
+host = https://www.transifex.com
+
+[sailfish-connect.harbour-sailfishconnectts]
+file_filter = translations/harbour-sailfishconnect-<lang>.ts
+minimum_perc = 0
+source_file = translations/harbour-sailfishconnect.ts
+source_lang = en
+type = QT
+

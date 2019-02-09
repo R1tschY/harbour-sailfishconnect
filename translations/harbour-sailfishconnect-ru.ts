@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ru">
 <context>
     <name>AboutPage</name>
     <message>
@@ -105,6 +107,10 @@
     <message>
         <source>Transfers ...</source>
         <translation>Передачи...</translation>
+    </message>
+    <message>
+        <source>Install KDE-Connect or GSConnect on your computer and connect it to the same Wifi.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -374,6 +380,17 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::TelephonyPluginFactory</name>
+    <message>
+        <source>Call notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send notifications for incoming and missed calls.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
         <source>Touchpad</source>
@@ -420,8 +437,8 @@
         <translation>Тачпад</translation>
     </message>
     <message>
-        <source/>
-        <translation type="unfinished"/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Move finger on screen
@@ -441,6 +458,10 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     <message>
         <source>%1 -- %2 of %3</source>
         <translation>%1 -- %2 из %3</translation>
+    </message>
+    <message>
+        <source>Yet no downloads or uploads</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

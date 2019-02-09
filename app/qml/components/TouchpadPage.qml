@@ -140,21 +140,18 @@ Page {
         spacing: Theme.paddingSmall
 
         Button {
-           text: ""
            onClicked: plugin.sendCommand("singleclick", true)
            preferredWidth: Theme.buttonWidthExtraSmall
            width: parent.btnWidth
         }
 
         Button {
-           text: ""
            onClicked: plugin.sendCommand("middleclick", true)
            preferredWidth: Theme.buttonWidthExtraSmall
            width: parent.btnWidth
         }
 
         Button {
-           text: ""
            onClicked: plugin.sendCommand("rightclick", true)
            preferredWidth: Theme.buttonWidthExtraSmall
            width: parent.btnWidth

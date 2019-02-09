@@ -106,6 +106,10 @@
         <source>Transfers ...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Install KDE-Connect or GSConnect on your computer and connect it to the same Wifi.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePage</name>
@@ -374,6 +378,17 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::TelephonyPluginFactory</name>
+    <message>
+        <source>Call notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send notifications for incoming and missed calls.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
         <source>Touchpad</source>
@@ -438,6 +453,10 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>%1 -- %2 of %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yet no downloads or uploads</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -6,8 +6,9 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.job")
 
-Job::Job(QObject *parent)
+Job::Job(const QString& deviceId, QObject *parent)
     : QObject(parent)
+    , m_deviceId(deviceId)
     , m_action(tr("Pending"))
 { }
 

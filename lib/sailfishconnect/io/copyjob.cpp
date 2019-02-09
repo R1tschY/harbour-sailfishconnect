@@ -10,12 +10,12 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.io")
 
-CopyJob::CopyJob(
-        QSharedPointer<QIODevice> source,
-        QSharedPointer<QIODevice> destination,
+CopyJob::CopyJob(const QString& deviceId,
+        const QSharedPointer<QIODevice>& source,
+        const QSharedPointer<QIODevice>& destination,
         qint64 size,
         QObject *parent)
-    : Job(parent),
+    : Job(deviceId, parent),
       m_source(source), m_destination(destination), m_buffer(), m_size(size)
 {
     m_timer.setInterval(100);

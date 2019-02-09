@@ -57,29 +57,47 @@ Page {
         }
     }
 
-    function description(currentState, action, processedBytes, totalBytes, error) {
+    function description(currentState, deviceId, action, processedBytes,
+                         totalBytes, error) {
+        var deviceName = "¯\_(ツ)_/¯"
+        var device = daemon.getDevice(deviceId)
+        if (device) {
+            deviceName = device.name
+        }
+
         if (currentState === Job.Running) {
             if (totalBytes < 0) {
-                return "%1 -- %2"
-                    .arg(action).arg(Humanize.bytes(processedBytes))
+                return "%1 - %2 - %3"
+                    .arg(action)
+                    .arg(deviceName)
+                    .arg(Humanize.bytes(processedBytes))
             }
 
-            return qsTr("%1 -- %2 of %3")
+            return "%1 - %2 - %3 %4 %5"
                 .arg(action)
+                .arg(deviceName)
                 .arg(Humanize.bytes(processedBytes))
+                //: Download progress, for example: 3MB of 50MB
+                .arg(qsTr("of"))
                 .arg(Humanize.bytes(totalBytes))
         } else if (currentState === Job.Finished) {
             if (error) {
-                return "%1 -- %2".arg(action).arg(error)
+                return action
             }
 
-            return "%1 -- %2".arg(action).arg(Humanize.bytes(processedBytes))
-        } else {
+            return "%1 - %2 - %3"
+                .arg(action)
+                .arg(deviceName)
+                .arg(Humanize.bytes(processedBytes))
+        } else if (currentState === Job.Pending) {
             if (totalBytes < 0) {
                 return action
             }
 
-            return "%1 -- %2".arg(action).arg(Humanize.bytes(totalBytes))
+            return "%1 - %2 - %3"
+                .arg(action)
+                .arg(deviceName)
+                .arg(Humanize.bytes(totalBytes))
         }
     }
 
@@ -150,7 +168,8 @@ Page {
                     right: parent.right
                 }
 
-                text: description(currentState, action, processedBytes, totalBytes, error)
+                text: description(currentState, deviceId, action,
+                                  processedBytes, totalBytes, error)
                 color: listItem.highlighted
                        ? Theme.secondaryHighlightColor
                        : Theme.secondaryColor

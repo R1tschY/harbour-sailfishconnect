@@ -19,6 +19,7 @@ public:
         StateRole,
         CanceledRole,
         ErrorRole,
+        DeviceIdRole,
     };
 
     explicit JobsModel(QObject *parent = nullptr);

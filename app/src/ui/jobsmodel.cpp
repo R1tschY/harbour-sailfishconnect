@@ -29,6 +29,7 @@ QHash<int, QByteArray> JobsModel::roleNames() const
     roles.insert(StateRole, "currentState");
     roles.insert(CanceledRole, "canceled");
     roles.insert(ErrorRole, "error");
+    roles.insert(DeviceIdRole, "deviceId");
     return roles;
 }
 
@@ -148,6 +149,8 @@ QVariant JobsModel::data(const QModelIndex &index, int role) const
         return job->canceled();
     case ErrorRole:
         return job->errorString();
+    case DeviceIdRole:
+        return job->deviceId();
     }
 
     return QVariant();

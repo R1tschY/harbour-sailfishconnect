@@ -456,11 +456,12 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
         <translation>Передачи</translation>
     </message>
     <message>
-        <source>%1 -- %2 of %3</source>
-        <translation>%1 -- %2 из %3</translation>
+        <source>Yet no downloads or uploads</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Yet no downloads or uploads</source>
+        <source>of</source>
+        <extracomment>for example: 3MB of 50MB</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

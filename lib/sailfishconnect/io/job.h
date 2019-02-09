@@ -25,9 +25,10 @@ public:
     };
     Q_ENUM(State)
 
-    explicit Job(QObject* parent = nullptr);
+    explicit Job(const QString &deviceId, QObject* parent = nullptr);
     ~Job();
 
+    QString deviceId() const { return m_deviceId; }
     /// \brief an uri to the target file.
     ///
     /// possibilities:
@@ -43,6 +44,7 @@ public:
     Q_SCRIPTABLE bool isPending() const { return m_state == State::Pending; }
     Q_SCRIPTABLE bool isRunning() const { return m_state == State::Running; }
     Q_SCRIPTABLE bool isFinished() const { return m_state == State::Finished; }
+
 
 public slots:
     void start();
@@ -83,6 +85,7 @@ protected:
 
 private:
     QString m_errorString;
+    QString m_deviceId;
     QUrl m_target;
     QString m_action;
     qint64 m_totalBytes = -1;

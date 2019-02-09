@@ -9,9 +9,11 @@
 
 namespace SailfishConnect {
 
-DownloadJob::DownloadJob(const QSharedPointer<QIODevice>& origin,
+DownloadJob::DownloadJob(
+        const QString& deviceId,
+        const QSharedPointer<QIODevice>& origin,
         const QString& destination, qint64 size, QObject* parent)
-    : CopyJob(origin, QSharedPointer<QIODevice>(), size, parent),
+    : CopyJob(deviceId, origin, QSharedPointer<QIODevice>(), size, parent),
       m_destination(destination)
 {
     QUrl target;

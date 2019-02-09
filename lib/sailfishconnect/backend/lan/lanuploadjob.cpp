@@ -27,12 +27,10 @@
 namespace SailfishConnect {
 
 LanUploadJob::LanUploadJob(const NetworkPacket &np, const QString& deviceId)
-    : CopyJob(np.payload(), QSharedPointer<QIODevice>())
+    : CopyJob(deviceId, np.payload(), QSharedPointer<QIODevice>())
     , m_server(new Server(this))
     , m_socket(nullptr)
     , m_port(0)
-    // We will use this info if link is on ssl, to send encrypted payload
-    , m_deviceId(deviceId)
 {
     QUrl target;
     target.setScheme(QStringLiteral("remote"));
@@ -95,7 +93,7 @@ void LanUploadJob::newConnection()
 //             this, [](QAbstractSocket::SocketState state){
 //                  qDebug() << "statechange" << state; });
 
-    LanLinkProvider::configureSslSocket(m_socket.data(), m_deviceId, true);
+    LanLinkProvider::configureSslSocket(m_socket.data(), deviceId(), true);
     m_socket->startServerEncryption();
 }
 

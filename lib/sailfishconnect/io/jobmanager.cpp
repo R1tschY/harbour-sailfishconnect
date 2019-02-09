@@ -7,8 +7,8 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.jobmanager")
 
-JobInfo::JobInfo(Job *job, QString deviceId, QObject *parent)
-    : QObject(parent), m_impl(job), m_deviceId(deviceId)
+JobInfo::JobInfo(Job *job, QObject *parent)
+    : QObject(parent), m_impl(job), m_deviceId(job->deviceId())
 {
     Q_ASSERT(job);
 
@@ -84,9 +84,9 @@ JobManager::JobManager(QObject *parent)
 
 }
 
-void JobManager::addJob(Job *job, const QString &deviceId)
+void JobManager::addJob(Job *job)
 {
-    m_jobs.append(new JobInfo(job, deviceId, this));
+    m_jobs.append(new JobInfo(job, this));
     emit jobAdded(m_jobs.back());
 }
 

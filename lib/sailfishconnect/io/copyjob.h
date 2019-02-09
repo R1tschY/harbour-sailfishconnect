@@ -28,8 +28,9 @@ public:
      * IO-Devices are not closed at destruction.
      */
     explicit CopyJob(
-            QSharedPointer<QIODevice> source,
-            QSharedPointer<QIODevice> destination,
+            const QString &deviceId,
+            const QSharedPointer<QIODevice>& source,
+            const QSharedPointer<QIODevice>& destination,
             qint64 size = -1,
             QObject *parent = nullptr);
 

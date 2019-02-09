@@ -452,11 +452,12 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 -- %2 of %3</source>
+        <source>Yet no downloads or uploads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Yet no downloads or uploads</source>
+        <source>of</source>
+        <extracomment>for example: 3MB of 50MB</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

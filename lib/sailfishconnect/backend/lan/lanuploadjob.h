@@ -55,7 +55,6 @@ private:
     Server* m_server;
     QSharedPointer<QSslSocket> m_socket;
     quint16 m_port;
-    const QString m_deviceId;
 
     const static quint16 MIN_PORT = 1739;
     const static quint16 MAX_PORT = 1764;

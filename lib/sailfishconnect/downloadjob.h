@@ -12,6 +12,7 @@ class DownloadJob : public CopyJob
     Q_OBJECT
 public:
     DownloadJob(
+            const QString &deviceId,
             const QSharedPointer<QIODevice>& origin,
             const QString &destination,
             qint64 size,

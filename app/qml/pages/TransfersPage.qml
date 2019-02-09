@@ -26,6 +26,13 @@ Page {
 
     allowedOrientations: Orientation.All
 
+    InfoLabel {
+        id: hintLabel
+        text: qsTr("Yet no downloads or uploads")
+        anchors.verticalCenter: page.verticalCenter
+        visible: listView.count == 0
+    }
+
     function stringStartsWith(s, start) {
         // TODO: Qt 5.8: use s.startsWith(start)
         return s.substring(0, start.length) === start

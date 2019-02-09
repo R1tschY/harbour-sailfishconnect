@@ -25,6 +25,14 @@ Page {
 
     allowedOrientations: Orientation.All
 
+    InfoLabel {
+        id: hintLabel
+        text: qsTr("Install KDE-Connect or GSConnect on your " +
+                   "computer and connect it to the same Wifi.")
+        anchors.verticalCenter: parent.verticalCenter
+        visible: nearDevices.count === 0 && trustedDevices.count === 0
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
@@ -182,22 +190,26 @@ Page {
             }
 
             SilicaListView {
+                id: trustedDevices
                 width: page.width
                 height: contentItem.childrenRect.height
                 header: SectionHeader { text: qsTr("Paired devices") }
 
                 model: trustedDevicesModel
                 delegate: deviceDelegate
+                visible: trustedDevices.count > 0
             }
 
 
             SilicaListView {
+                id: nearDevices
                 width: page.width
                 height: contentItem.childrenRect.height
                 header: SectionHeader { text: qsTr("Nearby devices") }
 
                 model: otherNearDevicesModel
                 delegate: deviceDelegate
+                visible: nearDevices.count > 0
             }
         }
 

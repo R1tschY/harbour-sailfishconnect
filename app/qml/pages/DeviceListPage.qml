@@ -25,17 +25,15 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    InfoLabel {
-        id: hintLabel
-        text: qsTr("Install KDE-Connect or GSConnect on your " +
-                   "computer and connect it to the same Wifi.")
-        anchors.verticalCenter: parent.verticalCenter
-        visible: nearDevices.count === 0 && trustedDevices.count === 0
-    }
-
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
+
+        ViewPlaceholder {
+            enabled: trustedDevices.count === 0 && nearDevices.count === 0
+            text: qsTr("Install KDE-Connect or GSConnect on your " +
+                       "computer and connect it to the same WLAN.")
+        }
 
         Column {
             id: column

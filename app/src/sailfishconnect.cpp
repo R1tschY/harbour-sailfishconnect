@@ -41,7 +41,7 @@
 #include "plugins/mprisremote/mprisremoteplugin.h"
 #include "plugins/touchpad/touchpadplugin.h"
 #include "ui/devicelistmodel.h"
-#include "ui/filtervalueproxymodel.h"
+#include "ui/sortfiltermodel.h"
 #include "ui/devicepluginsmodel.h"
 #include "ui/mprisplayersmodel.h"
 #include "ui/jobsmodel.h"
@@ -96,8 +96,8 @@ void registerQmlTypes() {
     // TODO: register in plugin factories when possible
     qmlRegisterType<DeviceListModel>(
                 "SailfishConnect.UI", 0, 3, "DeviceListModel");
-    qmlRegisterType<FilterValueProxyModel>(
-                "SailfishConnect.UI", 0, 3, "FilterValueProxyModel");
+    qmlRegisterType<SortFilterModel>(
+                "SailfishConnect.UI", 0, 3, "SortFilterModel");
     qmlRegisterType<DevicePluginsModel>(
                 "SailfishConnect.UI", 0, 3, "DevicePluginsModel");
     qmlRegisterType<JobsModel>(

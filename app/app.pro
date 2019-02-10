@@ -32,7 +32,6 @@ SOURCES += \
     src/plugins/battery/batteryplugin.cpp \
     src/plugins/ping/pingplugin.cpp \
     src/plugins/clipboard/clipboardplugin.cpp \
-    src/ui/filtervalueproxymodel.cpp \
     src/ui/devicepluginsmodel.cpp \
     src/ui.cpp \
     src/plugins/telepathy/telepathyplugin.cpp \
@@ -48,7 +47,8 @@ SOURCES += \
     src/js/qmlregister.cpp \
     src/js/humanize.cpp \
     src/plugins/telephony/telephonyplugin.cpp \
-    src/dbus/ofono.cpp
+    src/dbus/ofono.cpp \
+    src/ui/sortfiltermodel.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -84,7 +84,6 @@ HEADERS += \
     src/plugins/battery/batteryplugin.h \
     src/plugins/ping/pingplugin.h \
     src/plugins/clipboard/clipboardplugin.h \
-    src/ui/filtervalueproxymodel.h \
     src/ui/devicepluginsmodel.h \
     src/ui.h \
     src/sailfishconnect.h \
@@ -102,4 +101,5 @@ HEADERS += \
     src/js/humanize.h \
     src/plugins/telephony/telephonyplugin.h \
     src/dbus/tuple.h \
-    src/dbus/ofono.h
+    src/dbus/ofono.h \
+    src/ui/sortfiltermodel.h

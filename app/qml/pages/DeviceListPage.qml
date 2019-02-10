@@ -166,25 +166,27 @@ Page {
 //                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "5"; deviceId: "1"; trusted: false; reachable: true }
 //             }
 
-            FilterValueProxyModel {
+            SortFilterModel {
                 id: trustedDevicesModel
 
-                filterRoleName: "trusted"
+                sortRole: "name"
+                filterRole: "trusted"
                 filterValue: true
                 sourceModel: devicelistModel
             }
 
-            FilterValueProxyModel {
+            SortFilterModel {
                 id: nontrustedDevicesModel
 
-                filterRoleName: "trusted"
+                sortRole: "name"
+                filterRole: "trusted"
                 filterValue: false
                 sourceModel: devicelistModel
             }
-            FilterValueProxyModel {
+            SortFilterModel {
                 id: otherNearDevicesModel
 
-                filterRoleName: "reachable"
+                filterRole: "reachable"
                 filterValue: true
                 sourceModel: nontrustedDevicesModel
             }

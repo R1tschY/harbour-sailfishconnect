@@ -109,7 +109,7 @@
         <translation>Передачи...</translation>
     </message>
     <message>
-        <source>Install KDE-Connect or GSConnect on your computer and connect it to the same Wifi.</source>
+        <source>Install KDE-Connect or GSConnect on your computer and connect it to the same WLAN.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -461,7 +461,7 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>of</source>
-        <extracomment>for example: 3MB of 50MB</extracomment>
+        <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

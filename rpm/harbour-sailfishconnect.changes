@@ -3,8 +3,9 @@
 
 * Wed Jan 23 2019 Richard Liebscher <r1tschy@yahoo.de> 0.3-1
 - Added page to show file transfers
+- Added telephony plugin
 - Fixed various bugs to support GSConnect
-- Fixed bug when unpairing
+- Fixed crash when unpairing
 - Fixed various small bugs
 
 * Sun Oct 21 2018 Richard Liebscher <r1tschy@yahoo.de> 0.2-2

@@ -144,7 +144,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE void rejectPairing();
 
     /**
-     * @brief just to be compatible with KDE-Connect Interface
+     * @brief just to be compatible with KDE Connect Interface
      * @see PluginManager::pluginIconUrl
      */
     Q_SCRIPTABLE QString pluginIconName(const QString& pluginName);

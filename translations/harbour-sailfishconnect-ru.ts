@@ -24,7 +24,7 @@
         <translation>Исходный код на Github</translation>
     </message>
     <message>
-        <source>Alternative KDE-Connect client for Sailfish OS</source>
+        <source>Alternative KDE Connect client for Sailfish OS</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -109,7 +109,7 @@
         <translation>Передачи...</translation>
     </message>
     <message>
-        <source>Install KDE-Connect or GSConnect on your computer and connect it to the same WLAN.</source>
+        <source>Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

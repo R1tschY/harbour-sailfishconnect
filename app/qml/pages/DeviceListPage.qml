@@ -31,7 +31,7 @@ Page {
 
         ViewPlaceholder {
             enabled: trustedDevices.count === 0 && nearDevices.count === 0
-            text: qsTr("Install KDE-Connect or GSConnect on your " +
+            text: qsTr("Install KDE Connect or GSConnect on your " +
                        "computer and connect it to the same WLAN.")
         }
 

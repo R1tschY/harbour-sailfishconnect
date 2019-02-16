@@ -29,6 +29,10 @@ class SortFilterModel : public QSortFilterProxyModel, public QQmlParserStatus
                READ sortRole
                WRITE setSortRole)
 
+    Q_PROPERTY(bool sortAscending
+               READ sortAscending
+               WRITE setSortAscending)
+
 public:
     SortFilterModel();
 
@@ -44,6 +48,9 @@ public:
     QString sortRole() const;
     void setSortRole(const QString& sortRole);
 
+    bool sortAscending() const;
+    void setSortAscending(bool sortAscending);
+
 protected:
     bool filterAcceptsRow(
             int source_row, const QModelIndex& source_parent) const override;
@@ -53,6 +60,7 @@ private:
     QVariant m_filterValue;
     QString m_filterRole;
     QString m_sortRole;
+    bool m_sortAscending = true;
     bool m_complete = true;
 
     void componentComplete() override;

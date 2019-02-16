@@ -1,6 +1,7 @@
 #include "sortfiltermodel.h"
 
 #include <QModelIndex>
+#include <QLoggingCategory>
 
 namespace SailfishConnect {
 
@@ -40,6 +41,22 @@ bool SortFilterModel::filterAcceptsRow(
                 source_row, filterKeyColumn(), source_parent);
     return m_filterValue == sourceModel()->data(
                 sourceIndex, QSortFilterProxyModel::filterRole());
+}
+
+bool SortFilterModel::sortAscending() const
+{
+    return m_sortAscending;
+}
+
+void SortFilterModel::setSortAscending(bool sortAscending)
+{
+    if (m_sortAscending == sortAscending)
+        return;
+
+    m_sortAscending = sortAscending;
+
+    if (m_complete && !m_sortRole.isEmpty())
+        sort(0, m_sortAscending ? Qt::AscendingOrder : Qt::DescendingOrder);
 }
 
 QString SortFilterModel::filterMode() const
@@ -141,8 +158,12 @@ void SortFilterModel::onRoleNamesChanged()
 void SortFilterModel::componentComplete()
 {
     m_complete = true;
-    invalidateFilter();
     onRoleNamesChanged();
+    invalidateFilter();
+
+    if (!m_sortRole.isEmpty()) {
+        sort(0, m_sortAscending ? Qt::AscendingOrder : Qt::DescendingOrder);
+    }
 }
 
 } // namespace SailfishConnect

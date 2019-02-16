@@ -1,6 +1,6 @@
 # Sailfish Connect
 
-An alternative SailfishOS client for [KDE Connect](https://community.kde.org/KDEConnect)
+An alternative Sailfish OS client for [KDE Connect](https://community.kde.org/KDEConnect)
 
 ## Screenshots
 
@@ -33,7 +33,7 @@ Ping | :heavy_check_mark: | :wave: Check connection with a ping.
 Touchpad | :heavy_check_mark: | :computer_mouse: Create mouse input from your phone.
 Share | :construction: | Send and receive files, text and URLs.
 SendNotifications | :construction: | Share notifications of your phone.
-Telephony | :o: | :telephone_receiver: Share call status (incoming or active) with your computer.
+Telephony | :construction: | :telephone_receiver: Share call status (incoming or active) with your computer.
 RemoteKeyboard | :o: | :keyboard: Create keyboard input from your phone.
 RunCommand | :o: | Run user-defined commands on your computer.
 Sftp | :o: | :open_file_folder: Provide access to local files from your computer.

@@ -53,7 +53,7 @@ Page {
 
             Label {
                 wrapMode: Text.WordWrap
-                text: qsTr("A KDE-Connect client for SailfishOS")
+                text: qsTr("Alternative KDE Connect client for Sailfish OS")
                 color: Theme.highlightColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }

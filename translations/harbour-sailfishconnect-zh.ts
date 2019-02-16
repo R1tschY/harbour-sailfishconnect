@@ -4,10 +4,6 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <source>A KDE-Connect client for SailfishOS</source>
-        <translation>一个旗鱼系统 KDE-Connect客户端</translation>
-    </message>
-    <message>
         <source>Links</source>
         <translation>链接</translation>
     </message>
@@ -26,6 +22,10 @@
     <message>
         <source>Source code on Github</source>
         <translation>Github上的源代码</translation>
+    </message>
+    <message>
+        <source>Alternative KDE-Connect client for Sailfish OS</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

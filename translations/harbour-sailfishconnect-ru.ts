@@ -4,10 +4,6 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <source>A KDE-Connect client for SailfishOS</source>
-        <translation>Клиент KDE-Connect для SailfishOS</translation>
-    </message>
-    <message>
         <source>Links</source>
         <translation>Ссылки</translation>
     </message>
@@ -26,6 +22,10 @@
     <message>
         <source>Source code on Github</source>
         <translation>Исходный код на Github</translation>
+    </message>
+    <message>
+        <source>Alternative KDE-Connect client for Sailfish OS</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

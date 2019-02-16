@@ -29,9 +29,14 @@ Page {
 
     SilicaListView {
         id: listView
-        model: DevicePluginsModel {
-            deviceId: device
+        model: SortFilterModel {
+            sortRole: "pluginName"
+            filterMode: "none"
+            sourceModel: DevicePluginsModel {
+                deviceId: device
+            }
         }
+
         anchors.fill: parent
         header: PageHeader {
             title: qsTr("Select Plugins")

@@ -68,10 +68,12 @@ Daemon* Daemon::instance()
 }
 
 Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, QObject *parent)
-    : Daemon(std::move(systemInfo), standardLinkProviders(), parent)
-{ }
+    : Daemon(std::move(systemInfo), {}, parent)
+{
+    setLinkProviders(standardLinkProviders());
+}
 
-Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, QList<LinkProvider*> link_providers, QObject* parent)
+Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, const QList<LinkProvider*>& link_providers, QObject* parent)
     : QObject(parent)
     , d(new DaemonPrivate(std::move(systemInfo)))
 {
@@ -87,20 +89,13 @@ Daemon::Daemon(std::unique_ptr<SystemInfo> systemInfo, QList<LinkProvider*> link
         return;
     }
 
-    d->m_linkProviders = link_providers;
-
     //Read remebered paired devices
     const QStringList& list = d->m_config.trustedDevices();
     for (const QString& id : list) {
         addDevice(new Device(this, &d->m_config, id));
     }
 
-    //Listen to new devices
-    for (LinkProvider* a : asConst(d->m_linkProviders)) {
-        connect(a, &LinkProvider::onConnectionReceived,
-                this, &Daemon::onNewDeviceLink);
-        a->onStart();
-    }
+    setLinkProviders(link_providers);
 
     qCDebug(coreLogger) << "KdeConnect daemon started";
 }
@@ -152,11 +147,25 @@ void Daemon::cleanDevices()
 QList<LinkProvider *> Daemon::standardLinkProviders()
 {
     QList<LinkProvider*> result;
-    result.append(new LanLinkProvider());
+    result.append(new LanLinkProvider(&d->m_config));
 #ifdef KDECONNECT_BLUETOOTH
-    result.insert(new BluetoothLinkProvider());
+    result.append(new BluetoothLinkProvider());
 #endif
     return result;
+}
+
+void Daemon::setLinkProviders(const QList<LinkProvider *> &linkProviders)
+{
+    Q_ASSERT(d->m_linkProviders.isEmpty());
+
+    d->m_linkProviders = linkProviders;
+
+    //Listen to new devices
+    for (LinkProvider* a : asConst(d->m_linkProviders)) {
+        connect(a, &LinkProvider::onConnectionReceived,
+                this, &Daemon::onNewDeviceLink);
+        a->onStart();
+    }
 }
 
 void Daemon::forceOnNetworkChange(const QString& reason)

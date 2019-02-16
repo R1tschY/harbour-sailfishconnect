@@ -47,9 +47,8 @@ public:
             std::unique_ptr<SailfishConnect::SystemInfo> systemInfo,
             QObject* parent);
 
-    explicit Daemon(
-            std::unique_ptr<SailfishConnect::SystemInfo> systemInfo,
-            QList<LinkProvider*> link_providers,
+    explicit Daemon(std::unique_ptr<SailfishConnect::SystemInfo> systemInfo,
+            const QList<LinkProvider *> &link_providers,
             QObject* parent);
     ~Daemon() override;
 
@@ -101,7 +100,8 @@ private:
     void removeDevice(Device* d);
     void cleanDevices();
 
-    static QList<LinkProvider*> standardLinkProviders();
+    QList<LinkProvider*> standardLinkProviders();
+    void setLinkProviders(const QList<LinkProvider*>& linkProviders);
 
     QScopedPointer<struct DaemonPrivate> d;
 };

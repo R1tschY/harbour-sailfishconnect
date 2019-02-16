@@ -34,7 +34,7 @@
 
 using namespace SailfishConnect;
 
-LanDeviceLink::LanDeviceLink(const QString& deviceId, LinkProvider* parent, QSslSocket* socket, ConnectionStarted connectionSource)
+LanDeviceLink::LanDeviceLink(const QString& deviceId, LanLinkProvider *parent, QSslSocket* socket, ConnectionStarted connectionSource)
     : DeviceLink(deviceId, parent)
     , m_socketLineReader(nullptr)
     , m_debounceTimer(new QTimer(this))
@@ -67,7 +67,7 @@ void LanDeviceLink::reset(QSslSocket* socket, ConnectionStarted connectionSource
     //destroyed as well
     socket->setParent(m_socketLineReader.data());
 
-    QString certString = KdeConnectConfig::instance()->getDeviceProperty(deviceId(), QStringLiteral("certificate"));
+    QString certString = config()->getDeviceProperty(deviceId(), QStringLiteral("certificate"));
     DeviceLink::setPairStatus(certString.isEmpty()? PairStatus::NotPaired : PairStatus::Paired);
 }
 
@@ -113,7 +113,7 @@ bool LanDeviceLink::sendPacket(NetworkPacket& np, JobManager* jobMgr)
 
 LanUploadJob* LanDeviceLink::sendPayload(const NetworkPacket& np, JobManager* jobMgr)
 {
-    LanUploadJob* job = new LanUploadJob(np, deviceId());
+    LanUploadJob* job = new LanUploadJob(np, deviceId(), provider());
     job->start();
     if (jobMgr) {
         jobMgr->addJob(job);
@@ -134,7 +134,7 @@ void LanDeviceLink::dataReceived()
 
     if (packet.type() == PACKET_TYPE_PAIR) {
         //TODO: Handle pair/unpair requests and forward them (to the pairing handler?)
-        qobject_cast<LanLinkProvider*>(provider())->incomingPairPacket(this, packet);
+        provider()->incomingPairPacket(this, packet);
         return;
     }
 
@@ -142,9 +142,9 @@ void LanDeviceLink::dataReceived()
         //qCDebug(coreLogger) << "HasPayloadTransferInfo";
         const QVariantMap transferInfo = packet.payloadTransferInfo();
 
-        QSharedPointer<QSslSocket> socket(new QSslSocket);
+        QSharedPointer<QSslSocket> socket(new QSslSocket());
 
-        LanLinkProvider::configureSslSocket(socket.data(), deviceId(), true);
+        provider()->configureSslSocket(socket.data(), deviceId(), true);
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 9, 2)
         // emit readChannelFinished when the socket gets disconnected. This seems to be a bug in upstream QSslSocket.
@@ -176,18 +176,26 @@ void LanDeviceLink::socketDisconnected()
     }
 }
 
+LanLinkProvider *LanDeviceLink::provider() {
+    return static_cast<LanLinkProvider*>(DeviceLink::provider());
+}
+
+KdeConnectConfig* LanDeviceLink::config() {
+    return provider()->config();
+}
+
 void LanDeviceLink::userRequestsPair()
 {
     if (m_socketLineReader->peerCertificate().isNull()) {
         Q_EMIT pairingError(tr("This device cannot be paired because it is running an old version of KDE Connect."));
     } else {
-        static_cast<LanLinkProvider*>(provider())->userRequestsPair(deviceId());
+        provider()->userRequestsPair(deviceId());
     }
 }
 
 void LanDeviceLink::userRequestsUnpair()
 {
-    static_cast<LanLinkProvider*>(provider())->userRequestsUnpair(deviceId());
+    provider()->userRequestsUnpair(deviceId());
 }
 
 void LanDeviceLink::setPairStatus(PairStatus status)
@@ -214,9 +222,9 @@ void LanDeviceLink::setPairStatus(PairStatus status)
 
     DeviceLink::setPairStatus(status);
     if (status == Paired) {
-        Q_ASSERT(KdeConnectConfig::instance()->trustedDevices().contains(deviceId()));
+        Q_ASSERT(config()->trustedDevices().contains(deviceId()));
         Q_ASSERT(!m_socketLineReader->peerCertificate().isNull());
-        KdeConnectConfig::instance()->setDeviceProperty(
+        config()->setDeviceProperty(
                     deviceId(), QStringLiteral("certificate"), m_socketLineReader->peerCertificate().toPem());
     }
 }

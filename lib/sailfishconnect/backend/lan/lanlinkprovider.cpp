@@ -38,8 +38,9 @@
 
 using namespace SailfishConnect;
 
-LanLinkProvider::LanLinkProvider(bool testMode)
+LanLinkProvider::LanLinkProvider(KdeConnectConfig* config, bool testMode)
     : m_testMode(testMode)
+    , m_config(config)
     , m_udpSocket(this)
     , m_combineBroadcastsTimer(this)
 {
@@ -122,7 +123,7 @@ void LanLinkProvider::broadcastToNetwork()
     qCDebug(coreLogger()) << "Broadcasting identity packet";
 
     NetworkPacket np(QLatin1String(""));
-    NetworkPacket::createIdentityPacket(&np);
+    NetworkPacket::createIdentityPacket(m_config, &np);
     np.set(QStringLiteral("tcpPort"), m_tcpPort);
 
     if (m_testMode) {
@@ -193,7 +194,7 @@ void LanLinkProvider::newUdpConnection() //udpBroadcastReceived
         deviceId = Device::sanitizeDeviceId(deviceId);
         receivedPacket.set<QString>(QStringLiteral("deviceId"), deviceId);
 
-        if (deviceId == KdeConnectConfig::instance()->deviceId()) {
+        if (deviceId == m_config->deviceId()) {
             qCDebug(coreLogger) << "Ignoring my own broadcast";
             continue;
         }
@@ -224,7 +225,7 @@ void LanLinkProvider::connectError()
 
     qCDebug(coreLogger) << "Fallback (1), try reverse connection (send udp packet)" << socket->errorString();
     NetworkPacket np(QLatin1String(""));
-    NetworkPacket::createIdentityPacket(&np);
+    NetworkPacket::createIdentityPacket(m_config, &np);
     np.set(QStringLiteral("tcpPort"), m_tcpPort);
     m_udpSocket.writeDatagram(np.serialize(), m_receivedIdentityPackets[socket].sender, UDP_PORT);
 
@@ -254,7 +255,7 @@ void LanLinkProvider::connected()
 
     // If network is on ssl, do not believe when they are connected, believe when handshake is completed
     NetworkPacket np2;
-    NetworkPacket::createIdentityPacket(&np2);
+    NetworkPacket::createIdentityPacket(m_config, &np2);
     socket->write(np2.serialize());
     bool success = socket->waitForBytesWritten();
 
@@ -265,7 +266,7 @@ void LanLinkProvider::connected()
         // if ssl supported
         if (receivedPacket.get<int>(QStringLiteral("protocolVersion")) >= MIN_VERSION_WITH_SSL_SUPPORT) {
 
-            bool isDeviceTrusted = KdeConnectConfig::instance()->trustedDevices().contains(deviceId);
+            bool isDeviceTrusted = m_config->trustedDevices().contains(deviceId);
             configureSslSocket(socket, deviceId, isDeviceTrusted);
 
             qCDebug(coreLogger) << socket << "Starting server ssl (I'm the client TCP socket)";
@@ -389,7 +390,7 @@ void LanLinkProvider::dataReceived()
     //This socket will now be owned by the LanDeviceLink or we don't want more data to be received, forget about it
     disconnect(socket, &QIODevice::readyRead, this, &LanLinkProvider::dataReceived);
 
-    bool isDeviceTrusted = KdeConnectConfig::instance()->trustedDevices().contains(deviceId);
+    bool isDeviceTrusted = m_config->trustedDevices().contains(deviceId);
     configureSslSocket(socket, deviceId, isDeviceTrusted);
 
     qCDebug(coreLogger) << "Starting client ssl (but I'm the server TCP socket)" << socket;
@@ -440,12 +441,12 @@ void LanLinkProvider::configureSslSocket(QSslSocket* socket, const QString& devi
     sslConfig.setProtocol(QSsl::TlsV1_0);
 
     socket->setSslConfiguration(sslConfig);
-    socket->setLocalCertificate(KdeConnectConfig::instance()->certificate());
-    socket->setPrivateKey(KdeConnectConfig::instance()->privateKeyPath());
+    socket->setLocalCertificate(m_config->certificate());
+    socket->setPrivateKey(m_config->privateKeyPath());
     socket->setPeerVerifyName(deviceId);
 
     if (isDeviceTrusted) {
-        QString certString = KdeConnectConfig::instance()->getDeviceProperty(
+        QString certString = m_config->getDeviceProperty(
                     deviceId, QStringLiteral("certificate"), QString());
 
         // use unsanitized device id as peer verify name

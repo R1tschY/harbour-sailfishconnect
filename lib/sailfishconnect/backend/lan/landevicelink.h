@@ -32,6 +32,7 @@ class QString;
 class QSslSocket;
 
 class LinkProvider;
+class LanLinkProvider;
 class NetworkPacket;
 
 namespace SailfishConnect {
@@ -47,7 +48,7 @@ class LanDeviceLink
 public:
     enum ConnectionStarted : bool { Locally, Remotely };  // TODO: remove?
 
-    LanDeviceLink(const QString& deviceId, LinkProvider* parent, QSslSocket* socket, ConnectionStarted connectionSource);
+    LanDeviceLink(const QString& deviceId, LanLinkProvider* parent, QSslSocket* socket, ConnectionStarted connectionSource);
     ~LanDeviceLink();
 
     void reset(QSslSocket* socket, ConnectionStarted connectionSource);
@@ -73,6 +74,9 @@ private:
     QScopedPointer<SocketLineReader> m_socketLineReader;
     QHostAddress m_hostAddress;
     QTimer* m_debounceTimer;
+
+    LanLinkProvider* provider();
+    KdeConnectConfig* config();
 };
 
 #endif

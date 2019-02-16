@@ -38,6 +38,9 @@
 
 #include <sailfishconnect/networkpacket.h>
 #include <sailfishconnect/networkpackettypes.h>
+#include <sailfishconnect/helper/cpphelper.h>
+#include <sailfishconnect/systeminfo.h>
+#include <sailfishconnect/kdeconnectconfig.h>
 
 using namespace SailfishConnect;
 
@@ -73,9 +76,11 @@ TEST(NetworkPacketTests, networkPacketTest) {
     EXPECT_EQ((np2.get<bool>("not_testing", true)), true);
 }
 
-TEST(NetworkPacketTests, DISABLED_networkPacketIdentityTest) {
+TEST(NetworkPacketTests, networkPacketIdentityTest) {
+    KdeConnectConfig kcc(makeUniquePtr<SystemInfo>());
+
     NetworkPacket np(QLatin1String(""));
-    NetworkPacket::createIdentityPacket(&np);  // fix dependency injuection ;)
+    NetworkPacket::createIdentityPacket(&kcc, &np);
 
     EXPECT_EQ(np.get<int>("protocolVersion", -1),
               NetworkPacket::s_protocolVersion);

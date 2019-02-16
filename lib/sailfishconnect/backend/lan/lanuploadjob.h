@@ -30,6 +30,7 @@
 #include "server.h"
 
 class NetworkPacket;
+class LanLinkProvider;
 
 namespace SailfishConnect {
 
@@ -38,7 +39,8 @@ class LanUploadJob : public CopyJob
     Q_OBJECT
 public:
     explicit LanUploadJob(
-            const NetworkPacket& np, const QString& deviceId);
+            const NetworkPacket& np, const QString& deviceId,
+            LanLinkProvider* provider);
 
     QVariantMap transferInfo();
 
@@ -52,6 +54,7 @@ private Q_SLOTS:
     void sslErrors(const QList<QSslError>& errors);
 
 private:
+    LanLinkProvider* m_provider;
     Server* m_server;
     QSharedPointer<QSslSocket> m_socket;
     quint16 m_port;

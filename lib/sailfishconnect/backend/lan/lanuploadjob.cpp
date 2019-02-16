@@ -26,8 +26,11 @@
 
 namespace SailfishConnect {
 
-LanUploadJob::LanUploadJob(const NetworkPacket &np, const QString& deviceId)
+LanUploadJob::LanUploadJob(
+        const NetworkPacket &np, const QString& deviceId,
+        LanLinkProvider* provider)
     : CopyJob(deviceId, np.payload(), QSharedPointer<QIODevice>())
+    , m_provider(provider)
     , m_server(new Server(this))
     , m_socket(nullptr)
     , m_port(0)
@@ -93,7 +96,7 @@ void LanUploadJob::newConnection()
 //             this, [](QAbstractSocket::SocketState state){
 //                  qDebug() << "statechange" << state; });
 
-    LanLinkProvider::configureSslSocket(m_socket.data(), deviceId(), true);
+    m_provider->configureSslSocket(m_socket.data(), deviceId(), true);
     m_socket->startServerEncryption();
 }
 

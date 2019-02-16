@@ -57,9 +57,8 @@ NetworkPacket::NetworkPacket(const QString& type, const QVariantMap& body)
 {
 }
 
-void NetworkPacket::createIdentityPacket(NetworkPacket* np)
+void NetworkPacket::createIdentityPacket(KdeConnectConfig* config, NetworkPacket* np)
 {
-    KdeConnectConfig* config = KdeConnectConfig::instance();
     np->m_id = QString::number(QDateTime::currentMSecsSinceEpoch());
     np->m_type = PACKET_TYPE_IDENTITY;
     np->m_payload = QSharedPointer<QIODevice>();

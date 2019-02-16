@@ -29,6 +29,7 @@
 
 class QIODevice;
 class QByteArray;
+class KdeConnectConfig;
 
 namespace SailfishConnect {
 class Job;
@@ -48,7 +49,7 @@ public:
 
     explicit NetworkPacket(const QString& type = QStringLiteral("empty"), const QVariantMap& body = {});
 
-    static void createIdentityPacket(NetworkPacket*);
+    static void createIdentityPacket(KdeConnectConfig *config, NetworkPacket*);
 
     QByteArray serialize() const;
     static bool unserialize(const QByteArray& json, NetworkPacket* out);
@@ -87,7 +88,7 @@ private:
     QString m_id;
     QString m_type;
     QVariantMap m_body;
-	
+
     QSharedPointer<QIODevice> m_payload;
     qint64 m_payloadSize;
     QVariantMap m_payloadTransferInfo;

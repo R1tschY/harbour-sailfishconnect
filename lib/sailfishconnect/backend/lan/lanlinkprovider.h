@@ -34,13 +34,15 @@
 #include <sailfishconnect/networkpacket.h>
 
 class LanPairingHandler;
+class KdeConnectConfig;
+
 class LanLinkProvider
     : public LinkProvider
 {
     Q_OBJECT
 
 public:
-    LanLinkProvider(bool testMode = false);
+    LanLinkProvider(KdeConnectConfig* config, bool testMode = false);
     ~LanLinkProvider() override;
 
     QString name() override { return QStringLiteral("LanLinkProvider"); }
@@ -50,8 +52,10 @@ public:
     void userRequestsUnpair(const QString& deviceId);
     void incomingPairPacket(DeviceLink* device, const NetworkPacket& np);
 
-    static void configureSslSocket(QSslSocket* socket, const QString& deviceId, bool isDeviceTrusted);
+    void configureSslSocket(QSslSocket* socket, const QString& deviceId, bool isDeviceTrusted);
     static void configureSocket(QSslSocket* socket);
+
+    KdeConnectConfig* config() { return m_config; }
 
     const static quint16 UDP_PORT = 1716;
     const static quint16 MIN_TCP_PORT = 1716;
@@ -84,6 +88,9 @@ private:
     bool hasUsefulNetworkInterfaces();
 
     // TODO: use pimple
+    const bool m_testMode;
+    KdeConnectConfig* m_config;
+
     Server* m_server;
     QUdpSocket m_udpSocket;
     quint16 m_tcpPort;
@@ -96,7 +103,6 @@ private:
         QHostAddress sender;
     };
     QHash<QSslSocket*, PendingConnect> m_receivedIdentityPackets;
-    const bool m_testMode;
     QTimer m_combineBroadcastsTimer;
 
     SailfishConnect::LanNetworkListener m_networkListener;

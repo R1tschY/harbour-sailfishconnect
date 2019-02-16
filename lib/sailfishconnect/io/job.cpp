@@ -125,6 +125,8 @@ void Job::onFinished()
     } else {
         setAction(tr("Succeeded"));
     }
+
+    deleteLater();
 }
 
 void Job::onSuccess()

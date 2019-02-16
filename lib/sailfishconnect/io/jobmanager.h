@@ -56,6 +56,8 @@ private:
     QString m_errorString;
 
     void onJobDestroyed();
+    void onStateChanged();
+    void onTargetChanged();
 };
 
 class JobManager : public QObject

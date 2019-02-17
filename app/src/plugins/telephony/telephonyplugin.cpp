@@ -31,13 +31,13 @@ static Q_LOGGING_CATEGORY(logger, "sailfishconnect.telephony")
 
 static QString PACKET_TYPE_TELEPHONY = QStringLiteral("kdeconnect.telephony");
 
+// -----------------------------------------------------------------------------
 
 TelephonyCall::TelephonyCall(
         const QString& path, const QVariantMap &properties, QObject* parent)
     : m_obj(new Ofono::VoiceCall(path, this))
     , m_properties(properties)
 {
-    qCDebug(logger) << path << properties;
     connect(m_obj, &Ofono::VoiceCall::DisconnectReason,
             this, &TelephonyCall::disconnectReason);
     connect(m_obj, &Ofono::VoiceCall::PropertyChanged,
@@ -60,17 +60,16 @@ QString TelephonyCall::path() const
 }
 
 void TelephonyCall::onPropertiesChanged(
-        const QString &property, const QVariant &value)
+        const QString &property, const QDBusVariant &value)
 {
-    qCDebug(logger) << m_obj->path() << property << value;
-
-    m_properties[property] = value;
+    m_properties[property] = value.variant();
 
     if (property == QStringLiteral("State")) {
         emit stateChanged();
     }
 }
 
+// -----------------------------------------------------------------------------
 
 TelephonyPlugin::TelephonyPlugin(
         Device *device,
@@ -147,7 +146,8 @@ void TelephonyPlugin::onCallAdded(
 
     TelephonyCall* tc = new TelephonyCall(p, properties, this);
     connect(tc, &TelephonyCall::stateChanged,
-            this, &TelephonyPlugin::onCallStateChanged);
+            this, &TelephonyPlugin::onCallStateChanged_);
+    onCallStateChanged(tc);
 
     m_calls.insert(p, tc);
 }
@@ -159,38 +159,48 @@ void TelephonyPlugin::onCallRemoved(const QDBusObjectPath &path)
     if (!call) return;
 
     call->deleteLater();
-    QString state = call->state();
-    if (state == QStringLiteral("incoming")) {
-        // missed call
-        sendTelephonyPacket(QStringLiteral("ringing"), call, true);
-        sendTelephonyPacket(QStringLiteral("missedCall"), call);
-    } else if (state == QStringLiteral("active")) {
-        sendTelephonyPacket(QStringLiteral("talking"), call, true);
-    }
 }
 
-void TelephonyPlugin::onCallStateChanged()
+void TelephonyPlugin::onCallStateChanged_()
 {
-    TelephonyCall* sender = qobject_cast<TelephonyCall*>(QObject::sender());
-    QString state = sender->state();
-    qCDebug(logger) << "Call state changed" << sender->path() << state;
+    onCallStateChanged(qobject_cast<TelephonyCall*>(QObject::sender()));
+}
+
+void TelephonyPlugin::onCallStateChanged(TelephonyCall* call)
+{
+    QString state = call->state();
+    qCDebug(logger) << "Call state changed" << call->path() << state;
+
     if (state == QStringLiteral("incoming")) {
         // incomming call
-        sendTelephonyPacket(QStringLiteral("ringing"), sender);
-    } else if (state == QStringLiteral("active")) {
-        // active call
-        sendTelephonyPacket(QStringLiteral("talking"), sender);
-    } else if (state == QStringLiteral("disconnect")) {
-        sendTelephonyPacket(QStringLiteral("talking"), sender, true);
+        sendTelephonyPacket(QStringLiteral("ringing"), call);
+
+    } else if (state == QStringLiteral("active")
+               || state == QStringLiteral("dealing")
+               || state == QStringLiteral("alerting"))
+    {
+        // active call or
+        // outgoing call (rebuilded KDE Connect Android behavior)
+        sendTelephonyPacket(QStringLiteral("talking"), call);
+
+    } else if (state == QStringLiteral("disconnected")) {
+        // call ended
+        sendCancelTelephonyPacket(call);
     }
 }
 
 void TelephonyPlugin::sendTelephonyPacket(
-        const QString& event, TelephonyCall* call, bool cancel)
+        const QString& event, TelephonyCall* call)
 {
     Q_ASSERT(call != nullptr);
+    QString callPath = call->path();
 
-    NetworkPacket np {
+    if (m_send_call_state.value(callPath) == event)
+        return; // no change
+
+    m_send_call_state[callPath] = event;
+
+    sendPacket(NetworkPacket {
         PACKET_TYPE_TELEPHONY,
         {
             { QStringLiteral("event"), event },
@@ -198,14 +208,31 @@ void TelephonyPlugin::sendTelephonyPacket(
             // TODO: look at contacts:
             { QStringLiteral("contactName"), call->lineIdentification() },
         }
-    };
-
-    if (cancel) {
-        np.set(QStringLiteral("isCancel"), true);
-    }
-
-    sendPacket(np);
+    });
 }
+
+void TelephonyPlugin::sendCancelTelephonyPacket(TelephonyCall* call)
+{
+    Q_ASSERT(call != nullptr);
+
+    QString callPath = call->path();
+    auto lastState = m_send_call_state.value(
+                callPath, QStringLiteral("talking"));
+    m_send_call_state.remove(callPath);
+
+    sendPacket(NetworkPacket {
+        PACKET_TYPE_TELEPHONY,
+        {
+            { QStringLiteral("event"), lastState },
+            { QStringLiteral("phoneNumber"), call->lineIdentification() },
+            // TODO: look at contacts:
+            { QStringLiteral("contactName"), call->lineIdentification() },
+            { QStringLiteral("isCancel"), true }
+        }
+    });
+}
+
+// -----------------------------------------------------------------------------
 
 QString TelephonyPluginFactory::name() const
 {

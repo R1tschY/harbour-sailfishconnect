@@ -30,6 +30,7 @@ class QDBusPendingCallWatcher;
 class QDBusInterface;
 class QDBusError;
 class QDBusObjectPath;
+class QDBusVariant;
 
 namespace SailfishConnect {
 
@@ -59,7 +60,8 @@ private:
     Ofono::VoiceCall* m_obj;
     QVariantMap m_properties;
 
-    void onPropertiesChanged(const QString& property, const QVariant& value);
+    void onPropertiesChanged(
+            const QString& property, const QDBusVariant& value);
 };
 
 
@@ -80,6 +82,7 @@ private:
     QSet<QString> m_modems;
     QMap<QString, TelephonyCall*> m_calls;
     QMap<QString, Ofono::VoiceCallManager*> m_voice_call_managers;
+    QMap<QString, QString> m_send_call_state;
 
     void onModemAdded(const QDBusObjectPath &path, const QVariantMap &properties);
     void onModemRemoved(const QDBusObjectPath &path);
@@ -87,10 +90,11 @@ private:
     void onCallAdded(const QDBusObjectPath &path, const QVariantMap &properties);
     void onCallRemoved(const QDBusObjectPath &path);
 
-    void onCallStateChanged();
+    void onCallStateChanged_();
+    void onCallStateChanged(TelephonyCall* call);
 
-    void sendTelephonyPacket(
-            const QString& event, TelephonyCall *call, bool cancel = false);
+    void sendTelephonyPacket(const QString& event, TelephonyCall *call);
+    void sendCancelTelephonyPacket(TelephonyCall* call);
 };
 
 

@@ -46,7 +46,7 @@ public:
 
 Q_SIGNALS:
     void DisconnectReason(const QString& reason);
-    void PropertyChanged(const QString& property, const QVariant& value);
+    void PropertyChanged(const QString& name, const QDBusVariant& value);
 };
 
 

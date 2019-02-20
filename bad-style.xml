@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<bad-style>
+    <match-regex files="*.cpp" message="copyright missing">
+        Copyright \d+ Richard Liebscher .richard\.liebscher@gmail\.com.
+    </match-regex>
+    <dont-match-regex files="*.qml" regex=" == "
+                      message="use === instead of =="/>
+</bad-style>

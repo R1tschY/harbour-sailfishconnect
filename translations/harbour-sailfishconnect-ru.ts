@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>Alternative KDE Connect client for Sailfish OS</source>
-        <translation type="unfinished"></translation>
+        <translation>Альтернативный клиент KDE Connect для Sailfish OS</translation>
     </message>
 </context>
 <context>
@@ -110,7 +110,7 @@
     </message>
     <message>
         <source>Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.</source>
-        <translation type="unfinished"></translation>
+        <translation>Установите на свой компьютер KDE Connect или GSConnect и подключите телефон к той же сети, что и компьютер.</translation>
     </message>
 </context>
 <context>
@@ -383,11 +383,11 @@
     <name>SailfishConnect::TelephonyPluginFactory</name>
     <message>
         <source>Call notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Уведомления о звонках</translation>
     </message>
     <message>
         <source>Send notifications for incoming and missed calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>Посылать уведомления о входящих и пропущенных звонках.</translation>
     </message>
 </context>
 <context>
@@ -457,12 +457,12 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Yet no downloads or uploads</source>
-        <translation type="unfinished"></translation>
+        <translation>Пока нет передачи данных</translation>
     </message>
     <message>
         <source>of</source>
         <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>из</translation>
     </message>
 </context>
 </TS>

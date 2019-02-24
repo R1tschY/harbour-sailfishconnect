@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>Alternative KDE Connect client for Sailfish OS</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternativer KDE-Connect Client für Sailfish OS</translation>
     </message>
 </context>
 <context>
@@ -36,7 +36,7 @@
     </message>
     <message>
         <source>Clipboard</source>
-        <translation type="unfinished">Zwischenablage</translation>
+        <translation>Zwischenablage</translation>
     </message>
 </context>
 <context>
@@ -106,11 +106,11 @@
     </message>
     <message>
         <source>Transfers ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Übertragungen ...</translation>
     </message>
     <message>
         <source>Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.</source>
-        <translation type="unfinished"></translation>
+        <translation>Installiere KDE Connect oder GSConnect auf deinem Computer und verbinde ihn mit dem gleichen WLAN.</translation>
     </message>
 </context>
 <context>
@@ -182,7 +182,7 @@
     </message>
     <message>
         <source>This device cannot be paired because it sends a strange ssl certificate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppeln mit diesem Gerät ist nicht möglich, da es ein seltsames SSL Zertifikat benutzt. </translation>
     </message>
 </context>
 <context>
@@ -272,7 +272,7 @@
     </message>
     <message>
         <source>Early end of output stream</source>
-        <translation type="unfinished"></translation>
+        <translation>Frühes Ende des Ausgangestroms</translation>
     </message>
 </context>
 <context>
@@ -287,30 +287,30 @@
     </message>
     <message>
         <source>Receiving</source>
-        <translation type="unfinished"></translation>
+        <translation>Erhalte</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::Job</name>
     <message>
         <source>Pending</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausstehend</translation>
     </message>
     <message>
         <source>Running</source>
-        <translation type="unfinished"></translation>
+        <translation>Läuft</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgebrochen</translation>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlgeschlagen</translation>
     </message>
     <message>
         <source>Succeeded</source>
-        <translation type="unfinished"></translation>
+        <translation>Erfolgreich</translation>
     </message>
 </context>
 <context>
@@ -321,7 +321,7 @@
     </message>
     <message>
         <source>Sending</source>
-        <translation type="unfinished"></translation>
+        <translation>Sende</translation>
     </message>
 </context>
 <context>
@@ -383,11 +383,11 @@
     <name>SailfishConnect::TelephonyPluginFactory</name>
     <message>
         <source>Call notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen für Anrufe</translation>
     </message>
     <message>
         <source>Send notifications for incoming and missed calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sende Benachrichtigungen für eingehende und evtl. verpasste Anrufe.</translation>
     </message>
 </context>
 <context>
@@ -444,23 +444,25 @@
         <source>Move finger on screen
 Tap for click
 Hold shortly for Drag&apos;n&apos;Drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewege Finger auf Bildschirm
+Antippen zum Klicken
+Kurz halten für Drag&apos;n&apos;Drop</translation>
     </message>
 </context>
 <context>
     <name>TransfersPage</name>
     <message>
         <source>Transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Übertragungen</translation>
     </message>
     <message>
         <source>Yet no downloads or uploads</source>
-        <translation type="unfinished"></translation>
+        <translation>Bis jetzt keine Download oder Uploads vorhanden.</translation>
     </message>
     <message>
         <source>of</source>
         <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>von</translation>
     </message>
 </context>
 </TS>

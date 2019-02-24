@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Licence</source>
-        <translation>许可</translation>
+        <translation>许可协议</translation>
     </message>
     <message>
         <source>About</source>
@@ -17,15 +17,15 @@
     </message>
     <message>
         <source>Bug reports on Github</source>
-        <translation>在 Github报告问题</translation>
+        <translation>在 Github 报告问题</translation>
     </message>
     <message>
         <source>Source code on Github</source>
-        <translation>Github上的源代码</translation>
+        <translation>源代码位于 Github</translation>
     </message>
     <message>
         <source>Alternative KDE Connect client for Sailfish OS</source>
-        <translation type="unfinished"></translation>
+        <translation>旗鱼系统替代性的 KDE Connect 客户端</translation>
     </message>
 </context>
 <context>
@@ -52,12 +52,14 @@
     <message>
         <source>SHA1 fingerprint of your device certificate is: %1
 </source>
-        <translation>你的设备证书的SHA1 指纹为:%1</translation>
+        <translation>你的设备证书的SHA1 指纹为: %1
+</translation>
     </message>
     <message>
         <source>SHA1 fingerprint of remote device certificate is: %1
 </source>
-        <translation>远程设备证书的SHA1指纹为:% 1</translation>
+        <translation>远程设备证书的SHA1指纹为: %1
+</translation>
     </message>
 </context>
 <context>
@@ -108,7 +110,7 @@
     </message>
     <message>
         <source>Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.</source>
-        <translation type="unfinished"></translation>
+        <translation>在你的计算机安装 KDE Connect 或 GSConnect 然后连接到相同的 WLAN </translation>
     </message>
 </context>
 <context>
@@ -176,7 +178,7 @@
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
-        <translation>无法配对此设备, 因为它正在运行旧版本的  KDE连接。</translation>
+        <translation>无法配对此设备, 因为它正在运行的是旧版本的 KDE Connect </translation>
     </message>
     <message>
         <source>This device cannot be paired because it sends a strange ssl certificate.</source>
@@ -191,7 +193,7 @@
     </message>
     <message>
         <source>%1: Already paired</source>
-        <translation>已配对%1: </translation>
+        <translation>%1: 已配对</translation>
     </message>
     <message>
         <source>Timed out</source>
@@ -228,7 +230,7 @@
     </message>
     <message>
         <source>Share battery charge state.</source>
-        <translation>分享电池充电状态。</translation>
+        <translation>分享电池充电状态</translation>
     </message>
 </context>
 <context>
@@ -239,14 +241,14 @@
     </message>
     <message>
         <source>Synchronize clipboard between devices.</source>
-        <translation>在设备之间同步剪贴板。</translation>
+        <translation>在设备之间同步剪贴板</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::CopyJob</name>
     <message>
         <source>Read error: %1</source>
-        <translation>阅读错误：%1</translation>
+        <translation>读取错误:%1</translation>
     </message>
     <message>
         <source>Write error: %1</source>
@@ -254,15 +256,15 @@
     </message>
     <message>
         <source>Input stream is not readable.</source>
-        <translation>输入流不可读取。</translation>
+        <translation>输入流不可读取</translation>
     </message>
     <message>
         <source>Output stream is not writable.</source>
-        <translation>输出流不可读取。</translation>
+        <translation>输出流不可读取</translation>
     </message>
     <message>
         <source>Read more bytes of input stream than expected.</source>
-        <translation>读取比预期更多的输入流字节。</translation>
+        <translation>读取比预期更多的输入流字节</translation>
     </message>
     <message>
         <source>Early end of input stream</source>
@@ -330,7 +332,7 @@
     </message>
     <message>
         <source>Control your media player from remote.</source>
-        <translation>从远程控制媒体播放器。</translation>
+        <translation>从远程控制媒体播放器</translation>
     </message>
 </context>
 <context>
@@ -341,7 +343,7 @@
     </message>
     <message>
         <source>Ping other device and receive pings.</source>
-        <translation>Ping其他设备并接收Ping。</translation>
+        <translation>Ping其他设备并接收Ping</translation>
     </message>
 </context>
 <context>
@@ -352,7 +354,7 @@
     </message>
     <message>
         <source>Work in progress: Send notifications to the remote computer.</source>
-        <translation>正在进行的工作: 将通知发送到远程计算机。</translation>
+        <translation>正在工作: 将通知发送到远程计算机</translation>
     </message>
 </context>
 <context>
@@ -381,11 +383,11 @@
     <name>SailfishConnect::TelephonyPluginFactory</name>
     <message>
         <source>Call notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>呼叫通知</translation>
     </message>
     <message>
         <source>Send notifications for incoming and missed calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>发送来电和未接电话通知</translation>
     </message>
 </context>
 <context>
@@ -396,7 +398,7 @@
     </message>
     <message>
         <source>Control remote computer through mouse movements and clicks.</source>
-        <translation>通过鼠标移动和单击控制远程计算机。</translation>
+        <translation>通过鼠标移动和单击控制远程计算机</translation>
     </message>
 </context>
 <context>
@@ -411,7 +413,7 @@
     </message>
     <message>
         <source>Application runs in background after window is closed.</source>
-        <translation>窗口关闭之后应用在后台运行</translation>
+        <translation>窗口关闭之后应用转到后台运行</translation>
     </message>
 </context>
 <context>
@@ -444,7 +446,7 @@ Tap for click
 Hold shortly for Drag&apos;n&apos;Drop</source>
         <translation>在屏幕移动手指
 轻扫以点击
-短暂按住 Drag&apos;n&apos;Drop</translation>
+短暂按住以拖拽</translation>
     </message>
 </context>
 <context>
@@ -455,12 +457,12 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Yet no downloads or uploads</source>
-        <translation type="unfinished"></translation>
+        <translation>尚无下载或上传</translation>
     </message>
     <message>
         <source>of</source>
         <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>of</translation>
     </message>
 </context>
 </TS>

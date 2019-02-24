@@ -12,22 +12,26 @@ JobInfo::JobInfo(Job *job, QObject *parent)
 {
     Q_ASSERT(job);
 
-    // only target changes after job finishes
-    connect(job, &Job::destroyed, this, &JobInfo::onJobDestroyed);
-    connect(job, &Job::targetChanged, this, &JobInfo::onTargetChanged);
-    connect(job, &Job::actionChanged, this, &JobInfo::actionChanged);
+    m_action = m_impl->action();
+    m_state = m_impl->state();
+
+    // only action changes after job finishes
+    connect(job, &Job::actionChanged, this, &JobInfo::onActionChanged);
+    connect(job, &Job::stateChanged, this, &JobInfo::onStateChanged);
+    connect(job, &Job::targetChanged, this, &JobInfo::targetChanged);
     connect(job, &Job::totalBytesChanged, this, &JobInfo::totalBytesChanged);
     connect(job, &Job::processedBytesChanged,
             this, &JobInfo::processedBytesChanged);
-    connect(job, &Job::stateChanged, this, &JobInfo::onStateChanged);
+
+    connect(job, &Job::destroyed, this, &JobInfo::onJobDestroyed);
 }
 
 QUrl JobInfo::target() const {
-    return m_target;
+    return m_impl ? m_impl->target() : m_target;;
 }
 
 QString JobInfo::action() const {
-    return m_impl ? m_impl->action() : m_action;
+    return m_action;
 }
 
 qint64 JobInfo::totalBytes() const {
@@ -39,7 +43,7 @@ qint64 JobInfo::processedBytes() const {
 }
 
 Job::State JobInfo::state() const {
-    return m_impl ? m_impl->state() : m_state;
+    return m_state;
 }
 
 bool JobInfo::canceled() const
@@ -75,11 +79,12 @@ void JobInfo::onJobDestroyed()
 
 void JobInfo::onStateChanged()
 {
+    m_state = m_impl->state();
+
     if (m_impl->state() == Job::State::Finished) {
-        m_action = m_impl->action();
+        m_target = m_impl->target();
         m_totalBytes = m_impl->totalBytes();
         m_processedBytes = m_impl->processedBytes();
-        m_state = m_impl->state();
         m_canceled = m_impl->canceled();
         m_errorString = m_impl->errorString();
     }
@@ -87,10 +92,10 @@ void JobInfo::onStateChanged()
     emit stateChanged();
 }
 
-void JobInfo::onTargetChanged()
+void JobInfo::onActionChanged()
 {
-    m_target = m_impl->target();
-    emit targetChanged();
+    m_action = m_impl->action();
+    emit actionChanged();
 }
 
 JobManager::JobManager(QObject *parent)

@@ -57,7 +57,7 @@ private:
 
     void onJobDestroyed();
     void onStateChanged();
-    void onTargetChanged();
+    void onActionChanged();
 };
 
 class JobManager : public QObject

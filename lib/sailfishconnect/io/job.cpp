@@ -60,7 +60,14 @@ void Job::setTotalBytes(qint64 totalBytes)
 
 void Job::setProcessedBytes(qint64 processedBytes)
 {
-    if (m_processedBytes != processedBytes) {
+    if (processedBytes < m_processedBytes) {
+        return; // TODO: Quickfix for broken CopyJob
+        qCWarning(logger) << "Back step in processed bytes"
+                          << "old:" << m_processedBytes
+                          << "new:" << processedBytes;
+    }
+
+    if (processedBytes != m_processedBytes) {
         m_processedBytes = processedBytes;
         emit processedBytesChanged();
     }

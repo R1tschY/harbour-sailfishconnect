@@ -4,6 +4,7 @@
 #include <QLoggingCategory>
 #include <QTimer>
 #include <QFile>
+#include <QSslSocket>
 #include <algorithm>
 
 namespace SailfishConnect {
@@ -61,6 +62,8 @@ void CopyJob::doStart()
         m_sourceEof = true;
     }
 
+    m_sslSocket = qobject_cast<QSslSocket*>(m_destination.data());
+
     m_started = true;
 
     m_size = (m_size >= 0)
@@ -81,7 +84,7 @@ void CopyJob::poll()
     if (!isRunning())
         return;
 
-    if (m_bufferSize < m_buffer.size()) {
+    if (m_bufferSize < m_buffer.size() && bytesToWrite() < 1024 * 1024) {
         qint64 bytes = m_source->read(
                     m_buffer.data() + m_bufferSize, m_buffer.size() - m_bufferSize);
         if (bytes == -1) {
@@ -90,9 +93,9 @@ void CopyJob::poll()
             return;
         }
         m_bufferSize += bytes;
-//            qCDebug(logger)
-//                    << "Read" << bytes
-//                    << "bytes. Buffer size:" << m_bufferSize;
+//        qCDebug(logger)
+//                << "Read" << bytes
+//                << "bytes. Buffer size:" << m_bufferSize;
     }
 
     if (m_bufferSize != 0) {
@@ -110,18 +113,23 @@ void CopyJob::poll()
 //        qCDebug(logger)
 //                << "Written" << bytes
 //                << "bytes. Buffer size:" << m_bufferSize
-//                << "Waiting for" << m_destination->bytesToWrite() << "bytes";
+//                << "Waiting for" << bytesToWrite() << "bytes";
     }
 
-    setProcessedBytes(m_writtenBytes - m_destination->bytesToWrite());
+    auto btw = bytesToWrite();
+    setProcessedBytes(m_writtenBytes - btw);
 
-    if (m_source->bytesAvailable() > 0 && m_bufferSize != m_buffer.size()) {
+    if (m_source->bytesAvailable() > 0
+            && m_bufferSize != m_buffer.size()
+            && btw < 1024 * 1024) // 1 MB
+    {
         QMetaObject::invokeMethod(this, "poll", Qt::QueuedConnection);
     }
 
     if (m_sourceEof
+            && m_bufferSize == 0
             && m_source->bytesAvailable() == 0
-            && m_destination->bytesToWrite() == 0) {
+            && btw == 0) {
         qCDebug(logger) << "EOF";
         finish();
     }
@@ -148,6 +156,8 @@ void CopyJob::pollAtDestinationClose()
 
 void CopyJob::finish()
 {
+    m_timer.stop();
+
     if (m_bufferSize != 0) {
         return abort(tr("Early end of output stream"));
     }
@@ -166,6 +176,21 @@ void CopyJob::finish()
     close();
 }
 
-} // namespace SailfishConnect
+qint64 CopyJob::bytesToWrite() const
+{
+    if (m_sslSocket) {
+        return m_destination->bytesToWrite() +
+                m_sslSocket->encryptedBytesToWrite();
+    } else {
+        return m_destination->bytesToWrite();
+    }
+}
 
+bool CopyJob::doCancelling()
+{
+    close();
+    return true;
+}
+
+} // namespace SailfishConnect
 

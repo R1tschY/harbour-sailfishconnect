@@ -9,6 +9,7 @@
 #include "job.h"
 
 class QIODevice;
+class QSslSocket;
 
 namespace SailfishConnect {
 
@@ -42,10 +43,12 @@ public:
 protected:
     void close();
     void doStart() override;
+    bool doCancelling() override;
 
 private:
     QSharedPointer<QIODevice> m_source;
     QSharedPointer<QIODevice> m_destination;
+    QSslSocket* m_sslSocket = nullptr;
 
     qint64 m_size = -1;
     qint64 m_writtenBytes = 0;
@@ -66,6 +69,8 @@ private:
     void checkDestination();
 
     void finish();
+
+    qint64 bytesToWrite() const;
 
 private slots:
     void poll();

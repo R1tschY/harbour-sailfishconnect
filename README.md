@@ -1,6 +1,21 @@
+<p align="center">
+  <img src="/app/icons/108x108/harbour-sailfishconnect.png" />
+</p>
+
+<p align="center">
+   <a href="https://circleci.com/gh/R1tschY/harbour-sailfishconnect">
+      <img src="https://img.shields.io/circleci/project/github/R1tschY/harbour-sailfishconnect.svg?style=flat&logo=circleci" />
+   </a>
+   <a href="https://openrepos.net/content/r1tschy/sailfish-connect">
+      <img src="https://img.shields.io/badge/dynamic/json.svg?color=yellow&label=OpenRepos&query=%24.downloads&url=https%3A%2F%2Fopenrepos.net%2Fapi%2Fv1%2Fapps%2F10437&suffix=+downloads&style=flat&cacheSeconds=3600" />
+   </a>
+</p>
+
 # Sailfish Connect
 
 An alternative Sailfish OS client for [KDE Connect](https://community.kde.org/KDEConnect)
+
+
 
 ## Screenshots
 

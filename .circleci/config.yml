@@ -8,7 +8,7 @@ jobs:
       - run: git submodule sync
       - run: git submodule update --init
       - run: git config user.email "circleci@nowhere.nowhere" && git config user.name "circleci"
-      - run: mb2 -t SailfishOS-3.0.1.11-armv7hl build -d
+      - run: mb2 build -d -X
       - run: mb2 -t SailfishOS-3.0.1.11-armv7hl make check
       - store_artifacts:
           path: /home/nemo/project/RPMS/

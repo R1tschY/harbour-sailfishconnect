@@ -1,7 +1,7 @@
 Name: harbour-sailfishconnect
 Summary: SailfishOS client for KDE-Connect
-Version: 0.3
-Release: 1
+Version: 0.4
+Release: 0.1
 # The contents of the Group field should be one of the groups listed here:
 # http://gitorious.org/meego-developer-tools/spectacle/blobs/master/data/GROUPS
 Group: Qt/Qt
@@ -10,7 +10,7 @@ License: LICENSE
 # This must be generated before uploading a package to a remote build service.
 # Usually this line does not need to be modified.
 Sources:
-- '%{name}-%{version}.tar.bz2'
+  - '%{name}-%{version}.tar.bz2'
 Description: |
   SailfishOS client for KDE-Connect
 Configure: none
@@ -37,7 +37,7 @@ PkgConfigBR:
 
 # Runtime dependencies which are not automatically detected
 Requires:
-  - sailfishsilica-qt5 >= 0.10.9 
+  - sailfishsilica-qt5 >= 0.10.9
 
 # All installed files
 Files:
@@ -45,6 +45,5 @@ Files:
   - '%{_datadir}/%{name}'
   - '%{_datadir}/applications/%{name}.desktop'
   - '%{_datadir}/icons/hicolor/*/apps/%{name}.png'
-
 # For more information about yaml and what's supported in Sailfish OS
 # build system, please see https://wiki.merproject.org/wiki/Spectacle

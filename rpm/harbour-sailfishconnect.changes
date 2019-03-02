@@ -1,7 +1,7 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Wed Jan 23 2019 Richard Liebscher <r1tschy@yahoo.de> 0.3-1
+* Sat Mar 02 2019 Richard Liebscher <r1tschy@yahoo.de> 0.3-1
 - Added page to show file transfers
 - Added telephony plugin
 - Fixed various bugs to support GSConnect

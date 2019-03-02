@@ -1,5 +1,6 @@
 /*
  * Copyright 2013 Albert Vaca <albertvaka@gmail.com>
+ * Copyright 2019 Richard Liebscher <richard.liebscher@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -40,7 +41,7 @@ class LanUploadJob : public CopyJob
 public:
     explicit LanUploadJob(
             const NetworkPacket& np, const QString& deviceId,
-            LanLinkProvider* provider);
+            LanLinkProvider* provider, QObject* parent = nullptr);
 
     QVariantMap transferInfo();
 

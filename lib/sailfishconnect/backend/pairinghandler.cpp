@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015 Albert Vaca Cintora <albertvaka@gmail.com>
  *
  * This program is free software; you can redistribute it and/or

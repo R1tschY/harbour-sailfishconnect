@@ -1,5 +1,6 @@
-/**
+/*
  * Copyright 2013 Albert Vaca <albertvaka@gmail.com>
+ * Copyright 2019 Richard Liebscher <richard.liebscher@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -113,7 +114,7 @@ bool LanDeviceLink::sendPacket(NetworkPacket& np, JobManager* jobMgr)
 
 LanUploadJob* LanDeviceLink::sendPayload(const NetworkPacket& np, JobManager* jobMgr)
 {
-    LanUploadJob* job = new LanUploadJob(np, deviceId(), provider());
+    LanUploadJob* job = new LanUploadJob(np, deviceId(), provider(), this);
     job->start();
     if (jobMgr) {
         jobMgr->addJob(job);

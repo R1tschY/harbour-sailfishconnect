@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015 Vineet Garg <grg.vineet@gmail.com>
  *
  * This program is free software; you can redistribute it and/or

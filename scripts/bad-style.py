@@ -1,5 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
+# Copyright 2019 Richard Liebscher <richard.liebscher@gmail.com>.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 
 import sys
 import os
@@ -11,7 +27,7 @@ import xml.etree.ElementTree as ET
 
 class Failure:
 
-    def __init__(
+    def __init__(  
             self,
             file: Path,
             location: "Union[None, int, Tuple[int, int]]",
@@ -42,7 +58,8 @@ class Failure:
                 endLine = len(content)
             print(f"{self.file}: error: {self.message}")
             print(" " + content[startLine:endLine])
-            print(" " * (self.location[0] - startLine + 1) + "^" * (self.location[1] - self.location[0]))
+            print(" " * (self.location[0] - startLine + 1) 
+                  + "^" * (self.location[1] - self.location[0]))
 
 
 
@@ -58,14 +75,14 @@ class MatchRegexRule:
 
     def __init__(self, regex: str, files: str = None, message: str = None):
         self.regex = re.compile(regex)
-        self.files = files
+        self.files = re.compile(files)
         self.message = message
 
     def canHandle(self, file: Path):
-        return fnmatch(file.name, self.files)
+        return self.files.search(file.name) is not None
 
     def handleFile(self, file: Path, content: str):
-        if not self.regex.match(content):
+        if not self.regex.search(content):
             return [Failure(file, None, self.message)]
         else:
             return []
@@ -75,11 +92,11 @@ class DontMatchRegexRule:
 
     def __init__(self, regex: str, *, files: str = None, message: str = None):
         self.regex = re.compile(regex)
-        self.files = files
+        self.files = re.compile(files)
         self.message = message
 
     def canHandle(self, file: Path):
-        return fnmatch(file.name, self.files)
+        return self.files.search(file.name) is not None
 
     def handleFile(self, file: Path, content: str):
         return [
@@ -104,6 +121,9 @@ def main():
     root = tree.getroot()
     assert root.tag == "bad-style"
 
+    # ignore dirs
+    ignoredirs = frozenset(root.attrib.get("ignore-dirs", "").split())
+
     # create rules
     rules = []
     for element in root:
@@ -117,6 +137,10 @@ def main():
     failures = []
     matchedFiles = 0
     for root, dirs, files in os.walk('.'):
+        for dir in dirs:
+            if dir in ignoredirs:
+                dirs.remove(dir)
+
         for file in files:
             content = None
             path = Path(root) / file
@@ -129,12 +153,12 @@ def main():
                     failures.extend(rule.handleFile(path, content))
 
     # result
-    print(f"matched files {matchedFiles}")
     if failures:
-        print(f"\n{len(failures)} Failures:")
         for failure in failures:
             failure.print()
 
+    print(f"Matched {matchedFiles} files. {len(failures)} Failures.")
+    if failures:
         sys.exit(5)
 
 

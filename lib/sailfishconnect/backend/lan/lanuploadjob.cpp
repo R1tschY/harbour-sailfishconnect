@@ -1,5 +1,6 @@
 /*
  * Copyright 2013 Albert Vaca <albertvaka@gmail.com>
+ * Copyright 2019 Richard Liebscher <richard.liebscher@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -28,8 +29,8 @@ namespace SailfishConnect {
 
 LanUploadJob::LanUploadJob(
         const NetworkPacket &np, const QString& deviceId,
-        LanLinkProvider* provider)
-    : CopyJob(deviceId, np.payload(), QSharedPointer<QIODevice>())
+        LanLinkProvider* provider, QObject* parent)
+    : CopyJob(deviceId, np.payload(), QSharedPointer<QIODevice>(), -1, parent)
     , m_provider(provider)
     , m_server(new Server(this))
     , m_socket(nullptr)

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<bad-style>
-    <match-regex files="*.cpp" message="copyright missing">
-        Copyright \d+ Richard Liebscher .richard\.liebscher@gmail\.com.
+<bad-style ignore-dirs=".git gtest">
+    <match-regex files="\.(cpp|h|qml|py)\Z" message="copyright missing">
+        This program is free software. you can redistribute it
     </match-regex>
-    <dont-match-regex files="*.qml" regex=" == "
-                      message="use === instead of =="/>
+    <match-regex files="\.(cpp|h)\Z" regex="\A/\*\n" message="source file should start with /*" />
+    <dont-match-regex files="\.qml\Z" regex=" == " message="use === instead of =="/>
 </bad-style>

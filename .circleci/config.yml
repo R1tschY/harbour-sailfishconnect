@@ -5,12 +5,17 @@ jobs:
       - image: r1tschy/sailfishos-platform-sdk:3.0.1.11
     steps:
       - checkout
-      - run: git submodule sync
-      - run: git submodule update --init
+      - run: git submodule sync && git submodule update --init
       - run: git config user.email "circleci@nowhere.nowhere" && git config user.name "circleci"
-      - run: mb2 -X -t SailfishOS-3.0.1.11-armv7hl build -d
-      - run: mb2 -X -t SailfishOS-3.0.1.11-i486 build -d
+
+      - run: mb2 -X -t SailfishOS-3.0.1.11-armv7hl build -d -j 2
+      - store_artifacts:
+          path: /home/nemo/project/RPMS/
+          destination: rpms
       - run: mb2 -t SailfishOS-3.0.1.11-i486 make check
+
+      - run: git clean -f -x
+      - run: mb2 -X -t SailfishOS-3.0.1.11-i486 build -d -j 2
       - store_artifacts:
           path: /home/nemo/project/RPMS/
           destination: rpms

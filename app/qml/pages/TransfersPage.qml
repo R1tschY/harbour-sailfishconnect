@@ -174,7 +174,7 @@ Page {
         }
 
         ViewPlaceholder {
-            enabled: listView.count == 0
+            enabled: listView.count === 0
             text: qsTr("Yet no downloads or uploads")
         }
 

@@ -4,5 +4,8 @@
         This program is free software. you can redistribute it
     </match-regex>
     <match-regex files="\.(cpp|h)\Z" regex="\A/\*\n" message="source file should start with /*" />
+
+    <!-- QML rules -->
     <dont-match-regex files="\.qml\Z" regex=" == " message="use === instead of =="/>
+    <dont-match-regex files="\.qml\Z" regex=";\n" message="dont use ; at EOL"/>
 </bad-style>

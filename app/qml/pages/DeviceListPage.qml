@@ -263,7 +263,7 @@ Page {
         if (devicePage !== null && devicePage.deviceId === deviceId) {
             pageStack.pop(devicePage)
             ui.showMainWindow()
-            return;
+            return
         }
 
         pageStack.pop(page, PageStackAction.Immediate)

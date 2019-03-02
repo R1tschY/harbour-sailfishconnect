@@ -69,7 +69,7 @@ Page {
 
                     Button {
                         id: requestBtn
-                        visible: trustEntry.state == ""
+                        visible: trustEntry.state === ""
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         text: qsTr("Request pairing")
@@ -80,7 +80,7 @@ Page {
 
                     Row {
                         id: acceptRejectBtns
-                        visible: trustEntry.state == "waitingParingRequest"
+                        visible: trustEntry.state === "waitingParingRequest"
                         width: parent.width
                         spacing: Theme.paddingLarge
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -101,21 +101,21 @@ Page {
                             name: "trusted"
                             when: _device.isTrusted
                             PropertyChanges {
-                                target: stateText;
+                                target: stateText
                                 text: qsTr("You trust this device")}
                         },
                         State {
                             name: "waitForAcceptedPairing"
                             when: _device.waitsForPairing
                             PropertyChanges {
-                                target: stateText;
+                                target: stateText
                                 text: qsTr("Waiting for accepted pairing ...")}
                         },
                         State {
                             name: "waitingParingRequest"
                             when: _device.hasPairingRequests
                             PropertyChanges {
-                                target: stateText;
+                                target: stateText
                                 text: qsTr("This device wants to pair with your " +
                                            "device.")}
                         }

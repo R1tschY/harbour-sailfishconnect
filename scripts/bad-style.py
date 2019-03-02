@@ -46,7 +46,8 @@ class Failure:
             endLine = content.find('\n', self.location, None)
             if endLine == -1:
                 endLine = len(content)
-            print(f"{self.file}: error: {self.message}")
+            lineNumber = content.count("\n", None, self.location) + 1
+            print(f"{self.file}:{lineNumber}: error: {self.message}")
             print(" " + content[startLine:endLine])
             print(" " * (self.location - startLine + 1) + "^")
 
@@ -56,7 +57,8 @@ class Failure:
             endLine = content.find('\n', self.location[0], None)
             if endLine == -1:
                 endLine = len(content)
-            print(f"{self.file}: error: {self.message}")
+            lineNumber = content.count("\n", None, self.location[0]) + 1
+            print(f"{self.file}:{lineNumber}: error: {self.message}")
             print(" " + content[startLine:endLine])
             print(" " * (self.location[0] - startLine + 1) 
                   + "^" * (self.location[1] - self.location[0]))

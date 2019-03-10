@@ -49,7 +49,8 @@ SOURCES += \
     src/plugins/telephony/telephonyplugin.cpp \
     src/dbus/ofono.cpp \
     src/ui/sortfiltermodel.cpp \
-    src/ui/keyboardlayoutprovider.cpp
+    src/ui/keyboardlayoutprovider.cpp \
+    src/plugins/remoteinput/remoteinput.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -78,7 +79,8 @@ DISTFILES += \
     src/dbus/ofono/org.ofono.Manager.xml \
     qml/components/KeyboardPage.qml \
     qml/components/Key.qml \
-    qml/components/RemoteInput.qml
+    qml/components/RemoteInput.qml \
+    src/plugins/remoteinput/metadata.json
 
 keyboardlayouts.path = /home/nemo/.local/share/harbour-sailfishconnect/harbour-sailfishconnect/keyboard-layouts/
 keyboardlayouts.files = keyboard-layouts/*
@@ -112,4 +114,5 @@ HEADERS += \
     src/dbus/tuple.h \
     src/dbus/ofono.h \
     src/ui/sortfiltermodel.h \
-    src/ui/keyboardlayoutprovider.h
+    src/ui/keyboardlayoutprovider.h \
+    src/plugins/remoteinput/remoteinput.h

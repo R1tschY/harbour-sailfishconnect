@@ -361,6 +361,17 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::RemoteInputPluginFactory</name>
+    <message>
+        <source>Remote Keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type on remote compute using a virtual keyboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::SendNotificationsPluginFactory</name>
     <message>
         <source>Send notifcations</source>

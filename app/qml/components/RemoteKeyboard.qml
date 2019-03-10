@@ -21,9 +21,9 @@ import SailfishConnect.Core 0.3
 
 Column {
     width: parent.width
-    //visible:
-    //    _device.isReachable && _device.isTrusted
-    //    && _device.loadedPlugins.indexOf("SailfishConnect::RemoteInputPlugin") >= 0
+    visible:
+        _device.isReachable && _device.isTrusted
+        && _device.loadedPlugins.indexOf("SailfishConnect::RemoteInputPlugin") >= 0
 
     SectionHeader { text: qsTr("Remote Input") }
 

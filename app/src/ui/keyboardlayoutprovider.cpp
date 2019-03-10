@@ -37,7 +37,6 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
 {
     // seems to be the only way to get the files stored
     QFile layoutFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/keyboard-layouts/german.json");
-    qDebug() << QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     if (!layoutFile.open(QIODevice::ReadOnly)) {
         qDebug() << "unkown layout: " << layout;
         return;

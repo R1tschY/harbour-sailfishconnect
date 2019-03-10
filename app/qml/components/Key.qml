@@ -16,20 +16,54 @@
  */
 
 import QtQuick 2.0
+import Sailfish.Silica 1.0
 
 Rectangle {
-    width: 50
-    height: 50
     radius: 10
 
-    color: "white"
-    border.color: "black"
+    color: "transparent"
+    border.color: Theme.primaryColor
+    border.width: 2
 
     property string label: ""
+    property string altLabel: ""
+    property bool showAlt: false
+    property bool markable: false
+    property int markValue: 0
+
+    signal clicked()
+
+    Rectangle {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        visible: markable
+        height: parent.height / 2 * markValue
+        radius: 2
+
+        color: Theme.secondaryHighlightColor
+    }
 
     Text {
         anchors.centerIn: parent
+        color: Theme.primaryColor
+        font.pixelSize: Theme.fontSizeMedium
 
-        text: label
+        text: !showAlt ? label : (altLabel != "" ? altLabel : label)
+    }
+
+    MouseArea {
+        id: mouse
+        anchors.fill: parent
+
+        onClicked: {
+            console.log(label)
+            parent.clicked();
+        }
+
+        onEntered: parent.color = Theme.highlightBackgroundColor
+
+        onExited: parent.color = "transparent"
     }
 }

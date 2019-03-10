@@ -49,7 +49,9 @@ SOURCES += \
     src/plugins/telephony/telephonyplugin.cpp \
     src/dbus/ofono.cpp \
     src/ui/sortfiltermodel.cpp \
-    src/plugins/mprisremote/albumartcache.cpp
+    src/plugins/mprisremote/albumartcache.cpp \
+    src/js/process.cpp \
+    src/js/path.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -104,4 +106,6 @@ HEADERS += \
     src/dbus/tuple.h \
     src/dbus/ofono.h \
     src/ui/sortfiltermodel.h \
-    src/plugins/mprisremote/albumartcache.h
+    src/plugins/mprisremote/albumartcache.h \
+    src/js/process.h \
+    src/js/path.h

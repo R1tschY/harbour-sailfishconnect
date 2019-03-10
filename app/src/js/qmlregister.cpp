@@ -19,6 +19,8 @@
 
 #include "url.h"
 #include "humanize.h"
+#include "process.h"
+#include "path.h"
 
 namespace QmlJs {
 
@@ -26,6 +28,8 @@ void registerTypes()
 {
     Url::registerType();
     Humanize::registerType();
+    Process::registerType();
+    Path::registerType();
 }
 
 } // namespace QmlJs

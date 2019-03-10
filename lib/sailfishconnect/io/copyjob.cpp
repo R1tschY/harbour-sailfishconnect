@@ -179,12 +179,12 @@ void CopyJob::finish()
         return abort(tr("Early end of output stream"));
     }
 
-    if (m_writtenBytes > m_size) {
+    if (m_size > 0 && m_writtenBytes > m_size) {
         return abort(tr("Read more bytes of input stream than "
                         "expected."));
     }
 
-    if (m_writtenBytes < m_size) {
+    if (m_size > 0 && m_writtenBytes < m_size) {
         return abort(tr("Early end of input stream"));
     }
 

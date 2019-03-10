@@ -175,6 +175,13 @@
     </message>
 </context>
 <context>
+    <name>KeyboardPage</name>
+    <message>
+        <source>Keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
@@ -209,6 +216,13 @@
     <message>
         <source>Multimedia Controls</source>
         <translation>Multimedia Steuerung</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteKeyboard</name>
+    <message>
+        <source>Remote Input</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

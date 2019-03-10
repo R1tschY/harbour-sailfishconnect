@@ -48,6 +48,7 @@
 #include "ui.h"
 #include "js/qmlregister.h"
 #include "dbus/ofono.h"
+#include "ui/keyboardlayoutprovider.h"
 
 namespace SailfishConnect {
 
@@ -154,7 +155,8 @@ int main(int argc, char *argv[])
     registerQmlTypes();
 
     AppDaemon daemon;
-    UI ui(&daemon);
+    KeyboardLayoutProvider keyboardLayoutProvider;
+    UI ui(&daemon, &keyboardLayoutProvider);
     ui.showMainWindow();
 
     return app->exec();

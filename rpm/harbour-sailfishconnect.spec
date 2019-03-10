@@ -72,5 +72,6 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
+/home/nemo/.local/share/%{name}/%{name}/keyboard-layouts/*
 # >> files
 # << files

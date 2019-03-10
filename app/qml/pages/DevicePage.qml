@@ -128,6 +128,7 @@ Page {
                 MprisUi { id: mprisUi }
                 Touchpad { id: touchpad }
                 ClipboardUi { id: clipboardUi }
+                RemoteKeyboard { id: remoteKeyboard}
             }
         }
 

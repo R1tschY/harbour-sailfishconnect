@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QString>
 #include <QSettings>
+#include "ui/keyboardlayoutprovider.h"
 
 class QQuickView;
 class QQmlImageProviderBase;
@@ -50,7 +51,7 @@ public:
     static const QString DBUS_INTERFACE_NAME;
     static const QString DBUS_PATH;
 
-    explicit UI(AppDaemon* daemon, QObject *parent = nullptr);
+    explicit UI(AppDaemon* daemon, KeyboardLayoutProvider* keyboardLayoutProvider, QObject *parent = nullptr);
 
     /**
      * @brief notify other main daemon to show app window
@@ -86,6 +87,7 @@ public slots:
 private:
     QQuickView* m_view = nullptr;
     AppDaemon *m_daemon;
+    KeyboardLayoutProvider* m_keyboardLayoutProvider;
 
     QSettings m_settings;
     bool m_runInBackground = false;

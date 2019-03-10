@@ -42,9 +42,10 @@ const QString UI::DBUS_PATH =
         QStringLiteral("/org/harbour/SailfishConnect/UI");
 
 
-UI::UI(AppDaemon* daemon, QObject *parent)
+UI::UI(AppDaemon* daemon, KeyboardLayoutProvider* keyboardLayoutProvider, QObject *parent)
     : QObject(parent)
     , m_daemon(daemon)
+    , m_keyboardLayoutProvider(keyboardLayoutProvider)
 {
     m_settings.beginGroup(QStringLiteral("UI"));
 
@@ -77,6 +78,7 @@ void UI::showMainWindow()
     // view
     m_view->rootContext()->setContextProperty("daemon", m_daemon);
     m_view->rootContext()->setContextProperty("ui", this);
+    m_view->rootContext()->setContextProperty("_keyboardLayout", m_keyboardLayoutProvider);
     m_view->setSource(SailfishApp::pathToMainQml());
     m_view->showFullScreen();
 }

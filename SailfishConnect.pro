@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 
-SUBDIRS = lib
+SUBDIRS = lib tests
+tests.depends = lib
 
 packagesExist(sailfishapp) {
     SUBDIRS += app

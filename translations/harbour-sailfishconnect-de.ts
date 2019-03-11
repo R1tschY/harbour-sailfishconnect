@@ -178,14 +178,15 @@
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>Choose layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Layout auswählen
+</translation>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur</translation>
     </message>
 </context>
 <context>
@@ -229,7 +230,7 @@
     <name>RemoteKeyboard</name>
     <message>
         <source>Remote Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernte Eingabe</translation>
     </message>
 </context>
 <context>
@@ -371,11 +372,11 @@
     <name>SailfishConnect::RemoteInputPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernte Tastatur</translation>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tippe auf einem anderen Computer mit einer virtuellen Tastatur.</translation>
     </message>
 </context>
 <context>

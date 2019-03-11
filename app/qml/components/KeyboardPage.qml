@@ -20,10 +20,14 @@ import Sailfish.Silica 1.0
 
 Page {
     id: page
-    allowedOrientations: Orientation.All
-    property bool shiftActive: false
+    allowedOrientations: Orientation.Landscape | Orientation.LandscapeInverted
     property var device
     property var plugin: device.plugin("SailfishConnect::RemoteInputPlugin")
+    property QtObject modifiers: QtObject {
+        property int shift: 0
+        property int ctrl: 0
+        property int alt: 0
+    }
 
     PageHeader {
         title: qsTr("Keyboard")
@@ -44,7 +48,7 @@ Page {
                         height: page.height / 7
                         label: modelData["name"] === "backspace" ? "" : modelData["name"]
                         altLabel: modelData["alt"]
-                        showAlt: shiftActive
+                        showAlt: modifiers.shift
 
                         Image {
                             anchors.centerIn: parent
@@ -58,9 +62,18 @@ Page {
 
                         onClicked: {
                             if (modelData["name"] === "backspace") {
-                                plugin.sendKeyPress("backspace", shiftActive);
+                                plugin.sendKeyPress("backspace", modifiers.shift, modifiers.ctrl, modifiers.atl);
                             } else {
-                                plugin.sendKeyPress(shiftActive ? altLabel : label, shiftActive);
+                                plugin.sendKeyPress(modifiers.shift ? altLabel : label, false, modifiers.ctrl, modifiers.alt);
+                            }
+                            if (modifiers.shift == 1) {
+                                modifiers.shift = 0;
+                            }
+                            if (modifiers.ctrl == 1) {
+                                modifiers.ctrl = 0;
+                            }
+                            if (modifiers.alt == 1) {
+                                modifiers.alt = 0;
                             }
                         }
                     }
@@ -76,10 +89,10 @@ Page {
                         height: page.height / 7
                         label: modelData["name"]
                         altLabel: modelData["alt"]
-                        showAlt: shiftActive
+                        showAlt: modifiers.shift
 
                         onClicked: {
-                            plugin.sendKeyPress(shiftActive ? altLabel : label, shiftActive)
+                            plugin.sendKeyPress(modifiers.shift ? altLabel : label, false, modifiers.ctrl, modifiers.alt);
                         }
                     }
                 }
@@ -94,7 +107,7 @@ Page {
                         height: page.height / 7
                         label: modelData["name"] === "enter" ? "" : modelData["name"]
                         altLabel: modelData["alt"]
-                        showAlt: shiftActive
+                        showAlt: modifiers.shift
 
                         Image {
                             anchors.centerIn: parent
@@ -108,9 +121,18 @@ Page {
 
                         onClicked: {
                             if (modelData["name"] === "enter") {
-                                plugin.sendKeyPress("enter", shiftActive);
+                                plugin.sendKeyPress("enter", modifiers.shift, modifiers.ctrl, modifiers.alt);
                             } else {
-                                plugin.sendKeyPress(shiftActive ? altLabel : label, shiftActive)
+                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
+                            }
+                            if (modifiers.shift == 1) {
+                                modifiers.shift = 0;
+                            }
+                            if (modifiers.ctrl == 1) {
+                                modifiers.ctrl = 0;
+                            }
+                            if (modifiers.alt == 1) {
+                                modifiers.alt = 0;
                             }
                         }
                     }
@@ -126,10 +148,19 @@ Page {
                         height: page.height / 7
                         label: modelData["name"]
                         altLabel: modelData["alt"]
-                        showAlt: shiftActive
+                        showAlt: modifiers.shift
 
                         onClicked: {
-                            plugin.sendKeyPress(shiftActive ? altLabel : label)
+                            plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
+                            if (modifiers.shift == 1) {
+                                modifiers.shift = 0;
+                            }
+                            if (modifiers.ctrl == 1) {
+                                modifiers.ctrl = 0;
+                            }
+                            if (modifiers.alt == 1) {
+                                modifiers.alt = 0;
+                            }
                         }
                     }
                 }
@@ -145,8 +176,9 @@ Page {
                         height: page.height / 7
                         label: modelData["name"] === "up" ? "" : modelData["name"]
                         altLabel: modelData["alt"]
-                        showAlt: shiftActive
+                        showAlt: modifiers.shift
                         markable: label == "shift"
+                        markValue: modifiers.shift
 
                         Image {
                             anchors.centerIn: parent
@@ -158,28 +190,26 @@ Page {
                             source: "image://theme/icon-m-up"
                         }
 
-                        Connections {
-                            target: page
-
-                            onShiftActiveChanged: {
-                                if (!page.shiftActive && key.markValue == 1) {
-                                    key.markValue = false;
-                                }
-                            }
-                        }
-
                         onClicked: {
                             if (label === "shift") {
-                                shiftActive = true;
-                                markValue++;
-                                if (markValue == 3) {
-                                    markValue = 0;
-                                    shiftActive = false
+                                modifiers.shift++;
+                                if (modifiers.shift == 3) {
+                                    modifiers.shift = 0;
                                 }
+                                return;
                             } else if (modelData["name"] === "up") {
-                                plugin.sendKeyPress("up", shiftActive);
+                                plugin.sendKeyPress("up", modifiers.shift, modifiers.ctrl, modifiers.alt);
                             } else {
-                                plugin.sendKeyPress(shiftActive ? altLabel : label, shiftActive)
+                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
+                            }
+                            if (modifiers.shift == 1) {
+                                modifiers.shift = 0;
+                            }
+                            if (modifiers.ctrl == 1) {
+                                modifiers.ctrl = 0;
+                            }
+                            if (modifiers.alt == 1) {
+                                modifiers.alt = 0;
                             }
                         }
                     }
@@ -195,7 +225,9 @@ Page {
                         height: page.height / 7
                         label: modelData["name"] === "left" || modelData["name"] === "down" || modelData["name"] === "right" ? "" : modelData["name"]
                         altLabel: modelData["alt"]
-                        showAlt: shiftActive
+                        showAlt: modifiers.shift
+                        markable: label == "ctrl" || label == "alt"
+                        markValue: label == "ctrl" ? modifiers.ctrl : modifiers.alt
 
                         Image {
                             anchors.centerIn: parent
@@ -209,13 +241,34 @@ Page {
 
                         onClicked: {
                             if (modelData["name"] === "left") {
-                                plugin.sendKeyPress("left", shiftActive);
+                                plugin.sendKeyPress("left", modifiers.shift, modifiers.ctrl, modifiers.alt);
                             } else if (modelData["name"] === "down") {
-                                plugin.sendKeyPress("down", shiftActive);
+                                plugin.sendKeyPress("down", modifiers.shift, modifiers.ctrl, modifiers.alt);
                             } else if (modelData["name"] === "right") {
-                                plugin.sendKeyPress("right", shiftActive);
+                                plugin.sendKeyPress("right", modifiers.shift, modifiers.ctrl, modifiers.alt);
+                            } else if (label == "ctrl") {
+                                modifiers.ctrl++;
+                                if (modifiers.ctrl == 3) {
+                                    modifiers.ctrl = 0;
+                                }
+                                return;
+                            } else if (label == "alt") {
+                                modifiers.alt++;
+                                if (modifiers.alt == 3) {
+                                    modifiers.alt = 0;
+                                }
+                                return;
                             } else {
-                                plugin.sendKeyPress(label, shiftActive)
+                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
+                            }
+                            if (modifiers.shift == 1) {
+                                modifiers.shift = 0;
+                            }
+                            if (modifiers.ctrl == 1) {
+                                modifiers.ctrl = 0;
+                            }
+                            if (modifiers.alt == 1) {
+                                modifiers.alt = 0;
                             }
                         }
                     }

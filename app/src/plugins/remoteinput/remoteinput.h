@@ -32,7 +32,7 @@ public:
 
     bool receivePacket(const NetworkPacket &np) override;
 
-    Q_SCRIPTABLE void sendKeyPress(const QString &key, bool shift = false, bool ctrl = false, bool alt = false, bool sendAck = true) const;
+    Q_SCRIPTABLE void sendKeyPress(const QString &key, bool shift = false, bool ctrl = false, bool alt = false) const;
 };
 
 class RemoteInputPluginFactory : public SailfishConnectPluginFactory_<RemoteInputPlugin>

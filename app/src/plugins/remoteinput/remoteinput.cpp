@@ -49,9 +49,9 @@ bool SailfishConnect::RemoteInputPlugin::receivePacket(const NetworkPacket &np)
     return false;
 }
 
-void SailfishConnect::RemoteInputPlugin::sendKeyPress(const QString &key, bool shift, bool ctrl, bool alt, bool sendAck) const
+void SailfishConnect::RemoteInputPlugin::sendKeyPress(const QString &key, bool shift, bool ctrl, bool alt) const
 {
-    NetworkPacket np("kdeconnect.mousepad.request", {{"key", key}, {"specialKey", specialKeysMap[key]}, {"shift", shift}, {"ctrl", ctrl}, {"alt", alt}, {"sendAck", sendAck}});
+    NetworkPacket np("kdeconnect.mousepad.request", {{"key", key}, {"specialKey", specialKeysMap[key]}, {"shift", shift}, {"ctrl", ctrl}, {"alt", alt}, {"sendAck", true}});
     sendPacket(np);
 }
 

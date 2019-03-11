@@ -58,7 +58,6 @@ Rectangle {
         anchors.fill: parent
 
         onClicked: {
-            console.log(label)
             parent.clicked();
         }
 

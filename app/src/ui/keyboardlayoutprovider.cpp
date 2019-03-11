@@ -22,10 +22,18 @@
 #include <QJsonArray>
 #include <QDebug>
 #include <sailfishapp.h>
+#include <QtAlgorithms>
 
 KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent) : QObject(parent)
 {
-    setLayout("german");
+    QString defaultLayout = "english";
+    QFile saved(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/keyboardlayout.conf");
+    if (saved.exists()) {
+        saved.open(QIODevice::ReadOnly);
+        defaultLayout = saved.readLine().replace("\n", "");
+        saved.close();
+    }
+    setLayout(defaultLayout);
 }
 
 QString KeyboardLayoutProvider::layout() const
@@ -36,7 +44,7 @@ QString KeyboardLayoutProvider::layout() const
 void KeyboardLayoutProvider::setLayout(const QString &layout)
 {
     // seems to be the only way to get the files stored
-    QFile layoutFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/keyboard-layouts/german.json");
+    QFile layoutFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/keyboard-layouts/" + layout + ".json");
     if (!layoutFile.open(QIODevice::ReadOnly)) {
         qDebug() << "unkown layout: " << layout;
         return;
@@ -56,7 +64,28 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
 
     m_layout = layout;
 
+    QFile saved(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/keyboardlayout.conf");
+    saved.open(QIODevice::WriteOnly);
+    saved.write(m_layout.toLocal8Bit());
+    saved.close();
+
     emit layoutChanged();
+}
+
+QVariantList KeyboardLayoutProvider::layouts()
+{
+    QDir layoutDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/keyboard-layouts/");
+
+    layoutDir.setSorting(QDir::Name);
+
+    QVariantList layouts;
+    for (QString layout : layoutDir.entryList()) {
+        if (!layout.startsWith(".")) {
+            layouts.append(layout.left(layout.indexOf(".")));
+        }
+    }
+
+    return layouts;
 }
 
 QVariantList KeyboardLayoutProvider::row1() const

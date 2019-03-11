@@ -276,4 +276,17 @@ Page {
             }
         }
     }
+
+    // I hate this hack but it seems this is the only way to push an attachted page
+    Timer {
+        id: pushPage
+
+        interval: 50
+        repeat: false
+        running: true
+
+        onTriggered: {
+            pageStack.pushAttached(Qt.resolvedUrl("KeyboardChangeLayoutPage.qml"))
+        }
+    }
 }

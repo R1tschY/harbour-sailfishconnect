@@ -38,6 +38,8 @@ public:
     QString layout() const;
     void setLayout(const QString &layout);
 
+    Q_INVOKABLE QVariantList layouts();
+
     QVariantList row1() const;
     QVariantList row2() const;
     QVariantList row3() const;

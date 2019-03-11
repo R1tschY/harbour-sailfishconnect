@@ -173,6 +173,13 @@
     </message>
 </context>
 <context>
+    <name>KeyboardChangeLayoutPage</name>
+    <message>
+        <source>Choose layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>

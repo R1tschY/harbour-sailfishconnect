@@ -80,7 +80,8 @@ DISTFILES += \
     qml/components/KeyboardPage.qml \
     qml/components/Key.qml \
     qml/components/RemoteInput.qml \
-    src/plugins/remoteinput/metadata.json
+    src/plugins/remoteinput/metadata.json \
+    keyboard-layouts/english.json
 
 keyboardlayouts.path = /home/nemo/.local/share/harbour-sailfishconnect/harbour-sailfishconnect/keyboard-layouts/
 keyboardlayouts.files = keyboard-layouts/*

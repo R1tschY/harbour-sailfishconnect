@@ -93,6 +93,15 @@ Page {
 
                         onClicked: {
                             plugin.sendKeyPress(modifiers.shift ? altLabel : label, false, modifiers.ctrl, modifiers.alt);
+                            if (modifiers.shift == 1) {
+                                modifiers.shift = 0;
+                            }
+                            if (modifiers.ctrl == 1) {
+                                modifiers.ctrl = 0;
+                            }
+                            if (modifiers.alt == 1) {
+                                modifiers.alt = 0;
+                            }
                         }
                     }
                 }

@@ -178,6 +178,14 @@
         <source>Choose layout</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1ms repeat interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vibration feedback</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeyboardPage</name>

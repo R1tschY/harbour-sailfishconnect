@@ -13,7 +13,7 @@
 TARGET = harbour-sailfishconnect
 
 CONFIG += sailfishapp c++14
-QT += network dbus
+QT += network dbus feedback
 
 PKGCONFIG += sailfishapp contextkit-statefs nemonotifications-qt5
 DEFINES += \

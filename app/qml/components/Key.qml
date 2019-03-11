@@ -53,16 +53,52 @@ Rectangle {
         text: !showAlt ? label : (altLabel != "" ? altLabel : label)
     }
 
+    Timer {
+        id: timer
+
+        interval: _keyboardLayout.repeatInterval
+        repeat: true
+        running: false
+
+        onTriggered: {
+            if (_keyboardLayout.feedback) {
+                _keyboardLayout.pressFeedback();
+            }
+
+            parent.clicked();
+        }
+    }
+
     MouseArea {
         id: mouse
         anchors.fill: parent
 
         onClicked: {
+            if (_keyboardLayout.feedback) {
+                _keyboardLayout.pressFeedback();
+            }
+
             parent.clicked();
         }
 
-        onEntered: parent.color = Theme.highlightBackgroundColor
+        onPressAndHold: {
+            timer.start();
+        }
 
-        onExited: parent.color = "transparent"
+        onReleased: {
+            if (_keyboardLayout.feedback) {
+                _keyboardLayout.releaseFeedback();
+            }
+
+            timer.stop();
+        }
+
+        onEntered: {
+            parent.color = Theme.highlightColor;
+        }
+
+        onExited: {
+            parent.color = "transparent";
+        }
     }
 }

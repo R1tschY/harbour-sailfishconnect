@@ -22,18 +22,23 @@
 #include <QJsonArray>
 #include <QDebug>
 #include <sailfishapp.h>
-#include <QtAlgorithms>
+#include <QtFeedback/QFeedbackEffect>
 
 KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent) : QObject(parent)
 {
-    QString defaultLayout = "english";
-    QFile saved(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/keyboardlayout.conf");
+    m_layout = "english";
+    m_repeatInterval = 200;
+    m_feedback = true;
+    QFile saved(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/harbour-sailfishconnect/keyboardlayout.conf");
     if (saved.exists()) {
         saved.open(QIODevice::ReadOnly);
-        defaultLayout = saved.readLine().replace("\n", "");
+        QJsonObject conf = QJsonDocument::fromJson(saved.readAll()).object();
         saved.close();
+        m_layout = conf["layout"].toString();
+        m_repeatInterval = conf["interval"].toInt();
+        m_feedback = conf["feedback"].toBool();
     }
-    setLayout(defaultLayout);
+    setLayout(m_layout);
 }
 
 QString KeyboardLayoutProvider::layout() const
@@ -64,10 +69,7 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
 
     m_layout = layout;
 
-    QFile saved(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/keyboardlayout.conf");
-    saved.open(QIODevice::WriteOnly);
-    saved.write(m_layout.toLocal8Bit());
-    saved.close();
+    saveConfig();
 
     emit layoutChanged();
 }
@@ -116,4 +118,56 @@ QVariantList KeyboardLayoutProvider::row5() const
 QVariantList KeyboardLayoutProvider::row6() const
 {
     return m_row6;
+}
+
+int KeyboardLayoutProvider::repeatInterval() const
+{
+    return m_repeatInterval;
+}
+
+void KeyboardLayoutProvider::setRepeatInterval(const int &interval)
+{
+    m_repeatInterval = interval;
+
+    saveConfig();
+
+    emit settingsChanged();
+}
+
+bool KeyboardLayoutProvider::feedback() const
+{
+    return m_feedback;
+}
+
+void KeyboardLayoutProvider::setFeedback(const bool &feedback)
+{
+    m_feedback = feedback;
+
+    saveConfig();
+
+    emit settingsChanged();
+}
+
+void KeyboardLayoutProvider::pressFeedback()
+{
+    QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::PressWeak);
+}
+
+void KeyboardLayoutProvider::releaseFeedback()
+{
+    QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::ReleaseWeak);
+}
+
+void KeyboardLayoutProvider::saveConfig() const
+{
+    QFile config(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/harbour-sailfishconnect/keyboardlayout.conf");
+    config.open(QIODevice::WriteOnly);
+
+    QJsonObject conf;
+    conf["layout"] = m_layout;
+    conf["interval"] = m_repeatInterval;
+    conf["feedback"] = m_feedback;
+
+    config.write(QJsonDocument(conf).toJson());
+    config.close();
 }

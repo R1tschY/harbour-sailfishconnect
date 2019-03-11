@@ -181,6 +181,14 @@
         <translation>Layout auswählen
 </translation>
     </message>
+    <message>
+        <source>%1ms repeat interval</source>
+        <translation>%1ms Wiederholungsinterval</translation>
+    </message>
+    <message>
+        <source>Vibration feedback</source>
+        <translation>Rückmeldung bei Tastendruck</translation>
+    </message>
 </context>
 <context>
     <name>KeyboardPage</name>

@@ -21,35 +21,64 @@ import Sailfish.Silica 1.0
 Page {
     allowedOrientations: Orientation.All
 
-    SilicaListView {
-        id: view
+    SilicaFlickable {
         anchors.fill: parent
 
-        header:  PageHeader {
-            title: qsTr("Choose layout")
-        }
+        ListView {
+            id: view
+            anchors.fill: parent
 
-        model: _keyboardLayout.layouts()
+            model: _keyboardLayout.layouts()
 
-        delegate: BackgroundItem {
-            width: view.width
-            height: Theme.itemSizeSmall
-
-            Text {
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.horizontalPageMargin
-                    right: parent.right
-                    rightMargin: Theme.horizontalPageMargin
-                    verticalCenter: parent.verticalCenter
-                }
-                text: modelData
-                color: modelData == _keyboardLayout.layout ? Theme.highlightColor : Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeMedium
+            header: PageHeader {
+                title: qsTr("Choose layout")
             }
 
-            onClicked: {
-                _keyboardLayout.layout = modelData;
+            delegate: BackgroundItem {
+                width: view.width
+                height: Theme.itemSizeSmall
+
+                Text {
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.horizontalPageMargin
+                        right: parent.right
+                        rightMargin: Theme.horizontalPageMargin
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: modelData
+                    color: modelData == _keyboardLayout.layout ? Theme.highlightColor : Theme.secondaryColor
+                    font.pixelSize: Theme.fontSizeMedium
+                }
+
+                onClicked: {
+                    _keyboardLayout.layout = modelData;
+                }
+            }
+
+            footer: Column {
+
+                Slider {
+                    width: view.width
+                    minimumValue: 50
+                    maximumValue: 500
+                    stepSize: 50
+                    value: _keyboardLayout.repeatInterval
+                    valueText: qsTr("%1ms repeat interval").arg(value)
+
+                    onValueChanged: {
+                        _keyboardLayout.repeatInterval = value;
+                    }
+                }
+
+                TextSwitch {
+                    text: qsTr("Vibration feedback")
+                    checked: _keyboardLayout.feedback
+
+                    onCheckedChanged: {
+                        _keyboardLayout.feedback = checked;
+                    }
+                }
             }
         }
     }

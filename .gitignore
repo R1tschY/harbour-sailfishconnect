@@ -6,3 +6,12 @@
 # Qt Creator
 *.user
 *.autosave
+
+# VS Code
+.vscode
+
+# Conan
+conanbuildinfo.pri
+conanbuildinfo.txt
+conaninfo.txt
+graph_info.json

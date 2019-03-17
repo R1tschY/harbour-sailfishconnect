@@ -1,5 +1,7 @@
 TEMPLATE = subdirs
 
+system(conan install . --profile=$PWD/dev/conan/armv7hl-profile)
+
 SUBDIRS = lib tests
 tests.depends = lib
 

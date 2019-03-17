@@ -32,8 +32,9 @@ PkgConfigBR:
   - nemonotifications-qt5
 
 # Build dependencies without a pkgconfig setup can be listed here
-# PkgBR:
-#   - package-needed-to-build
+PkgBR:
+  - ninja
+  - cmake
 
 # Runtime dependencies which are not automatically detected
 Requires:

@@ -30,6 +30,8 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Test)
 BuildRequires:  pkgconfig(contextkit-statefs)
 BuildRequires:  pkgconfig(nemonotifications-qt5)
+BuildRequires:  ninja
+BuildRequires:  cmake
 BuildRequires:  desktop-file-utils
 
 %description

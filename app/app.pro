@@ -15,6 +15,9 @@ TARGET = harbour-sailfishconnect
 CONFIG += sailfishapp c++14
 QT += network dbus
 
+CONFIG += conan_basic_setup
+include(../conanbuildinfo.pri)
+
 PKGCONFIG += sailfishapp contextkit-statefs nemonotifications-qt5
 DEFINES += \
     QT_STATICPLUGIN \

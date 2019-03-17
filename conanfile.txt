@@ -1,0 +1,5 @@
+[requires]
+KCoreAddons/5.36.0@sailfishos/stable
+
+[generators]
+qmake

@@ -48,7 +48,7 @@ SailfishOS client for KDE-Connect
 # >> build pre
 
 # should be setup, but qtc5 ignores it
-VENV=$RPM_BUILD_ROOT/venv
+VENV=$RPM_BUILD_ROOT/venv-%{_target_cpu}
 
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then

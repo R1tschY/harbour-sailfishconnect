@@ -27,7 +27,8 @@ jobs:
       - save_cache:
           key: venv-cache-{{ .Branch }}
           paths:
-            - ~/rpmbuild/BUILDROOT
+            - ~/project/installroot/venv-armv7hl
+            - ~/project/installroot/venv-i486
 workflows:
   version: 2
   build_and_test:

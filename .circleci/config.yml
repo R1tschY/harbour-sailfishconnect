@@ -8,17 +8,26 @@ jobs:
       - run: git submodule sync && git submodule update --init
       - run: git config user.email "circleci@nowhere.nowhere" && git config user.name "circleci"
 
+      - restore_cache:
+          keys:
+            - venv-cache-{{ .Branch }}
+
       - run: mb2 -X -t SailfishOS-3.0.1.11-armv7hl build -d -j 2
       - store_artifacts:
-          path: /home/nemo/project/RPMS/
+          path: ~/project/RPMS/
           destination: rpms
       - run: mb2 -t SailfishOS-3.0.1.11-armv7hl make check
 
       - run: git clean -f -x
       - run: mb2 -X -t SailfishOS-3.0.1.11-i486 build -d -j 2
       - store_artifacts:
-          path: /home/nemo/project/RPMS/
+          path: ~/project/RPMS/
           destination: rpms
+
+      - save_cache:
+          key: venv-cache-{{ .Branch }}
+          paths:
+            - ~/rpmbuild/BUILDROOT
 workflows:
   version: 2
   build_and_test:

@@ -35,6 +35,8 @@ PkgConfigBR:
 PkgBR:
   - ninja
   - cmake
+  - python2-devel
+  - curl
 
 # Runtime dependencies which are not automatically detected
 Requires:

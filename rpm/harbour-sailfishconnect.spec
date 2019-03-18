@@ -46,6 +46,24 @@ SailfishOS client for KDE-Connect
 
 %build
 # >> build pre
+
+# should be setup, but qtc5 ignores it
+VENV=$RPM_BUILD_ROOT/venv
+
+if [ ! -f ~/.local/bin/virtualenv ] ; then
+  curl -q https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+  python2 get-pip.py --user virtualenv
+  rm get-pip.py
+fi
+
+if [ ! -f "$VENV/bin/conan" ] ; then
+  ~/.local/bin/virtualenv "$VENV"
+  pip install conan
+  conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
+fi
+
+source "$VENV/bin/activate"
+
 # << build pre
 
 %qtc_qmake5 

@@ -83,11 +83,6 @@ DISTFILES += \
     src/plugins/remoteinput/metadata.json \
     keyboard-layouts/english.json
 
-keyboardlayouts.path = /home/nemo/.local/share/harbour-sailfishconnect/harbour-sailfishconnect/keyboard-layouts/
-keyboardlayouts.files = keyboard-layouts/*
-
-INSTALLS += keyboardlayouts
-
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
 HEADERS += \

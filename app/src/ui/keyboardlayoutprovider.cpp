@@ -23,21 +23,13 @@
 #include <QDebug>
 #include <sailfishapp.h>
 #include <QtFeedback/QFeedbackEffect>
+#include <QRegularExpression>
 
 KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent) : QObject(parent)
 {
-    m_layout = "english";
-    m_repeatInterval = 200;
-    m_feedback = true;
-    QFile saved(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/harbour-sailfishconnect/keyboardlayout.conf");
-    if (saved.exists()) {
-        saved.open(QIODevice::ReadOnly);
-        QJsonObject conf = QJsonDocument::fromJson(saved.readAll()).object();
-        saved.close();
-        m_layout = conf["layout"].toString();
-        m_repeatInterval = conf["interval"].toInt();
-        m_feedback = conf["feedback"].toBool();
-    }
+    m_layout = "de";
+    m_repeatInterval = m_settings.value("repeatInterval", 200).toInt();
+    m_feedback = m_settings.value("keyboardFeedback", true).toBool();
     setLayout(m_layout);
 }
 
@@ -49,40 +41,110 @@ QString KeyboardLayoutProvider::layout() const
 void KeyboardLayoutProvider::setLayout(const QString &layout)
 {
     // seems to be the only way to get the files stored
-    QFile layoutFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/keyboard-layouts/" + layout + ".json");
+    QFile layoutFile("/usr/share/maliit/plugins/com/jolla/layouts/" + layout + ".qml");
     if (!layoutFile.open(QIODevice::ReadOnly)) {
         qDebug() << "unkown layout: " << layout;
         return;
     }
 
-    QJsonDocument layoutJson = QJsonDocument::fromJson(layoutFile.readAll());
+    QRegularExpression caption("caption: \"([\\S])\"");
+    QRegularExpression captionShifted("captionShifted: \"([\\S])\"");
+    QRegularExpression symView("symView: \"([\\S]+)\"");
+    QRegularExpression symView2("symView2: \"([\\S]+)\"");
+    QByteArray line;
+    line = layoutFile.readLine();
+    QByteArray keySequence;
+    QJsonArray keys;
+    QJsonArray row;
+
+    while (line.length() > 0) {
+        if (line.contains("  }")) {
+            keys.append(row);
+        } else if (line.contains("KeyboardRow {")) {
+            row = QJsonArray();
+        } else if (line.contains("Key")) {
+            keySequence.clear();
+            keySequence.append(line);
+            while (!line.contains("}")) {
+                line = layoutFile.readLine();
+                keySequence.append(line);
+            }
+            while (keySequence.contains("\n")) {
+                keySequence.replace("\n", " ");
+            }
+
+            // remove backslash
+            keySequence.replace("\\\"", "\"");
+            keySequence.replace("\\\\", "\\");
+
+            if (keySequence.contains("ShiftKey")) {
+                QJsonObject key;
+                key["caption"] = "shift";
+                row.append(key);
+            } else if (keySequence.contains("BackspaceKey")) {
+                QJsonObject upKey;
+                upKey["caption"] = "";
+                upKey["symView"] = "up";
+                row.append(upKey);
+                QJsonObject key;
+                key["caption"] = "backspace";
+                row.append(key);
+            } else {
+                QRegularExpressionMatch captionMatch = caption.match(keySequence);
+                QRegularExpressionMatch captionShiftedMatch = captionShifted.match(keySequence);
+                QRegularExpressionMatch symViewMatch = symView.match(keySequence);
+                QRegularExpressionMatch symView2Match = symView2.match(keySequence);
+                QJsonObject key;
+                key["caption"] = captionMatch.captured(1);
+                if (captionShiftedMatch.hasMatch()) key["captionShifted"] = captionShiftedMatch.captured(1);
+                if (symViewMatch.hasMatch()) key["symView"] = symViewMatch.captured(1);
+                if (symView2Match.hasMatch()) key["symView2"] = symView2Match.captured(1);
+                row.append(key);
+            }
+        }
+
+        line = layoutFile.readLine();
+    }
 
     layoutFile.close();
 
-    QJsonArray rowArray = layoutJson.array();
-    m_row1 = rowArray[0].toArray().toVariantList();
-    m_row2 = rowArray[1].toArray().toVariantList();
-    m_row3 = rowArray[2].toArray().toVariantList();
-    m_row4 = rowArray[3].toArray().toVariantList();
-    m_row5 = rowArray[4].toArray().toVariantList();
-    m_row6 = rowArray[5].toArray().toVariantList();
+    m_row1 = keys[0].toArray().toVariantList();
+    m_row2 = keys[1].toArray().toVariantList();
+    m_row3 = keys[2].toArray().toVariantList();
+
+    QJsonArray row4;
+    for (QString key : {"char", "ctrl", ",", " ", ".", "alt", "enter"}) {
+        QJsonObject keyObject;
+        keyObject["caption"] = key;
+        if (key == ".") {
+            keyObject["symView"] = "left";
+        } else if (key == "alt") {
+            keyObject["symView"] = "down";
+        } else if (key == "enter") {
+            keyObject["symView"] = "right";
+        }
+        row4.append(keyObject);
+    }
+
+    m_row4 = row4.toVariantList();
 
     m_layout = layout;
-
-    saveConfig();
 
     emit layoutChanged();
 }
 
 QVariantList KeyboardLayoutProvider::layouts()
 {
-    QDir layoutDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/keyboard-layouts/");
+    QDir layoutDir("/usr/share/maliit/plugins/com/jolla/layouts/");
 
     layoutDir.setSorting(QDir::Name);
 
     QVariantList layouts;
     for (QString layout : layoutDir.entryList()) {
-        if (!layout.startsWith(".")) {
+        // layouts with _ are not working
+        if (!layout.startsWith(".") && !layout.contains("_")) {
+            // hi, kn, mr and te are currentently not working
+            if (layout.contains("hi") || layout.contains("kn") || layout.contains("mr") || layout.contains("te")) continue;
             layouts.append(layout.left(layout.indexOf(".")));
         }
     }
@@ -110,16 +172,6 @@ QVariantList KeyboardLayoutProvider::row4() const
     return m_row4;
 }
 
-QVariantList KeyboardLayoutProvider::row5() const
-{
-    return m_row5;
-}
-
-QVariantList KeyboardLayoutProvider::row6() const
-{
-    return m_row6;
-}
-
 int KeyboardLayoutProvider::repeatInterval() const
 {
     return m_repeatInterval;
@@ -129,7 +181,7 @@ void KeyboardLayoutProvider::setRepeatInterval(const int &interval)
 {
     m_repeatInterval = interval;
 
-    saveConfig();
+    m_settings.setValue("repeatInterval", interval);
 
     emit settingsChanged();
 }
@@ -143,7 +195,7 @@ void KeyboardLayoutProvider::setFeedback(const bool &feedback)
 {
     m_feedback = feedback;
 
-    saveConfig();
+    m_settings.setValue("keyboardFeedback", feedback);
 
     emit settingsChanged();
 }
@@ -156,18 +208,4 @@ void KeyboardLayoutProvider::pressFeedback()
 void KeyboardLayoutProvider::releaseFeedback()
 {
     QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::ReleaseWeak);
-}
-
-void KeyboardLayoutProvider::saveConfig() const
-{
-    QFile config(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/harbour-sailfishconnect/keyboardlayout.conf");
-    config.open(QIODevice::WriteOnly);
-
-    QJsonObject conf;
-    conf["layout"] = m_layout;
-    conf["interval"] = m_repeatInterval;
-    conf["feedback"] = m_feedback;
-
-    config.write(QJsonDocument(conf).toJson());
-    config.close();
 }

@@ -79,6 +79,7 @@ void UI::showMainWindow()
     m_view->rootContext()->setContextProperty("daemon", m_daemon);
     m_view->rootContext()->setContextProperty("ui", this);
     m_view->rootContext()->setContextProperty("_keyboardLayout", m_keyboardLayoutProvider);
+    qmlRegisterType<KeyboardLayoutProvider>("com.meego.maliitquick", 1, 0, "Layout");
     m_view->setSource(SailfishApp::pathToMainQml());
     m_view->showFullScreen();
 }

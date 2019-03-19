@@ -28,6 +28,23 @@ Page {
         property int ctrl: 0
         property int alt: 0
     }
+    property bool chars: false
+
+    function displayCorrectChar(data) {
+        if (page.chars && typeof data["symView"] !== "undefined") {
+            // dont show text on arrow keys
+            if (data["symView"] === "up" || data["symView"] === "left" || data["symView"] === "down" || data["symView"] === "right") return " ";
+            if (modifiers.shift && typeof data["symView2"] !== "undefined") {
+                return data["symView2"];
+            }
+            return data["symView"];
+        } else {
+            if (modifiers.shift && typeof data["captionShifted"] !== "undefined") {
+                return data["captionShifted"];
+            }
+            return data["caption"];
+        }
+    }
 
     PageHeader {
         title: qsTr("Keyboard")
@@ -44,35 +61,23 @@ Page {
                     model: _keyboardLayout.row1
 
                     Key {
-                        width: page.width / _keyboardLayout.row1.length * modelData["width"]
+                        width: page.width / _keyboardLayout.row1.length
                         height: page.height / 7
-                        label: modelData["name"] === "backspace" ? "" : modelData["name"]
-                        altLabel: modelData["alt"]
-                        showAlt: modifiers.shift
-
-                        Image {
-                            anchors.centerIn: parent
-                            width: parent.width
-                            height: parent.height
-                            fillMode: Image.PreserveAspectFit
-                            visible: modelData["name"] === "backspace"
-
-                            source: "image://theme/icon-m-backspace"
-                        }
+                        label: displayCorrectChar(modelData)
 
                         onClicked: {
-                            if (modelData["name"] === "backspace") {
-                                plugin.sendKeyPress("backspace", modifiers.shift, modifiers.ctrl, modifiers.atl);
+                            if (page.chars) {
+                                plugin.sendKeyPress(label, false, modifiers.ctrl, modifiers.alt)
                             } else {
-                                plugin.sendKeyPress(modifiers.shift ? altLabel : label, false, modifiers.ctrl, modifiers.alt);
+                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
+                                if (modifiers.shift === 1) {
+                                    modifiers.shift = 0;
+                                }
                             }
-                            if (modifiers.shift == 1) {
-                                modifiers.shift = 0;
-                            }
-                            if (modifiers.ctrl == 1) {
+                            if (modifiers.ctrl === 1) {
                                 modifiers.ctrl = 0;
                             }
-                            if (modifiers.alt == 1) {
+                            if (modifiers.alt === 1) {
                                 modifiers.alt = 0;
                             }
                         }
@@ -85,21 +90,23 @@ Page {
                     model: _keyboardLayout.row2
 
                     Key {
-                        width: page.width / _keyboardLayout.row1.length * modelData["width"]
+                        width: page.width / _keyboardLayout.row2.length
                         height: page.height / 7
-                        label: modelData["name"]
-                        altLabel: modelData["alt"]
-                        showAlt: modifiers.shift
+                        label: displayCorrectChar(modelData)
 
                         onClicked: {
-                            plugin.sendKeyPress(modifiers.shift ? altLabel : label, false, modifiers.ctrl, modifiers.alt);
-                            if (modifiers.shift == 1) {
-                                modifiers.shift = 0;
+                            if (page.chars) {
+                                plugin.sendKeyPress(label, false, modifiers.ctrl, modifiers.alt)
+                            } else {
+                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
+                                if (modifiers.shift === 1) {
+                                    modifiers.shift = 0;
+                                }
                             }
-                            if (modifiers.ctrl == 1) {
+                            if (modifiers.ctrl === 1) {
                                 modifiers.ctrl = 0;
                             }
-                            if (modifiers.alt == 1) {
+                            if (modifiers.alt === 1) {
                                 modifiers.alt = 0;
                             }
                         }
@@ -112,36 +119,65 @@ Page {
                     model: _keyboardLayout.row3
 
                     Key {
-                        width: page.width / _keyboardLayout.row1.length * modelData["width"]
+                        width: page.width / (_keyboardLayout.row3.length + (page.chars ? 0 : -1))
                         height: page.height / 7
-                        label: modelData["name"] === "enter" ? "" : modelData["name"]
-                        altLabel: modelData["alt"]
-                        showAlt: modifiers.shift
+                        label: getName(modelData)
+                        markValue: modelData["caption"] === "shift" ? modifiers.shift : 0
+
+                        function getName(data) {
+                            if (modelData["caption"] === "shift") {
+                                if (page.chars) {
+                                    if (modifiers.shift === 0) {
+                                        return "1/2";
+                                    }
+                                    return "2/2";
+                                } else {
+                                    return " ";
+                                }
+                            } else if (modelData["caption"] === "backspace") {
+                                return " ";
+                            } else {
+                                return displayCorrectChar(data);
+                            }
+                        }
 
                         Image {
                             anchors.centerIn: parent
                             width: parent.width
                             height: parent.height
                             fillMode: Image.PreserveAspectFit
-                            visible: modelData["name"] === "enter"
+                            visible: (modelData["caption"] === "shift" && !page.chars) || modelData["caption"] === "backspace" || (modelData["symView"] === "up" && page.chars)
 
-                            source: "image://theme/icon-m-enter"
+                            source: modelData["symView"] === "up" ? "image://theme/icon-m-up" : (modelData["caption"] === "shift" ? "image://theme/icon-m-capslock" : "image://theme/icon-m-backspace")
                         }
 
                         onClicked: {
-                            if (modelData["name"] === "enter") {
-                                plugin.sendKeyPress("enter", modifiers.shift, modifiers.ctrl, modifiers.alt);
+                            if (modelData["caption"] === "shift") {
+                                modifiers.shift++;
+                                if (modifiers.shift > 2) {
+                                    modifiers.shift = 0;
+                                }
+                                if (page.chars && modifiers.shift === 1) modifiers.shift = 2;
+                                return;
+                            } else if (modelData["caption"] === "backspace") {
+                                plugin.sendKeyPress("backspace");
+                            } else if (modelData["symView"] === "up") {
+                                plugin.sendKeyPress("up", false, modifiers.ctrl, modifiers.alt);
                             } else {
-                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
-                            }
-                            if (modifiers.shift == 1) {
-                                modifiers.shift = 0;
-                            }
-                            if (modifiers.ctrl == 1) {
-                                modifiers.ctrl = 0;
-                            }
-                            if (modifiers.alt == 1) {
-                                modifiers.alt = 0;
+                                if (page.chars) {
+                                    plugin.sendKeyPress(label, false, modifiers.ctrl, modifiers.alt);
+                                } else {
+                                    plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt);
+                                    if (modifiers.shift === 1) {
+                                        modifiers.shift = 0;
+                                    }
+                                }
+                                if (modifiers.ctrl === 1) {
+                                    modifiers.ctrl = 0;
+                                }
+                                if (modifiers.alt === 1) {
+                                    modifiers.alt = 0;
+                                }
                             }
                         }
                     }
@@ -153,131 +189,41 @@ Page {
                     model: _keyboardLayout.row4
 
                     Key {
-                        width: page.width / _keyboardLayout.row1.length * modelData["width"]
+                        width: modelData["caption"] !== " " ? page.width / (_keyboardLayout.row4.length + 1) : 2 * page.width / (_keyboardLayout.row4.length + 1)
                         height: page.height / 7
-                        label: modelData["name"]
-                        altLabel: modelData["alt"]
-                        showAlt: modifiers.shift
-
-                        onClicked: {
-                            plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
-                            if (modifiers.shift == 1) {
-                                modifiers.shift = 0;
-                            }
-                            if (modifiers.ctrl == 1) {
-                                modifiers.ctrl = 0;
-                            }
-                            if (modifiers.alt == 1) {
-                                modifiers.alt = 0;
-                            }
-                        }
-                    }
-                }
-            }
-
-            Row {
-                Repeater {
-                    model: _keyboardLayout.row5
-
-                    Key {
-                        id: key
-                        width: page.width / _keyboardLayout.row1.length * modelData["width"]
-                        height: page.height / 7
-                        label: modelData["name"] === "up" ? "" : modelData["name"]
-                        altLabel: modelData["alt"]
-                        showAlt: modifiers.shift
-                        markable: label == "shift"
-                        markValue: modifiers.shift
+                        label: displayCorrectChar(modelData)
+                        markValue: modelData["caption"] === "ctrl" ? modifiers.ctrl : (modelData["caption"] === "alt" && !page.chars ? modifiers.alt : 0)
 
                         Image {
                             anchors.centerIn: parent
                             width: parent.width
                             height: parent.height
                             fillMode: Image.PreserveAspectFit
-                            visible: modelData["name"] === "up"
+                            visible: (modelData["symView"] === "left" || modelData["symView"] === "down" || modelData["symView"] === "right") && page.chars
 
-                            source: "image://theme/icon-m-up"
+                            source:  "image://theme/icon-m-" + modelData["symView"]
                         }
 
                         onClicked: {
-                            if (label === "shift") {
-                                modifiers.shift++;
-                                if (modifiers.shift == 3) {
-                                    modifiers.shift = 0;
-                                }
-                                return;
-                            } else if (modelData["name"] === "up") {
-                                plugin.sendKeyPress("up", modifiers.shift, modifiers.ctrl, modifiers.alt);
-                            } else {
-                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
-                            }
-                            if (modifiers.shift == 1) {
+                            if (label == "char") {
+                                page.chars = !page.chars;
                                 modifiers.shift = 0;
-                            }
-                            if (modifiers.ctrl == 1) {
-                                modifiers.ctrl = 0;
-                            }
-                            if (modifiers.alt == 1) {
                                 modifiers.alt = 0;
-                            }
-                        }
-                    }
-                }
-            }
-
-            Row {
-                Repeater {
-                    model: _keyboardLayout.row6
-
-                    Key {
-                        width: page.width / _keyboardLayout.row1.length * modelData["width"]
-                        height: page.height / 7
-                        label: modelData["name"] === "left" || modelData["name"] === "down" || modelData["name"] === "right" ? "" : modelData["name"]
-                        altLabel: modelData["alt"]
-                        showAlt: modifiers.shift
-                        markable: label == "ctrl" || label == "alt"
-                        markValue: label == "ctrl" ? modifiers.ctrl : modifiers.alt
-
-                        Image {
-                            anchors.centerIn: parent
-                            width: parent.width
-                            height: parent.height
-                            fillMode: Image.PreserveAspectFit
-                            visible: modelData["name"] === "left" || modelData["name"] === "down" || modelData["name"] === "right"
-
-                            source: modelData["name"] === "left" ? "image://theme/icon-m-left" :  modelData["name"] === "down" ? "image://theme/icon-m-down" : "image://theme/icon-m-right"
-                        }
-
-                        onClicked: {
-                            if (modelData["name"] === "left") {
-                                plugin.sendKeyPress("left", modifiers.shift, modifiers.ctrl, modifiers.alt);
-                            } else if (modelData["name"] === "down") {
-                                plugin.sendKeyPress("down", modifiers.shift, modifiers.ctrl, modifiers.alt);
-                            } else if (modelData["name"] === "right") {
-                                plugin.sendKeyPress("right", modifiers.shift, modifiers.ctrl, modifiers.alt);
-                            } else if (label == "ctrl") {
-                                modifiers.ctrl++;
-                                if (modifiers.ctrl == 3) {
-                                    modifiers.ctrl = 0;
-                                }
-                                return;
+                                modifiers.ctrl = 0;
                             } else if (label == "alt") {
                                 modifiers.alt++;
-                                if (modifiers.alt == 3) {
-                                    modifiers.alt = 0;
-                                }
-                                return;
-                            } else {
-                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
-                            }
-                            if (modifiers.shift == 1) {
-                                modifiers.shift = 0;
-                            }
-                            if (modifiers.ctrl == 1) {
-                                modifiers.ctrl = 0;
-                            }
-                            if (modifiers.alt == 1) {
-                                modifiers.alt = 0;
+                                if (modifiers.alt > 2) modifiers.alt = 0;
+                            } else if (label == "ctrl") {
+                                modifiers.ctrl++;
+                                if (modifiers.ctrl > 2) modifiers.ctrl = 0;
+                            } else if (label == "enter") {
+                                plugin.sendKeyPress("enter", modifiers.shift, modifiers.ctrl, modifiers.alt);
+                            } else if (modelData["symView"] === "left") {
+                                plugin.sendKeyPress("left", false, modifiers.ctrl, modifiers.alt);
+                            } else if (modelData["symView"] === "down") {
+                                plugin.sendKeyPress("down", false, modifiers.ctrl, modifiers.alt);
+                            } else if (modelData["symView"] === "right") {
+                                plugin.sendKeyPress("right", false, modifiers.ctrl, modifiers.alt);
                             }
                         }
                     }

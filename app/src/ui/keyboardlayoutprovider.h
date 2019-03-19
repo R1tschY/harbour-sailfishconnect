@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QList>
 #include <QVariant>
+#include <QSettings>
 
 class KeyboardLayoutProvider : public QObject
 {
@@ -30,8 +31,6 @@ class KeyboardLayoutProvider : public QObject
     Q_PROPERTY(QVariantList row2 READ row2 NOTIFY layoutChanged)
     Q_PROPERTY(QVariantList row3 READ row3 NOTIFY layoutChanged)
     Q_PROPERTY(QVariantList row4 READ row4 NOTIFY layoutChanged)
-    Q_PROPERTY(QVariantList row5 READ row5 NOTIFY layoutChanged)
-    Q_PROPERTY(QVariantList row6 READ row6 NOTIFY layoutChanged)
     Q_PROPERTY(int repeatInterval READ repeatInterval WRITE setRepeatInterval NOTIFY settingsChanged)
     Q_PROPERTY(bool feedback READ feedback WRITE setFeedback NOTIFY settingsChanged)
 public:
@@ -63,17 +62,14 @@ signals:
     void settingsChanged();
 
 private:
-    void saveConfig() const;
-
     QString m_layout;
     QVariantList m_row1;
     QVariantList m_row2;
     QVariantList m_row3;
     QVariantList m_row4;
-    QVariantList m_row5;
-    QVariantList m_row6;
     int m_repeatInterval;
     bool m_feedback;
+    QSettings m_settings;
 };
 
 #endif // KEYBOARDLAYOUTPROVIDER_H

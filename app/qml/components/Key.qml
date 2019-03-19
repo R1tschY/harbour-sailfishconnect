@@ -26,10 +26,9 @@ Rectangle {
     border.width: 2
 
     property string label: ""
-    property string altLabel: ""
-    property bool showAlt: false
-    property bool markable: false
     property int markValue: 0
+
+    visible: label != ""
 
     signal clicked()
 
@@ -38,7 +37,6 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        visible: markable
         height: parent.height / 2 * markValue
         radius: 2
 
@@ -50,7 +48,7 @@ Rectangle {
         color: Theme.primaryColor
         font.pixelSize: Theme.fontSizeMedium
 
-        text: !showAlt ? label : (altLabel != "" ? altLabel : label)
+        text: label
     }
 
     Timer {

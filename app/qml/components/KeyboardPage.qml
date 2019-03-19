@@ -205,7 +205,7 @@ Page {
                         }
 
                         onClicked: {
-                            if (label == "char") {
+                            if (label == "?123" || label == "ABC") {
                                 page.chars = !page.chars;
                                 modifiers.shift = 0;
                                 modifiers.alt = 0;

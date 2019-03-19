@@ -113,7 +113,7 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
     m_row3 = keys[2].toArray().toVariantList();
 
     QJsonArray row4;
-    for (QString key : {"char", "ctrl", ",", " ", ".", "alt", "enter"}) {
+    for (QString key : {"?123", "ctrl", ",", " ", ".", "alt", "enter"}) {
         QJsonObject keyObject;
         keyObject["caption"] = key;
         if (key == ".") {
@@ -122,6 +122,8 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
             keyObject["symView"] = "down";
         } else if (key == "enter") {
             keyObject["symView"] = "right";
+        } else if (key == "?123") {
+            keyObject["symView"] = "ABC";
         }
         row4.append(keyObject);
     }

@@ -67,8 +67,7 @@ else
 fi
 
 # speed up conan remote add
-grep -sq sailfishos ~/.conan/registry.json
-if [ "$?" -ne "0" ] ; then
+if ! grep -sq sailfishos ~/.conan/registry.json ; then
   conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
 fi
 

@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS = lib #tests
+SUBDIRS = lib tests
 tests.depends = lib
 
 packagesExist(sailfishapp) {
@@ -16,8 +16,6 @@ TRANSLATION_SOURCES = app/src app/qml lib/sailfishconnect
 include(translations/translations.pri)
 
 # Other files
-DISTFILES += *.md \
-    app/qml/components/SpacebarRow.qml
-
+DISTFILES += *.md
 
 

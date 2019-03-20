@@ -45,8 +45,6 @@ public:
     QVariantList row2() const;
     QVariantList row3() const;
     QVariantList row4() const;
-    QVariantList row5() const;
-    QVariantList row6() const;
 
     int repeatInterval() const;
     void setRepeatInterval(const int &interval);

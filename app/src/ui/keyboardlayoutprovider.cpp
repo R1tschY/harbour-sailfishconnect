@@ -27,9 +27,11 @@
 
 KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent) : QObject(parent)
 {
-    m_layout = "de";
+    m_settings.beginGroup(QStringLiteral("RemoteKeyboard"));
+    m_layout = m_settings.value("layout", "en").toString();
     m_repeatInterval = m_settings.value("repeatInterval", 200).toInt();
     m_feedback = m_settings.value("keyboardFeedback", true).toBool();
+    m_settings.endGroup();
     setLayout(m_layout);
 }
 
@@ -108,6 +110,10 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
 
     layoutFile.close();
 
+    m_settings.beginGroup(QStringLiteral("RemoteKeyboard"));
+    m_settings.setValue("layout", layout);
+    m_settings.endGroup();
+
     m_row1 = keys[0].toArray().toVariantList();
     m_row2 = keys[1].toArray().toVariantList();
     m_row3 = keys[2].toArray().toVariantList();
@@ -183,7 +189,9 @@ void KeyboardLayoutProvider::setRepeatInterval(const int &interval)
 {
     m_repeatInterval = interval;
 
+    m_settings.beginGroup(QStringLiteral("RemoteKeyboard"));
     m_settings.setValue("repeatInterval", interval);
+    m_settings.endGroup();
 
     emit settingsChanged();
 }
@@ -197,7 +205,9 @@ void KeyboardLayoutProvider::setFeedback(const bool &feedback)
 {
     m_feedback = feedback;
 
+    m_settings.beginGroup(QStringLiteral("RemoteKeyboard"));
     m_settings.setValue("keyboardFeedback", feedback);
+    m_settings.endGroup();
 
     emit settingsChanged();
 }

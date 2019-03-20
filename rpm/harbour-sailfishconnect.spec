@@ -47,8 +47,8 @@ SailfishOS client for KDE-Connect
 %build
 # >> build pre
 
-# should be setup, but qtc5 ignores it
 VENV=$RPM_BUILD_ROOT/venv-%{_target_cpu}
+export TARGET_CPU="%{_target_cpu}"
 
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then
@@ -67,7 +67,8 @@ else
 fi
 
 # speed up conan remote add
-if [ ! grep -sq sailfishos ~/.conan/registry.json ] ; then
+grep -sq sailfishos ~/.conan/registry.json
+if [ "$?" -ne "0" ] ; then
   conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
 fi
 

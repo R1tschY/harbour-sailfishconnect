@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-system(conan install $PWD)
+system(conan install $PWD --profile=$PWD/dev/profiles/$$(TARGET_CPU))
 
 SUBDIRS = lib tests
 tests.depends = lib

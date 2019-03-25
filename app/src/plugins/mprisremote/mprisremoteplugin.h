@@ -63,6 +63,7 @@ public:
     QString artist() const { return m_artist; }
     QString album() const { return m_album; }
     QUrl albumArtUrl() const { return m_albumArtUrl; }
+    QString remoteAlbumArtUrl() const { return m_remoteAlbumArtUrl; }
     int volume() const { return m_volume; }
     qlonglong length() const { return m_length; }
     qlonglong position() const;
@@ -111,6 +112,7 @@ private:
     QString m_artist;
     QString m_album;
     QUrl m_albumArtUrl;
+    QString m_remoteAlbumArtUrl;
 
     /**
      * @brief detect Spotify for workarounds
@@ -157,7 +159,7 @@ private:
 
     void requestPlayerList();
     void requestPlayerStatus(const QString& player);
-    bool askForAlbumArt(const QUrl &url, const QString& playerName);
+    bool askForAlbumArt(const QString &url, const QString& playerName);
 };
 
 class MprisRemotePluginFactory :

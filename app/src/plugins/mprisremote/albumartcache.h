@@ -7,12 +7,41 @@
 #include <QImage>
 #include <QSet>
 #include <QDir>
+#include <KJob>
+
+#include <sailfishconnect/io/job.h>
 
 class KdeConnectConfig;
+class QQmlEngine;
 
 namespace SailfishConnect {
 
 class Job;
+
+class DownloadAlbumArtJob : public KJob
+{
+    Q_OBJECT
+public:
+    DownloadAlbumArtJob(const QUrl& url, const QString& filePath, QObject* parent = nullptr);
+
+    void start() override;
+
+    void gotData(Job* fileTransfer);
+
+    QUrl url() const { return m_url; }
+    QString hash() const { return m_hash; }
+    QString filePath() const { return m_filePath; }
+    QString fileName() const;
+    bool isFetching() const { return m_fileTransfer != nullptr; }
+
+private:
+    QUrl m_url;
+    QString m_hash;
+    QString m_filePath;
+    Job* m_fileTransfer = nullptr;
+
+    void fetchFinished();
+};
 
 class AlbumArtCache : public QObject
 {
@@ -24,10 +53,13 @@ public:
 
     void init();
 
-    bool startFetching(const QUrl& url);
-    Job* endFetching(const QUrl& url, const QSharedPointer<QIODevice>& payload);
+    DownloadAlbumArtJob* startFetching(const QUrl& url);
+    DownloadAlbumArtJob* endFetching(const QUrl& url, const QSharedPointer<QIODevice>& payload);
 
-    Job* getFetchingJob(const QString& hash);
+    DownloadAlbumArtJob* getFetchingJob(const QString& hash);
+
+    bool isAvailable(const QUrl& url) const;
+    bool isHashAvailable(const QString& hash) const;
 
     /**
      * @brief Get album art what is yet available.
@@ -55,12 +87,13 @@ private:
     KdeConnectConfig* m_config;
     QString m_deviceId;
 
-    QHash<QString, Job*> m_fetching;
-    QSet<QString> m_diskCache;
-    qint64 m_diskCacheSize = 0;
+    QHash<QString, DownloadAlbumArtJob*> m_fetching;
+    QHash<QString, QString> m_diskCache;
+    qint64 m_diskCacheSize = 0; // TODO: use QCache for cache handling
     QDir m_cacheDir;
 
-    void fetchFinished();
+    void fetchFinished(KJob* job);
+    void fetchResult(KJob *job);
 };
 
 
@@ -71,6 +104,8 @@ public:
 
     QQuickImageResponse *requestImageResponse(
             const QString &id, const QSize &requestedSize) override;
+
+    static void registerImageProvider(QQmlEngine* qmlEngine);
 };
 
 
@@ -78,7 +113,7 @@ class AlbumArtImageResponse : public QQuickImageResponse {
     Q_OBJECT
 public:
     AlbumArtImageResponse(
-            AlbumArtCache* cache, Job* job);
+            AlbumArtCache* cache, DownloadAlbumArtJob* job);
 
     QQuickTextureFactory *textureFactory() const override;
     QString errorString() const override;
@@ -87,8 +122,12 @@ public slots:
     void cancel() override;
 
 private:
-    AlbumArtCache* m_cache;
-    Job* m_job;
+    AlbumArtCache* m_cache = nullptr;
+    DownloadAlbumArtJob* m_job = nullptr;
+    QUrl m_url;
+    QString m_errorString;
+
+    void onFinished();
 };
 
 

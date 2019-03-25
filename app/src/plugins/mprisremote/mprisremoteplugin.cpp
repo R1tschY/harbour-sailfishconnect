@@ -110,9 +110,8 @@ void MprisPlayer::receivePacket(const NetworkPacket &np, AlbumArtCache *cache)
 
     QString albumArtUrl = np.get<QString>(QStringLiteral("albumArtUrl"));
     if (!albumArtUrl.isEmpty()) {
-        m_albumArtUrl = cache->imageUrl(albumArtUrl);
-    } else {
-        m_albumArtUrl = QUrl();
+        m_remoteAlbumArtUrl = albumArtUrl;
+        m_albumArtUrl = cache->imageUrl(m_remoteAlbumArtUrl);
     }
 
     if (np.has(QStringLiteral("pos")) && !isSpotify()) {
@@ -197,12 +196,15 @@ bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
         MprisPlayer* player = m_players.value(
                     np.get<QString>(QStringLiteral("player")), nullptr);
         if (player) {
-            player->receivePacket(np, m_cache);
+            auto albumArtUrl = np.get<QString>(QStringLiteral("albumArtUrl"));
+            auto* fetchJob = m_supportAlbumArtPayload
+                    ? m_cache->startFetching(albumArtUrl)
+                    : nullptr;
 
-            if (m_supportAlbumArtPayload &&
-                    m_cache->startFetching(player->albumArtUrl()))
-            {
-                askForAlbumArt(player->albumArtUrl(), player->name());
+            player->receivePacket(np, m_cache);
+            if (fetchJob) {
+                // can send request only after url was set
+                askForAlbumArt(albumArtUrl, player->name());
             }
         }
     }
@@ -238,7 +240,7 @@ bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
 }
 
 bool MprisRemotePlugin::askForAlbumArt(
-        const QUrl& url, const QString& playerName)
+        const QString& url, const QString& playerName)
 {
     if (!m_supportAlbumArtPayload || url.isEmpty())
         return false;
@@ -247,7 +249,7 @@ bool MprisRemotePlugin::askForAlbumArt(
     if (plyr == nullptr)
         return false;
 
-    if (plyr->albumArtUrl() != url)
+    if (plyr->remoteAlbumArtUrl() != url)
         return false;
 
     sendPacket(NetworkPacket {

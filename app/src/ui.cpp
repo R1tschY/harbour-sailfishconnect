@@ -30,6 +30,7 @@
 
 #include "sailfishconnect.h"
 #include "appdaemon.h"
+#include "plugins/mprisremote/albumartcache.h"
 
 namespace SailfishConnect {
 
@@ -66,6 +67,7 @@ void UI::showMainWindow()
 
     m_view = SailfishApp::createView();
     m_daemon->setQmlEngine(m_view->engine());
+    AlbumArtProvider::registerImageProvider(m_view->engine());
 
     setRunInBackground(
         m_settings.value("runInBackground", m_runInBackground).toBool());

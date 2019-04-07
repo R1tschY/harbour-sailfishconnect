@@ -323,12 +323,12 @@ void Device::addLink(const NetworkPacket& identityPacket, DeviceLink* link)
         qDebug() << "Outgoing capabilities for" << d->m_deviceName;
         printCapabilities(
                     PluginManager::instance()->outgoingCapabilities().toSet(),
-                    outgoingCapabilities);
+                    incomingCapabilities);
 
         qDebug() << "Incoming capabilities for" << d->m_deviceName;
         printCapabilities(
                     PluginManager::instance()->incomingCapabilities().toSet(),
-                    incomingCapabilities);
+                    outgoingCapabilities);
 
         qDebug() << "Plugins for" << d->m_deviceName << d->m_supportedPlugins;
 #endif

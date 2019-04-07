@@ -15,6 +15,9 @@ TARGET = harbour-sailfishconnect
 CONFIG += sailfishapp c++14
 QT += network dbus feedback
 
+CONFIG += conan_basic_setup
+include(../conanbuildinfo.pri)
+
 PKGCONFIG += sailfishapp contextkit-statefs nemonotifications-qt5
 DEFINES += \
     QT_STATICPLUGIN \
@@ -50,7 +53,10 @@ SOURCES += \
     src/dbus/ofono.cpp \
     src/ui/sortfiltermodel.cpp \
     src/ui/keyboardlayoutprovider.cpp \
-    src/plugins/remoteinput/remoteinput.cpp
+    src/plugins/remoteinput/remoteinput.cpp\
+    src/plugins/mprisremote/albumartcache.cpp \
+    src/js/process.cpp \
+    src/js/path.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -111,4 +117,7 @@ HEADERS += \
     src/dbus/ofono.h \
     src/ui/sortfiltermodel.h \
     src/ui/keyboardlayoutprovider.h \
-    src/plugins/remoteinput/remoteinput.h
+    src/plugins/remoteinput/remoteinput.h \
+    src/plugins/mprisremote/albumartcache.h \
+    src/js/process.h \
+    src/js/path.h

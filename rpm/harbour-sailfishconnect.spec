@@ -30,6 +30,8 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Test)
 BuildRequires:  pkgconfig(contextkit-statefs)
 BuildRequires:  pkgconfig(nemonotifications-qt5)
+BuildRequires:  ninja
+BuildRequires:  cmake
 BuildRequires:  desktop-file-utils
 
 %description
@@ -44,6 +46,31 @@ SailfishOS client for KDE-Connect
 
 %build
 # >> build pre
+
+VENV=$RPM_BUILD_ROOT/venv-%{_target_cpu}
+export TARGET_CPU="%{_target_cpu}"
+
+# install virtualenv
+if [ ! -f ~/.local/bin/virtualenv ] ; then
+  curl -q https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+  python2 get-pip.py --user virtualenv
+  rm get-pip.py
+fi
+
+# create virtualenv and install conan
+if [ ! -f "$VENV/bin/conan" ] ; then
+  ~/.local/bin/virtualenv "$VENV"
+  source "$VENV/bin/activate"
+  pip install conan
+else
+  source "$VENV/bin/activate"
+fi
+
+# speed up conan remote add
+if ! grep -sq sailfishos ~/.conan/registry.json ; then
+  conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
+fi
+
 # << build pre
 
 %qtc_qmake5 

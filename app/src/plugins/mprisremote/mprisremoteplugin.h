@@ -22,12 +22,14 @@
 #include <QtPlugin>
 #include <QFlags>
 #include <QMap>
+#include <QUrl>
 
 #include <sailfishconnect/kdeconnectplugin.h>
 
 namespace SailfishConnect {
 
 class MprisRemotePlugin;
+class AlbumArtCache;
 
 class MprisPlayer : public QObject
 {
@@ -39,7 +41,7 @@ class MprisPlayer : public QObject
     Q_PROPERTY(QString title READ title NOTIFY propertiesChanged)
     Q_PROPERTY(QString artist READ artist NOTIFY propertiesChanged)
     Q_PROPERTY(QString album READ album NOTIFY propertiesChanged)
-    Q_PROPERTY(QString albumArtUrl READ albumArtUrl NOTIFY propertiesChanged)
+    Q_PROPERTY(QUrl albumArtUrl READ albumArtUrl NOTIFY propertiesChanged)
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY propertiesChanged)
     Q_PROPERTY(qint64 length READ length NOTIFY propertiesChanged)
     Q_PROPERTY(qint64 position READ position WRITE setPosition)
@@ -60,7 +62,8 @@ public:
     QString title() const { return m_title; }
     QString artist() const { return m_artist; }
     QString album() const { return m_album; }
-    QString albumArtUrl() const { return m_albumArtUrl; }
+    QUrl albumArtUrl() const { return m_albumArtUrl; }
+    QString remoteAlbumArtUrl() const { return m_remoteAlbumArtUrl; }
     int volume() const { return m_volume; }
     qlonglong length() const { return m_length; }
     qlonglong position() const;
@@ -75,7 +78,7 @@ public:
     void setVolume(int value);
     void setPosition(int value);
 
-    void receivePacket(const NetworkPacket& np);
+    void receivePacket(const NetworkPacket& np, AlbumArtCache* cache);
 
 public slots:
     Q_SCRIPTABLE void playPause();
@@ -108,7 +111,8 @@ private:
     QString m_title;
     QString m_artist;
     QString m_album;
-    QString m_albumArtUrl;
+    QUrl m_albumArtUrl;
+    QString m_remoteAlbumArtUrl;
 
     /**
      * @brief detect Spotify for workarounds
@@ -141,6 +145,7 @@ public:
 
     QStringList players() const;
     MprisPlayer* player(const QString& name) const;
+    AlbumArtCache* albumArtCache();
 
 signals:
     void playerAdded(const QString& player);
@@ -150,9 +155,11 @@ private:
     QMap<QString, MprisPlayer*> m_players;
 
     bool m_supportAlbumArtPayload = false;
+    AlbumArtCache* m_cache;
 
     void requestPlayerList();
     void requestPlayerStatus(const QString& player);
+    bool askForAlbumArt(const QString &url, const QString& playerName);
 };
 
 class MprisRemotePluginFactory :

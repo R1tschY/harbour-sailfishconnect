@@ -64,7 +64,6 @@ private:
     const static quint16 MAX_PORT = 1764;
 
     void doStart() override;
-    void onFinished() override;
 };
 
 } // namespace SailfishConnect

@@ -5,17 +5,16 @@ CONFIG += console c++11 thread testcase no_testcase_installs
 CONFIG -= app_bundle
 QT += testlib
 
+include(../lib/lib.pri)
+
 CONFIG += conan_basic_setup
 include(../conanbuildinfo.pri)
-
-include(../lib/lib.pri)
 
 HEADERS += \
     test.h \
     mock_devicelink.h \
     mock_linkprovider.h \
-    mock_pairinghandler.h \
-    mock_job.h
+    mock_pairinghandler.h
 
 SOURCES += main.cpp \
     test_filehelper.cpp \
@@ -26,7 +25,6 @@ SOURCES += main.cpp \
     mock_linkprovider.cpp \
     mock_pairinghandler.cpp \
     test.cpp \
-    test_job.cpp \
-    mock_job.cpp \
     test_humanize.cpp \
-    test_functools.cpp
+    test_functools.cpp \
+    test_lanlinkprovider.cpp

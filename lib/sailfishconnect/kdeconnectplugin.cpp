@@ -70,7 +70,7 @@ const Device* KdeConnectPlugin::device() const
     return d->m_device;
 }
 
-bool KdeConnectPlugin::sendPacket(NetworkPacket& np, JobManager* jobMgr) const
+bool KdeConnectPlugin::sendPacket(NetworkPacket& np, KJobTrackerInterface* jobMgr) const
 {
     if (!d->m_outgoingCapabilties.contains(np.type())) {
         qCWarning(coreLogger).nospace()

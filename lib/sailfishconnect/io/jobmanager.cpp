@@ -17,102 +17,87 @@
 
 #include "jobmanager.h"
 
-#include <sailfishconnect/io/job.h>
 #include <QLoggingCategory>
+
+#include <sailfishconnect/helper/cpphelper.h>
+
 
 namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.jobmanager")
 
-JobInfo::JobInfo(Job *job, QObject *parent)
-    : QObject(parent), m_impl(job), m_deviceId(job->deviceId())
+JobInfo::JobInfo(KJob *job, QObject *parent)
+    : QObject(parent), m_impl(job)
 {
     Q_ASSERT(job);
 
-    m_action = m_impl->action();
-    m_state = m_impl->state();
+    m_state = QStringLiteral("running");
 
-    // only action changes after job finishes
-    connect(job, &Job::actionChanged, this, &JobInfo::onActionChanged);
-    connect(job, &Job::stateChanged, this, &JobInfo::onStateChanged);
-    connect(job, &Job::targetChanged, this, &JobInfo::targetChanged);
-    connect(job, &Job::totalBytesChanged, this, &JobInfo::totalBytesChanged);
-    connect(job, &Job::processedBytesChanged,
-            this, &JobInfo::processedBytesChanged);
-
-    connect(job, &Job::destroyed, this, &JobInfo::onJobDestroyed);
-}
-
-QUrl JobInfo::target() const {
-    return m_impl ? m_impl->target() : m_target;;
-}
-
-QString JobInfo::action() const {
-    return m_action;
-}
-
-qint64 JobInfo::totalBytes() const {
-    return m_impl ? m_impl->totalBytes() : m_totalBytes;
-}
-
-qint64 JobInfo::processedBytes() const {
-    return m_impl ? m_impl->processedBytes() : m_processedBytes;
-}
-
-Job::State JobInfo::state() const {
-    return m_state;
-}
-
-bool JobInfo::canceled() const
-{
-    return m_impl ? m_impl->canceled() : m_canceled;
-}
-
-QString JobInfo::errorString() const
-{
-    return m_impl ? m_impl->errorString() : m_errorString;
+    connect(job, &KJob::description, this, &JobInfo::onDescription);
+    connect(job, &KJob::finished, this, &JobInfo::onFinished);
+    connect(job, &KJob::result, this, &JobInfo::onResult);
+    connect(job, SIGNAL(processedAmount(KJob*, KJob::Unit, qulonglong)),
+            this, SLOT(onProcessedAmount(KJob*, KJob::Unit, qulonglong)));
+    connect(job, SIGNAL(totalAmount(KJob*, KJob::Unit, qulonglong)),
+            this, SLOT(onTotalAmount(KJob*, KJob::Unit, qulonglong)));
 }
 
 void JobInfo::cancel()
 {
     if (m_impl) {
-        m_impl->cancel();
+        m_impl->kill();
     }
 }
 
-void JobInfo::onJobDestroyed()
+void JobInfo::onDescription(
+        KJob *job,
+        const QString &title,
+        const QPair<QString, QString> &field1,
+        const QPair<QString, QString> &field2)
 {
-    // WARNING: do not access members of m_impl, because the job is already
-    //          destroyed
+    Q_ASSERT(job == m_impl);
 
-    m_impl = nullptr;
+    m_title = title;
+    m_field1 = field1;
+    m_field2 = field2;
+}
 
-    if (m_state != Job::State::Finished) {
-        qCWarning(logger) << "unfinished job destroyed";
-        m_state = Job::State::Finished;
-        emit stateChanged();
+void JobInfo::onTotalAmount(KJob *job, KJob::Unit unit, qulonglong amount)
+{
+    Q_ASSERT(job == m_impl);
+
+    if (unit == KJob::Bytes) {
+        m_totalBytes = amount;
+        emit totalBytesChanged();
     }
 }
 
-void JobInfo::onStateChanged()
+void JobInfo::onProcessedAmount(KJob *job, KJob::Unit unit, qulonglong amount)
 {
-    m_state = m_impl->state();
+    Q_ASSERT(job == m_impl);
 
-    if (m_impl->state() == Job::State::Finished) {
-        m_target = m_impl->target();
-        m_totalBytes = m_impl->totalBytes();
-        m_processedBytes = m_impl->processedBytes();
-        m_canceled = m_impl->canceled();
-        m_errorString = m_impl->errorString();
+    if (unit == KJob::Bytes) {
+        m_processedBytes = amount;
+        emit processedBytesChanged();
+    }
+}
+
+void JobInfo::onFinished()
+{
+    if (m_impl->error() == KJob::KilledJobError) {
+        m_state = QStringLiteral("canceled");
+    } else {
+        m_state = QStringLiteral("finished");
     }
 
     emit stateChanged();
 }
 
-void JobInfo::onActionChanged()
+void JobInfo::onResult()
 {
-    m_action = m_impl->action();
-    emit actionChanged();
+    if (m_impl->error()) {
+        m_errorString = m_impl->errorText();
+    }
 }
 
 JobManager::JobManager(QObject *parent)
@@ -120,7 +105,23 @@ JobManager::JobManager(QObject *parent)
 
 }
 
-void JobManager::addJob(Job *job)
+void JobManager::unregisterJob(KJob *job)
+{
+    QList<JobInfo*> toRemove;
+
+    for (auto& ji : asConst(m_jobs)) {
+        if (ji->job() == job) {
+            toRemove.append(ji);
+        }
+    }
+
+    for (auto& ji : asConst(toRemove)) {
+        m_jobs.removeOne(ji);
+        emit jobRemoved(ji);
+    }
+}
+
+void JobManager::registerJob(KJob *job)
 {
     m_jobs.append(new JobInfo(job, this));
     emit jobAdded(m_jobs.back());

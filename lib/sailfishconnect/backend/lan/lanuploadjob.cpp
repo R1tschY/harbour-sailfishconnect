@@ -36,11 +36,6 @@ LanUploadJob::LanUploadJob(
     , m_socket(nullptr)
     , m_port(0)
 {
-    QUrl target;
-    target.setScheme(QStringLiteral("remote"));
-    target.setPath(np.get<QString>(QStringLiteral("filename")));
-
-    setTarget(target);
     connect(source().data(), &QIODevice::readyRead,
             this, &LanUploadJob::startUploading);
     connect(source().data(), &QIODevice::aboutToClose,
@@ -49,8 +44,6 @@ LanUploadJob::LanUploadJob(
 
 void LanUploadJob::doStart()
 {
-    setAction(tr("Sending"));
-
     m_port = MIN_PORT;
     while (!m_server->listen(QHostAddress::Any, m_port)) {
         m_port++;
@@ -60,17 +53,13 @@ void LanUploadJob::doStart()
                     << "Error opening a port in range"
                     << MIN_PORT << "-" << MAX_PORT;
             m_port = 0;
-            return abort(tr("Couldn't find an available port"));
+            setError(2);
+            setErrorText(tr("Couldn't find an available port"));
+            return emitResult();
         }
     }
     connect(m_server, &QTcpServer::newConnection,
             this, &LanUploadJob::newConnection);
-}
-
-void LanUploadJob::onFinished()
-{
-    CopyJob::onFinished();
-    close();
 }
 
 void LanUploadJob::newConnection()
@@ -78,8 +67,9 @@ void LanUploadJob::newConnection()
     qCDebug(coreLogger) << "connection for payload upload";
     if (!source()->open(QIODevice::ReadOnly)) {
         qCWarning(coreLogger) << "error when opening the input to upload";
-        abort(source()->errorString());
-        return;
+        setError(2);
+        setErrorText(source()->errorString());
+        return emitResult();
     }
 
     m_socket = QSharedPointer<QSslSocket>(m_server->nextPendingConnection());
@@ -117,7 +107,7 @@ void LanUploadJob::aboutToClose()
 void LanUploadJob::tearDown()
 {
     close();
-    exit();
+    emitResult();
 }
 
 QVariantMap LanUploadJob::transferInfo()
@@ -130,7 +120,9 @@ void LanUploadJob::socketFailed(QAbstractSocket::SocketError error)
 {
     if (m_socket) {
         qWarning() << "error uploading" << error;
-        abort(m_socket->errorString());
+        setError(2);
+        setErrorText(m_socket->errorString());
+        emitResult();
     }
 }
 
@@ -138,7 +130,9 @@ void LanUploadJob::sslErrors(const QList<QSslError>& errors)
 {
     qWarning() << "ssl errors" << errors;
 
-    abort(errors.first().errorString());  // TODO
+    setError(2);
+    setErrorText(errors.first().errorString());  // TODO
+    emitResult();
 }
 
 } // namespace SailfishConnect

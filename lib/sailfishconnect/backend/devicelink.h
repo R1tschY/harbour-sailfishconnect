@@ -30,10 +30,7 @@ class PairingHandler;
 class NetworkPacket;
 class LinkProvider;
 class Device;
-
-namespace SailfishConnect {
-class JobManager;
-} // namespace SailfishConnect
+class KJobTrackerInterface;
 
 
 class DeviceLink
@@ -52,7 +49,7 @@ public:
     const QString& deviceId() const { return m_deviceId; }
     LinkProvider* provider() { return m_linkProvider; }
 
-    virtual bool sendPacket(NetworkPacket& np, SailfishConnect::JobManager* jobMgr = nullptr) = 0;
+    virtual bool sendPacket(NetworkPacket& np, KJobTrackerInterface* jobMgr = nullptr) = 0;
 
     //user actions
     virtual void userRequestsPair() = 0;

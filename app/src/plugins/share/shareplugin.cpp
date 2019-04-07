@@ -66,11 +66,10 @@ bool SharePlugin::receivePacket(const NetworkPacket& np)
                     QStringLiteral("filename"),
                     device()->name()));
 
-        Job* job = np.createDownloadPayloadJob(
+        KJob* job = np.createDownloadPayloadJob(
                     device()->id(), incomingPath() % "/" % filename);
-        job->setParent(this);
-        Daemon::instance()->jobManager()->addJob(job);
-        connect(job, &Job::finished, this, &SharePlugin::finishedFileTransfer);
+        Daemon::instance()->jobManager()->registerJob(job);
+        connect(job, &KJob::result, this, &SharePlugin::finishedFileTransfer);
         // TODO: daemon->addJob(job);
         // TODO: add to a job queue in which only x downloads/uploads are
         // running in parallel
@@ -120,18 +119,18 @@ void SharePlugin::share(const QUrl& url)
 
 void SharePlugin::finishedFileTransfer()
 {
-    auto job = qobject_cast<Job*>(QObject::sender());
+    auto job = qobject_cast<KJob*>(QObject::sender());
     Q_ASSERT(job != nullptr);
-    if (job->errorString().isEmpty()) {
+    if (!job->error()) {
         // TODO: add notification
-        emit received(job->target().toString());
+        // FIXME: emit received(job->target().toString());
         qCDebug(logger)
-                << "Share succeeded:" << job->target().toString();
+                << "Share succeeded:"; // << job->target().toString();
     } else {
         qCWarning(logger)
                 << "Share failed:"
-                << job->errorString()
-                << job->target().toString();
+                << job->errorText()
+                ; //<< job->target().toString();
     }
 }
 

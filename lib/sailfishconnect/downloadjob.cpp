@@ -32,12 +32,22 @@ DownloadJob::DownloadJob(
         const QString& destination, qint64 size, QObject* parent)
     : CopyJob(deviceId, origin, QSharedPointer<QIODevice>(), size, parent),
       m_destination(destination)
-{
-    QUrl target;
-    target.setScheme(QStringLiteral("local"));
-    target.setPath(destination);
+{ }
 
-    setTarget(target);
+bool DownloadJob::doKill()
+{
+    CopyJob::doKill();
+    QFile::remove(m_destination);
+    return true;
+}
+
+QString DownloadJob::destination() const
+{
+    return m_destination;
+}
+
+void DownloadJob::doStart()
+{
     if (QFileInfo::exists(m_destination)) {
         auto destination = nonexistingFile(m_destination);
 
@@ -45,8 +55,9 @@ DownloadJob::DownloadJob(
             qCWarning(coreLogger)
                     << "Cannot create destination folder for file download"
                     << destination.filePath();
-            abort(tr("Cannot create destination folder"));
-            return;
+            setError(2);
+            setErrorText(tr("Cannot create destination folder"));
+            return emitResult();
         }
 
         m_destination = destination.filePath();
@@ -58,44 +69,21 @@ DownloadJob::DownloadJob(
     QSharedPointer<QFile> file = QSharedPointer<QFile>(
                 new QFile(m_destination));
     if (!file->open(QIODevice::WriteOnly | QIODevice::Unbuffered)) {
-        abort(
+        setError(2);
+        setErrorText(
             tr("Could not open file for writing: %1").arg(file->error()));
-        return;
+        return emitResult();
     }
     setDestination(std::move(file));
 
-    target.setPath(m_destination);
-    setTarget(target);
-}
-
-bool DownloadJob::doCancelling()
-{
-    close();
-    QFile::remove(m_destination);
-    return true;
-}
-
-void DownloadJob::onFinished()
-{
-    close();
-    CopyJob::onFinished();
-}
-
-QString DownloadJob::destination() const
-{
-    return m_destination;
-}
-
-void DownloadJob::doStart()
-{
-    setAction(tr("Receiving"));
     CopyJob::doStart();
 }
 
-void DownloadJob::onError()
+void DownloadJob::onResult()
 {
-    QFile::remove(m_destination);
-    Job::onError();
+    if (error()) {
+        QFile::remove(m_destination);
+    }
 }
 
 } // namespace SailfishConnect

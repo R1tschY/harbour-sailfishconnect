@@ -31,7 +31,7 @@
 #include "lanuploadjob.h"
 #include <sailfishconnect/device.h>
 #include <sailfishconnect/helper/cpphelper.h>
-#include <sailfishconnect/io/jobmanager.h>
+#include <KJobTrackerInterface>
 
 using namespace SailfishConnect;
 
@@ -94,13 +94,11 @@ QString LanDeviceLink::name()
     return QStringLiteral("LanLink"); // Should be same in both android and kde version
 }
 
-bool LanDeviceLink::sendPacket(NetworkPacket& np, JobManager* jobMgr)
+bool LanDeviceLink::sendPacket(NetworkPacket& np, KJobTrackerInterface* jobMgr)
 {
     if (np.hasPayload()) {
         auto* uploadJob = sendPayload(np, jobMgr);
-        if (uploadJob->isRunning()) {
-            np.setPayloadTransferInfo(uploadJob->transferInfo());
-        }
+        np.setPayloadTransferInfo(uploadJob->transferInfo());
         // TODO: else return?
     }
 
@@ -112,12 +110,12 @@ bool LanDeviceLink::sendPacket(NetworkPacket& np, JobManager* jobMgr)
     return (written != -1);
 }
 
-LanUploadJob* LanDeviceLink::sendPayload(const NetworkPacket& np, JobManager* jobMgr)
+LanUploadJob* LanDeviceLink::sendPayload(const NetworkPacket& np, KJobTrackerInterface* jobMgr)
 {
     LanUploadJob* job = new LanUploadJob(np, deviceId(), provider(), this);
     job->start();
     if (jobMgr) {
-        jobMgr->addJob(job);
+        jobMgr->registerJob(job);
     }
 
     return job;

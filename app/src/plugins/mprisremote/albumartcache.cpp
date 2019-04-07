@@ -9,7 +9,6 @@
 #include <QFileInfo>
 #include <QQmlEngine>
 
-#include <sailfishconnect/io/job.h>
 #include <sailfishconnect/io/copyjob.h>
 #include <sailfishconnect/kdeconnectconfig.h>
 #include <sailfishconnect/helper/humanize.h>
@@ -287,21 +286,19 @@ void DownloadAlbumArtJob::start()
 {
 }
 
-void DownloadAlbumArtJob::gotData(Job* fileTransfer)
+void DownloadAlbumArtJob::gotData(KJob* fileTransfer)
 {
     m_fileTransfer = fileTransfer;
 
-    connect(fileTransfer, &Job::finished,
+    connect(fileTransfer, &KJob::result,
             this, &DownloadAlbumArtJob::fetchFinished);
 
     fileTransfer->start();
 }
 
-void DownloadAlbumArtJob::fetchFinished()
+void DownloadAlbumArtJob::fetchFinished(KJob* fileTransfer)
 {
-    auto* fileTransfer = qobject_cast<CopyJob*>(QObject::sender());
-
-    if (!fileTransfer->errorString().isEmpty()) {
+    if (fileTransfer->error()) {
         qCDebug(logger) << "Failed download of" << m_url;
 
         // mark as failed
@@ -309,11 +306,13 @@ void DownloadAlbumArtJob::fetchFinished()
         file.open(QIODevice::WriteOnly);
         file.close();
 
-        setError(1);
+        setError(100);
         setErrorText(fileTransfer->errorString());
     } else {
-        setTotalAmount(KJob::Bytes, fileTransfer->processedBytes());
-        setProcessedAmount(KJob::Bytes, fileTransfer->processedBytes());
+        setTotalAmount(
+                    KJob::Bytes, fileTransfer->processedAmount(KJob::Bytes));
+        setProcessedAmount(
+                    KJob::Bytes, fileTransfer->processedAmount(KJob::Bytes));
     }
 
     emitResult();

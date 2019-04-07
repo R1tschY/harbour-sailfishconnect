@@ -22,7 +22,6 @@
 
 #include <sailfishconnect/backend/devicelink.h>
 #include <sailfishconnect/networkpacket.h>
-#include <sailfishconnect/io/jobmanager.h>
 
 class MockDeviceLink : public DeviceLink
 {
@@ -30,7 +29,7 @@ public:
     MockDeviceLink(const QString& deviceId, LinkProvider* parent);
 
     MOCK_METHOD0(name, QString());
-    MOCK_METHOD2(sendPacket, bool(NetworkPacket&, SailfishConnect::JobManager*));
+    MOCK_METHOD2(sendPacket, bool(NetworkPacket&, KJobTrackerInterface*));
     MOCK_METHOD0(userRequestsPair, void());
     MOCK_METHOD0(userRequestsUnpair, void());
     MOCK_METHOD1(setPairStatus, void(PairStatus));

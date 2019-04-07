@@ -30,6 +30,7 @@ class SocketLineReader;
 class QTimer;
 class QString;
 class QSslSocket;
+class KJobTrackerInterface;
 
 class LinkProvider;
 class LanLinkProvider;
@@ -37,7 +38,6 @@ class NetworkPacket;
 
 namespace SailfishConnect {
 class LanUploadJob;
-class JobManager;
 } // namespace SailfishConnect
 
 class LanDeviceLink
@@ -54,8 +54,8 @@ public:
     void reset(QSslSocket* socket, ConnectionStarted connectionSource);
 
     QString name() override;
-    bool sendPacket(NetworkPacket& np, SailfishConnect::JobManager* jobMgr) override;
-    SailfishConnect::LanUploadJob* sendPayload(const NetworkPacket& np, SailfishConnect::JobManager *jobMgr = nullptr);
+    bool sendPacket(NetworkPacket& np, KJobTrackerInterface *jobMgr) override;
+    SailfishConnect::LanUploadJob* sendPayload(const NetworkPacket& np, KJobTrackerInterface *jobMgr = nullptr);
 
     void userRequestsPair() override;
     void userRequestsUnpair() override;

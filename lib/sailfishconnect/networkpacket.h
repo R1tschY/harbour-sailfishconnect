@@ -30,10 +30,7 @@
 class QIODevice;
 class QByteArray;
 class KdeConnectConfig;
-
-namespace SailfishConnect {
-class Job;
-} // namespace SailfishConnect
+class KJob;
 
 class NetworkPacket
 {
@@ -71,7 +68,7 @@ public:
     void setPayload(const QSharedPointer<QIODevice>& device, qint64 payloadSize) { m_payload = device; m_payloadSize = payloadSize; Q_ASSERT(m_payloadSize >= -1); }
     bool hasPayload() const { return (m_payloadSize != 0); }
     qint64 payloadSize() const { return m_payloadSize; } //-1 means it is an endless stream
-    SailfishConnect::Job *createDownloadPayloadJob(const QString &deviceId, const QString &destination) const; // TODO: return QDevice
+    KJob *createDownloadPayloadJob(const QString &deviceId, const QString &destination) const; // TODO: return QDevice
 
     //To be called by a particular DeviceLink
     QVariantMap payloadTransferInfo() const { return m_payloadTransferInfo; }

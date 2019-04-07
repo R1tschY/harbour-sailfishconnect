@@ -15,9 +15,6 @@ TARGET = harbour-sailfishconnect
 CONFIG += sailfishapp c++14
 QT += network dbus
 
-CONFIG += conan_basic_setup
-include(../conanbuildinfo.pri)
-
 PKGCONFIG += sailfishapp contextkit-statefs nemonotifications-qt5
 DEFINES += \
     QT_STATICPLUGIN \
@@ -25,7 +22,11 @@ DEFINES += \
     QT_DISABLE_DEPRECATED_BEFORE=0x050600 \
     QT_USE_QSTRINGBUILDER
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT QT_NO_DEBUG
+
 include(../lib/lib.pri)
+CONFIG += conan_basic_setup
+include(../conanbuildinfo.pri)
+
 INCLUDEPATH += $$PWD/src
 
 SOURCES += \

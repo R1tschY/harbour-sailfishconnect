@@ -33,10 +33,7 @@ class KdeConnectPlugin;
 class Device;
 class NetworkPacket;
 class SailfishConnectPluginConfig;
-
-namespace SailfishConnect {
-class JobManager;
-} // namespace SailfishConnect
+class KJobTrackerInterface;
 
 
 class SailfishConnectPluginFactory
@@ -92,10 +89,10 @@ public:
 
     const Device* device() const;
 
-    bool sendPacket(NetworkPacket& np, SailfishConnect::JobManager *jobMgr = nullptr) const;
+    bool sendPacket(NetworkPacket& np, KJobTrackerInterface *jobMgr = nullptr) const;
     bool sendPacket(
             NetworkPacket&& np,
-            SailfishConnect::JobManager *jobMgr = nullptr) const
+            KJobTrackerInterface *jobMgr = nullptr) const
     {
         return sendPacket(np, jobMgr);
     }

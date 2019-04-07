@@ -34,7 +34,6 @@ SOURCES += \
     sailfishconnect/helper/sslhelper.cpp \
     sailfishconnect/pluginloader.cpp \
     sailfishconnect/systeminfo.cpp \
-    sailfishconnect/io/job.cpp \
     sailfishconnect/helper/filehelper.cpp \
     sailfishconnect/io/copyjob.cpp \
     sailfishconnect/downloadjob.cpp \
@@ -74,7 +73,6 @@ HEADERS += \
     sailfishconnect/pluginloader.h \
     sailfishconnect/systeminfo.h \
     sailfishconnect/helper/cpphelper.h \
-    sailfishconnect/io/job.h \
     sailfishconnect/helper/filehelper.h \
     sailfishconnect/io/copyjob.h \
     sailfishconnect/downloadjob.h \

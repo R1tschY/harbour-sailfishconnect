@@ -9,14 +9,11 @@
 #include <QDir>
 #include <KJob>
 
-#include <sailfishconnect/io/job.h>
-
 class KdeConnectConfig;
 class QQmlEngine;
+class KJob;
 
 namespace SailfishConnect {
-
-class Job;
 
 class DownloadAlbumArtJob : public KJob
 {
@@ -26,7 +23,7 @@ public:
 
     void start() override;
 
-    void gotData(Job* fileTransfer);
+    void gotData(KJob* fileTransfer);
 
     QUrl url() const { return m_url; }
     QString hash() const { return m_hash; }
@@ -38,9 +35,9 @@ private:
     QUrl m_url;
     QString m_hash;
     QString m_filePath;
-    Job* m_fileTransfer = nullptr;
+    KJob* m_fileTransfer = nullptr;
 
-    void fetchFinished();
+    void fetchFinished(KJob* fileTransfer);
 };
 
 class AlbumArtCache : public QObject

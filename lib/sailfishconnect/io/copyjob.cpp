@@ -33,12 +33,18 @@ CopyJob::CopyJob(const QString& deviceId,
         const QSharedPointer<QIODevice>& destination,
         qint64 size,
         QObject *parent)
-    : Job(deviceId, parent),
-      m_source(source), m_destination(destination), m_buffer(), m_size(size)
+    : KJob(parent)
+    , m_source(source)
+    , m_destination(destination)
+    , m_buffer()
+    , m_size(size)
+    , m_deviceId(deviceId)
 {
     m_timer.setInterval(100);
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &CopyJob::poll);
+
+    setCapabilities(KJob::Killable);
 }
 
 void CopyJob::close()
@@ -53,6 +59,11 @@ void CopyJob::setDestination(const QSharedPointer<QIODevice> &destination)
         return;
 
     m_destination = destination;
+}
+
+void CopyJob::start()
+{
+    QMetaObject::invokeMethod(this, "doStart", Qt::QueuedConnection);
 }
 
 void CopyJob::setSource(const QSharedPointer<QIODevice> &source)
@@ -70,10 +81,14 @@ void CopyJob::doStart()
     Q_ASSERT(!m_destination.isNull());
 
     if (!m_source->isOpen() || !m_source->isReadable()) {
-        return abort(tr("Input stream is not readable."));
+        setError(2);
+        setErrorText(tr("Input stream is not readable."));
+        return emitResult();
     }
     if (!m_destination->isOpen() || !m_destination->isWritable()) {
-        return abort(tr("Output stream is not writable."));
+        setError(2);
+        setErrorText(tr("Output stream is not writable."));
+        return emitResult();
     }
     if (!m_source->isSequential()) {
         m_sourceEof = true;
@@ -85,7 +100,7 @@ void CopyJob::doStart()
 
     m_size = (m_size >= 0)
             ? m_size : (!m_source->isSequential()) ? m_source->size() : -1;
-    setTotalBytes(m_size);
+    setTotalAmount(KJob::Bytes, m_size);
 
     connect(m_source.data(), &QIODevice::readChannelFinished,
             this, &CopyJob::pollAtSourceClose);
@@ -96,9 +111,14 @@ void CopyJob::doStart()
     m_timer.start();
 }
 
+QString CopyJob::deviceId() const
+{
+    return m_deviceId;
+}
+
 void CopyJob::poll()
 {
-    if (!isRunning())
+    if (m_finished)
         return;
 
     if (m_bufferSize < m_buffer.size() && bytesToWrite() < 1024 * 1024) {
@@ -106,8 +126,9 @@ void CopyJob::poll()
                     m_buffer.data() + m_bufferSize, m_buffer.size() - m_bufferSize);
         if (bytes == -1) {
             // read error
-            abort(tr("Read error: %1").arg(m_source->errorString()));
-            return;
+            setError(2);
+            setErrorText(tr("Read error: %1").arg(m_source->errorString()));
+            return emitResult();
         }
         m_bufferSize += bytes;
 //        qCDebug(logger)
@@ -119,8 +140,10 @@ void CopyJob::poll()
         qint64 bytes = m_destination->write(m_buffer.data(), m_bufferSize);
         if (bytes == -1) {
             // write error
-            abort(tr("Write error: %1").arg(m_destination->errorString()));
-            return;
+            setError(2);
+            setErrorText(
+                tr("Write error: %1").arg(m_destination->errorString()));
+            return emitResult();
         }
         std::move(m_buffer.begin() + bytes, m_buffer.begin() + m_bufferSize,
                   m_buffer.begin());
@@ -134,7 +157,7 @@ void CopyJob::poll()
     }
 
     auto btw = bytesToWrite();
-    setProcessedBytes(m_writtenBytes - btw);
+    setProcessedAmount(KJob::Bytes, m_writtenBytes - btw);
 
     if (m_source->bytesAvailable() > 0
             && m_bufferSize != m_buffer.size()
@@ -154,7 +177,7 @@ void CopyJob::poll()
 
 void CopyJob::pollAtSourceClose()
 {
-    if (!isRunning())
+    if (m_finished)
         return;
 
     qCDebug(logger) << "Detected source closing";
@@ -165,7 +188,7 @@ void CopyJob::pollAtSourceClose()
 
 void CopyJob::pollAtDestinationClose()
 {
-    if (isRunning()) {
+    if (!m_finished) {
         qCDebug(logger) << "Detected destination closing";
         finish();
     }
@@ -173,24 +196,29 @@ void CopyJob::pollAtDestinationClose()
 
 void CopyJob::finish()
 {
+    m_finished = true;
     m_timer.stop();
 
     if (m_bufferSize != 0) {
-        return abort(tr("Early end of output stream"));
+        setError(2);
+        setErrorText(tr("Early end of output stream"));
     }
 
     if (m_size > 0 && m_writtenBytes > m_size) {
-        return abort(tr("Read more bytes of input stream than "
+        setError(2);
+        setErrorText(tr("Read more bytes of input stream than "
                         "expected."));
     }
 
     if (m_size > 0 && m_writtenBytes < m_size) {
-        return abort(tr("Early end of input stream"));
+        setError(2);
+        setErrorText(tr("Early end of input stream"));
     }
 
-    // success
-    exit();
     close();
+
+    // success
+    emitResult();
 }
 
 qint64 CopyJob::bytesToWrite() const
@@ -203,7 +231,7 @@ qint64 CopyJob::bytesToWrite() const
     }
 }
 
-bool CopyJob::doCancelling()
+bool CopyJob::doKill()
 {
     close();
     return true;

@@ -34,10 +34,8 @@ class QString;
 class NetworkPacket;
 class QStringList;
 class PairingHandler;
+class KJobTrackerInterface;
 
-namespace SailfishConnect {
-class JobManager;
-} // namespace SailfishConnect
 
 class Device
     : public QObject
@@ -133,7 +131,7 @@ public:
 public Q_SLOTS:
     ///sends a @p np packet to the device
     ///virtual for testing purposes.
-    virtual bool sendPacket(NetworkPacket& np, SailfishConnect::JobManager *jobMgr = nullptr);
+    virtual bool sendPacket(NetworkPacket& np, KJobTrackerInterface *jobMgr = nullptr);
 
     //Dbus operations
 public Q_SLOTS:

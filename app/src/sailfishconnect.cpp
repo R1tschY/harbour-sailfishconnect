@@ -37,7 +37,6 @@
 #include "appdaemon.h"
 #include <sailfishconnect/device.h>
 #include <sailfishconnect/kdeconnectplugin.h>
-#include <sailfishconnect/io/job.h>
 #include "plugins/mprisremote/mprisremoteplugin.h"
 #include "plugins/touchpad/touchpadplugin.h"
 #include "ui/devicelistmodel.h"
@@ -110,9 +109,6 @@ void registerQmlTypes() {
     qmlRegisterUncreatableType<KdeConnectPlugin>(
                 "SailfishConnect.Core", 0, 3, "Plugin",
                 QStringLiteral("instance of abstract type cannot be created"));
-    qmlRegisterUncreatableType<Job>(
-                "SailfishConnect.Core", 0, 3, "Job",
-                QStringLiteral("not intented to be created from users"));
 
     qmlRegisterUncreatableType<MprisPlayer>(
                 "SailfishConnect.Mpris", 0, 3, "MprisPlayer",

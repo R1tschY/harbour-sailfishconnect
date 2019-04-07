@@ -155,7 +155,7 @@ bool NetworkPacket::unserialize(const QByteArray& a, NetworkPacket* np)
     return true;
 }
 
-Job* NetworkPacket::createDownloadPayloadJob(
+KJob* NetworkPacket::createDownloadPayloadJob(
         const QString& deviceId, const QString& destination) const
 {
     return new DownloadJob(deviceId, payload(), destination, payloadSize());

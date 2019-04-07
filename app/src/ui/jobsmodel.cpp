@@ -39,12 +39,10 @@ int JobsModel::rowCount(const QModelIndex &parent) const
 QHash<int, QByteArray> JobsModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles.insert(TargetRole, "target");
-    roles.insert(ActionRole, "action");
+    roles.insert(TitleRole, "title");
     roles.insert(ProcessedBytesRole, "processedBytes");
     roles.insert(TotalBytesRole, "totalBytes");
     roles.insert(StateRole, "currentState");
-    roles.insert(CanceledRole, "canceled");
     roles.insert(ErrorRole, "error");
     roles.insert(DeviceIdRole, "deviceId");
     return roles;
@@ -89,24 +87,13 @@ void JobsModel::addJob(JobInfo *job)
 
 void JobsModel::connectJob(JobInfo *job)
 {
-    connect(job, &JobInfo::targetChanged,
-            this, [=](){ jobChanged(job, TargetRole); });
-    connect(job, &JobInfo::actionChanged,
-            this, [=](){ jobChanged(job, ActionRole); });
     connect(job, &JobInfo::processedBytesChanged,
             this, [=](){ jobChanged(job, ProcessedBytesRole); });
     connect(job, &JobInfo::totalBytesChanged,
             this, [=](){ jobChanged(job, TotalBytesRole); });
     connect(job, &JobInfo::stateChanged,
             this, [=](){
-        QVector<int> roles { StateRole };
-        if (!job->errorString().isEmpty()) {
-            roles.append(ErrorRole);
-        }
-        if (job->canceled()) {
-            roles.append(CanceledRole);
-        }
-        jobChanged(job, roles);
+        jobChanged(job, { StateRole, ErrorRole });
     });
 }
 
@@ -152,18 +139,14 @@ QVariant JobsModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     switch (role) {
-    case TargetRole:
-        return job->target();
-    case ActionRole:
-        return job->action();
+    case TitleRole:
+        return job->title();
     case ProcessedBytesRole:
         return job->processedBytes();
     case TotalBytesRole:
         return job->totalBytes();
     case StateRole:
-        return int(job->state());
-    case CanceledRole:
-        return job->canceled();
+        return job->state();
     case ErrorRole:
         return job->errorString();
     case DeviceIdRole:

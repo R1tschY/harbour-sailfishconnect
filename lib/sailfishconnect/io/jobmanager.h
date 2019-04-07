@@ -19,65 +19,74 @@
 #define JOBMANAGER_H
 
 #include <QObject>
-#include "job.h"
+#include <KJobTrackerInterface>
 
 class Device;
-
 
 namespace SailfishConnect {
 
 class JobInfo : public QObject {
     Q_OBJECT
 
+    Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(QString deviceId READ deviceId CONSTANT)
-    Q_PROPERTY(QUrl target READ target NOTIFY targetChanged)
-    Q_PROPERTY(QString action READ action NOTIFY actionChanged)
-    Q_PROPERTY(qint64 totalBytes READ totalBytes NOTIFY totalBytesChanged)
-    Q_PROPERTY(qint64 processedBytes READ processedBytes NOTIFY processedBytesChanged)
-    Q_PROPERTY(Job::State state READ state NOTIFY stateChanged)
-    Q_PROPERTY(bool canceled READ canceled NOTIFY stateChanged)
+    Q_PROPERTY(qulonglong totalBytes
+               READ totalBytes NOTIFY totalBytesChanged)
+    Q_PROPERTY(qulonglong processedBytes
+               READ processedBytes NOTIFY processedBytesChanged)
+    Q_PROPERTY(QString state READ state NOTIFY stateChanged)
     Q_PROPERTY(QString errorString READ errorString NOTIFY stateChanged)
 
 public:
-    JobInfo(Job* job, QObject* parent);
+    JobInfo(KJob* job, QObject* parent);
 
-    QUrl target() const;
-    QString action() const;
-    qint64 totalBytes() const;
-    qint64 processedBytes() const;
+    qint64 totalBytes() const { return m_totalBytes; }
+    qint64 processedBytes() const { return m_processedBytes; }
     QString deviceId() const { return m_deviceId; }
 
-    Job::State state() const;
-    bool canceled() const;
-    QString errorString() const;
+    QString title() const { return m_title; }
+    QString state() const { return m_state; }
+    QString errorString() const { return m_errorString; }
 
     void cancel();
 
+    KJob* job() const { return m_impl; }
+
+
 signals:
-    void targetChanged();
-    void actionChanged();
+    void titleChanged();
     void totalBytesChanged();
     void processedBytesChanged();
     void stateChanged();
 
 private:
-    Job* m_impl = nullptr;
+    KJob* m_impl = nullptr;
 
-    QUrl m_target;
-    QString m_action;
-    qint64 m_totalBytes;
-    qint64 m_processedBytes;
-    Job::State m_state;
+    QString m_state;
     QString m_deviceId;
-    bool m_canceled;
-    QString m_errorString;
 
-    void onJobDestroyed();
-    void onStateChanged();
-    void onActionChanged();
+    QString m_errorString;
+    qulonglong m_totalBytes;
+    qulonglong m_processedBytes;
+
+    QString m_title;
+    QPair<QString, QString> m_field1;
+    QPair<QString, QString> m_field2;
+
+    void onDescription(
+            KJob *job,
+            const QString &title,
+            const QPair<QString, QString> &field1,
+            const QPair<QString, QString> &field2);
+    void onTotalAmount(KJob *job, KJob::Unit unit, qulonglong amount);
+    void onProcessedAmount(KJob *job, KJob::Unit unit, qulonglong amount);
+
+private slots:
+    void onResult();
+    void onFinished();
 };
 
-class JobManager : public QObject
+class JobManager : public KJobTrackerInterface
 {
     Q_OBJECT
 
@@ -86,8 +95,8 @@ public:
 
     QList<JobInfo*> jobs() const { return m_jobs; }
 
-    void addJob(Job* job);
-    void removeJob(JobInfo* job);
+    void registerJob(KJob *job) override;
+    void unregisterJob(KJob *job) override;
 
 signals:
     void jobAdded(SailfishConnect::JobInfo*);
@@ -95,6 +104,7 @@ signals:
 
 private:
     QList<JobInfo*> m_jobs;
+
 };
 
 } // namespace SailfishConnect

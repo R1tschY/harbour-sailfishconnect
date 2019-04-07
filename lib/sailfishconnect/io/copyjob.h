@@ -22,15 +22,14 @@
 #include <QSharedPointer>
 #include <QString>
 #include <QTimer>
-
-#include "job.h"
+#include <KJob>
 
 class QIODevice;
 class QSslSocket;
 
 namespace SailfishConnect {
 
-class CopyJob : public Job
+class CopyJob : public KJob
 {
     Q_OBJECT
 public:
@@ -57,21 +56,30 @@ public:
     void setSource(const QSharedPointer<QIODevice> &source);
     void setDestination(const QSharedPointer<QIODevice> &destination);
 
+    void start() override;
+
+    QString deviceId() const;
+
 protected:
     void close();
-    void doStart() override;
-    bool doCancelling() override;
+    bool doKill() override;
+
+protected slots:
+    virtual void doStart();
 
 private:
     QSharedPointer<QIODevice> m_source;
     QSharedPointer<QIODevice> m_destination;
     QSslSocket* m_sslSocket = nullptr;
 
+
     qint64 m_size = -1;
     qint64 m_writtenBytes = 0;
     bool m_sourceEof = false;
     bool m_started = false;
+    bool m_finished = false;
     QTimer m_timer;
+    QString m_deviceId;
 
     std::size_t m_bufferSize = 0;
     std::array<char, 64 * 1024> m_buffer;

@@ -424,7 +424,7 @@ void Device::removeLink(DeviceLink* link)
     }
 }
 
-bool Device::sendPacket(NetworkPacket& np, JobManager* jobMgr)
+bool Device::sendPacket(NetworkPacket& np, KJobTrackerInterface* jobMgr)
 {
     Q_ASSERT(np.type() != PACKET_TYPE_PAIR);
     Q_ASSERT(isTrusted());

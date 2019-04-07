@@ -39,12 +39,12 @@ public:
 
 protected:
     void doStart() override;
-    bool doCancelling() override;
-    void onFinished() override;
-    void onError() override;
+    bool doKill() override;
 
 private:
     QString m_destination;
+
+    void onResult();
 };
 
 } // namespace SailfishConnect

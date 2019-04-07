@@ -195,6 +195,10 @@
         <source>Keyboard</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change layout</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LanDeviceLink</name>

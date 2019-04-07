@@ -25,7 +25,8 @@
 #include <QtFeedback/QFeedbackEffect>
 #include <QRegularExpression>
 
-KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent) : QObject(parent)
+KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent)
+    : QObject(parent)
 {
     m_settings.beginGroup(QStringLiteral("RemoteKeyboard"));
     m_layout = m_settings.value("layout", "en").toString();
@@ -43,7 +44,8 @@ QString KeyboardLayoutProvider::layout() const
 void KeyboardLayoutProvider::setLayout(const QString &layout)
 {
     // seems to be the only way to get the files stored
-    QFile layoutFile("/usr/share/maliit/plugins/com/jolla/layouts/" + layout + ".qml");
+    QFile layoutFile("/usr/share/maliit/plugins/com/jolla/layouts/" + layout
+                     + ".qml");
     if (!layoutFile.open(QIODevice::ReadOnly)) {
         qDebug() << "unkown layout: " << layout;
         return;
@@ -92,15 +94,25 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
                 key["caption"] = "backspace";
                 row.append(key);
             } else {
-                QRegularExpressionMatch captionMatch = caption.match(keySequence);
-                QRegularExpressionMatch captionShiftedMatch = captionShifted.match(keySequence);
-                QRegularExpressionMatch symViewMatch = symView.match(keySequence);
-                QRegularExpressionMatch symView2Match = symView2.match(keySequence);
+                QRegularExpressionMatch captionMatch =
+                        caption.match(keySequence);
+                QRegularExpressionMatch captionShiftedMatch =
+                        captionShifted.match(keySequence);
+                QRegularExpressionMatch symViewMatch =
+                        symView.match(keySequence);
+                QRegularExpressionMatch symView2Match =
+                        symView2.match(keySequence);
                 QJsonObject key;
                 key["caption"] = captionMatch.captured(1);
-                if (captionShiftedMatch.hasMatch()) key["captionShifted"] = captionShiftedMatch.captured(1);
-                if (symViewMatch.hasMatch()) key["symView"] = symViewMatch.captured(1);
-                if (symView2Match.hasMatch()) key["symView2"] = symView2Match.captured(1);
+                if (captionShiftedMatch.hasMatch()) {
+                    key["captionShifted"] = captionShiftedMatch.captured(1);
+                }
+                if (symViewMatch.hasMatch()) {
+                    key["symView"] = symViewMatch.captured(1);
+                }
+                if (symView2Match.hasMatch()) {
+                    key["symView2"] = symView2Match.captured(1);
+                }
                 row.append(key);
             }
         }
@@ -152,7 +164,9 @@ QVariantList KeyboardLayoutProvider::layouts()
         // layouts with _ are not working
         if (!layout.startsWith(".") && !layout.contains("_")) {
             // hi, kn, mr and te are currentently not working
-            if (layout.contains("hi") || layout.contains("kn") || layout.contains("mr") || layout.contains("te")) continue;
+            if (layout.contains("hi") || layout.contains("kn") ||
+                    layout.contains("mr") || layout.contains("te") ||
+                    layout.contains("emoji")) continue;
             layouts.append(layout.left(layout.indexOf(".")));
         }
     }
@@ -214,10 +228,10 @@ void KeyboardLayoutProvider::setFeedback(const bool &feedback)
 
 void KeyboardLayoutProvider::pressFeedback()
 {
-    QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::PressWeak);
+    QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::PressStrong);
 }
 
 void KeyboardLayoutProvider::releaseFeedback()
 {
-    QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::ReleaseWeak);
+    QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::ReleaseStrong);
 }

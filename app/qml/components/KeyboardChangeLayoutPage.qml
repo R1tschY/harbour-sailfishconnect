@@ -21,65 +21,62 @@ import Sailfish.Silica 1.0
 Page {
     allowedOrientations: Orientation.All
 
-    SilicaFlickable {
+    SilicaListView {
+        id: view
         anchors.fill: parent
 
-        ListView {
-            id: view
-            anchors.fill: parent
+        model: _keyboardLayout.layouts()
 
-            model: _keyboardLayout.layouts()
+        header: Column {
 
-            header: PageHeader {
+            PageHeader {
                 title: qsTr("Choose layout")
             }
 
-            delegate: BackgroundItem {
+            Slider {
                 width: view.width
-                height: Theme.itemSizeSmall
+                minimumValue: 50
+                maximumValue: 500
+                stepSize: 50
+                value: _keyboardLayout.repeatInterval
+                valueText: qsTr("%1ms repeat interval").arg(value)
 
-                Text {
-                    anchors {
-                        left: parent.left
-                        leftMargin: Theme.horizontalPageMargin
-                        right: parent.right
-                        rightMargin: Theme.horizontalPageMargin
-                        verticalCenter: parent.verticalCenter
-                    }
-                    text: modelData
-                    color: modelData == _keyboardLayout.layout ? Theme.highlightColor : Theme.secondaryColor
-                    font.pixelSize: Theme.fontSizeMedium
-                }
-
-                onClicked: {
-                    _keyboardLayout.layout = modelData;
+                onValueChanged: {
+                    if (_keyboardLayout.repeatInterval != value) _keyboardLayout.repeatInterval = value;
                 }
             }
 
-            footer: Column {
+            TextSwitch {
+                text: qsTr("Vibration feedback")
+                checked: _keyboardLayout.feedback
 
-                Slider {
-                    width: view.width
-                    minimumValue: 50
-                    maximumValue: 500
-                    stepSize: 50
-                    value: _keyboardLayout.repeatInterval
-                    valueText: qsTr("%1ms repeat interval").arg(value)
-
-                    onValueChanged: {
-                        _keyboardLayout.repeatInterval = value;
-                    }
+                onCheckedChanged: {
+                    if (_keyboardLayout.feedback != checked) _keyboardLayout.feedback = checked;
                 }
+            }
+        }
 
-                TextSwitch {
-                    text: qsTr("Vibration feedback")
-                    checked: _keyboardLayout.feedback
+        delegate: BackgroundItem {
+            width: view.width
+            height: Theme.itemSizeSmall
 
-                    onCheckedChanged: {
-                        _keyboardLayout.feedback = checked;
-                    }
+            Text {
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.horizontalPageMargin
+                    right: parent.right
+                    rightMargin: Theme.horizontalPageMargin
+                    verticalCenter: parent.verticalCenter
                 }
+                text: modelData
+                color: modelData == _keyboardLayout.layout ? Theme.highlightColor : Theme.secondaryColor
+                font.pixelSize: Theme.fontSizeMedium
+            }
+
+            onClicked: {
+                _keyboardLayout.layout = modelData;
             }
         }
     }
 }
+

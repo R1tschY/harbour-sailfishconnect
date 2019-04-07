@@ -196,6 +196,10 @@
         <source>Keyboard</source>
         <translation>Tastatur</translation>
     </message>
+    <message>
+        <source>Change layout</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LanDeviceLink</name>

@@ -53,6 +53,15 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Change layout")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("KeyboardChangeLayoutPage.qml"));
+                }
+            }
+        }
+
         Column {
             anchors.bottom: parent.bottom
 
@@ -201,7 +210,7 @@ Page {
                             fillMode: Image.PreserveAspectFit
                             visible: (modelData["symView"] === "left" || modelData["symView"] === "down" || modelData["symView"] === "right") && page.chars
 
-                            source:  "image://theme/icon-m-" + modelData["symView"]
+                            source: visible ? "image://theme/icon-m-" + modelData["symView"] : ""
                         }
 
                         onClicked: {
@@ -229,19 +238,6 @@ Page {
                     }
                 }
             }
-        }
-    }
-
-    // I hate this hack but it seems this is the only way to push an attachted page
-    Timer {
-        id: pushPage
-
-        interval: 50
-        repeat: false
-        running: true
-
-        onTriggered: {
-            pageStack.pushAttached(Qt.resolvedUrl("KeyboardChangeLayoutPage.qml"))
         }
     }
 }

@@ -23,6 +23,9 @@
 
 #include <sailfishconnect/device.h>
 #include <sailfishconnect/helper/cpphelper.h>
+#include <sailfishconnect/daemon.h>
+
+#include "albumartcache.h"
 
 namespace SailfishConnect {
 
@@ -80,7 +83,7 @@ void MprisPlayer::setPosition(int value)
     }
 }
 
-void MprisPlayer::receivePacket(const NetworkPacket &np)
+void MprisPlayer::receivePacket(const NetworkPacket &np, AlbumArtCache *cache)
 {
     m_currentSong =
             np.get<QString>(QStringLiteral("nowPlaying"), m_currentSong);
@@ -90,8 +93,6 @@ void MprisPlayer::receivePacket(const NetworkPacket &np)
             np.get<QString>(QStringLiteral("artist"), m_artist);
     m_album =
             np.get<QString>(QStringLiteral("album"), m_album);
-    m_albumArtUrl =
-            np.get<QString>(QStringLiteral("albumArtUrl"), m_albumArtUrl);
     m_length =
             np.get<qint64>(QStringLiteral("length"), m_length);
     m_isPlaying =
@@ -106,6 +107,12 @@ void MprisPlayer::receivePacket(const NetworkPacket &np)
             np.get<bool>(QStringLiteral("canGoPrevious"), m_goPreviousAllowed);
     m_seekAllowed =
             np.get<bool>(QStringLiteral("canSeek"), m_seekAllowed);
+
+    QString albumArtUrl = np.get<QString>(QStringLiteral("albumArtUrl"));
+    if (!albumArtUrl.isEmpty()) {
+        m_remoteAlbumArtUrl = albumArtUrl;
+        m_albumArtUrl = cache->imageUrl(m_remoteAlbumArtUrl);
+    }
 
     if (np.has(QStringLiteral("pos")) && !isSpotify()) {
         m_lastPosition = np.get<qint64>(QStringLiteral("pos"), m_lastPosition);
@@ -168,6 +175,8 @@ MprisRemotePlugin::MprisRemotePlugin(Device* device,
                                      const QString &name,
                                      const QSet<QString> &outgoingCapabilities)
     : KdeConnectPlugin(device, name, outgoingCapabilities)
+    , m_cache(new AlbumArtCache(
+                  Daemon::instance()->config(), device->id(), this))
 {
     requestPlayerList();
 }
@@ -175,21 +184,30 @@ MprisRemotePlugin::MprisRemotePlugin(Device* device,
 bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
 {
     if (np.get<bool>("transferringAlbumArt", false)) {
-        // TODO: not supported yet
+        m_cache->endFetching(np.get<QString>("albumArtUrl"), np.payload());
         return true;
-    }
-
-    if (np.has("player")) {
-        MprisPlayer* player = m_players.value(
-                    np.get<QString>(QStringLiteral("player")), nullptr);
-        if (player) {
-            player->receivePacket(np);
-        }
     }
 
     m_supportAlbumArtPayload = np.get<bool>(
                 QStringLiteral("supportAlbumArtPayload"),
                 m_supportAlbumArtPayload);
+
+    if (np.has("player")) {
+        MprisPlayer* player = m_players.value(
+                    np.get<QString>(QStringLiteral("player")), nullptr);
+        if (player) {
+            auto albumArtUrl = np.get<QString>(QStringLiteral("albumArtUrl"));
+            auto* fetchJob = m_supportAlbumArtPayload
+                    ? m_cache->startFetching(albumArtUrl)
+                    : nullptr;
+
+            player->receivePacket(np, m_cache);
+            if (fetchJob) {
+                // can send request only after url was set
+                askForAlbumArt(albumArtUrl, player->name());
+            }
+        }
+    }
 
     if (np.has(QStringLiteral("playerList"))) {
         QSet<QString> newPlayerList(
@@ -221,6 +239,29 @@ bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
     return true;
 }
 
+bool MprisRemotePlugin::askForAlbumArt(
+        const QString& url, const QString& playerName)
+{
+    if (!m_supportAlbumArtPayload || url.isEmpty())
+        return false;
+
+    MprisPlayer* plyr = player(playerName);
+    if (plyr == nullptr)
+        return false;
+
+    if (plyr->remoteAlbumArtUrl() != url)
+        return false;
+
+    sendPacket(NetworkPacket {
+        PACKET_TYPE_MPRIS_REQUEST,
+        {
+            {"player", plyr->name()},
+            {"albumArtUrl", url}
+        }
+    });
+    return true;
+}
+
 void MprisRemotePlugin::sendCommand(
         const QString& player, const QString& method, const QString& value)
 {
@@ -248,7 +289,12 @@ QStringList MprisRemotePlugin::players() const
 
 MprisPlayer* MprisRemotePlugin::player(const QString &name) const
 {
-    return m_players.value(name);
+    return m_players.value(name, nullptr);
+}
+
+AlbumArtCache *MprisRemotePlugin::albumArtCache()
+{
+    return m_cache;
 }
 
 void MprisRemotePlugin::requestPlayerList()

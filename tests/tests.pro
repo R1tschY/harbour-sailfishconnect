@@ -5,6 +5,9 @@ CONFIG += console c++11 thread testcase no_testcase_installs
 CONFIG -= app_bundle
 QT += testlib
 
+CONFIG += conan_basic_setup
+include(../conanbuildinfo.pri)
+
 include(../lib/lib.pri)
 
 HEADERS += \

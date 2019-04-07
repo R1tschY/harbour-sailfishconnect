@@ -155,7 +155,7 @@ void Job::onFinished()
 
 void Job::onSuccess()
 {
-    qCInfo(logger) << "Job" << m_target.toString() << "was successful in "
+    qCInfo(logger) << "Job" << m_target.toString() << "was successful in"
                    << m_timer.elapsed() << "ms";
     emit success();
 }

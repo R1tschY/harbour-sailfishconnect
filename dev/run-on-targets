@@ -1,0 +1,31 @@
+#!/bin/bash -e
+
+SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
+SDK=`$SCRIPT_DIR/get-sdk-install-folder`
+
+REMOTE_WD="${PWD/#$HOME//home/mersdk/share}"
+REMOTE_SCRIPT_DIR="${SCRIPT_DIR/#$HOME//home/mersdk/share}"
+
+ssh \
+  mersdk@127.0.0.1 \
+  -p 2222 \
+  -i "$SDK/vmshare/ssh/private_keys/engine/mersdk" \
+  -o UserKnownHostsFile=/dev/null \
+  -o StrictHostKeyChecking=no \
+  -q \
+  << EOF
+set -e
+cd "$REMOTE_WD"
+
+for t in \$(sdk-assistant target list)
+do
+  VENV=\$HOME/.conan-venv-\$t
+  sb2 -t \$t -m sdk-build << EOI
+    set -e
+    source "\$VENV/bin/activate"
+
+    echo === \$t ===
+    $@
+EOI
+done
+EOF

@@ -4,6 +4,9 @@ TEMPLATE = lib
 CONFIG += staticlib c++14
 QT += network dbus
 
+CONFIG += conan_basic_setup
+include(../conanbuildinfo.pri)
+
 PKGCONFIG += openssl
 DEFINES += \
     QT_DEPRECATED_WARNINGS \

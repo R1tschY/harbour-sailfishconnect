@@ -16,10 +16,11 @@
  */
 
 import QtQuick 2.0
+import Nemo.Notifications 1.0
 import Sailfish.Silica 1.0
 import SailfishConnect.UI 0.3
 import SailfishConnect.Core 0.3
-import SailfishConnect.Qml 0.3
+import SailfishConnect.Qml 0.4
 
 Page {
     id: page
@@ -41,6 +42,38 @@ Page {
             return url.toString()
         }
     }
+
+    function openFile(target) {
+        var url = Url.fromUrl(target)
+        if (url.scheme !== "local") {
+            console.error("Tried to open non-local file")
+            return
+        }
+
+        if (xdgOpen.state == "Running") {
+            xdgOpen.waitForFinished()
+        }
+
+        xdgOpen.arguments = [url.path]
+        xdgOpen.start()
+        // TODO: start loading animation
+    }
+
+//    function openFileDir(target) {
+//        var url = Url.fromUrl(target)
+//        if (url.scheme !== "local") {
+//            console.error("Tried to open non-local file")
+//            return
+//        }
+
+//        if (xdgOpen.state == "Running") {
+//            xdgOpen.waitForFinished()
+//        }
+
+//        xdgOpen.arguments = [Path.dirname(url.path)]
+//        xdgOpen.start()
+//        // TODO: start loading animation
+//    }
 
     function progressIcon(target) {
         if (stringStartsWith(target.toString(), "remote:")) {
@@ -94,6 +127,41 @@ Page {
         }
     }
 
+    Notification { id: xdgOpenNotification }
+
+    Process {
+        id: xdgOpen
+
+        program: "xdg-open"
+
+        onFinished: {
+            console.log("onFinished")
+            if (!xdgOpen.normalExit || xdgOpen.exitCode != 0) {
+                xdgOpenNotification.previewSummary = qsTr("Failed to open file")
+                if (xdgOpen.normalExit) {
+                    var errorMessage = {
+                        // Error in command line syntax.
+                        1: qsTr("Internal error"),
+
+                        // One of the files passed on the command line did not exist.
+                        2: qsTr("File does not exit"),
+
+                        // A required tool could not be found.
+                        3: qsTr("No program found to open file"),
+
+                        // The action failed.
+                        4: qsTr("xdg-open failed"),
+                    }
+
+                    xdgOpenNotification.previewBody = errorMessage[xdgOpen.exitCode]
+                } else {
+                    xdgOpenNotification.previewBody = qsTr("xdg-open crashed")
+                }
+                xdgOpenNotification.publish()
+            }
+        }
+    }
+
     SilicaListView {
         id: listView
         model: JobsModel { }
@@ -105,8 +173,30 @@ Page {
         delegate: ListItem {
             id: listItem
 
+            property bool isTargetLocal:
+                stringStartsWith(target.toString(), "local:")
+            property bool wasSuccessful: currentState === Job.Finished && !error
+
             width: page.width
-            height: Theme.itemSizeMedium
+            contentHeight: Theme.itemSizeMedium
+
+            menu: ContextMenu {
+                MenuItem {
+                    text: qsTr("Cancel")
+                    visible: currentState === Job.Running
+                    onClicked: canceled = true
+                }
+                MenuItem {
+                    text: qsTr("Open")
+                    visible: isTargetLocal && wasSuccessful
+                    onClicked: openFile(target)
+                }
+//                TODO: MenuItem {
+//                    text: qsTr("Open containing directory")
+//                    visible: isTargetLocal && wasSuccessful
+//                    onClicked: openFileDir(target)
+//                }
+            }
 
             ProgressCircle {
                 id: progress
@@ -131,7 +221,7 @@ Page {
                 source: "image://theme/icon-l-image"
                 anchors { centerIn: progress }
                 opacity: 0.3
-                visible: currentState === Job.Finished
+                visible: wasSuccessful
             }*/
 
             Label {

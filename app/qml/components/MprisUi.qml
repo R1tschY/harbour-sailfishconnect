@@ -24,7 +24,9 @@ import SailfishConnect.Mpris 0.3
 SilicaListView {
     id: mprisView
     width: parent.width
-    height: Math.max(contentItem.childrenRect.height, Theme.itemSizeExtraLarge)
+    height: Math.max(
+                contentItem.childrenRect.height,
+                replacement.childrenRect.height)
     visible:
         _device.isReachable && _device.isTrusted
         && _device.loadedPlugins.indexOf(
@@ -66,89 +68,90 @@ SilicaListView {
     Component {
         id: mprisPlayerDelegate
 
-        Column {
+        ListItem {
             id: listItem
             width: parent.width
-            spacing: Theme.paddingSmall
-
-            Label {
-                text: playerName
-                color: Theme.highlightColor
-                width: listItem.width
-                truncationMode: TruncationMode.Fade
-                textFormat: Text.PlainText
-            }
-
-            Label {
-                text: song
-                color: Theme.highlightColor
-                width: listItem.width
-                truncationMode: TruncationMode.Fade
-                textFormat: Text.PlainText
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.weight: Font.Bold
-            }
-
-            Item {
+            Column {
                 width: parent.width
-                height: Theme.itemSizeMedium
+                spacing: Theme.paddingSmall
 
-                IconButton {
-                    id: playBtn
-                    icon.source: (isPlaying && (pauseAllowed || playAllowed)) ?
-                        "image://theme/icon-m-pause"
-                        : "image://theme/icon-m-play"
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        verticalCenter: parent.verticalCenter
+                Label {
+                    text: playerName
+                    color: Theme.highlightColor
+                    width: listItem.width
+                    truncationMode: TruncationMode.Fade
+                    textFormat: Text.PlainText
+                }
+
+                Label {
+                    text: song
+                    color: Theme.highlightColor
+                    width: listItem.width
+                    truncationMode: TruncationMode.Fade
+                    textFormat: Text.PlainText
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font.weight: Font.Bold
+                }
+
+                Item {
+                    width: parent.width
+                    height: Theme.itemSizeMedium
+
+                    IconButton {
+                        id: playBtn
+                        icon.source: (isPlaying && (pauseAllowed || playAllowed)) ?
+                            "image://theme/icon-m-pause"
+                            : "image://theme/icon-m-play"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
+                        }
+                        enabled: pauseAllowed || playAllowed
+                        onClicked: player.playPause()
                     }
-                    enabled: pauseAllowed || playAllowed
-                    onClicked: player.playPause()
-                }
 
-                IconButton {
-                    icon.source: "image://theme/icon-m-previous"
-                    anchors {
-                        top: playBtn.top
-                        right: playBtn.left
+                    IconButton {
+                        icon.source: "image://theme/icon-m-previous"
+                        anchors {
+                            right: playBtn.left
+                        }
+                        visible: goPreviousAllowed
+                        onClicked: player.previous()
                     }
-                    visible: goPreviousAllowed
-                    onClicked: player.previous()
-                }
 
-                IconButton {
-                    icon.source: "image://theme/icon-m-next"
-                    anchors {
-                        top: playBtn.top
-                        left: playBtn.right
-                    }
-                    visible: goNextAllowed
-                    onClicked: player.next()
-                }
-            }
-
-            Slider {
-                id: positionSlider
-                visible: player.hasPosition && player.length > 0
-                width: parent.width
-                minimumValue: 0
-                maximumValue: Math.max(player.length, 1)
-                value: 0
-                enabled: player.seekAllowed
-                onReleased: {
-                    if (player) {
-                        player.position = positionSlider.value
+                    IconButton {
+                        icon.source: "image://theme/icon-m-next"
+                        anchors {
+                            left: playBtn.right
+                        }
+                        visible: goNextAllowed
+                        onClicked: player.next()
                     }
                 }
 
-                Connections {
-                    target: player
-                    onPropertiesChanged: positionSlider.value = player.position
-                }
+                Slider {
+                    id: positionSlider
+                    visible: player.hasPosition && player.length > 0
+                    width: parent.width
+                    minimumValue: 0
+                    maximumValue: Math.max(player.length, 1)
+                    value: 0
+                    enabled: player.seekAllowed
+                    onReleased: {
+                        if (player) {
+                            player.position = positionSlider.value
+                        }
+                    }
 
-                Component.onCompleted: {
-                    if (player) {
-                        positionSlider.value = player.position
+                    Connections {
+                        target: player
+                        onPropertiesChanged: positionSlider.value = player.position
+                    }
+
+                    Component.onCompleted: {
+                        if (player) {
+                            positionSlider.value = player.position
+                        }
                     }
                 }
             }
@@ -162,6 +165,16 @@ SilicaListView {
                     if (player) {
                         positionSlider.value = player.position
                     }
+                }
+            }
+
+            Image {
+                fillMode: Image.PreserveAspectCrop
+                source: albumArtUrl
+                opacity: 0.3
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
                 }
             }
         }

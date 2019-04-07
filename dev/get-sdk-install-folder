@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+
+import os
+import xml.etree.ElementTree as ET
+
+mersdk_xml = os.path.expanduser("~/.config/SailfishOS-SDK/qtcreator/mersdk.xml")
+root = ET.parse(mersdk_xml)
+values = root.findall(".//data[variable='MerSDK.InstallDir']/value")
+if values:
+    print(values[0].text)
+else:
+    print(os.path.expanduser("~/SailfishOS"))

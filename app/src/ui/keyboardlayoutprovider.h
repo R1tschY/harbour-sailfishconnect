@@ -31,8 +31,10 @@ class KeyboardLayoutProvider : public QObject
     Q_PROPERTY(QVariantList row2 READ row2 NOTIFY layoutChanged)
     Q_PROPERTY(QVariantList row3 READ row3 NOTIFY layoutChanged)
     Q_PROPERTY(QVariantList row4 READ row4 NOTIFY layoutChanged)
-    Q_PROPERTY(int repeatInterval READ repeatInterval WRITE setRepeatInterval NOTIFY settingsChanged)
-    Q_PROPERTY(bool feedback READ feedback WRITE setFeedback NOTIFY settingsChanged)
+    Q_PROPERTY(int repeatInterval READ repeatInterval WRITE setRepeatInterval
+               NOTIFY settingsChanged)
+    Q_PROPERTY(bool feedback READ feedback WRITE setFeedback
+               NOTIFY settingsChanged)
 public:
     explicit KeyboardLayoutProvider(QObject *parent = nullptr);
 

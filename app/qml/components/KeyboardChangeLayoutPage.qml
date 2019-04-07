@@ -21,20 +21,18 @@ import Sailfish.Silica 1.0
 Page {
     allowedOrientations: Orientation.All
 
-    SilicaListView {
-        id: view
+    SilicaFlickable {
         anchors.fill: parent
 
-        model: _keyboardLayout.layouts()
-
-        header: Column {
+        Column {
+            anchors.fill: parent
 
             PageHeader {
                 title: qsTr("Choose layout")
             }
 
             Slider {
-                width: view.width
+                width: parent.width
                 minimumValue: 50
                 maximumValue: 500
                 stepSize: 50
@@ -54,29 +52,27 @@ Page {
                     if (_keyboardLayout.feedback != checked) _keyboardLayout.feedback = checked;
                 }
             }
-        }
 
-        delegate: BackgroundItem {
-            width: view.width
-            height: Theme.itemSizeSmall
+            ComboBox {
+                label: qsTr("Change layout")
+                currentIndex: _keyboardLayout.layouts().indexOf(_keyboardLayout.layout)
+                menu: ContextMenu {
+                    Repeater {
+                        id: view
+                        model: _keyboardLayout.layouts()
 
-            Text {
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.horizontalPageMargin
-                    right: parent.right
-                    rightMargin: Theme.horizontalPageMargin
-                    verticalCenter: parent.verticalCenter
+                        delegate: MenuItem {
+                            width: view.width
+                            height: Theme.itemSizeSmall
+                            text: modelData
+
+                            onClicked: {
+                                _keyboardLayout.layout = modelData;
+                            }
+                        }
+                    }
                 }
-                text: modelData
-                color: modelData == _keyboardLayout.layout ? Theme.highlightColor : Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeMedium
-            }
-
-            onClicked: {
-                _keyboardLayout.layout = modelData;
             }
         }
     }
 }
-

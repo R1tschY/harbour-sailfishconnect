@@ -24,6 +24,9 @@
 #include <sailfishapp.h>
 #include <QtFeedback/QFeedbackEffect>
 #include <QRegularExpression>
+#include <QLoggingCategory>
+
+static Q_LOGGING_CATEGORY(logger, "SailfishConnect.KeyboardLayoutProvider")
 
 KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent)
     : QObject(parent)
@@ -47,7 +50,7 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
     QFile layoutFile("/usr/share/maliit/plugins/com/jolla/layouts/" + layout
                      + ".qml");
     if (!layoutFile.open(QIODevice::ReadOnly)) {
-        qDebug() << "unkown layout: " << layout;
+        qCDebug(logger) << "unkown layout: " << layout;
         return;
     }
 

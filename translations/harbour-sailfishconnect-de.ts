@@ -189,6 +189,10 @@
         <source>Vibration feedback</source>
         <translation>Rückmeldung bei Tastendruck</translation>
     </message>
+    <message>
+        <source>Change layout</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeyboardPage</name>

@@ -50,7 +50,7 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
     QFile layoutFile("/usr/share/maliit/plugins/com/jolla/layouts/" + layout
                      + ".qml");
     if (!layoutFile.open(QIODevice::ReadOnly)) {
-        qCDebug(logger) << "unkown layout: " << layout;
+        qCDebug(logger) << "Unknown layout: " << layout;
         return;
     }
 

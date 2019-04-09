@@ -66,7 +66,7 @@ SailfishConnect::RemoteKeyboardPlugin::RemoteKeyboardPlugin(Device *device,
 bool SailfishConnect::RemoteKeyboardPlugin::receivePacket(const NetworkPacket &np)
 {
     Q_UNUSED(np);
-    return false;
+    return true;
 }
 
 void SailfishConnect::RemoteKeyboardPlugin::sendKeyPress(const QString &key,

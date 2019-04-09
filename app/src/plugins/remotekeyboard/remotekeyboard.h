@@ -24,24 +24,28 @@
 #include <sailfishconnect/kdeconnectplugin.h>
 
 namespace SailfishConnect {
-class RemoteInputPlugin : public KdeConnectPlugin
+class RemoteKeyboardPlugin : public KdeConnectPlugin
 {
     Q_OBJECT
 public:
-    RemoteInputPlugin(Device* device, const QString &name, const QSet<QString> &outgoingCapabilities);
+    RemoteKeyboardPlugin(Device* device, const QString &name,
+                      const QSet<QString> &outgoingCapabilities);
 
     bool receivePacket(const NetworkPacket &np) override;
 
-    Q_SCRIPTABLE void sendKeyPress(const QString &key, bool shift = false, bool ctrl = false, bool alt = false) const;
+    Q_SCRIPTABLE void sendKeyPress(const QString &key, bool shift = false,
+                                   bool ctrl = false, bool alt = false) const;
 };
 
-class RemoteInputPluginFactory: public SailfishConnectPluginFactory_<RemoteInputPlugin>
+class RemoteKeyboardPluginFactory
+        : public SailfishConnectPluginFactory_<RemoteKeyboardPlugin>
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID SailfishConnectPlugin_iid FILE "metadata.json")
     Q_INTERFACES(SailfishConnectPluginFactory)
 public:
-    using SailfishConnectPluginFactory_<RemoteInputPlugin>::SailfishConnectPluginFactory_;
+    using SailfishConnectPluginFactory_<RemoteKeyboardPlugin>
+        ::SailfishConnectPluginFactory_;
 
     QString name() const override;
     QString description() const override;

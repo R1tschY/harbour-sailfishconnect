@@ -15,10 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "remoteinput.h"
+#include "remotekeyboard.h"
 #include <QtPlugin>
 #include <QMap>
 #include <sailfishconnect/device.h>
+#include <QDebug>
 
 QMap<QString, int> specialKeysMap = {
     //0,              // Invalid
@@ -42,54 +43,54 @@ QMap<QString, int> specialKeysMap = {
     //0,              // 18
     //0,              // 19
     //0,              // 20
-    //{Qt::Key_F1, 21},
-    //{Qt::Key_F2, 22},
-    //{Qt::Key_F3, 23},
-    //{Qt::Key_F4, 24},
-    //{Qt::Key_F5, 25},
-    //{Qt::Key_F6, 26},
-    //{Qt::Key_F7, 27},
-    //{Qt::Key_F8, 28},
-    //{Qt::Key_F9, 29},
-    //{Qt::Key_F10, 30},
-    //{Qt::Key_F11, 31},
-    //{Qt::Key_F12, 32},
+    {"F1", 21},
+    {"F2", 22},
+    {"F3", 23},
+    {"F4", 24},
+    {"F5", 25},
+    {"F6", 26},
+    {"F7", 27},
+    {"F8", 28},
+    {"F9", 29},
+    {"F10", 30},
+    {"F11", 31},
+    {"F12", 32}
 };
 
-SailfishConnect::RemoteInputPlugin::RemoteInputPlugin(Device *device,
+SailfishConnect::RemoteKeyboardPlugin::RemoteKeyboardPlugin(Device *device,
         const QString &name, const QSet<QString> &outgoingCapabilities)
     : KdeConnectPlugin(device, name, outgoingCapabilities)
 {
 }
 
-bool SailfishConnect::RemoteInputPlugin::receivePacket(const NetworkPacket &np)
+bool SailfishConnect::RemoteKeyboardPlugin::receivePacket(const NetworkPacket &np)
 {
     Q_UNUSED(np);
     return false;
 }
 
-void SailfishConnect::RemoteInputPlugin::sendKeyPress(const QString &key,
+void SailfishConnect::RemoteKeyboardPlugin::sendKeyPress(const QString &key,
     bool shift, bool ctrl, bool alt) const
 {
     NetworkPacket np("kdeconnect.mousepad.request", {{"key", key},
-                        {"specialKey", specialKeysMap[key]}, {"shift", shift},
-                        {"ctrl", ctrl}, {"alt", alt}, {"sendAck", true}});
+                        {"specialKey", specialKeysMap.value(key, 0)},
+                        {"shift", shift}, {"ctrl", ctrl}, {"alt", alt}});
     sendPacket(np);
 }
 
-QString SailfishConnect::RemoteInputPluginFactory::name() const
+QString SailfishConnect::RemoteKeyboardPluginFactory::name() const
 {
     return tr("Remote Keyboard");
 }
 
-QString SailfishConnect::RemoteInputPluginFactory::description() const
+QString SailfishConnect::RemoteKeyboardPluginFactory::description() const
 {
     return tr("Type on remote compute using a virtual keyboard.");
 }
 
-QString SailfishConnect::RemoteInputPluginFactory::iconUrl() const
+QString SailfishConnect::RemoteKeyboardPluginFactory::iconUrl() const
 {
     return QStringLiteral("image://theme/icon-m-keyboard");
 }
 
-Q_IMPORT_PLUGIN(RemoteInputPluginFactory)
+Q_IMPORT_PLUGIN(RemoteKeyboardPluginFactory)

@@ -36,6 +36,20 @@ KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent)
     m_repeatInterval = m_settings.value("repeatInterval", 200).toInt();
     m_feedback = m_settings.value("keyboardFeedback", true).toBool();
     m_settings.endGroup();
+
+    QJsonArray row1;
+    for (QString key : {"esc", "F1", "F2", "F3", "F4", "F5", "F6"}) {
+        QJsonObject keyObject;
+        keyObject["caption"] = key;
+        if (key.startsWith("F")) {
+            int num = key.at(1).toLatin1() - '0';
+            QString name = "F" + QString::number(num + 6);
+            keyObject["captionShifted"] = name;
+        }
+        row1.append(keyObject);
+    }
+    m_row1 = row1.toVariantList();
+
     setLayout(m_layout);
 }
 
@@ -50,7 +64,7 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
     QFile layoutFile("/usr/share/maliit/plugins/com/jolla/layouts/" + layout
                      + ".qml");
     if (!layoutFile.open(QIODevice::ReadOnly)) {
-        qCDebug(logger) << "unkown layout: " << layout;
+        qCDebug(logger) << "Unkown layout: " << layout;
         return;
     }
 
@@ -129,11 +143,11 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
     m_settings.setValue("layout", layout);
     m_settings.endGroup();
 
-    m_row1 = keys[0].toArray().toVariantList();
-    m_row2 = keys[1].toArray().toVariantList();
-    m_row3 = keys[2].toArray().toVariantList();
+    m_row2 = keys[0].toArray().toVariantList();
+    m_row3 = keys[1].toArray().toVariantList();
+    m_row4 = keys[2].toArray().toVariantList();
 
-    QJsonArray row4;
+    QJsonArray row5;
     for (QString key : {"?123", "ctrl", ",", " ", ".", "alt", "enter"}) {
         QJsonObject keyObject;
         keyObject["caption"] = key;
@@ -146,10 +160,10 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
         } else if (key == "?123") {
             keyObject["symView"] = "ABC";
         }
-        row4.append(keyObject);
+        row5.append(keyObject);
     }
 
-    m_row4 = row4.toVariantList();
+    m_row5 = row5.toVariantList();
 
     m_layout = layout;
 
@@ -195,6 +209,11 @@ QVariantList KeyboardLayoutProvider::row3() const
 QVariantList KeyboardLayoutProvider::row4() const
 {
     return m_row4;
+}
+
+QVariantList KeyboardLayoutProvider::row5() const
+{
+    return m_row5;
 }
 
 int KeyboardLayoutProvider::repeatInterval() const

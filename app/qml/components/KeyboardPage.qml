@@ -20,9 +20,9 @@ import Sailfish.Silica 1.0
 
 Page {
     id: page
-    allowedOrientations: Orientation.Landscape | Orientation.LandscapeInverted
+    allowedOrientations: Orientation.All
     property var device
-    property var plugin: device.plugin("SailfishConnect::RemoteInputPlugin")
+    property var plugin: device.plugin("SailfishConnect::RemoteKeyboardPlugin")
     property QtObject modifiers: QtObject {
         property int shift: 0
         property int ctrl: 0
@@ -33,7 +33,7 @@ Page {
     function displayCorrectChar(data) {
         if (page.chars && typeof data["symView"] !== "undefined") {
             // dont show text on arrow keys
-            if (data["symView"] === "up" || data["symView"] === "left" || data["symView"] === "down" || data["symView"] === "right") return " ";
+            if (["up", "down", "left", "right"].indexOf(data["symView"]) != -1) return " ";
             if (modifiers.shift && typeof data["symView2"] !== "undefined") {
                 return data["symView2"];
             }
@@ -55,7 +55,7 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("Change layout")
+                text: qsTr("Settings")
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("KeyboardChangeLayoutPage.qml"));
                 }
@@ -67,10 +67,10 @@ Page {
 
             Row {
                 Repeater {
-                    model: _keyboardLayout.row1
+                    model: keyboardLayout.row1
 
                     Key {
-                        width: page.width / _keyboardLayout.row1.length
+                        width: page.width / keyboardLayout.row1.length
                         height: page.height / 7
                         label: displayCorrectChar(modelData)
 
@@ -96,10 +96,10 @@ Page {
 
             Row {
                 Repeater {
-                    model: _keyboardLayout.row2
+                    model: keyboardLayout.row2
 
                     Key {
-                        width: page.width / _keyboardLayout.row2.length
+                        width: page.width / keyboardLayout.row2.length
                         height: page.height / 7
                         label: displayCorrectChar(modelData)
 
@@ -125,10 +125,39 @@ Page {
 
             Row {
                 Repeater {
-                    model: _keyboardLayout.row3
+                    model: keyboardLayout.row3
 
                     Key {
-                        width: page.width / (_keyboardLayout.row3.length + (page.chars ? 0 : -1))
+                        width: page.width / keyboardLayout.row3.length
+                        height: page.height / 7
+                        label: displayCorrectChar(modelData)
+
+                        onClicked: {
+                            if (page.chars) {
+                                plugin.sendKeyPress(label, false, modifiers.ctrl, modifiers.alt)
+                            } else {
+                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
+                                if (modifiers.shift === 1) {
+                                    modifiers.shift = 0;
+                                }
+                            }
+                            if (modifiers.ctrl === 1) {
+                                modifiers.ctrl = 0;
+                            }
+                            if (modifiers.alt === 1) {
+                                modifiers.alt = 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            Row {
+                Repeater {
+                    model: keyboardLayout.row4
+
+                    Key {
+                        width: page.width / (keyboardLayout.row4.length + (page.chars ? 0 : -1))
                         height: page.height / 7
                         label: getName(modelData)
                         markValue: modelData["caption"] === "shift" ? modifiers.shift : 0
@@ -155,17 +184,20 @@ Page {
                             width: parent.width
                             height: parent.height
                             fillMode: Image.PreserveAspectFit
-                            visible: (modelData["caption"] === "shift" && !page.chars) || modelData["caption"] === "backspace" || (modelData["symView"] === "up" && page.chars)
+                            visible: (modelData["caption"] === "shift" && !page.chars) ||
+                                     modelData["caption"] === "backspace" ||
+                                     (modelData["symView"] === "up" && page.chars)
 
-                            source: modelData["symView"] === "up" ? "image://theme/icon-m-up" : (modelData["caption"] === "shift" ? "image://theme/icon-m-capslock" : "image://theme/icon-m-backspace")
+                            source: modelData["symView"] === "up" ?
+                                        "image://theme/icon-m-up" :
+                                        (modelData["caption"] === "shift" ?
+                                             "image://theme/icon-m-capslock" :
+                                             "image://theme/icon-m-backspace")
                         }
 
                         onClicked: {
                             if (modelData["caption"] === "shift") {
-                                modifiers.shift++;
-                                if (modifiers.shift > 2) {
-                                    modifiers.shift = 0;
-                                }
+                                modifiers.shift = (modifiers.shift + 1) % 3
                                 if (page.chars && modifiers.shift === 1) modifiers.shift = 2;
                                 return;
                             } else if (modelData["caption"] === "backspace") {
@@ -195,20 +227,25 @@ Page {
 
             Row {
                 Repeater {
-                    model: _keyboardLayout.row4
+                    model: keyboardLayout.row5
 
                     Key {
-                        width: modelData["caption"] !== " " ? page.width / (_keyboardLayout.row4.length + 1) : 2 * page.width / (_keyboardLayout.row4.length + 1)
+                        width: modelData["caption"] !== " " ?
+                                   page.width / (keyboardLayout.row5.length + 1)
+                                   : 2 * page.width / (keyboardLayout.row5.length + 1)
                         height: page.height / 7
                         label: displayCorrectChar(modelData)
-                        markValue: modelData["caption"] === "ctrl" ? modifiers.ctrl : (modelData["caption"] === "alt" && !page.chars ? modifiers.alt : 0)
+                        markValue: modelData["caption"] === "ctrl" ?
+                                       modifiers.ctrl
+                                       : (modelData["caption"] === "alt" && !page.chars ?
+                                            modifiers.alt : 0)
 
                         Image {
                             anchors.centerIn: parent
                             width: parent.width
                             height: parent.height
                             fillMode: Image.PreserveAspectFit
-                            visible: (modelData["symView"] === "left" || modelData["symView"] === "down" || modelData["symView"] === "right") && page.chars
+                            visible: (["left", "right", "down"].indexOf(modelData["symView"]) != -1) && page.chars
 
                             source: visible ? "image://theme/icon-m-" + modelData["symView"] : ""
                         }
@@ -220,11 +257,9 @@ Page {
                                 modifiers.alt = 0;
                                 modifiers.ctrl = 0;
                             } else if (label == "alt") {
-                                modifiers.alt++;
-                                if (modifiers.alt > 2) modifiers.alt = 0;
+                                modifiers.alt = (modifiers.alt + 1) % 3
                             } else if (label == "ctrl") {
-                                modifiers.ctrl++;
-                                if (modifiers.ctrl > 2) modifiers.ctrl = 0;
+                                modifiers.ctrl = (modifiers.ctrl + 1) % 3
                             } else if (label == "enter") {
                                 plugin.sendKeyPress("enter", modifiers.shift, modifiers.ctrl, modifiers.alt);
                             } else if (modelData["symView"] === "left") {

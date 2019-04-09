@@ -200,8 +200,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change layout</source>
-        <translation type="unfinished"></translation>
+        <source>Settings</source>
+        <translation type="unfinished">设置</translation>
     </message>
 </context>
 <context>
@@ -384,7 +384,7 @@
     </message>
 </context>
 <context>
-    <name>SailfishConnect::RemoteInputPluginFactory</name>
+    <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
         <translation type="unfinished"></translation>
@@ -511,6 +511,38 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
         <source>of</source>
         <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
         <translation>of</translation>
+    </message>
+    <message>
+        <source>Failed to open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File does not exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No program found to open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xdg-open failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xdg-open crashed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

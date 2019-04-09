@@ -36,30 +36,30 @@ Page {
                 minimumValue: 50
                 maximumValue: 500
                 stepSize: 50
-                value: _keyboardLayout.repeatInterval
+                value: keyboardLayout.repeatInterval
                 valueText: qsTr("%1ms repeat interval").arg(value)
 
                 onValueChanged: {
-                    if (_keyboardLayout.repeatInterval != value) _keyboardLayout.repeatInterval = value;
+                    if (keyboardLayout.repeatInterval != value) keyboardLayout.repeatInterval = value;
                 }
             }
 
             TextSwitch {
                 text: qsTr("Vibration feedback")
-                checked: _keyboardLayout.feedback
+                checked: keyboardLayout.feedback
 
                 onCheckedChanged: {
-                    if (_keyboardLayout.feedback != checked) _keyboardLayout.feedback = checked;
+                    if (keyboardLayout.feedback != checked) keyboardLayout.feedback = checked;
                 }
             }
 
             ComboBox {
                 label: qsTr("Change layout")
-                currentIndex: _keyboardLayout.layouts().indexOf(_keyboardLayout.layout)
+                currentIndex: keyboardLayout.layouts().indexOf(keyboardLayout.layout)
                 menu: ContextMenu {
                     Repeater {
                         id: view
-                        model: _keyboardLayout.layouts()
+                        model: keyboardLayout.layouts()
 
                         delegate: MenuItem {
                             width: view.width
@@ -67,7 +67,7 @@ Page {
                             text: modelData
 
                             onClicked: {
-                                _keyboardLayout.layout = modelData;
+                                keyboardLayout.layout = modelData;
                             }
                         }
                     }

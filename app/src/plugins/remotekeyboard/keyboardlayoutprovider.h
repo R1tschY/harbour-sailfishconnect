@@ -31,6 +31,7 @@ class KeyboardLayoutProvider : public QObject
     Q_PROPERTY(QVariantList row2 READ row2 NOTIFY layoutChanged)
     Q_PROPERTY(QVariantList row3 READ row3 NOTIFY layoutChanged)
     Q_PROPERTY(QVariantList row4 READ row4 NOTIFY layoutChanged)
+    Q_PROPERTY(QVariantList row5 READ row5 NOTIFY layoutChanged)
     Q_PROPERTY(int repeatInterval READ repeatInterval WRITE setRepeatInterval
                NOTIFY settingsChanged)
     Q_PROPERTY(bool feedback READ feedback WRITE setFeedback
@@ -47,6 +48,7 @@ public:
     QVariantList row2() const;
     QVariantList row3() const;
     QVariantList row4() const;
+    QVariantList row5() const;
 
     int repeatInterval() const;
     void setRepeatInterval(const int &interval);
@@ -67,6 +69,7 @@ private:
     QVariantList m_row2;
     QVariantList m_row3;
     QVariantList m_row4;
+    QVariantList m_row5;
     int m_repeatInterval;
     bool m_feedback;
     QSettings m_settings;

@@ -21,7 +21,7 @@
 #include <QObject>
 #include <QString>
 #include <QSettings>
-#include "ui/keyboardlayoutprovider.h"
+#include "plugins/remotekeyboard/keyboardlayoutprovider.h"
 
 class QQuickView;
 class QQmlImageProviderBase;

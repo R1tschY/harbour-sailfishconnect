@@ -23,7 +23,7 @@ Column {
     width: parent.width
     visible:
         _device.isReachable && _device.isTrusted
-        && _device.loadedPlugins.indexOf("SailfishConnect::RemoteInputPlugin") >= 0
+        && _device.loadedPlugins.indexOf("SailfishConnect::RemoteKeyboardPlugin") >= 0
 
     SectionHeader { text: qsTr("Remote Input") }
 

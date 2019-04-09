@@ -201,8 +201,8 @@
         <translation>Tastatur</translation>
     </message>
     <message>
-        <source>Change layout</source>
-        <translation type="unfinished"></translation>
+        <source>Settings</source>
+        <translation type="unfinished">Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -385,14 +385,14 @@
     </message>
 </context>
 <context>
-    <name>SailfishConnect::RemoteInputPluginFactory</name>
+    <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation>Entfernte Tastatur</translation>
+        <translation type="unfinished">Entfernte Tastatur</translation>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation>Tippe auf einem anderen Computer mit einer virtuellen Tastatur.</translation>
+        <translation type="unfinished">Tippe auf einem anderen Computer mit einer virtuellen Tastatur.</translation>
     </message>
 </context>
 <context>
@@ -512,6 +512,38 @@ Kurz halten für Drag&apos;n&apos;Drop</translation>
         <source>of</source>
         <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
         <translation>von</translation>
+    </message>
+    <message>
+        <source>Failed to open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File does not exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No program found to open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xdg-open failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xdg-open crashed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

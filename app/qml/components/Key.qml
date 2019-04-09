@@ -54,13 +54,13 @@ Rectangle {
     Timer {
         id: timer
 
-        interval: _keyboardLayout.repeatInterval
+        interval: keyboardLayout.repeatInterval
         repeat: true
         running: false
 
         onTriggered: {
-            if (_keyboardLayout.feedback) {
-                _keyboardLayout.pressFeedback();
+            if (keyboardLayout.feedback) {
+                keyboardLayout.pressFeedback();
             }
 
             parent.clicked();
@@ -72,8 +72,8 @@ Rectangle {
         anchors.fill: parent
 
         onClicked: {
-            if (_keyboardLayout.feedback) {
-                _keyboardLayout.pressFeedback();
+            if (keyboardLayout.feedback) {
+                keyboardLayout.pressFeedback();
             }
 
             parent.clicked();
@@ -84,8 +84,8 @@ Rectangle {
         }
 
         onReleased: {
-            if (_keyboardLayout.feedback) {
-                _keyboardLayout.releaseFeedback();
+            if (keyboardLayout.feedback) {
+                keyboardLayout.releaseFeedback();
             }
 
             timer.stop();

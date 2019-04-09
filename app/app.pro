@@ -52,8 +52,8 @@ SOURCES += \
     src/plugins/telephony/telephonyplugin.cpp \
     src/dbus/ofono.cpp \
     src/ui/sortfiltermodel.cpp \
-    src/ui/keyboardlayoutprovider.cpp \
-    src/plugins/remoteinput/remoteinput.cpp\
+    src/plugins/remotekeyboard/keyboardlayoutprovider.cpp \
+    src/plugins/remotekeyboard/remotekeyboard.cpp\
     src/plugins/mprisremote/albumartcache.cpp \
     src/js/process.cpp \
     src/js/path.cpp
@@ -86,8 +86,7 @@ DISTFILES += \
     qml/components/KeyboardPage.qml \
     qml/components/Key.qml \
     qml/components/RemoteInput.qml \
-    src/plugins/remoteinput/metadata.json \
-    keyboard-layouts/english.json
+    src/plugins/remotekeyboard/metadata.json
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
@@ -116,8 +115,8 @@ HEADERS += \
     src/dbus/tuple.h \
     src/dbus/ofono.h \
     src/ui/sortfiltermodel.h \
-    src/ui/keyboardlayoutprovider.h \
-    src/plugins/remoteinput/remoteinput.h \
+    src/plugins/remotekeyboard/keyboardlayoutprovider.h \
+    src/plugins/remotekeyboard/remotekeyboard.h \
     src/plugins/mprisremote/albumartcache.h \
     src/js/process.h \
     src/js/path.h

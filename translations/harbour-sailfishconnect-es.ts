@@ -208,6 +208,10 @@
         <source>Multimedia Controls</source>
         <translation>Controles multimedia</translation>
     </message>
+    <message>
+        <source>Nothing playing</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SailfishConnect::AppDaemon</name>

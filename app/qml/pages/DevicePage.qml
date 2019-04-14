@@ -52,14 +52,14 @@ Page {
             // TODO: remove this text entry and replace with placeholder
             Column {
                 id: mainColumn
-                width: parent.width - Theme.paddingLarge * 2
-                x: Theme.horizontalPageMargin
+                width: parent.width
 
                 Column {
                     id: trustEntry
                     spacing: Theme.paddingLarge
-                    width: parent.width
-                    height: Theme.itemSizeMedium
+                    height: Theme.itemSizeSmall
+                    width: parent.width - Theme.paddingLarge * 2
+                    x: Theme.horizontalPageMargin
 
                     Label {
                         id: stateText

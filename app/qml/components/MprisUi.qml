@@ -21,36 +21,177 @@ import SailfishConnect.UI 0.3
 import SailfishConnect.Core 0.3
 import SailfishConnect.Mpris 0.3
 
-SilicaListView {
-    id: mprisView
+Column {
     width: parent.width
-    height: Math.max(
-                contentItem.childrenRect.height,
-                replacement.childrenRect.height)
     visible:
         _device.isReachable && _device.isTrusted
         && _device.loadedPlugins.indexOf(
             "SailfishConnect::MprisRemotePlugin") >= 0
 
-    header: SectionHeader {
-        text: qsTr("Multimedia Controls")
-        id: header
+
+    SilicaListView {
+        id: mprisView
+        width: parent.width
+        height: contentHeight
+
+        header: SectionHeader {
+            text: qsTr("Multimedia Controls")
+            id: header
+        }
+
+        delegate: mprisPlayerDelegate
+        model: MprisPlayersModel {
+            deviceId: page.deviceId
+        }
+
+        Component {
+            id: mprisPlayerDelegate
+
+            BackgroundItem {
+                id: listItem
+                width: parent.width
+                height: hasPosition
+                        ? (Theme.itemSizeMedium * 2.5)
+                        : (Theme.itemSizeMedium * 2)
+
+                property bool hasPosition: player.hasPosition && player.length > 0
+
+                Label {
+                    id: playerNameLabel
+                    text: playerName
+                    color: Theme.highlightColor
+                    truncationMode: TruncationMode.Fade
+                    textFormat: Text.PlainText
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: Theme.horizontalPageMargin
+                    }
+                }
+
+                AlbumArt {
+                    id: albumArt
+                    source: albumArtUrl
+                    size: Theme.iconSizeLarge * 1.5
+
+                    anchors {
+                        left: parent.left
+                        top: playerNameLabel.bottom
+                        topMargin: Theme.paddingMedium
+                    }
+                }
+
+                Item {
+                    anchors {
+                        top: playerNameLabel.bottom
+                        left: albumArt.right
+                        leftMargin: Theme.horizontalPageMargin
+                        right: parent.right
+                    }
+
+                    Label {
+                        id: songLabel
+                        text: song ? song : ("<" + qsTr("Nothing playing") + ">")
+                        color: Theme.highlightColor
+                        truncationMode: TruncationMode.Fade
+                        textFormat: Text.PlainText
+                        font.weight: Font.Bold
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                        }
+                    }
+
+                    Item {
+                        id: playBtns
+                        height: Theme.itemSizeSmall
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            top: songLabel.bottom
+                        }
+
+                        IconButton {
+                            id: playBtn
+                            icon.source: (isPlaying && (pauseAllowed || playAllowed)) ?
+                                "image://theme/icon-m-pause"
+                                : "image://theme/icon-m-play"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            enabled: pauseAllowed || playAllowed
+                            onClicked: player.playPause()
+                        }
+
+                        IconButton {
+                            icon.source: "image://theme/icon-m-previous"
+                            anchors.right: playBtn.left
+                            visible: goPreviousAllowed
+                            onClicked: player.previous()
+                        }
+
+                        IconButton {
+                            icon.source: "image://theme/icon-m-next"
+                            anchors.left: playBtn.right
+                            visible: goNextAllowed
+                            onClicked: player.next()
+                        }
+                    }
+
+                    Slider {
+                        id: positionSlider
+
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            top: playBtns.bottom
+                        }
+                        visible: hasPosition
+                        minimumValue: 0
+                        maximumValue: Math.max(player.length, 1)
+                        value: 0
+                        enabled: player.seekAllowed
+                        onReleased: {
+                            if (player) {
+                                player.position = positionSlider.value
+                            }
+                        }
+
+                        Connections {
+                            target: player
+                            onPropertiesChanged: positionSlider.value = player.position
+                        }
+
+                        Component.onCompleted: {
+                            if (player) {
+                                positionSlider.value = player.position
+                            }
+                        }
+                    }
+
+                    Timer {
+                        interval: 1000
+                        repeat: true
+                        running: isPlaying && player.hasPosition
+                        triggeredOnStart: false
+                        onTriggered: {
+                            if (player) {
+                                positionSlider.value = player.position
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    delegate: mprisPlayerDelegate
-    model: MprisPlayersModel {
-        deviceId: page.deviceId
-    }
 
     Label {
         id: replacement
 
-        anchors.bottom: mprisView.bottom
         x: Theme.horizontalPageMargin
         width: parent.width - 2 * x
 
-        enabled: mprisView.count === 0
-        opacity: enabled ? 1.0 : 0
+        visible: mprisView.count === 0
+        opacity: visible ? 1.0 : 0
 
         text: qsTr("No remote players")
         wrapMode: Text.Wrap
@@ -62,121 +203,5 @@ SilicaListView {
         color: Theme.rgba(Theme.highlightColor, 0.6)
 
         Behavior on opacity { FadeAnimation { duration: 300 } }
-    }
-
-
-    Component {
-        id: mprisPlayerDelegate
-
-        ListItem {
-            id: listItem
-            width: parent.width
-            Column {
-                width: parent.width
-                spacing: Theme.paddingSmall
-
-                Label {
-                    text: playerName
-                    color: Theme.highlightColor
-                    width: listItem.width
-                    truncationMode: TruncationMode.Fade
-                    textFormat: Text.PlainText
-                }
-
-                Label {
-                    text: song
-                    color: Theme.highlightColor
-                    width: listItem.width
-                    truncationMode: TruncationMode.Fade
-                    textFormat: Text.PlainText
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font.weight: Font.Bold
-                }
-
-                Item {
-                    width: parent.width
-                    height: Theme.itemSizeMedium
-
-                    IconButton {
-                        id: playBtn
-                        icon.source: (isPlaying && (pauseAllowed || playAllowed)) ?
-                            "image://theme/icon-m-pause"
-                            : "image://theme/icon-m-play"
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                        }
-                        enabled: pauseAllowed || playAllowed
-                        onClicked: player.playPause()
-                    }
-
-                    IconButton {
-                        icon.source: "image://theme/icon-m-previous"
-                        anchors {
-                            right: playBtn.left
-                        }
-                        visible: goPreviousAllowed
-                        onClicked: player.previous()
-                    }
-
-                    IconButton {
-                        icon.source: "image://theme/icon-m-next"
-                        anchors {
-                            left: playBtn.right
-                        }
-                        visible: goNextAllowed
-                        onClicked: player.next()
-                    }
-                }
-
-                Slider {
-                    id: positionSlider
-                    visible: player.hasPosition && player.length > 0
-                    width: parent.width
-                    minimumValue: 0
-                    maximumValue: Math.max(player.length, 1)
-                    value: 0
-                    enabled: player.seekAllowed
-                    onReleased: {
-                        if (player) {
-                            player.position = positionSlider.value
-                        }
-                    }
-
-                    Connections {
-                        target: player
-                        onPropertiesChanged: positionSlider.value = player.position
-                    }
-
-                    Component.onCompleted: {
-                        if (player) {
-                            positionSlider.value = player.position
-                        }
-                    }
-                }
-            }
-
-            Timer {
-                interval: 1000
-                repeat: true
-                running: isPlaying && player.hasPosition
-                triggeredOnStart: false
-                onTriggered: {
-                    if (player) {
-                        positionSlider.value = player.position
-                    }
-                }
-            }
-
-            Image {
-                fillMode: Image.PreserveAspectCrop
-                source: albumArtUrl
-                opacity: 0.3
-                anchors {
-                    top: parent.top
-                    bottom: parent.bottom
-                }
-            }
-        }
     }
 }

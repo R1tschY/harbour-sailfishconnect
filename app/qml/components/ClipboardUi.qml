@@ -20,6 +20,7 @@ import Sailfish.Silica 1.0
 import SailfishConnect.Core 0.3
 
 Column {
+    width: parent.width
     visible:
         _device.isReachable && _device.isTrusted
         && _device.loadedPlugins.indexOf(
@@ -28,9 +29,10 @@ Column {
     SectionHeader { text: qsTr("Clipboard") }
     Label {
         wrapMode: Text.Wrap
-        width: mainColumn.width
+        width: parent.width - 2 * Theme.horizontalPageMargin
         color: Theme.highlightColor
         font.pixelSize: Theme.fontSizeSmall
+        x: Theme.horizontalPageMargin
         text: qsTr("After copying open the Sailfish Connect window to send " +
                    "the clipboard content. For receiving clipboard content " +
                    "this is not required.")

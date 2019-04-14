@@ -23,6 +23,8 @@ import SailfishConnect.UI 0.3
 Page {
     id: page
 
+    property bool startup: true
+
     allowedOrientations: Orientation.All
 
     SilicaFlickable {
@@ -30,7 +32,9 @@ Page {
         contentHeight: column.height
 
         ViewPlaceholder {
-            enabled: trustedDevices.count === 0 && nearDevices.count === 0
+            enabled: !startup
+                     && trustedDevices.count === 0
+                     && nearDevices.count === 0
             text: qsTr("Install KDE Connect or GSConnect on your " +
                        "computer and connect it to the same WLAN.")
         }
@@ -247,6 +251,13 @@ Page {
     Connections {
         target: ui
         onOpeningDevicePage: openDevicePage(deviceId)
+    }
+
+    Timer {
+        interval: 1000
+        running: true
+        repeat: false
+        onTriggered: startup = false
     }
 
     function openDevicePage(deviceId) {

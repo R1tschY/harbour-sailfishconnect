@@ -50,6 +50,7 @@ Column {
             BackgroundItem {
                 id: listItem
                 width: parent.width
+                //height: parent.width
                 height: hasPosition
                         ? (Theme.itemSizeMedium * 2.5)
                         : (Theme.itemSizeMedium * 2)
@@ -69,22 +70,23 @@ Column {
                     }
                 }
 
-                AlbumArt {
+                Image {
                     id: albumArt
                     source: albumArtUrl
-                    size: Theme.iconSizeLarge * 1.5
+                    width: parent.width
+                    asynchronous: true
+                    sourceSize.height: parent.width
+                    visible: status === Image.Ready
+                    fillMode: Image.PreserveAspectCrop
+                    opacity: 0.3
 
-                    anchors {
-                        left: parent.left
-                        top: playerNameLabel.bottom
-                        topMargin: Theme.paddingMedium
-                    }
+                    anchors.fill: parent
                 }
 
                 Item {
                     anchors {
                         top: playerNameLabel.bottom
-                        left: albumArt.right
+                        left: parent.left
                         leftMargin: Theme.horizontalPageMargin
                         right: parent.right
                     }

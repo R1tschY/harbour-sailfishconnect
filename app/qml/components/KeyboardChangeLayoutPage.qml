@@ -28,7 +28,7 @@ Page {
             anchors.fill: parent
 
             PageHeader {
-                title: qsTr("Choose layout")
+                title: qsTr("Settings")
             }
 
             Slider {

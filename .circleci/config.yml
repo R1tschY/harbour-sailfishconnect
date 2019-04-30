@@ -12,14 +12,14 @@ jobs:
           keys:
             - venv-cache-{{ .Branch }}
 
-      - run: mb2 -X -t SailfishOS-latest-armv7hl build -d -j 2
+      - run: mb2 -X -t SailfishOS-3.0.2.8-armv7hl build -d -j 2
       - store_artifacts:
           path: ~/project/RPMS/
           destination: rpms
-      - run: mb2 -t SailfishOS-latest-armv7hl make check
+      - run: mb2 -t SailfishOS-3.0.2.8-armv7hl make check
 
       - run: git clean -f -x
-      - run: mb2 -X -t SailfishOS-latest-i486 build -d -j 2
+      - run: mb2 -X -t SailfishOS-3.0.2.8-i486 build -d -j 2
       - store_artifacts:
           path: ~/project/RPMS/
           destination: rpms

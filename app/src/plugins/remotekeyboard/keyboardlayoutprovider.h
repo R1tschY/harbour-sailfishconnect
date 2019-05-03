@@ -22,6 +22,7 @@
 #include <QList>
 #include <QVariant>
 #include <QSettings>
+#include <QHash>
 
 class KeyboardLayoutProvider : public QObject
 {
@@ -64,7 +65,10 @@ signals:
     void settingsChanged();
 
 private:
+    void loadNames();
+
     QString m_layout;
+    QVariantList m_layouts;
     QVariantList m_row1;
     QVariantList m_row2;
     QVariantList m_row3;

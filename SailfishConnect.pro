@@ -2,7 +2,7 @@ TEMPLATE = subdirs
 
 system(conan install $PWD --profile=$PWD/dev/profiles/$$(TARGET_CPU))
 
-SUBDIRS = lib tests
+SUBDIRS = lib #tests
 tests.depends = lib
 
 packagesExist(sailfishapp) {

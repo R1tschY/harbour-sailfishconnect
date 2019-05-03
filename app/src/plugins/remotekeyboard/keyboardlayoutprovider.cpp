@@ -51,6 +51,7 @@ KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent)
     m_row1 = row1.toVariantList();
 
     setLayout(m_layout);
+    loadNames();
 }
 
 QString KeyboardLayoutProvider::layout() const
@@ -172,23 +173,7 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
 
 QVariantList KeyboardLayoutProvider::layouts()
 {
-    QDir layoutDir("/usr/share/maliit/plugins/com/jolla/layouts/");
-
-    layoutDir.setSorting(QDir::Name);
-
-    QVariantList layouts;
-    for (QString layout : layoutDir.entryList()) {
-        // layouts with _ are not working
-        if (!layout.startsWith(".") && !layout.contains("_")) {
-            // hi, kn, mr and te are currentently not working
-            if (layout.contains("hi") || layout.contains("kn") ||
-                    layout.contains("mr") || layout.contains("te") ||
-                    layout.contains("emoji")) continue;
-            layouts.append(layout.left(layout.indexOf(".")));
-        }
-    }
-
-    return layouts;
+    return m_layouts;
 }
 
 QVariantList KeyboardLayoutProvider::row1() const
@@ -256,4 +241,40 @@ void KeyboardLayoutProvider::pressFeedback()
 void KeyboardLayoutProvider::releaseFeedback()
 {
     QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::ReleaseStrong);
+}
+
+void KeyboardLayoutProvider::loadNames()
+{
+    QDir confDir("/usr/share/maliit/plugins/com/jolla/layouts/");
+    QHash<QString, QString> longNames;
+
+    // load configs first to get names
+    for (const QString &conf : confDir.entryList()) {
+        if (conf.endsWith(".conf")) {
+            QSettings settings("/usr/share/maliit/plugins/com/jolla/layouts/"
+                              + conf, QSettings::NativeFormat);
+            settings.setIniCodec("UTF-8");
+
+            for (const QString &group : settings.childGroups()) {
+                 settings.beginGroup(group);
+                 longNames[group] = settings.value("name").toByteArray();
+                 settings.endGroup();
+            }
+        }
+    }
+
+    // then load layouts
+    for (const QString &layout : confDir.entryList()) {
+        if (layout.endsWith(".qml") && !layout.contains("_")) {
+            // hi, kn, mr and te are currentently not working
+            if (layout.contains("hi") || layout.contains("kn") ||
+                    layout.contains("mr") || layout.contains("te") ||
+                    layout.contains("emoji")) continue;
+
+            QJsonObject language;
+            language["short"] = layout.left(layout.indexOf("."));
+            language["long"] = longNames[layout];
+            m_layouts.append(language);
+        }
+    }
 }

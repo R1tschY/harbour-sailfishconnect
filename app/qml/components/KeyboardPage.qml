@@ -46,12 +46,12 @@ Page {
         }
     }
 
-    PageHeader {
-        title: qsTr("Keyboard")
-    }
-
     SilicaFlickable {
         anchors.fill: parent
+
+        PageHeader {
+            title: qsTr("Keyboard")
+        }
 
         PullDownMenu {
             MenuItem {

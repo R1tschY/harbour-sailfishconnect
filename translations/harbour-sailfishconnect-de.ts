@@ -177,17 +177,16 @@
 <context>
     <name>KeyboardChangeLayoutPage</name>
     <message>
-        <source>Choose layout</source>
-        <translation>Layout auswählen
-</translation>
-    </message>
-    <message>
         <source>%1ms repeat interval</source>
         <translation>%1ms Wiederholungsinterval</translation>
     </message>
     <message>
         <source>Vibration feedback</source>
         <translation>Rückmeldung bei Tastendruck</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Einstellungen</translation>
     </message>
     <message>
         <source>Change layout</source>

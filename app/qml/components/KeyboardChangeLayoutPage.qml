@@ -55,7 +55,7 @@ Page {
 
             ComboBox {
                 label: qsTr("Change layout")
-                currentIndex: keyboardLayout.layouts().indexOf(keyboardLayout.layout)
+                currentIndex: getLayoutIndex(keyboardLayout.layout)
                 menu: ContextMenu {
                     Repeater {
                         id: view
@@ -64,13 +64,22 @@ Page {
                         delegate: MenuItem {
                             width: view.width
                             height: Theme.itemSizeSmall
-                            text: modelData
+                            text: modelData["long"]
 
                             onClicked: {
-                                keyboardLayout.layout = modelData;
+                                keyboardLayout.layout = modelData["short"];
                             }
                         }
                     }
+                }
+
+                function getLayoutIndex(name) {
+                    for (var i = 0; i < keyboardLayout.layouts().length; i++) {
+                        if (keyboardLayout.layouts()[i]["short"] === name) {
+                            return i;
+                        }
+                    }
+                    return 0;
                 }
             }
         }

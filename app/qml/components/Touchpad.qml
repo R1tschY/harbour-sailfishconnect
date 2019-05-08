@@ -20,10 +20,8 @@ import Sailfish.Silica 1.0
 import SailfishConnect.Core 0.3
 
 Column {
-    visible:
-        _device.isReachable && _device.isTrusted
-        && _device.loadedPlugins.indexOf(
-            "SailfishConnect::RemoteControlPlugin") >= 0
+    visible: _device.loadedPlugins.indexOf(
+                 "SailfishConnect::RemoteControlPlugin") >= 0
     width: parent.width
 
     SectionHeader { text: qsTr("Touchpad") }

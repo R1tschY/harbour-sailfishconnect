@@ -23,10 +23,8 @@ import SailfishConnect.Mpris 0.3
 
 Column {
     width: parent.width
-    visible:
-        _device.isReachable && _device.isTrusted
-        && _device.loadedPlugins.indexOf(
-            "SailfishConnect::MprisRemotePlugin") >= 0
+    visible: _device.loadedPlugins.indexOf(
+                 "SailfishConnect::MprisRemotePlugin") >= 0
 
 
     SilicaListView {

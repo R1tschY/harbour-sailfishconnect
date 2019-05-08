@@ -65,7 +65,7 @@ source "$VENV/bin/activate"
 fi
 
 # speed up conan remote add
-if ! grep -sq sailfishos ~/.conan/registry.json ; then
+if ! grep -sq sailfishos ~/.conan/remotes.json ; then
 conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
 fi
 

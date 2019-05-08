@@ -30,6 +30,7 @@ class JobsModel : public QAbstractListModel
 public:
     enum ExtraRoles {
         TitleRole = Qt::UserRole,
+        TargetRole,
         ProcessedBytesRole,
         TotalBytesRole,
         StateRole,

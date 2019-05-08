@@ -332,37 +332,10 @@
     </message>
 </context>
 <context>
-    <name>SailfishConnect::Job</name>
-    <message>
-        <source>Pending</source>
-        <translation>等待中</translation>
-    </message>
-    <message>
-        <source>Running</source>
-        <translation>运行中</translation>
-    </message>
-    <message>
-        <source>Canceled</source>
-        <translation>已取消</translation>
-    </message>
-    <message>
-        <source>Failed</source>
-        <translation>失败</translation>
-    </message>
-    <message>
-        <source>Succeeded</source>
-        <translation>成功</translation>
-    </message>
-</context>
-<context>
     <name>SailfishConnect::LanUploadJob</name>
     <message>
         <source>Couldn&apos;t find an available port</source>
         <translation>找不到可用的端口</translation>
-    </message>
-    <message>
-        <source>Sending</source>
-        <translation>发送中</translation>
     </message>
 </context>
 <context>
@@ -546,6 +519,10 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

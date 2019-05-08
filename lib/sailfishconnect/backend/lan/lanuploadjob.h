@@ -44,6 +44,7 @@ public:
             LanLinkProvider* provider, QObject* parent = nullptr);
 
     QVariantMap transferInfo();
+    QString fileName();
 
 private Q_SLOTS:
     void startUploading();

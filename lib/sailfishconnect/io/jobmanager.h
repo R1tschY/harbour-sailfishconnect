@@ -19,6 +19,9 @@
 #define JOBMANAGER_H
 
 #include <QObject>
+#include <QString>
+#include <QUrl>
+#include <QPair>
 #include <KJobTrackerInterface>
 
 class Device;
@@ -29,6 +32,7 @@ class JobInfo : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
+    Q_PROPERTY(QUrl target READ target NOTIFY targetChanged)
     Q_PROPERTY(QString deviceId READ deviceId CONSTANT)
     Q_PROPERTY(qulonglong totalBytes
                READ totalBytes NOTIFY totalBytesChanged)
@@ -45,6 +49,7 @@ public:
     QString deviceId() const { return m_deviceId; }
 
     QString title() const { return m_title; }
+    QUrl target() const { return m_target; }
     QString state() const { return m_state; }
     QString errorString() const { return m_errorString; }
 
@@ -52,9 +57,9 @@ public:
 
     KJob* job() const { return m_impl; }
 
-
 signals:
     void titleChanged();
+    void targetChanged();
     void totalBytesChanged();
     void processedBytesChanged();
     void stateChanged();
@@ -64,6 +69,7 @@ private:
 
     QString m_state;
     QString m_deviceId;
+    QUrl m_target;
 
     QString m_errorString;
     qulonglong m_totalBytes;
@@ -73,6 +79,12 @@ private:
     QPair<QString, QString> m_field1;
     QPair<QString, QString> m_field2;
 
+    void getTarget();
+    void setTarget(const QUrl& value);
+
+private slots:
+    void onResult();
+    void onFinished();
     void onDescription(
             KJob *job,
             const QString &title,
@@ -80,10 +92,6 @@ private:
             const QPair<QString, QString> &field2);
     void onTotalAmount(KJob *job, KJob::Unit unit, qulonglong amount);
     void onProcessedAmount(KJob *job, KJob::Unit unit, qulonglong amount);
-
-private slots:
-    void onResult();
-    void onFinished();
 };
 
 class JobManager : public KJobTrackerInterface

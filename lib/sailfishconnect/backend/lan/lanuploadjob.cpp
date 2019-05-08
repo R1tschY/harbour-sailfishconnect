@@ -116,6 +116,11 @@ QVariantMap LanUploadJob::transferInfo()
     return {{"port", m_port}};
 }
 
+QString LanUploadJob::fileName()
+{
+    return QString(); // TODO
+}
+
 void LanUploadJob::socketFailed(QAbstractSocket::SocketError error)
 {
     if (m_socket) {

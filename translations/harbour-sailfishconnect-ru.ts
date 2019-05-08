@@ -332,37 +332,10 @@
     </message>
 </context>
 <context>
-    <name>SailfishConnect::Job</name>
-    <message>
-        <source>Pending</source>
-        <translation>Ожидает</translation>
-    </message>
-    <message>
-        <source>Running</source>
-        <translation>Выполняется</translation>
-    </message>
-    <message>
-        <source>Canceled</source>
-        <translation>Отменено</translation>
-    </message>
-    <message>
-        <source>Failed</source>
-        <translation>Завершено с ошибкой</translation>
-    </message>
-    <message>
-        <source>Succeeded</source>
-        <translation>Завершено успешно</translation>
-    </message>
-</context>
-<context>
     <name>SailfishConnect::LanUploadJob</name>
     <message>
         <source>Couldn&apos;t find an available port</source>
         <translation>Нет доступных портов</translation>
-    </message>
-    <message>
-        <source>Sending</source>
-        <translation>Передается</translation>
     </message>
 </context>
 <context>
@@ -546,6 +519,10 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

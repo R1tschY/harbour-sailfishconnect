@@ -40,6 +40,7 @@ QHash<int, QByteArray> JobsModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles.insert(TitleRole, "title");
+    roles.insert(TargetRole, "target");
     roles.insert(ProcessedBytesRole, "processedBytes");
     roles.insert(TotalBytesRole, "totalBytes");
     roles.insert(StateRole, "currentState");
@@ -141,6 +142,8 @@ QVariant JobsModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case TitleRole:
         return job->title();
+    case TargetRole:
+        return job->target();
     case ProcessedBytesRole:
         return job->processedBytes();
     case TotalBytesRole:

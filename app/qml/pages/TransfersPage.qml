@@ -50,7 +50,7 @@ Page {
             return
         }
 
-        if (xdgOpen.state == "Running") {
+        if (xdgOpen.state === "Running") {
             xdgOpen.waitForFinished()
         }
 
@@ -83,47 +83,42 @@ Page {
         }
     }
 
-    function description(currentState, deviceId, action, processedBytes,
+    function description(currentState, deviceId, processedBytes,
                          totalBytes, error) {
-        var deviceName = "¯\_(ツ)_/¯"
-        var device = daemon.getDevice(deviceId)
+        var deviceName = ""
+        var device = deviceId ? daemon.getDevice(deviceId) : null
         if (device) {
             deviceName = device.name
         }
 
-        if (currentState === Job.Running) {
+        if (error) {
+            return "%1 - %2"
+                .arg(qsTr("Failed"))
+                .arg(deviceName)
+        }
+
+        if (currentState === "running") {
             if (totalBytes < 0) {
-                return "%1 - %2 - %3"
-                    .arg(action)
+                return "%1 - %2"
                     .arg(deviceName)
                     .arg(Humanize.bytes(processedBytes))
             }
 
-            return "%1 - %2 - %3 %4 %5"
-                .arg(action)
+            return "%1 - %2 %3 %4"
                 .arg(deviceName)
                 .arg(Humanize.bytes(processedBytes))
                 //: Download progress, for example: 3MB of 50MB
                 .arg(qsTr("of"))
                 .arg(Humanize.bytes(totalBytes))
-        } else if (currentState === Job.Finished) {
-            if (error) {
-                return action
-            }
-
+        } else if (currentState === "finished") {
             return "%1 - %2 - %3"
-                .arg(action)
+                .arg(qsTr("Completed"))
                 .arg(deviceName)
                 .arg(Humanize.bytes(processedBytes))
-        } else if (currentState === Job.Pending) {
-            if (totalBytes < 0) {
-                return action
-            }
-
-            return "%1 - %2 - %3"
-                .arg(action)
+        } else if (currentState === "canceled") {
+            return "%1 - %2"
+                .arg(qsTr("Canceled"))
                 .arg(deviceName)
-                .arg(Humanize.bytes(totalBytes))
         }
     }
 
@@ -136,7 +131,7 @@ Page {
 
         onFinished: {
             console.log("onFinished")
-            if (!xdgOpen.normalExit || xdgOpen.exitCode != 0) {
+            if (!xdgOpen.normalExit || xdgOpen.exitCode !== 0) {
                 xdgOpenNotification.previewSummary = qsTr("Failed to open file")
                 if (xdgOpen.normalExit) {
                     var errorMessage = {
@@ -175,7 +170,7 @@ Page {
 
             property bool isTargetLocal:
                 stringStartsWith(target.toString(), "local:")
-            property bool wasSuccessful: currentState === Job.Finished && !error
+            property bool wasSuccessful: currentState === "finished" && !error
 
             width: page.width
             contentHeight: Theme.itemSizeMedium
@@ -183,7 +178,7 @@ Page {
             menu: ContextMenu {
                 MenuItem {
                     text: qsTr("Cancel")
-                    visible: currentState === Job.Running
+                    visible: currentState === "running"
                     onClicked: canceled = true
                 }
                 MenuItem {
@@ -207,7 +202,7 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
                 width: Theme.iconSizeMedium
                 height: Theme.iconSizeMedium
-                visible: currentState === Job.Running && totalBytes > 0
+                visible: currentState === "running" && totalBytes > 0
 
                 value: totalBytes > 0 ? (processedBytes / totalBytes) : 0
             }
@@ -251,7 +246,7 @@ Page {
                     right: parent.right
                 }
 
-                text: description(currentState, deviceId, action,
+                text: description(currentState, deviceId,
                                   processedBytes, totalBytes, error)
                 color: listItem.highlighted
                        ? Theme.secondaryHighlightColor

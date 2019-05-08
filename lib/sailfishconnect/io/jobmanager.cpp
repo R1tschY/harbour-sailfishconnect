@@ -20,6 +20,8 @@
 #include <QLoggingCategory>
 
 #include <sailfishconnect/helper/cpphelper.h>
+#include <sailfishconnect/downloadjob.h>
+#include <sailfishconnect/backend/lan/lanuploadjob.h>
 
 
 namespace SailfishConnect {
@@ -32,6 +34,14 @@ JobInfo::JobInfo(KJob *job, QObject *parent)
     Q_ASSERT(job);
 
     m_state = QStringLiteral("running");
+
+    // TODO: use interface
+    auto* copyJob = qobject_cast<CopyJob*>(m_impl);
+    if (copyJob) {
+        m_deviceId = copyJob->deviceId();
+    }
+
+    getTarget();
 
     connect(job, &KJob::description, this, &JobInfo::onDescription);
     connect(job, &KJob::finished, this, &JobInfo::onFinished);
@@ -60,6 +70,7 @@ void JobInfo::onDescription(
     m_title = title;
     m_field1 = field1;
     m_field2 = field2;
+    getTarget();
 }
 
 void JobInfo::onTotalAmount(KJob *job, KJob::Unit unit, qulonglong amount)
@@ -79,6 +90,39 @@ void JobInfo::onProcessedAmount(KJob *job, KJob::Unit unit, qulonglong amount)
     if (unit == KJob::Bytes) {
         m_processedBytes = amount;
         emit processedBytesChanged();
+    }
+}
+
+void JobInfo::getTarget()
+{
+    if (!m_impl) return;
+
+    // TODO: use interface
+
+    auto* downloadJob = qobject_cast<DownloadJob*>(m_impl);
+    if (downloadJob) {
+        QUrl url;
+        url.setScheme("local");
+        url.setPath(downloadJob->destination());
+        setTarget(url);
+        return;
+    }
+
+    auto* uploadJob = qobject_cast<LanUploadJob*>(m_impl);
+    if (uploadJob) {
+        QUrl url;
+        url.setScheme("remote");
+        url.setPath(uploadJob->fileName());
+        setTarget(url);
+        return;
+    }
+}
+
+void JobInfo::setTarget(const QUrl& value)
+{
+    if (value != m_target) {
+        m_target = value;
+        emit targetChanged();
     }
 }
 

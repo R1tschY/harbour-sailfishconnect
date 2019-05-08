@@ -41,86 +41,96 @@ Page {
             id: deviceColumn
             width: parent.width
 
+            states: [
+                State {
+                    name: "non-reachable"
+                    when: !_device.isReachable
+                },
+                State {
+                    name: "trusted"
+                    when: _device.isTrusted
+                },
+                State {
+                    name: "waitingParingRequest"
+                    when: _device.hasPairingRequests
+                },
+                State {
+                    name: "waitForAcceptedPairing"
+                    when: _device.waitsForPairing
+                },
+                State {
+                    name: "non-trusted"
+                    when: !_device.isTrusted
+                }
+            ]
+
             PageHeader {
                 id: header
                 title: _device.name
                 _titleItem.textFormat: Text.PlainText
             }
 
-            // Pairing UI
-
-            // TODO: remove this text entry and replace with placeholder
             Column {
-                id: mainColumn
-                width: parent.width
+                id: waitingEntry
+                spacing: Theme.paddingLarge
+                height: Theme.itemSizeSmall
+                width: parent.width - Theme.paddingLarge * 2
+                x: Theme.horizontalPageMargin
+                visible: deviceColumn.state === "waitingParingRequest"
 
-                Column {
-                    id: trustEntry
+                Label {
+                    color: Theme.highlightColor
+                    text: qsTr("This device wants to pair with your device.")
+                    // qsTr("Waiting for accepted pairing ...")
+                }
+
+                Row {
+                    id: acceptRejectBtns
+                    width: parent.width
                     spacing: Theme.paddingLarge
-                    height: Theme.itemSizeSmall
-                    width: parent.width - Theme.paddingLarge * 2
-                    x: Theme.horizontalPageMargin
+                    anchors.horizontalCenter: parent.horizontalCenter
 
-                    Label {
-                        id: stateText
-                        color: Theme.highlightColor
-                        text: qsTr("You don't trust this device")
+                    Button {
+                        text: qsTr("Accept")
+                        onClicked: _device.acceptPairing()
                     }
 
                     Button {
-                        id: requestBtn
-                        visible: trustEntry.state === ""
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        text: qsTr("Request pairing")
-                        onClicked: {
-                            _device.requestPair()
-                        }
+                        text: qsTr("Reject")
+                        onClicked: _device.rejectPairing()
                     }
-
-                    Row {
-                        id: acceptRejectBtns
-                        visible: trustEntry.state === "waitingParingRequest"
-                        width: parent.width
-                        spacing: Theme.paddingLarge
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        Button {
-                            text: qsTr("Accept")
-                            onClicked: _device.acceptPairing()
-                        }
-
-                        Button {
-                            text: qsTr("Reject")
-                            onClicked: _device.rejectPairing()
-                        }
-                    }
-
-                    states: [
-                        State {
-                            name: "trusted"
-                            when: _device.isTrusted
-                            PropertyChanges {
-                                target: stateText
-                                text: qsTr("You trust this device")}
-                        },
-                        State {
-                            name: "waitForAcceptedPairing"
-                            when: _device.waitsForPairing
-                            PropertyChanges {
-                                target: stateText
-                                text: qsTr("Waiting for accepted pairing ...")}
-                        },
-                        State {
-                            name: "waitingParingRequest"
-                            when: _device.hasPairingRequests
-                            PropertyChanges {
-                                target: stateText
-                                text: qsTr("This device wants to pair with your " +
-                                           "device.")}
-                        }
-                    ]
                 }
+            }
+
+            Column {
+                id: trustEntry
+                spacing: Theme.paddingLarge
+                height: Theme.itemSizeSmall
+                width: parent.width - Theme.paddingLarge * 2
+                x: Theme.horizontalPageMargin
+                visible: deviceColumn.state === "non-trusted"
+
+                Label {
+                    color: Theme.highlightColor
+                    text: qsTr("Do you want to connect to this device?")
+                }
+
+                Button {
+                    id: requestBtn
+                    visible: trustEntry.state === ""
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    text: qsTr("Connect")
+                    onClicked: {
+                        _device.requestPair()
+                    }
+                }
+            }
+
+            Column {
+                id: mainColumn
+                width: parent.width
+                visible: deviceColumn.state === "trusted"
 
                 // Plugin UIs
 
@@ -130,6 +140,20 @@ Page {
                 ClipboardUi { id: clipboardUi }
                 RemoteKeyboard { id: remoteKeyboard}
             }
+        }
+
+        Label {
+            visible: deviceColumn.state === "non-reachable"
+            anchors.fill: parent
+
+            text: qsTr("Device is not reachable")
+        }
+
+        Label {
+            visible: _device.isReachable && !_device.isTrusted
+            anchors.fill: parent
+
+            text: "TODO: device settings?"
         }
 
         PullDownMenu {

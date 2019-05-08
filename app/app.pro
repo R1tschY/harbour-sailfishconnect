@@ -13,7 +13,7 @@
 TARGET = harbour-sailfishconnect
 
 CONFIG += sailfishapp c++14
-QT += network dbus
+QT += network dbus feedback
 
 PKGCONFIG += sailfishapp contextkit-statefs nemonotifications-qt5
 DEFINES += \
@@ -53,6 +53,8 @@ SOURCES += \
     src/plugins/telephony/telephonyplugin.cpp \
     src/dbus/ofono.cpp \
     src/ui/sortfiltermodel.cpp \
+    src/plugins/remotekeyboard/keyboardlayoutprovider.cpp \
+    src/plugins/remotekeyboard/remotekeyboard.cpp\
     src/plugins/mprisremote/albumartcache.cpp \
     src/js/process.cpp \
     src/js/path.cpp
@@ -81,7 +83,11 @@ DISTFILES += \
     qml/components/ShareUi.qml \
     qml/pages/TransfersPage.qml \
     src/plugins/telephony/metadata.json \
-    src/dbus/ofono/org.ofono.Manager.xml
+    src/dbus/ofono/org.ofono.Manager.xml \
+    qml/components/KeyboardPage.qml \
+    qml/components/Key.qml \
+    qml/components/RemoteInput.qml \
+    src/plugins/remotekeyboard/metadata.json
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
@@ -110,6 +116,8 @@ HEADERS += \
     src/dbus/tuple.h \
     src/dbus/ofono.h \
     src/ui/sortfiltermodel.h \
+    src/plugins/remotekeyboard/keyboardlayoutprovider.h \
+    src/plugins/remotekeyboard/remotekeyboard.h \
     src/plugins/mprisremote/albumartcache.h \
     src/js/process.h \
     src/js/path.h

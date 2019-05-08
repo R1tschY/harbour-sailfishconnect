@@ -175,6 +175,36 @@
     </message>
 </context>
 <context>
+    <name>KeyboardChangeLayoutPage</name>
+    <message>
+        <source>%1ms repeat interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vibration feedback</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Настройка</translation>
+    </message>
+    <message>
+        <source>Change layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardPage</name>
+    <message>
+        <source>Keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Настройка</translation>
+    </message>
+</context>
+<context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
@@ -212,6 +242,13 @@
     </message>
     <message>
         <source>Nothing playing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RemoteKeyboard</name>
+    <message>
+        <source>Remote Input</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -348,6 +385,17 @@
     <message>
         <source>Ping other device and receive pings.</source>
         <translation>Отправка и получение пинг-запросов.</translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
+    <message>
+        <source>Remote Keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type on remote compute using a virtual keyboard.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

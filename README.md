@@ -49,7 +49,7 @@ Touchpad | :heavy_check_mark: | :computer_mouse: Create mouse input from your ph
 Share | :construction: | Send and receive files, text and URLs.
 SendNotifications | :construction: | Share notifications of your phone.
 Telephony | :construction: | :telephone_receiver: Share call status (incoming or active) with your computer.
-RemoteKeyboard | :o: | :keyboard: Create keyboard input from your phone.
+RemoteKeyboard | :construction: | :keyboard: Create keyboard input from your phone.
 RunCommand | :o: | Run user-defined commands on your computer.
 Sftp | :o: | :open_file_folder: Provide access to local files from your computer.
 FindMyPhone | :o: | :vibration_mode: Make finding your phone easier.

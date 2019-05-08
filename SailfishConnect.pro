@@ -21,4 +21,3 @@ include(translations/translations.pri)
 DISTFILES += *.md
 
 
-

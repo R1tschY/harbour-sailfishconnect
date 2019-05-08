@@ -115,7 +115,7 @@ void registerQmlTypes() {
                 QStringLiteral("not intented to be created from users"));
     qmlRegisterUncreatableType<TouchpadPlugin>(
                 "SailfishConnect.RemoteControl", 0, 3, "RemoteControlPlugin",
-                QStringLiteral("not intented to be created from users"));
+                QStringLiteral("not intented to be created from users"));    
 
     QmlJs::registerTypes();
 }
@@ -150,7 +150,8 @@ int main(int argc, char *argv[])
     registerQmlTypes();
 
     AppDaemon daemon;
-    UI ui(&daemon);
+    KeyboardLayoutProvider keyboardLayoutProvider;
+    UI ui(&daemon, &keyboardLayoutProvider);
     ui.showMainWindow();
 
     return app->exec();

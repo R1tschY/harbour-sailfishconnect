@@ -1,0 +1,5 @@
+{
+    "Id": "SailfishConnect::RemoteKeyboardPlugin",
+    "IncomingCapabilities": [],
+    "OutcomingCapabilities": ["kdeconnect.mousepad.request"]
+}

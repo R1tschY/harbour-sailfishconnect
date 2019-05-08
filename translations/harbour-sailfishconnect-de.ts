@@ -175,6 +175,36 @@
     </message>
 </context>
 <context>
+    <name>KeyboardChangeLayoutPage</name>
+    <message>
+        <source>%1ms repeat interval</source>
+        <translation>%1ms Wiederholungsinterval</translation>
+    </message>
+    <message>
+        <source>Vibration feedback</source>
+        <translation>Rückmeldung bei Tastendruck</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Einstellungen</translation>
+    </message>
+    <message>
+        <source>Change layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardPage</name>
+    <message>
+        <source>Keyboard</source>
+        <translation>Tastatur</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Einstellungen</translation>
+    </message>
+</context>
+<context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
@@ -213,6 +243,13 @@
     <message>
         <source>Nothing playing</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RemoteKeyboard</name>
+    <message>
+        <source>Remote Input</source>
+        <translation>Entfernte Eingabe</translation>
     </message>
 </context>
 <context>
@@ -351,6 +388,17 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
+    <message>
+        <source>Remote Keyboard</source>
+        <translation type="unfinished">Entfernte Tastatur</translation>
+    </message>
+    <message>
+        <source>Type on remote compute using a virtual keyboard.</source>
+        <translation type="unfinished">Tippe auf einem anderen Computer mit einer virtuellen Tastatur.</translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::SendNotificationsPluginFactory</name>
     <message>
         <source>Send notifcations</source>
@@ -467,6 +515,38 @@ Kurz halten für Drag&apos;n&apos;Drop</translation>
         <source>of</source>
         <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
         <translation>von</translation>
+    </message>
+    <message>
+        <source>Failed to open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File does not exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No program found to open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xdg-open failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xdg-open crashed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

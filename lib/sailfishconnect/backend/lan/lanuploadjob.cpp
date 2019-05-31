@@ -25,12 +25,14 @@
 #include "../../kdeconnectconfig.h"
 #include "../../corelogging.h"
 
+#include <QDebug>
+
 namespace SailfishConnect {
 
 LanUploadJob::LanUploadJob(
         const NetworkPacket &np, const QString& deviceId,
         LanLinkProvider* provider, QObject* parent)
-    : CopyJob(deviceId, np.payload(), QSharedPointer<QIODevice>(), -1, parent)
+    : CopyJob(deviceId, np.payload(), QSharedPointer<QIODevice>(), np.payloadSize(), parent)
     , m_provider(provider)
     , m_server(new Server(this))
     , m_socket(nullptr)
@@ -42,7 +44,7 @@ LanUploadJob::LanUploadJob(
             this, &LanUploadJob::aboutToClose);
 }
 
-void LanUploadJob::doStart()
+void LanUploadJob::start()
 {
     m_port = MIN_PORT;
     while (!m_server->listen(QHostAddress::Any, m_port)) {
@@ -75,12 +77,6 @@ void LanUploadJob::newConnection()
     m_socket = QSharedPointer<QSslSocket>(m_server->nextPendingConnection());
     setDestination(m_socket);
 
-    connect(m_socket.data(), &QSslSocket::disconnected,
-            this, &LanUploadJob::tearDown);
-    connect(m_socket.data(), SIGNAL(error(QAbstractSocket::SocketError)),
-            this, SLOT(socketFailed(QAbstractSocket::SocketError)));
-    connect(m_socket.data(), SIGNAL(sslErrors(QList<QSslError>)),
-            this, SLOT(sslErrors(QList<QSslError>)));
     connect(m_socket.data(), &QSslSocket::encrypted,
             this, &LanUploadJob::startUploading);
 //     connect(mSocket, &QAbstractSocket::stateChanged,
@@ -97,19 +93,6 @@ void LanUploadJob::startUploading()
     CopyJob::doStart();
 }
 
-void LanUploadJob::aboutToClose()
-{
-    if (m_socket) {
-        m_socket->disconnectFromHost();
-    }
-}
-
-void LanUploadJob::tearDown()
-{
-    close();
-    emitResult();
-}
-
 QVariantMap LanUploadJob::transferInfo()
 {
     Q_ASSERT(m_port != 0);
@@ -119,25 +102,6 @@ QVariantMap LanUploadJob::transferInfo()
 QString LanUploadJob::fileName()
 {
     return QString(); // TODO
-}
-
-void LanUploadJob::socketFailed(QAbstractSocket::SocketError error)
-{
-    if (m_socket) {
-        qWarning() << "error uploading" << error;
-        setError(2);
-        setErrorText(m_socket->errorString());
-        emitResult();
-    }
-}
-
-void LanUploadJob::sslErrors(const QList<QSslError>& errors)
-{
-    qWarning() << "ssl errors" << errors;
-
-    setError(2);
-    setErrorText(errors.first().errorString());  // TODO
-    emitResult();
 }
 
 } // namespace SailfishConnect

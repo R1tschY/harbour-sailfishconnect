@@ -46,14 +46,11 @@ public:
     QVariantMap transferInfo();
     QString fileName();
 
+    void start() override;
+
 private Q_SLOTS:
     void startUploading();
     void newConnection();
-    void aboutToClose();
-    void tearDown();
-
-    void socketFailed(QAbstractSocket::SocketError);
-    void sslErrors(const QList<QSslError>& errors);
 
 private:
     LanLinkProvider* m_provider;
@@ -64,7 +61,6 @@ private:
     const static quint16 MIN_PORT = 1739;
     const static quint16 MAX_PORT = 1764;
 
-    void doStart() override;
 };
 
 } // namespace SailfishConnect

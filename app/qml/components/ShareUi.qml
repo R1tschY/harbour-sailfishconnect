@@ -21,17 +21,14 @@ import SailfishConnect.Core 0.3
 import SailfishConnect.Share 0.3
 import Sailfish.Pickers 1.0
 
-Column {
+ImageListItem {
     width: parent.width
-    visible: _device.loadedPlugins.indexOf("SailfishConnect::SharePlugin") >= 0
+    height: Theme.itemSizeExtraLarge
+    //visible: _device.loadedPlugins.indexOf("SailfishConnect::SharePlugin") >= 0
 
-    SectionHeader { text: qsTr("Share") }
-
-    IconButton {
-       icon.source: "image://theme/icon-m-share"
-       anchors.horizontalCenter: parent.horizontalCenter
-       onClicked: pageStack.push(filePickerPage)
-    }
+    text: qsTr("Share")
+    icon.source: "image://theme/icon-m-share"
+    onClicked: pageStack.push(filePickerPage)
 
     Component {
         id: filePickerPage

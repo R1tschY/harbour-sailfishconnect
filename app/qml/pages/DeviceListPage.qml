@@ -197,6 +197,8 @@ Page {
             ColumnView {
                 id: trustedDevices
                 width: page.width
+                itemHeight: Theme.itemSizeMedium
+
 
                 model: trustedDevicesModel
                 delegate: deviceDelegate
@@ -207,6 +209,7 @@ Page {
             ColumnView {
                 id: nearDevices
                 width: page.width
+                itemHeight: Theme.itemSizeMedium
 
                 model: otherNearDevicesModel
                 delegate: deviceDelegate

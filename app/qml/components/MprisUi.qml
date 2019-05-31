@@ -76,7 +76,7 @@ Column {
                     sourceSize.height: parent.width
                     visible: status === Image.Ready
                     fillMode: Image.PreserveAspectCrop
-                    opacity: 0.3
+                    opacity: 0.25
 
                     anchors.fill: parent
                 }

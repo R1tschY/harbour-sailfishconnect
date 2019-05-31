@@ -26,6 +26,7 @@ import "../components"
 Page {
     id: page
     objectName: "DevicePage"
+    allowedOrientations: Orientation.All
 
     property string deviceId
     property Device _device: daemon.getDevice(deviceId)

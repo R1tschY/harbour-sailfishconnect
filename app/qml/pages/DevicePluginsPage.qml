@@ -42,7 +42,7 @@ Page {
             title: qsTr("Select Plugins")
         }
 
-        delegate: ListItem {
+        delegate: BackgroundItem {
             id: delegate
             width: page.width
             height: pluginSwitch.height

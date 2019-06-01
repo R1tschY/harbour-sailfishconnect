@@ -26,6 +26,10 @@
 #include <sailfishconnect/device.h>
 #include <QIODevice>
 #include <QSharedPointer>
+#include <QDBusConnection>
+#include <QThread>
+#include <QHash>
+#include <dbus/dbus.h>
 
 class KdeConnectPlugin;
 
@@ -33,7 +37,86 @@ namespace SailfishConnect {
 
 struct NotifyingApplication;
 
-// make singleton with shapedpointer/weakpointer
+class RawDbusError {
+public:
+    RawDbusError() {
+        dbus_error_init(&err);
+    }
+
+    RawDbusError(const RawDbusError&) = delete;
+    RawDbusError operator=(const RawDbusError&) = delete;
+    RawDbusError(RawDbusError&&) = delete;
+    RawDbusError operator=(RawDbusError&&) = delete;
+
+    ~RawDbusError() {
+        dbus_error_free(&err);
+    }
+
+    QString message() {
+        return QString::fromUtf8(err.message);
+    }
+
+    QString name() {
+        return QString::fromUtf8(err.name);
+    }
+
+    bool isSet() {
+        return dbus_error_is_set(&err);
+    }
+
+    explicit operator bool() {
+        return isSet();
+    }
+
+    DBusError* rawPtr() {
+        return &err;
+    }
+
+    DBusError* operator&() {
+        return &err;
+    }
+
+private:
+    DBusError err;
+};
+
+class NotificationsListenerThread : public QThread {
+    Q_OBJECT
+public:
+    NotificationsListenerThread();
+    ~NotificationsListenerThread();
+
+    bool hasLastError() {
+        return lastError.isSet();
+    }
+
+    QString lastErrorName() {
+        return lastError.name();
+    }
+
+    QString lastErrorMessage() {
+        return lastError.message();
+    }
+
+    void quit();
+
+    void handleMessage(DBusMessage *message);
+
+signals:
+    void Notify(const QString&, uint, const QString&,
+                const QString&, const QString&,
+                const QStringList&, const QVariantMap&, int);
+protected:
+    void run() override;
+
+private:
+    QAtomicPointer<DBusConnection> m_connection = nullptr;
+    RawDbusError lastError;
+
+    void handleNotifyCall(DBusMessage *message);
+};
+
+// TODO: make singleton with shapedpointer/weakpointer
 class NotificationsListener : public QDBusAbstractAdaptor
 {
     Q_OBJECT
@@ -44,9 +127,6 @@ public:
     ~NotificationsListener() override;
 
 protected:
-    KdeConnectPlugin* m_plugin;
-    QHash<QString, NotifyingApplication> m_applications;
-
     // virtual helper function to make testing possible (QDBusArgument can not
     // be injected without making a DBUS-call):
     virtual bool parseImageDataArgument(const QVariant& argument, int& width,
@@ -56,16 +136,18 @@ protected:
     QSharedPointer<QIODevice> iconForImageData(const QVariant& argument) const;
     QSharedPointer<QIODevice> iconForIconName(const QString& iconName) const;
 
-public Q_SLOTS:
-    Q_SCRIPTABLE uint Notify(const QString&, uint, const QString&,
-                             const QString&, const QString&,
-                             const QStringList&, const QVariantMap&, int);
-
 private Q_SLOTS:
     void loadApplications();
+    void onNotify(const QString&, uint, const QString&,
+                  const QString&, const QString&,
+                  const QStringList&, const QVariantMap&, int);
 
 private:
     QSharedPointer<QIODevice> pngFromImage();
+
+    KdeConnectPlugin* m_plugin;
+    QHash<QString, NotifyingApplication> m_applications;
+    NotificationsListenerThread m_thread;
 };
 
 } // namespace SailfishConnect

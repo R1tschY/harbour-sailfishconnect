@@ -19,18 +19,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtDBus/QDBusConnection>
-#include <QtDBus/QDBusInterface>
-#include <QtDBus/QDBusArgument>
-#include <QtDebug>
 #include <QLoggingCategory>
-#include <QStandardPaths>
 #include <QImage>
 #include <QIcon>
-#include <QLoggingCategory>
 #include <QIODevice>
 #include <QBuffer>
-#include <QPainter>
 #include <QQuickImageProvider>
 #include <QFile>
 
@@ -48,71 +41,219 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "SailfishConnect.SendNotifications")
 
-static QSharedPointer<QIODevice> imageToPng(const QImage& image) {
-    if (image.isNull())
-        return QSharedPointer<QBuffer>();
 
-    QSharedPointer<QBuffer> buffer;
-    buffer->open(QIODevice::ReadWrite);
+void becomeMonitor(DBusConnection* conn, const char* match) {
+    // message
+    DBusMessage* msg = dbus_message_new_method_call(
+        DBUS_SERVICE_DBUS,
+        DBUS_PATH_DBUS,
+        DBUS_INTERFACE_MONITORING,
+        "BecomeMonitor");
+    Q_ASSERT(msg != nullptr);
 
-    bool success = image.save(buffer.data(), "PNG");
-    if (success) {
-        buffer->seek(0);
-        return buffer;
-    } else {
-        return QSharedPointer<QBuffer>();
+    // arguments
+    const char* matches[] = {match};
+    const char** matches_ = matches;
+    dbus_uint32_t flags = 0;
+    Q_ASSERT(dbus_message_append_args(
+                msg,
+                DBUS_TYPE_ARRAY, DBUS_TYPE_STRING, &matches_, 1,
+                DBUS_TYPE_UINT32, &flags,
+                DBUS_TYPE_INVALID));
+
+    // send
+    // TODO: wait and check for error
+    Q_ASSERT(dbus_connection_send(conn, msg, nullptr));
+
+    dbus_message_unref(msg);
+}
+
+extern "C" DBusHandlerResult handleMessageFromC(
+        DBusConnection *connection, DBusMessage *message, void *user_data
+) {
+    try {
+        auto* self = static_cast<NotificationsListenerThread*>(user_data);
+        self->handleMessage(message);
+    } catch (...) {
+        Q_ASSERT_X(false,
+                   "NotificationsListenerThread::handleMessage",
+                   "Catched exception");
+    }
+
+    // Monitors must not allow libdbus to reply to messages,
+    // so we eat the message.
+    return DBUS_HANDLER_RESULT_HANDLED;
+}
+
+NotificationsListenerThread::NotificationsListenerThread() = default;
+
+NotificationsListenerThread::~NotificationsListenerThread()
+{
+    quit();
+    dbus_connection_unref(m_connection);
+}
+
+void NotificationsListenerThread::quit()
+{
+    if (m_connection) {
+        dbus_connection_close(m_connection);
+        wait();
     }
 }
 
+void NotificationsListenerThread::run()
+{
+    DBusConnection* connection =
+            dbus_bus_get_private(DBUS_BUS_SESSION, &lastError);
+    if (lastError) {
+       return;
+    }
+    Q_ASSERT(connection != nullptr);
+    m_connection = connection;
+
+    dbus_connection_set_route_peer_messages(connection, true);
+    dbus_connection_set_exit_on_disconnect(connection, false);
+    dbus_connection_add_filter(connection, handleMessageFromC, this, nullptr);
+
+    becomeMonitor(
+                connection,
+                "interface='org.freedesktop.Notifications',"
+                "member='Notify'");
+
+    while (dbus_connection_read_write_dispatch(connection, -1))
+      ;
+}
+
+void NotificationsListenerThread::handleMessage(
+        DBusMessage *message)
+{
+    switch (dbus_message_get_type (message))
+    {
+      case DBUS_MESSAGE_TYPE_METHOD_CALL:
+        qCDebug(logger) << "DBUS_MESSAGE_TYPE_METHOD_CALL";
+        break;
+      case DBUS_MESSAGE_TYPE_METHOD_RETURN:
+        qCDebug(logger) << "DBUS_MESSAGE_TYPE_METHOD_RETURN";
+        break;
+      case DBUS_MESSAGE_TYPE_ERROR:
+        qCDebug(logger) << "DBUS_MESSAGE_TYPE_ERROR";
+        break;
+      case DBUS_MESSAGE_TYPE_SIGNAL:
+        qCDebug(logger) << "DBUS_MESSAGE_TYPE_SIGNAL";
+        break;
+    }
+
+    if (dbus_message_is_method_call(
+                message, "org.freedesktop.Notifications", "Notify")) {
+        handleNotifyCall(message);
+    }
+}
+
+class RawDBusMessageIterNext {
+public:
+    RawDBusMessageIterNext(DBusMessageIter* iter)
+        : iter(iter)
+    {}
+
+    ~RawDBusMessageIterNext() { dbus_message_iter_next(iter); }
+
+private:
+    DBusMessageIter* iter;
+};
+
+class RawDBusMessageIter {
+public:
+    RawDBusMessageIter(DBusMessage *message) {
+        dbus_message_iter_init(message, &iter);
+    }
+
+    DBusMessageIter* operator&() { return &iter; }
+
+    QVariant next();
+
+private:
+    DBusMessageIter iter;
+};
+
+QVariant RawDBusMessageIter::next() {
+    int type = dbus_message_iter_get_arg_type(&iter);
+    if (type == DBUS_TYPE_INVALID)
+        return QVariant();
+
+    // Use qScopeGuard in Qt 5.12
+    RawDBusMessageIterNext iterNext(&iter);
+
+    if (dbus_type_is_basic(type)) {
+        DBusBasicValue value;
+        dbus_message_iter_get_basic(&iter, &value);
+        switch (type) {
+        case DBUS_TYPE_BOOLEAN:
+            return QVariant(value.bool_val);
+        case DBUS_TYPE_INT16:
+            return QVariant(value.i16);
+        case DBUS_TYPE_INT32:
+            return QVariant(value.i32);
+        case DBUS_TYPE_INT64:
+            return QVariant(value.i64);
+        case DBUS_TYPE_UINT16:
+            return QVariant(value.u16);
+        case DBUS_TYPE_UINT32:
+            return QVariant(value.u32);
+        case DBUS_TYPE_UINT64:
+            return QVariant(value.u64);
+        case DBUS_TYPE_BYTE:
+            return QVariant(value.byt);
+        case DBUS_TYPE_DOUBLE:
+            return QVariant(value.dbl);
+        case DBUS_TYPE_STRING:
+            return QVariant(QString::fromUtf8(value.str));
+        default:
+            Q_UNIMPLEMENTED();
+            return QVariant();
+        }
+    }
+
+    Q_UNIMPLEMENTED();
+    return QVariant();
+}
+
+void NotificationsListenerThread::handleNotifyCall(DBusMessage *message)
+{
+    RawDBusMessageIter iter(message);
+
+    QString appName = iter.next().toString();
+    int replacesId = iter.next().toInt();
+    QString appIcon = iter.next().toString();
+    QString summary = iter.next().toString();
+    QString body = iter.next().toString();
+    QStringList actions = iter.next().toStringList();
+    QVariantMap hints = iter.next().toMap();
+    int timeout = iter.next().toInt();
+
+    Q_EMIT Notify(
+                appName, replacesId, appIcon, summary, body, actions, hints,
+                timeout);
+}
+
 NotificationsListener::NotificationsListener(KdeConnectPlugin* aPlugin)
-    : QDBusAbstractAdaptor(aPlugin),
-      m_plugin(aPlugin)
+    : QDBusAbstractAdaptor(aPlugin)
+    , m_plugin(aPlugin)
 {
     qRegisterMetaTypeStreamOperators<NotifyingApplication>(
         "NotifyingApplication");
-
-    bool ret = QDBusConnection::sessionBus()
-        .registerObject(QStringLiteral("/org/freedesktop/Notifications"),
-                        this,
-                        QDBusConnection::ExportScriptableContents);
-    if (!ret)
-        qCWarning(logger)
-                << "Error registering notifications listener for device"
-                << m_plugin->device()->name() << ":"
-                << QDBusConnection::sessionBus().lastError();
-    else
-        qCDebug(logger)
-                << "Registered notifications listener for device"
-                << m_plugin->device()->name();
-
-    QDBusInterface iface(
-                QStringLiteral("org.freedesktop.DBus"),
-                QStringLiteral("/org/freedesktop/DBus"),
-                QStringLiteral("org.freedesktop.DBus"));
-    iface.call(
-        QStringLiteral("AddMatch"),
-        "interface='org.freedesktop.Notifications',member='Notify',type='method_call',eavesdrop='true'");
 
     loadApplications();
 
     connect(
         m_plugin->config(), &SailfishConnectPluginConfig::configChanged,
         this, &NotificationsListener::loadApplications);
+    connect(&m_thread, &NotificationsListenerThread::Notify,
+            this, &NotificationsListener::onNotify);
+
+    m_thread.start();
 }
 
-NotificationsListener::~NotificationsListener()
-{
-    qCDebug(logger) << "Destroying NotificationsListener";
-    QDBusInterface iface(
-                QStringLiteral("org.freedesktop.DBus"),
-                QStringLiteral("/org/freedesktop/DBus"),
-                QStringLiteral("org.freedesktop.DBus"));
-    QDBusMessage res = iface.call(
-                QStringLiteral("RemoveMatch"),
-                "interface='org.freedesktop.Notifications',member='Notify',type='method_call',eavesdrop='true'");
-    QDBusConnection::sessionBus().unregisterObject(
-                QStringLiteral("/org/freedesktop/Notifications"));
-}
+NotificationsListener::~NotificationsListener() = default;
 
 void NotificationsListener::loadApplications()
 {
@@ -181,6 +322,23 @@ QSharedPointer<QIODevice> NotificationsListener::iconForImageData(
     return buffer;
 }
 
+static QSharedPointer<QIODevice> imageToPng(const QImage& image) {
+    if (image.isNull())
+        return QSharedPointer<QBuffer>();
+
+    QSharedPointer<QBuffer> buffer;
+    buffer->open(QIODevice::ReadWrite);
+
+    // TODO: cache icons
+    bool success = image.save(buffer.data(), "PNG");
+    if (success) {
+        buffer->seek(0);
+        return buffer;
+    } else {
+        return QSharedPointer<QBuffer>();
+    }
+}
+
 static QSharedPointer<QIODevice> pathToPng(const QString& path) {
     if (path.endsWith(QLatin1String(".png"))) {
         return QSharedPointer<QIODevice>(new QFile(path));
@@ -222,34 +380,47 @@ QSharedPointer<QIODevice> NotificationsListener::iconForIconName(
         if (scheme == QLatin1String("file")) {
             return pathToPng(url.path());
         } else if (scheme == QLatin1String("image")) {
-            if (url.host() == QLatin1String("theme")) {
-                return themeIconToPng(url.path());
-            } else {
-                // TODO: give up here?
-                auto* imageProvider = static_cast<QQuickImageProvider*>(
-                        AppDaemon::instance()->imageProvider(url.host()));
-                if (!imageProvider) {
-                    qCWarning(logger)
-                            << "No image provider" << url.host() << "found.";
-                    return QSharedPointer<QIODevice>();
-                }
-
-                QSize size;
-                QSize requestedSize(128, 128);
-                switch (imageProvider->imageType()) {
-                case QQmlImageProviderBase::Image:
-                    return imageToPng(imageProvider->requestImage(
-                        url.path(), &size, requestedSize));
-                case QQmlImageProviderBase::Pixmap:
-                    return imageToPng(imageProvider->requestPixmap(
-                        url.path(), &size, requestedSize).toImage());
-                default:
-                    qCWarning(logger)
-                            << "Not supported QQuickImageProvider image type:"
-                            << iconName;
-                    return QSharedPointer<QIODevice>();
-                }
+            auto* imageProvider = static_cast<QQuickImageProvider*>(
+                    AppDaemon::instance()->imageProvider(url.host()));
+            if (!imageProvider) {
+                qCWarning(logger)
+                        << "No image provider" << url.host() << "found.";
+                return QSharedPointer<QIODevice>();
             }
+
+            QString id = url.path();
+            id.remove(0, 1);
+
+            QSize size;
+            QSize requestedSize(128, 128);
+            QImage image;
+            switch (imageProvider->imageType()) {
+            case QQmlImageProviderBase::Image:
+                qCDebug(logger) << "Get image from QQmlImageProvider" << id;
+                image = imageProvider->requestImage(
+                    id, &size, requestedSize);
+                break;
+            case QQmlImageProviderBase::Pixmap:
+                qCDebug(logger) << "Get pixmap from QQmlImageProvider" << id;
+                image = imageProvider->requestPixmap(
+                    id, &size, requestedSize).toImage();
+                break;
+            case QQmlImageProviderBase::Texture:
+                qCDebug(logger) << "Get texture from QQmlImageProvider" << id;
+                image = imageProvider->requestTexture(
+                    id, &size, requestedSize)->image();
+                break;
+            default:
+                Q_UNREACHABLE();
+            }
+
+            auto ret = imageToPng(image);
+            if (ret.isNull()) {
+                qCWarning(logger)
+                        << "Could not convert theme icon to png:"
+                        << iconName;
+            }
+            return ret;
         } else {
             qCWarning(logger)
                     << "Not supported file scheme for icon file" << scheme;
@@ -258,20 +429,19 @@ QSharedPointer<QIODevice> NotificationsListener::iconForIconName(
     }
 }
 
-uint NotificationsListener::Notify(const QString& appName, uint replacesId,
-                                   const QString& appIcon,
-                                   const QString& summary, const QString& body,
-                                   const QStringList& actions,
-                                   const QVariantMap& hints, int timeout)
+void NotificationsListener::onNotify(const QString& appName, uint replacesId,
+                                     const QString& appIcon,
+                                     const QString& summary, const QString& body,
+                                     const QStringList& actions,
+                                     const QVariantMap& hints, int timeout)
 {
-    static int gid = 0; // TODO: add to class
     Q_UNUSED(actions);
 
     //qCDebug(logger) << "Got notification appName=" << appName << "replacesId=" << replacesId << "appIcon=" << appIcon << "summary=" << summary << "body=" << body << "actions=" << actions << "hints=" << hints << "timeout=" << timeout;
 
     // skip our own notifications
     if (hints.value(QStringLiteral("x-sailfishconnect-hide"), false).toBool())
-        return 0;
+        return;
 
     auto* config = m_plugin->config();
 
@@ -294,11 +464,11 @@ uint NotificationsListener::Notify(const QString& appName, uint replacesId,
     }
 
     if (!app.active)
-        return 0;
+        return;
 
     if (timeout > 0 &&
             config->get(QStringLiteral("generalPersistent"), false))
-        return 0;
+        return;
 
     int urgency = -1;
     if (hints.contains(QStringLiteral("urgency"))) {
@@ -309,10 +479,7 @@ uint NotificationsListener::Notify(const QString& appName, uint replacesId,
     }
     if (urgency > -1 &&
             urgency < config->get<int>(QStringLiteral("generalUrgency"), 0))
-        return 0;
-
-    gid += 1;
-    int id = replacesId > 0 ? replacesId : gid;
+        return;
 
     QString ticker = summary;
     if (!body.isEmpty() &&
@@ -322,17 +489,20 @@ uint NotificationsListener::Notify(const QString& appName, uint replacesId,
     if (app.blacklistExpression.isValid() &&
             !app.blacklistExpression.pattern().isEmpty() &&
             app.blacklistExpression.match(ticker).hasMatch())
-        return 0;
+        return;
 
     //qCDebug(logger) << "Sending notification from" << appName << ":" <<ticker << "; appIcon=" << appIcon;
     NetworkPacket np("kdeconnect.notification", {
-        {"id", QString::number(id)},
+        {"id", QString::number(replacesId)},
         {"appName", appName},
         {"ticker", ticker},
-        {"isClearable", timeout == 0}
+        {"isClearable", timeout == 0},
+        {"title", summary},
+        {"text", body},
     });
 
     // sync any icon data?
+    // TODO: do not send icon on updates!
     if (config->get(QStringLiteral("generalSynchronizeIcons"), true)) {
         QSharedPointer<QIODevice> iconSource;
         // try different image sources according to priorities in notifications-
@@ -360,8 +530,6 @@ uint NotificationsListener::Notify(const QString& appName, uint replacesId,
     }
 
     m_plugin->sendPacket(np);
-
-    return id;
 }
 
 } // namespace SailfishConnect

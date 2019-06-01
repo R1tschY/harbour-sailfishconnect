@@ -15,7 +15,7 @@ TARGET = harbour-sailfishconnect
 CONFIG += sailfishapp c++14
 QT += network dbus feedback
 
-PKGCONFIG += sailfishapp contextkit-statefs nemonotifications-qt5
+PKGCONFIG += sailfishapp dbus-1 contextkit-statefs nemonotifications-qt5
 DEFINES += \
     QT_STATICPLUGIN \
     QT_DEPRECATED_WARNINGS \

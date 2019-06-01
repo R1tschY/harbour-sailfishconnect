@@ -40,8 +40,6 @@ LanUploadJob::LanUploadJob(
 {
     connect(source().data(), &QIODevice::readyRead,
             this, &LanUploadJob::startUploading);
-    connect(source().data(), &QIODevice::aboutToClose,
-            this, &LanUploadJob::aboutToClose);
 }
 
 void LanUploadJob::start()

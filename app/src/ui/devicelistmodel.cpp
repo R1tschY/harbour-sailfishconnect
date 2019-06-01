@@ -188,7 +188,7 @@ void DeviceListModel::connectDevice(Device *device)
         deviceDataChanged(device, {HasPairingRequestsRole});
     });
     connect(device, &Device::destroyed, this, [=]{
-        qCCritical(logger) << "device destroyed with id" << device->id();
+        //qCCritical(logger) << "device destroyed with id" << device->id();
         deviceRemoved(device);
     });
 }

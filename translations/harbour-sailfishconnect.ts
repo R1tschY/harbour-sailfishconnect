@@ -153,6 +153,10 @@
         <source>Actions</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Waiting for accepted pairing ...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePluginsPage</name>
@@ -242,7 +246,7 @@
 <context>
     <name>RemoteKeyboard</name>
     <message>
-        <source>Remote Input</source>
+        <source>Keyboard</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

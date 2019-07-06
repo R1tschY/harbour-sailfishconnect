@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fi" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="fi">
 <context>
     <name>AboutPage</name>
     <message>
@@ -29,12 +31,8 @@
 <context>
     <name>ClipboardUi</name>
     <message>
-        <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
-        <translation>Avaa Sailfish Connect ikkuna kopioinnin jälkkeen lähettääksesi leikepöydän sisällön. Vastaanottaaksesi leikepöydän sisällön tätä ei tarvita</translation>
-    </message>
-    <message>
-        <source>Clipboard</source>
-        <translation>Leikepöytä</translation>
+        <source>Upload clipboard text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -143,15 +141,23 @@
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Device is not reachable</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting for accepted pairing ...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -172,30 +178,30 @@
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>%1ms repeat interval</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Asetukset</translation>
     </message>
     <message>
         <source>Change layout</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Asetukset</translation>
     </message>
 </context>
 <context>
@@ -236,14 +242,14 @@
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RemoteKeyboard</name>
     <message>
-        <source>Remote Input</source>
-        <translation type="unfinished"/>
+        <source>Keyboard</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -358,11 +364,11 @@
     <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -439,7 +445,7 @@
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -456,8 +462,8 @@
         <translation>Ohjauslevy</translation>
     </message>
     <message>
-        <source/>
-        <translation type="unfinished"/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Move finger on screen
@@ -485,47 +491,47 @@ Pidä hetkellisesti raahataksesi ja pudottaaksesi</translation>
     </message>
     <message>
         <source>Failed to open file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Internal error</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File does not exit</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No program found to open file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xdg-open failed</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xdg-open crashed</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Completed</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

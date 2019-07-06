@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="es">
 <context>
     <name>AboutPage</name>
     <message>
@@ -29,12 +31,8 @@
 <context>
     <name>ClipboardUi</name>
     <message>
-        <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
-        <translation>Después de copiar, abrir la ventana de conexión de Sailfish para enviar el contenido del portapapeles. Para recibir el contenido del portapapeles esto no esta requerido.</translation>
-    </message>
-    <message>
-        <source>Clipboard</source>
-        <translation>Copiar al portapapeles</translation>
+        <source>Upload clipboard text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -141,15 +139,23 @@
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Device is not reachable</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting for accepted pairing ...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -241,8 +247,8 @@
 <context>
     <name>RemoteKeyboard</name>
     <message>
-        <source>Remote Input</source>
-        <translation>Entrada remota</translation>
+        <source>Keyboard</source>
+        <translation type="unfinished">Tecleado</translation>
     </message>
 </context>
 <context>
@@ -438,7 +444,7 @@
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -455,8 +461,8 @@
         <translation>Mando táctil</translation>
     </message>
     <message>
-        <source/>
-        <translation type="unfinished"/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Move finger on screen
@@ -520,11 +526,11 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Completed</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

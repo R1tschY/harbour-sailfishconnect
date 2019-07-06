@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh" version="2.1">
 <context>
     <name>AboutPage</name>
     <message>
@@ -116,28 +114,12 @@
 <context>
     <name>DevicePage</name>
     <message>
-        <source>You don&apos;t trust this device</source>
-        <translation>你不信任此设备</translation>
-    </message>
-    <message>
-        <source>Request pairing</source>
-        <translation>请求配对</translation>
-    </message>
-    <message>
         <source>Accept</source>
         <translation>接受</translation>
     </message>
     <message>
         <source>Reject</source>
         <translation>拒绝</translation>
-    </message>
-    <message>
-        <source>You trust this device</source>
-        <translation>你信任此设备</translation>
-    </message>
-    <message>
-        <source>Waiting for accepted pairing ...</source>
-        <translation>等待接受配对………</translation>
     </message>
     <message>
         <source>This device wants to pair with your device.</source>
@@ -159,6 +141,18 @@
         <source>Send ping</source>
         <translation>发送 ping</translation>
     </message>
+    <message>
+        <source>Do you want to connect to this device?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Device is not reachable</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DevicePluginsPage</name>
@@ -178,30 +172,30 @@
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>%1ms repeat interval</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">设置</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Change layout</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">设置</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -242,14 +236,14 @@
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>RemoteKeyboard</name>
     <message>
         <source>Remote Input</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -364,11 +358,11 @@
     <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -444,8 +438,8 @@
 <context>
     <name>ShareUi</name>
     <message>
-        <source>Share</source>
-        <translation>分享</translation>
+        <source>Share a file</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -462,8 +456,8 @@
         <translation>触摸板</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Move finger on screen
@@ -491,39 +485,47 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Failed to open file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>File does not exit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No program found to open file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>xdg-open failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>xdg-open crashed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Completed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

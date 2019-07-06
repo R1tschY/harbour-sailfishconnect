@@ -1,92 +1,94 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="sv" version="2.1">
 <context>
     <name>AboutPage</name>
     <message>
         <source>Links</source>
-        <translation>Enlaces</translation>
+        <translation>Länkar</translation>
     </message>
     <message>
         <source>Licence</source>
-        <translation>Licencia:</translation>
+        <translation>Licens</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Acerca de</translation>
+        <translation>Om</translation>
     </message>
     <message>
         <source>Bug reports on Github</source>
-        <translation>Bicho</translation>
+        <translation>Felrapporter på GitHub</translation>
     </message>
     <message>
         <source>Source code on Github</source>
-        <translation>Fuente</translation>
+        <translation>Källkod på GitHub</translation>
     </message>
     <message>
         <source>Alternative KDE Connect client for Sailfish OS</source>
-        <translation>Un cliente alternativo de KDE Connect para Sailfish SO</translation>
+        <translation>Alternativ KDE Connect-klient för Sailfish OS</translation>
     </message>
 </context>
 <context>
     <name>ClipboardUi</name>
     <message>
         <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
-        <translation>Después de copiar, abrir la ventana de conexión de Sailfish para enviar el contenido del portapapeles. Para recibir el contenido del portapapeles esto no esta requerido.</translation>
+        <translation>Efter kopiering, öppnar du Sailfish Connect-fönstret för att skicka urklippsinnehållet. Detta behövs inte för att ta emot urklippsinnehåll.</translation>
     </message>
     <message>
         <source>Clipboard</source>
-        <translation>Copiar al portapapeles</translation>
+        <translation>Urklipp</translation>
     </message>
 </context>
 <context>
     <name>Device</name>
     <message>
         <source>Already paired</source>
-        <translation>Ya está vinculado</translation>
+        <translation>Redan parkopplad</translation>
     </message>
     <message>
         <source>Device not reachable</source>
-        <translation>Dispositivo no accesible</translation>
+        <translation>Enheten kan inte nås</translation>
     </message>
     <message>
         <source>SHA1 fingerprint of your device certificate is: %1
 </source>
-        <translation>La huella digital SHA1 de su certificado de dispositivo es: %1</translation>
+        <translation>SHA1 fingeravtryck för din enhets certifikat är: %1
+</translation>
     </message>
     <message>
         <source>SHA1 fingerprint of remote device certificate is: %1
 </source>
-        <translation>La huella digital SHA1 del certificado del dispositivo remoto es:% 1</translation>
+        <translation>SHA1 fingeravtryck för fjärrenhetens certifikat är: %1
+</translation>
     </message>
 </context>
 <context>
     <name>DeviceListPage</name>
     <message>
         <source>Device Name</source>
-        <translation>Nombre del dispositivo</translation>
+        <translation>Enhetsnamn</translation>
     </message>
     <message>
         <source>Paired devices</source>
-        <translation>dispositivos vinculados</translation>
+        <translation>Parkopplade enheter</translation>
     </message>
     <message>
         <source>Nearby devices</source>
-        <translation>Dispositivos cercanos</translation>
+        <translation>Enheter i närheten</translation>
     </message>
     <message>
         <source>Connected</source>
-        <translation>Conectado</translation>
+        <translation>Ansluten</translation>
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation>Solicicitud  de vinculación pendientes ...</translation>
+        <translation>Väntande parkopplingsbegäran ...</translation>
     </message>
     <message>
         <source>About ...</source>
-        <translation>Acerca de</translation>
+        <translation>Om ...</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Actualizar</translation>
+        <translation>Uppdatera</translation>
     </message>
     <message>
         <source>Sailfish Connect</source>
@@ -94,50 +96,50 @@
     </message>
     <message>
         <source>Settings ...</source>
-        <translation>Ajustes</translation>
+        <translation>Inställningar ...</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Salir</translation>
+        <translation>Avsluta</translation>
     </message>
     <message>
         <source>Transfers ...</source>
-        <translation>Tranferencias</translation>
+        <translation>Överföringar ...</translation>
     </message>
     <message>
         <source>Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.</source>
-        <translation>Instale KDE Connect o GSConnect en la computadora y conéctarlo a la misma red WLAN.</translation>
+        <translation>Installera KDE Connect eller GSConnect på din dator och anslut den till samma WLAN.</translation>
     </message>
 </context>
 <context>
     <name>DevicePage</name>
     <message>
         <source>Accept</source>
-        <translation>Aceptar</translation>
+        <translation>Acceptera</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation>Rechazar</translation>
+        <translation>Avslå</translation>
     </message>
     <message>
         <source>This device wants to pair with your device.</source>
-        <translation>Este dispositivo quiere vincularse al dispositivo.</translation>
+        <translation>Denna enhet vill parkopplas med din enhet.</translation>
     </message>
     <message>
         <source>Encryption info</source>
-        <translation>Información de encriptación</translation>
+        <translation>Krypteringsinfo</translation>
     </message>
     <message>
         <source>Plugins</source>
-        <translation>Enchufes</translation>
+        <translation>Insticksmoduler</translation>
     </message>
     <message>
         <source>Unpair</source>
-        <translation>Desvincular</translation>
+        <translation>Ta bort parkoppling</translation>
     </message>
     <message>
         <source>Send ping</source>
-        <translation>Enviar una verificación</translation>
+        <translation>Skicka ping</translation>
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
@@ -156,190 +158,189 @@
     <name>DevicePluginsPage</name>
     <message>
         <source>Select Plugins</source>
-        <translation>Elegir enchufes</translation>
+        <translation>Välj insticksmoduler</translation>
     </message>
 </context>
 <context>
     <name>EncryptionInfoPage</name>
     <message>
         <source>Encryption info</source>
-        <translation>Información de encriptación</translation>
+        <translation>Krypteringsinfo</translation>
     </message>
 </context>
 <context>
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>%1ms repeat interval</source>
-        <translation>%1ms intervalo de repetición</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation>Retroalimentación de vibración</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Ajustes</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Change layout</source>
-        <translation>Cambia el diseño</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation>Tecleado</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Ajustes</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
-        <translation>Este dispositivo no se puede vincular porque está ejecutando una versión antigua de KDE-Connect.</translation>
+        <translation>Denna enhet kan inte parkopplas eftersom den kör en gammal version av KDE Connect.</translation>
     </message>
     <message>
         <source>This device cannot be paired because it sends a strange ssl certificate.</source>
-        <translation>Este dispositivo no se puede emparejar porque envía un certificado ssl extraño
-</translation>
+        <translation>Denna enhet kan inte parkopplas eftersom den skickar ett underligt SSL-certifikat.</translation>
     </message>
 </context>
 <context>
     <name>LanPairingHandler</name>
     <message>
         <source>Canceled by other peer</source>
-        <translation>Cancelado por otro interlocutor</translation>
+        <translation>Avbrutet av motparten</translation>
     </message>
     <message>
         <source>%1: Already paired</source>
-        <translation>%1: Ya está vinculado</translation>
+        <translation>%1: Redan parkopplad</translation>
     </message>
     <message>
         <source>Timed out</source>
-        <translation>Fuera de tiempo</translation>
+        <translation>Tidsgränsen överskreds</translation>
     </message>
 </context>
 <context>
     <name>MprisUi</name>
     <message>
         <source>No remote players</source>
-        <translation>No hay reproductores remotos</translation>
+        <translation>Inga fjärrspelare</translation>
     </message>
     <message>
         <source>Multimedia Controls</source>
-        <translation>Controles multimedia</translation>
+        <translation>Multimediakontroller</translation>
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation>Nada reprodiciendo</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>RemoteKeyboard</name>
     <message>
         <source>Remote Input</source>
-        <translation>Entrada remota</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SailfishConnect::AppDaemon</name>
     <message>
         <source>Pairing request</source>
-        <translation>Solicitud de emparejamiento</translation>
+        <translation>Parkopplingsbegäran</translation>
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation>Solicicitud de vinculación pendientes ...</translation>
+        <translation>Väntande parkopplingsbegäran ...</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::BatteryPluginFactory</name>
     <message>
         <source>Battery report</source>
-        <translation>reporte de batería</translation>
+        <translation>Batterirapport</translation>
     </message>
     <message>
         <source>Share battery charge state.</source>
-        <translation>Compartir el estado de carga de la batería.</translation>
+        <translation>Dela batteriets laddningsstatus.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::ClipboardPluginFactory</name>
     <message>
         <source>Clipboard</source>
-        <translation>Copiar al portapapeles</translation>
+        <translation>Urklipp</translation>
     </message>
     <message>
         <source>Synchronize clipboard between devices.</source>
-        <translation>Sincroniza el portapapeles entre dispositivos.</translation>
+        <translation>Synkronisera urklipp mellan enheter.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::CopyJob</name>
     <message>
         <source>Read error: %1</source>
-        <translation>Leer error: %1</translation>
+        <translation>Läsfel: %1</translation>
     </message>
     <message>
         <source>Write error: %1</source>
-        <translation>Escribir error: %1</translation>
+        <translation>Skrivfel: %1</translation>
     </message>
     <message>
         <source>Input stream is not readable.</source>
-        <translation>La secuencia de entrada no es leíble.</translation>
+        <translation>Inmatningsströmmen är inte läsbar.</translation>
     </message>
     <message>
         <source>Output stream is not writable.</source>
-        <translation>La secuencia de salida no es escribible.</translation>
+        <translation>Utmatningsströmmen är inte skrivbar.</translation>
     </message>
     <message>
         <source>Read more bytes of input stream than expected.</source>
-        <translation>Leer más bytes de secuencia de entrada de lo esperado.</translation>
+        <translation>Läser fler byte indata än förväntat.</translation>
     </message>
     <message>
         <source>Early end of input stream</source>
-        <translation>Final temprano de secuancia de entrada</translation>
+        <translation>Tidigt slut på inmatningsströmmen</translation>
     </message>
     <message>
         <source>Early end of output stream</source>
-        <translation>Final temprano del flujo de salida</translation>
+        <translation>Tidigt slut på utmatningsströmmen</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::DownloadJob</name>
     <message>
         <source>Cannot create destination folder</source>
-        <translation>No se puede crear la carpeta de destino</translation>
+        <translation>Kan inte skapa målmapp</translation>
     </message>
     <message>
         <source>Could not open file for writing: %1</source>
-        <translation>No se pudo abrir el archivo para escribirla: </translation>
+        <translation>Kunde inte öppna fil för skrivning: %1</translation>
     </message>
     <message>
         <source>Receiving</source>
-        <translation>Recibiendo</translation>
+        <translation>Tar emot</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::LanUploadJob</name>
     <message>
         <source>Couldn&apos;t find an available port</source>
-        <translation>No se pudo encontrar un puerto disponible</translation>
+        <translation>Kunde inte hitta någon tillgänglig port</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::MprisRemotePluginFactory</name>
     <message>
         <source>Multimedia controls</source>
-        <translation>Controles multimedia</translation>
+        <translation>Multimediakontroller</translation>
     </message>
     <message>
         <source>Control your media player from remote.</source>
-        <translation>Control de el reproductor multimedia desde el mando a distancia.</translation>
+        <translation>Fjärrkontrollera din mediaspelare.</translation>
     </message>
 </context>
 <context>
@@ -350,88 +351,88 @@
     </message>
     <message>
         <source>Ping other device and receive pings.</source>
-        <translation>Ping otro dispositivo y recibir pings.</translation>
+        <translation>Pinga andra enheter och ta emot ping.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation>Tecleado remoto</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation>Escribe en la computadora remota usando un teclado virtual.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SailfishConnect::SendNotificationsPluginFactory</name>
     <message>
         <source>Send notifcations</source>
-        <translation>Enviar notificaciones</translation>
+        <translation>Skicka aviseringar</translation>
     </message>
     <message>
         <source>Work in progress: Send notifications to the remote computer.</source>
-        <translation>Trabajo en curso: enviar notificaciones a computadora remoto.</translation>
+        <translation>Pågående arbete: Skicka aviseringar till fjärrdatorn.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::SharePluginFactory</name>
     <message>
         <source>Share</source>
-        <translation>Compartir</translation>
+        <translation>Dela</translation>
     </message>
     <message>
         <source>Send and receive files and URLs.</source>
-        <translation>Enviar y recibir archivos y LURs.</translation>
+        <translation>Skicka och ta emot filer och URL:er.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TelepathyPluginFactory</name>
     <message>
         <source>Send SMS</source>
-        <translation>Enviar SMS</translation>
+        <translation>Skicka SMS</translation>
     </message>
     <message>
         <source>Allow sending of text messages.</source>
-        <translation>Permitir el envío de mensajes de texto.</translation>
+        <translation>Tillåt sändning av textmeddelanden.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TelephonyPluginFactory</name>
     <message>
         <source>Call notifications</source>
-        <translation>Notificaciones de llamadas</translation>
+        <translation>Samtalsavisering</translation>
     </message>
     <message>
         <source>Send notifications for incoming and missed calls.</source>
-        <translation>Enviar notificaciones para llamadas entrantes y perdidas.</translation>
+        <translation>Skicka aviseringar för inkommande och missade samtal.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
         <source>Touchpad</source>
-        <translation>Mando táctil</translation>
+        <translation>Styrplatta</translation>
     </message>
     <message>
         <source>Control remote computer through mouse movements and clicks.</source>
-        <translation>Control remoto de la computadora a través de movimientos del ratón y clics.</translation>
+        <translation>Kontrollera fjärrdatorn med musrörelse och klick.</translation>
     </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
-        <translation>Ajustes</translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>Run in background</source>
-        <translation>Activar demonio</translation>
+        <translation>Kör i bakgrunden</translation>
     </message>
     <message>
         <source>Application runs in background after window is closed.</source>
-        <translation>La aplicación se ejecuta en segundo plano tras cerrar la ventana.</translation>
+        <translation>Appen körs i bakgrunden efter att fönstret stängts.</translation>
     </message>
 </context>
 <context>
@@ -445,14 +446,14 @@
     <name>Touchpad</name>
     <message>
         <source>Touchpad</source>
-        <translation>Mando táctil</translation>
+        <translation>Styrplatta</translation>
     </message>
 </context>
 <context>
     <name>TouchpadPage</name>
     <message>
         <source>Touchpad</source>
-        <translation>Mando táctil</translation>
+        <translation>Styrplatta</translation>
     </message>
     <message>
         <source/>
@@ -462,61 +463,61 @@
         <source>Move finger on screen
 Tap for click
 Hold shortly for Drag&apos;n&apos;Drop</source>
-        <translation>Mover el dedo sobre la pantalla
- Toque para hacer clic
- Mantener pulsado brevemente para arrastrar y soltar.</translation>
+        <translation>Flytta fingret över skärmen
+Tryck för att klicka
+Håll kvar för Dra &amp; Släpp</translation>
     </message>
 </context>
 <context>
     <name>TransfersPage</name>
     <message>
         <source>Transfers</source>
-        <translation>Transferencias</translation>
+        <translation>Överföringar</translation>
     </message>
     <message>
         <source>Yet no downloads or uploads</source>
-        <translation>Todavía no hay descargas o subidas</translation>
+        <translation>Inga ner- eller uppladdningar ännu</translation>
     </message>
     <message>
         <source>of</source>
         <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
-        <translation>de</translation>
+        <translation>av</translation>
     </message>
     <message>
         <source>Failed to open file</source>
-        <translation>A fallado al abrir el archivo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal error</source>
-        <translation>Error interno</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>File does not exit</source>
-        <translation>El archivo no existe</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No program found to open file</source>
-        <translation>No se encontro ningún programa para abrir el archivo.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>xdg-open failed</source>
-        <translation>xdg-open a fallado!</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>xdg-open crashed</source>
-        <translation>xdg-open estrellado!</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open</source>
-        <translation>Abrir</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Canceled</source>
-        <translation>Cancelado</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed</source>

@@ -114,27 +114,11 @@
 <context>
     <name>DevicePage</name>
     <message>
-        <source>You don&apos;t trust this device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Request pairing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Accept</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You trust this device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Waiting for accepted pairing ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -155,6 +139,18 @@
     </message>
     <message>
         <source>Send ping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to connect to this device?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device is not reachable</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -442,7 +438,7 @@
 <context>
     <name>ShareUi</name>
     <message>
-        <source>Share</source>
+        <source>Share a file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -519,6 +515,14 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Completed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

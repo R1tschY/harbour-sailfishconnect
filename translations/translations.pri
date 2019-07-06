@@ -25,5 +25,6 @@ qm.commands += \
     lrelease $${_TRANSLATIONS_OUT}
 
 INSTALLS += qm
+QMAKE_EXTRA_TARGETS += qm
 
 DISTFILES += $${TS} $${_TRANSLATIONS_IN}

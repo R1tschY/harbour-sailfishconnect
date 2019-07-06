@@ -19,16 +19,13 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import SailfishConnect.Core 0.3
 
-Column {
-    width: parent.width
+IconListItem {
+    title: qsTr("Keyboard")
+    source: "image://theme/icon-m-keyboard"
     visible: _device.loadedPlugins.indexOf(
                  "SailfishConnect::RemoteKeyboardPlugin") >= 0
 
-    SectionHeader { text: qsTr("Remote Input") }
-
-    IconButton {
-       icon.source: "image://theme/icon-m-keyboard"
-       anchors.horizontalCenter: parent.horizontalCenter
-       onClicked: pageStack.push(Qt.resolvedUrl("KeyboardPage.qml"), { device: _device });
-    }
+    onClicked: pageStack.push(
+                   Qt.resolvedUrl("../pages/KeyboardPage.qml"),
+                   { device: _device });
 }

@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>Alternative KDE Connect client for Sailfish OS</source>
-        <translation type="unfinished"></translation>
+        <translation>Un cliente alternativo de KDE Connect para Sailfish SO</translation>
     </message>
 </context>
 <context>
@@ -88,7 +88,7 @@
     </message>
     <message>
         <source>Refresh</source>
-        <translation>refrescar</translation>
+        <translation>Actualizar</translation>
     </message>
     <message>
         <source>Sailfish Connect</source>
@@ -104,11 +104,11 @@
     </message>
     <message>
         <source>Transfers ...</source>
-        <translation>tranferencias ...</translation>
+        <translation>Tranferencias</translation>
     </message>
     <message>
         <source>Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.</source>
-        <translation type="unfinished"></translation>
+        <translation>Instale KDE Connect o GSConnect en la computadora y conéctarlo a la misma red WLAN.</translation>
     </message>
 </context>
 <context>
@@ -135,11 +135,11 @@
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation>Esperando vinculacion aceptada...</translation>
+        <translation>Esperando por vinculacion aceptada...</translation>
     </message>
     <message>
         <source>This device wants to pair with your device.</source>
-        <translation>Este dispositivo quiere vincular con su dispositivo.</translation>
+        <translation>Este dispositivo quiere vincularse al dispositivo.</translation>
     </message>
     <message>
         <source>Encryption info</source>
@@ -176,30 +176,30 @@
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>%1ms repeat interval</source>
-        <translation type="unfinished"></translation>
+        <translation>%1ms intervalo de repetición</translation>
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Retroalimentación de vibración</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Ajustes</translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <source>Change layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambia el diseño</translation>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Tecleado</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Ajustes</translation>
+        <translation>Ajustes</translation>
     </message>
 </context>
 <context>
@@ -210,7 +210,8 @@
     </message>
     <message>
         <source>This device cannot be paired because it sends a strange ssl certificate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este dispositivo no se puede emparejar porque envía un certificado ssl extraño
+</translation>
     </message>
 </context>
 <context>
@@ -225,7 +226,7 @@
     </message>
     <message>
         <source>Timed out</source>
-        <translation>Tiempo fuera</translation>
+        <translation>Fuera de tiempo</translation>
     </message>
 </context>
 <context>
@@ -240,14 +241,14 @@
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Nada reprodiciendo</translation>
     </message>
 </context>
 <context>
     <name>RemoteKeyboard</name>
     <message>
         <source>Remote Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada remota</translation>
     </message>
 </context>
 <context>
@@ -269,7 +270,7 @@
     </message>
     <message>
         <source>Share battery charge state.</source>
-        <translation>compartir el estado de carga de la batería.</translation>
+        <translation>Compartir el estado de carga de la batería.</translation>
     </message>
 </context>
 <context>
@@ -326,7 +327,7 @@
     </message>
     <message>
         <source>Receiving</source>
-        <translation type="unfinished"></translation>
+        <translation>Recibiendo</translation>
     </message>
 </context>
 <context>
@@ -362,11 +363,11 @@
     <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Tecleado remoto</translation>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Escribe en la computadora remota usando un teclado virtual.</translation>
     </message>
 </context>
 <context>
@@ -406,11 +407,11 @@
     <name>SailfishConnect::TelephonyPluginFactory</name>
     <message>
         <source>Call notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Notificaciones de llamadas</translation>
     </message>
     <message>
         <source>Send notifications for incoming and missed calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>Enviar notificaciones para llamadas entrantes y perdidas.</translation>
     </message>
 </context>
 <context>
@@ -432,7 +433,7 @@
     </message>
     <message>
         <source>Run in background</source>
-        <translation>Ejecutar en segundo plano</translation>
+        <translation>Activar demonio</translation>
     </message>
     <message>
         <source>Application runs in background after window is closed.</source>
@@ -467,7 +468,9 @@
         <source>Move finger on screen
 Tap for click
 Hold shortly for Drag&apos;n&apos;Drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover el dedo sobre la pantalla
+ Toque para hacer clic
+ Mantener pulsado brevemente para arrastrar y soltar.</translation>
     </message>
 </context>
 <context>
@@ -478,48 +481,48 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Yet no downloads or uploads</source>
-        <translation type="unfinished"></translation>
+        <translation>Todavía no hay descargas o subidas</translation>
     </message>
     <message>
         <source>of</source>
         <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>de</translation>
     </message>
     <message>
         <source>Failed to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>A fallado al abrir el archivo</translation>
     </message>
     <message>
         <source>Internal error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error interno</translation>
     </message>
     <message>
         <source>File does not exit</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo no existe</translation>
     </message>
     <message>
         <source>No program found to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontro ningún programa para abrir el archivo.</translation>
     </message>
     <message>
         <source>xdg-open failed</source>
-        <translation type="unfinished"></translation>
+        <translation>xdg-open a fallado!</translation>
     </message>
     <message>
         <source>xdg-open crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>xdg-open estrellado!</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelado</translation>
     </message>
 </context>
 </TS>

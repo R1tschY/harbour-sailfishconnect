@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 BackgroundItem {
     id: root
     width: parent.width
-    contentHeight: Theme.itemSizeMedium
+    height: Theme.itemSizeMedium
     property alias source: image.source
     property alias title: _title.text
 

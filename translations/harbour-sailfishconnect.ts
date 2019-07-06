@@ -31,11 +31,7 @@
 <context>
     <name>ClipboardUi</name>
     <message>
-        <source>After copying open the Sailfish Connect window to send the clipboard content. For receiving clipboard content this is not required.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clipboard</source>
+        <source>Upload clipboard text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -151,6 +147,10 @@
     </message>
     <message>
         <source>Device is not reachable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

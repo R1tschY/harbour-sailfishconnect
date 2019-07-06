@@ -135,11 +135,15 @@ Page {
 
                 // Plugin UIs
 
+                SectionHeader {
+                    text: qsTr("Actions")
+                }
                 ShareUi { id: shareUi }
-                MprisUi { id: mprisUi }
-                Touchpad { id: touchpad }
                 ClipboardUi { id: clipboardUi }
+                Touchpad { id: touchpad }
                 RemoteKeyboard { id: remoteKeyboard}
+
+                MprisUi { id: mprisUi }
             }
         }
 

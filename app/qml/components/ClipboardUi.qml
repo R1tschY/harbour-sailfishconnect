@@ -19,20 +19,12 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import SailfishConnect.Core 0.3
 
-Column {
-    width: parent.width
+IconListItem {
+    title: qsTr("Upload clipboard text")
+    source: "image://theme/icon-m-clipboard"
     visible: _device.loadedPlugins.indexOf(
                  "SailfishConnect::ClipboardPlugin") >= 0
 
-    SectionHeader { text: qsTr("Clipboard") }
-    Label {
-        wrapMode: Text.Wrap
-        width: parent.width - 2 * Theme.horizontalPageMargin
-        color: Theme.highlightColor
-        font.pixelSize: Theme.fontSizeSmall
-        x: Theme.horizontalPageMargin
-        text: qsTr("After copying open the Sailfish Connect window to send " +
-                   "the clipboard content. For receiving clipboard content " +
-                   "this is not required.")
-    }
+    onClicked:
+        _device.plugin("SailfishConnect::ClipboardPlugin").pushClipboard()
 }

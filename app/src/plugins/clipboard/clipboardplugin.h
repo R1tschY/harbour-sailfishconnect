@@ -20,9 +20,10 @@
 
 #include <QObject>
 #include <QtPlugin>
-#include <QClipboard>
 
 #include <sailfishconnect/kdeconnectplugin.h>
+
+class QClipboard;
 
 namespace SailfishConnect {
 
@@ -37,11 +38,9 @@ public:
 
 public slots:
     bool receivePacket(const NetworkPacket &np) override;
+    Q_SCRIPTABLE void pushClipboard();
 
 private:
-    void dataChanged();
-
-    QString m_lastClipboardText;
     QClipboard* m_clipboard;
 };
 

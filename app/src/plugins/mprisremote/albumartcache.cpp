@@ -34,7 +34,8 @@ AlbumArtCache::AlbumArtCache(
     m_cacheDir = QDir(pluginConfigDir.filePath(QStringLiteral("albumart")));
 
     if (!m_cacheDir.mkpath(QStringLiteral("."))) {
-        qCCritical(logger) << "Failed to create cache dir" << m_cacheDir;
+        qCCritical(logger).noquote()
+                << "Failed to create cache dir" << m_cacheDir;
         return;
     }
 
@@ -44,8 +45,9 @@ AlbumArtCache::AlbumArtCache(
         m_diskCache.insert(file.baseName(), file.fileName());
         m_diskCacheSize += file.size();
     }
-    qCInfo(logger) << "Using" << humanizeBytes(m_diskCacheSize)
-                   << "of album art cache";
+    qCInfo(logger).noquote()
+            << "Using" << humanizeBytes(m_diskCacheSize)
+            << "of album art cache";
 }
 
 DownloadAlbumArtJob *AlbumArtCache::endFetching(
@@ -64,7 +66,7 @@ DownloadAlbumArtJob *AlbumArtCache::endFetching(
 
     QSharedPointer<QFile> file { new QFile(cacheFileFor(url)) };
     if (!file->open(QIODevice::WriteOnly | QIODevice::Unbuffered)) {
-        qCCritical(logger)
+        qCCritical(logger).noquote()
                 << "Failed to create cache file" << file->fileName()
                 << file->errorString();
         return nullptr;

@@ -129,7 +129,8 @@ void LanDeviceLink::dataReceived()
     NetworkPacket packet;
     NetworkPacket::unserialize(serializedPacket, &packet);
 
-    qCDebug(coreLogger) << "LanDeviceLink dataReceived" << serializedPacket;
+    qCDebug(coreLogger).noquote()
+            << "LanDeviceLink dataReceived" << serializedPacket;
 
     if (packet.type() == PACKET_TYPE_PAIR) {
         //TODO: Handle pair/unpair requests and forward them (to the pairing handler?)

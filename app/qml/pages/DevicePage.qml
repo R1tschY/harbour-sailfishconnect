@@ -38,32 +38,57 @@ Page {
         anchors.fill: parent
         contentHeight: deviceColumn.height + Theme.paddingLarge
 
+        states: [
+            State {
+                name: "non-reachable"
+                when: !_device.isReachable
+
+                PropertyChanges {
+                    target: placeholder
+                    text: qsTr("Device is not reachable")
+                }
+            },
+            State {
+                name: "trusted"
+                when: _device.isTrusted
+
+                PropertyChanges {
+                    target: placeholder
+                    text: ""
+                }
+            },
+            State {
+                name: "waitingParingRequest"
+                when: _device.hasPairingRequests
+
+                PropertyChanges {
+                    target: placeholder
+                    text: ""
+                }
+            },
+            State {
+                name: "waitForAcceptedPairing"
+                when: _device.waitsForPairing
+
+                PropertyChanges {
+                    target: placeholder
+                    text: qsTr("Waiting for accepted pairing ...")
+                }
+            },
+            State {
+                name: "non-trusted"
+                when: !_device.isTrusted
+
+                PropertyChanges {
+                    target: placeholder
+                    text: ""
+                }
+            }
+        ]
+
         Column {
             id: deviceColumn
             width: parent.width
-
-            states: [
-                State {
-                    name: "non-reachable"
-                    when: !_device.isReachable
-                },
-                State {
-                    name: "trusted"
-                    when: _device.isTrusted
-                },
-                State {
-                    name: "waitingParingRequest"
-                    when: _device.hasPairingRequests
-                },
-                State {
-                    name: "waitForAcceptedPairing"
-                    when: _device.waitsForPairing
-                },
-                State {
-                    name: "non-trusted"
-                    when: !_device.isTrusted
-                }
-            ]
 
             PageHeader {
                 id: header
@@ -77,7 +102,7 @@ Page {
                 height: Theme.itemSizeSmall
                 width: parent.width - Theme.paddingLarge * 2
                 x: Theme.horizontalPageMargin
-                visible: deviceColumn.state === "waitingParingRequest"
+                visible: deviceView.state === "waitingParingRequest"
 
                 Label {
                     color: Theme.highlightColor
@@ -109,7 +134,7 @@ Page {
                 height: Theme.itemSizeSmall
                 width: parent.width - Theme.paddingLarge * 2
                 x: Theme.horizontalPageMargin
-                visible: deviceColumn.state === "non-trusted"
+                visible: deviceView.state === "non-trusted"
 
                 Label {
                     color: Theme.highlightColor
@@ -131,7 +156,7 @@ Page {
             Column {
                 id: mainColumn
                 width: parent.width
-                visible: deviceColumn.state === "trusted"
+                visible: deviceView.state === "trusted"
 
                 // Plugin UIs
 
@@ -145,20 +170,13 @@ Page {
 
                 MprisUi { id: mprisUi }
             }
-        }
 
-        Label {
-            visible: deviceColumn.state === "non-reachable"
-            anchors.fill: parent
-
-            text: qsTr("Device is not reachable")
-        }
-
-        Label {
-            visible: _device.isReachable && !_device.isTrusted
-            anchors.fill: parent
-
-            text: "TODO: device settings?"
+            ViewPlaceholder {
+                id: placeholder
+                enabled: !!text
+                flickable: deviceView
+                text: ""
+            }
         }
 
         PullDownMenu {

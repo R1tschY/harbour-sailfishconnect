@@ -24,10 +24,10 @@ import Sailfish.Pickers 1.0
 ImageListItem {
     width: parent.width
     height: Theme.itemSizeExtraLarge
-    //visible: _device.loadedPlugins.indexOf("SailfishConnect::SharePlugin") >= 0
+    visible: _device.loadedPlugins.indexOf("SailfishConnect::SharePlugin") >= 0
 
-    text: qsTr("Share")
-    icon.source: "image://theme/icon-m-share"
+    title: qsTr("Share a file")
+    source: "image://theme/icon-m-share"
     onClicked: pageStack.push(filePickerPage)
 
     Component {

@@ -141,15 +141,15 @@
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
-        <translation type="unfinished"/>
+        <translation/>Quieres conectarte a este dispositivo?
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"/>
+        <translation/>Conectar
     </message>
     <message>
         <source>Device is not reachable</source>
-        <translation type="unfinished"/>
+        <translation/>El dispositivo no es accesible
     </message>
 </context>
 <context>
@@ -438,7 +438,7 @@
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
-        <translation type="unfinished"/>
+        <translation/>Compartir un archivo
     </message>
 </context>
 <context>
@@ -456,7 +456,7 @@
     </message>
     <message>
         <source/>
-        <translation type="unfinished"/>
+        <translation/>
     </message>
     <message>
         <source>Move finger on screen
@@ -520,11 +520,11 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"/>
+        <translation/>A fallado
     </message>
     <message>
         <source>Completed</source>
-        <translation type="unfinished"/>
+        <translation/>Completado
     </message>
 </context>
 </TS>

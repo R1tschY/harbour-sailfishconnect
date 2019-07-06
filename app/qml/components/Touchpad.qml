@@ -19,18 +19,14 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import SailfishConnect.Core 0.3
 
-Column {
+IconListItem {
+    title: qsTr("Touchpad")
+    source: "image://theme/icon-m-gesture"
     visible: _device.loadedPlugins.indexOf(
                  "SailfishConnect::RemoteControlPlugin") >= 0
-    width: parent.width
 
-    SectionHeader { text: qsTr("Touchpad") }
-    IconButton {
-       icon.source: "image://theme/icon-m-gesture"
-       anchors.horizontalCenter: parent.horizontalCenter
-       onClicked:
-           pageStack.push(
-               Qt.resolvedUrl("TouchpadPage.qml"),
-               { device: _device })
-    }
+   onClicked:
+       pageStack.push(
+           Qt.resolvedUrl("../pages/TouchpadPage.qml"),
+           { device: _device })
 }

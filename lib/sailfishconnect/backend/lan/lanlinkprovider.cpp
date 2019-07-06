@@ -356,7 +356,12 @@ void LanLinkProvider::newConnection()
 //I'm the new device and this is the answer to my UDP identity packet (data received)
 void LanLinkProvider::dataReceived()
 {
+    // TODO: use Socket line reader
     QSslSocket* socket = qobject_cast<QSslSocket*>(sender());
+
+    if (!socket->canReadLine()) {
+        return;
+    }
 
     const QByteArray data = socket->readLine();
 

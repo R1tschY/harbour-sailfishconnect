@@ -43,7 +43,6 @@ void SocketLineReader::dataReceived()
     //So we call this method again just in case.
     if (m_socket->bytesAvailable() > 0) {
         QMetaObject::invokeMethod(this, "dataReceived", Qt::QueuedConnection);
-        return;
     }
 
     //If we have any packets, tell it to the world.

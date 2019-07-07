@@ -20,6 +20,7 @@
 #include <QStandardPaths>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QJsonObject>
 #include <QDebug>
 #include <sailfishapp.h>
 #include <QtFeedback/QFeedbackEffect>

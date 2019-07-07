@@ -32,7 +32,7 @@
     <name>ClipboardUi</name>
     <message>
         <source>Upload clipboard text</source>
-        <translation type="unfinished"></translation>
+        <translation>Subir texto del portapapeles</translation>
     </message>
 </context>
 <context>
@@ -139,23 +139,23 @@
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Quieres conectarte a este dispositivo?</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectar</translation>
     </message>
     <message>
         <source>Device is not reachable</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo no accesible</translation>
     </message>
     <message>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Acciones</translation>
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Esperando emparejamiento aceptado ...</translation>
     </message>
 </context>
 <context>
@@ -195,7 +195,7 @@
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation>Tecleado</translation>
+        <translation>Teclado</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -248,7 +248,7 @@
     <name>RemoteKeyboard</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished">Tecleado</translation>
+        <translation>Teclado</translation>
     </message>
 </context>
 <context>
@@ -444,7 +444,7 @@
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Compartir un archivo</translation>
     </message>
 </context>
 <context>
@@ -526,11 +526,11 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>A fallado</translation>
     </message>
     <message>
         <source>Completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Completado</translation>
     </message>
 </context>
 </TS>

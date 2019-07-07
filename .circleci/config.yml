@@ -16,7 +16,7 @@ jobs:
       - store_artifacts:
           path: ~/project/RPMS/
           destination: rpms
-      - run: mb2 -t SailfishOS-3.0.3.9-armv7hl make check
+      - run: mb2 -X -t SailfishOS-3.0.3.9-armv7hl make check
 
       - run: git clean -f -x
       - run: mb2 -X -t SailfishOS-3.0.3.9-i486 build -d -j 2

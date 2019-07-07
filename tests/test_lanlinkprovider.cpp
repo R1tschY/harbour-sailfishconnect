@@ -65,7 +65,8 @@ protected:
 
         m_privateKey = Ssl::KeyGenerator::generateRsa(2048);
         m_certificate = generateCertificate(deviceId, m_privateKey);
-        m_identityPacket = QStringLiteral("{\"id\":1439365924847,\"type\":\"kdeconnect.identity\",\"body\":{\"deviceId\":\"testdevice\",\"deviceName\":\"Test Device\",\"protocolVersion\":6,\"deviceType\":\"phone\",\"tcpPort\":") + QString::number(TEST_PORT) + QStringLiteral("}}");
+        m_identityPacket = QStringLiteral(
+                    "{\"id\":1439365924847,\"type\":\"kdeconnect.identity\",\"body\":{\"deviceId\":\"testdevice\",\"deviceName\":\"Test Device\",\"protocolVersion\":6,\"deviceType\":\"phone\",\"tcpPort\":") + QString::number(TEST_PORT) + QStringLiteral("}}\n");
 
         removeTrustedDevice();
 
@@ -94,58 +95,61 @@ protected:
 };
 
 
-TEST_F(LanLinkProviderTests, pairedDeviceTcpPacketReceived) {
-    addTrustedDevice();
+//TEST_F(LanLinkProviderTests, pairedDeviceTcpPacketReceived) {
+//    addTrustedDevice();
 
-    QUdpSocket* mUdpServer = new QUdpSocket;
-    bool b = mUdpServer->bind(QHostAddress::LocalHost, LanLinkProvider::UDP_PORT, QUdpSocket::ShareAddress);
-    EXPECT_TRUE(b);
+//    QUdpSocket* mUdpServer = new QUdpSocket;
+//    bool b = mUdpServer->bind(
+//                QHostAddress::LocalHost,
+//                udpBroadcastPort,
+//                QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+//    ASSERT_TRUE(b);
 
-    QSignalSpy spy(mUdpServer, SIGNAL(readyRead()));
-    m_lanLinkProvider.onNetworkChange("test");
-    EXPECT_TRUE(!spy.isEmpty() || spy.wait());
+//    QSignalSpy spy(mUdpServer, SIGNAL(readyRead()));
+//    m_lanLinkProvider.onNetworkChange("test");
+//    ASSERT_TRUE(!spy.isEmpty() || spy.wait());
 
-    QByteArray datagram;
-    datagram.resize(mUdpServer->pendingDatagramSize());
-    QHostAddress sender;
+//    QByteArray datagram;
+//    datagram.resize(mUdpServer->pendingDatagramSize());
+//    QHostAddress sender;
 
-    mUdpServer->readDatagram(datagram.data(), datagram.size(), &sender);
+//    mUdpServer->readDatagram(datagram.data(), datagram.size(), &sender);
 
-    testIdentityPacket(datagram);
+//    testIdentityPacket(datagram);
 
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(datagram);
-    QJsonObject body = jsonDocument.object().value(QStringLiteral("body")).toObject();
-    int tcpPort = body.value(QStringLiteral("tcpPort")).toInt();
+//    QJsonDocument jsonDocument = QJsonDocument::fromJson(datagram);
+//    QJsonObject body = jsonDocument.object().value(QStringLiteral("body")).toObject();
+//    int tcpPort = body.value(QStringLiteral("tcpPort")).toInt();
 
-    QSslSocket socket;
-    QSignalSpy spy2(&socket, SIGNAL(connected()));
+//    QSslSocket socket;
+//    QSignalSpy spy2(&socket, SIGNAL(connected()));
 
-    socket.connectToHost(sender, tcpPort);
-    EXPECT_TRUE(spy2.wait());
+//    socket.connectToHost(sender, tcpPort);
+//    EXPECT_TRUE(spy2.wait());
 
-    EXPECT_TRUE(socket.isOpen()); // Socket disconnected immediately
+//    EXPECT_TRUE(socket.isOpen()); // Socket disconnected immediately
 
-    socket.write(m_identityPacket.toLatin1());
-    socket.waitForBytesWritten(2000);
+//    socket.write(m_identityPacket.toLatin1());
+//    socket.waitForBytesWritten(2000);
 
-    QSignalSpy spy3(&socket, SIGNAL(encrypted()));
+//    QSignalSpy spy3(&socket, SIGNAL(encrypted()));
 
-    setSocketAttributes(&socket);
-    socket.addCaCertificate(m_certificate);
-    socket.setPeerVerifyMode(QSslSocket::VerifyPeer);
-    socket.setPeerVerifyName(deviceId);
+//    setSocketAttributes(&socket);
+//    socket.addCaCertificate(kcc.certificate());
+//    socket.setPeerVerifyMode(QSslSocket::VerifyPeer);
+//    socket.setPeerVerifyName(kcc.name());
 
-    socket.startServerEncryption();
-    EXPECT_TRUE(spy3.wait());
+//    socket.startServerEncryption();
+//    EXPECT_TRUE(spy3.wait());
 
-    EXPECT_EQ(socket.sslErrors().size(), 0);
-    EXPECT_TRUE(socket.isValid()); // Server socket disconnected
-    EXPECT_TRUE(socket.isEncrypted()); // Server socket not yet encrypted
-    EXPECT_TRUE(!socket.peerCertificate().isNull()); // Peer certificate is null
+//    EXPECT_EQ(socket.sslErrors().size(), 0);
+//    EXPECT_TRUE(socket.isValid()); // Server socket disconnected
+//    EXPECT_TRUE(socket.isEncrypted()); // Server socket not yet encrypted
+//    EXPECT_TRUE(!socket.peerCertificate().isNull()); // Peer certificate is null
 
-    removeTrustedDevice();
-    delete mUdpServer;
-}
+//    removeTrustedDevice();
+//    delete mUdpServer;
+//}
 
 void LanLinkProviderTests::testIdentityPacket(QByteArray& identityPacket)
 {

@@ -17,6 +17,7 @@
 
 #include "keyboardlayoutprovider.h"
 #include <QFile>
+#include <QDir>
 #include <QStandardPaths>
 #include <QJsonDocument>
 #include <QJsonArray>

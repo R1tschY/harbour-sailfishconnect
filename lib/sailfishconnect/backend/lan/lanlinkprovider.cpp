@@ -454,13 +454,20 @@ void LanLinkProvider::configureSslSocket(QSslSocket* socket, const QString& devi
     if (isDeviceTrusted) {
         QString certString = m_config->getDeviceProperty(
                     deviceId, QStringLiteral("certificate"), QString());
+        QSslCertificate cert(certString.toLatin1());
 
         // use unsanitized device id as peer verify name
-        QSslCertificate cert(certString.toLatin1());
-        socket->setPeerVerifyName(
-                    cert.issuerInfo(QSslCertificate::CommonName).constFirst());
-        socket->addCaCertificate(cert);
-        socket->setPeerVerifyMode(QSslSocket::VerifyPeer);
+        QStringList commonName = cert.issuerInfo(QSslCertificate::CommonName);
+        if (cert.isNull() || commonName.length() != 1) {
+            qCWarning(coreLogger)
+                    << "Certificate of" << deviceId
+                    << "is missing or corrupt. Maybe pairing was incomplete.";
+            socket->setPeerVerifyMode(QSslSocket::VerifyPeer);
+        } else {
+            socket->setPeerVerifyName(commonName.constFirst());
+            socket->addCaCertificate(cert);
+            socket->setPeerVerifyMode(QSslSocket::VerifyPeer);
+        }
     } else {
         socket->setPeerVerifyMode(QSslSocket::QueryPeer);
     }

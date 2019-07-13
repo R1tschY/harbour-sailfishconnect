@@ -193,7 +193,10 @@ Page {
                 sourceModel: nontrustedDevicesModel
             }
 
-            SectionHeader { text: qsTr("Paired devices") }
+            SectionHeader {
+                text: qsTr("Paired devices")
+                visible: trustedDevices.count > 0
+            }
             ColumnView {
                 id: trustedDevices
                 width: page.width
@@ -205,7 +208,10 @@ Page {
                 visible: trustedDevices.count > 0
             }
 
-            SectionHeader { text: qsTr("Nearby devices") }
+            SectionHeader {
+                text: qsTr("Nearby devices")
+                visible: nearDevices.count > 0
+            }
             ColumnView {
                 id: nearDevices
                 width: page.width

@@ -64,11 +64,18 @@ DownloadAlbumArtJob *AlbumArtCache::endFetching(
         return job;
     }
 
+    if (payload.isNull()) {
+        qCDebug(logger) << "Empty payload";
+        m_fetching.remove(hash);
+        return nullptr;
+    }
+
     QSharedPointer<QFile> file { new QFile(cacheFileFor(url)) };
     if (!file->open(QIODevice::WriteOnly | QIODevice::Unbuffered)) {
         qCCritical(logger).noquote()
                 << "Failed to create cache file" << file->fileName()
                 << file->errorString();
+        m_fetching.remove(hash);
         return nullptr;
     }
 
@@ -105,6 +112,7 @@ DownloadAlbumArtJob *AlbumArtCache::startFetching(const QUrl &url)
     }
 
     auto* job = new DownloadAlbumArtJob(url, cacheFileFor(url), this);
+    // TODO: add timeout to remove it after a time when no response
     m_fetching.insert(hash, job);
     connect(job, &DownloadAlbumArtJob::finished,
             this, &AlbumArtCache::fetchFinished);

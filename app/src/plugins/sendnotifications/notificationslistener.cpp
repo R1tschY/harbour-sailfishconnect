@@ -122,7 +122,7 @@ void NotificationsListenerThread::run()
                 "member='Notify'");
 
     // wake up every minute to see if we are still connected
-    while (dbus_connection_read_write(connection, 60 * 1000))
+    while (dbus_connection_read_write_dispatch(connection, 60 * 1000))
       ;
 }
 
@@ -151,43 +151,55 @@ void NotificationsListenerThread::handleMessage(
     }
 }
 
-class RawDBusMessageIterNext {
-public:
-    RawDBusMessageIterNext(DBusMessageIter* iter)
-        : iter(iter)
-    {}
+static unsigned nextUnsigned(DBusMessageIter* iter) {
+    Q_ASSERT(dbus_message_iter_get_arg_type(iter) == DBUS_TYPE_UINT32);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(iter, &value);
+    dbus_message_iter_next(iter);
+    return value.u32;
+}
 
-    ~RawDBusMessageIterNext() { dbus_message_iter_next(iter); }
+static int nextInt(DBusMessageIter* iter) {
+    Q_ASSERT(dbus_message_iter_get_arg_type(iter) == DBUS_TYPE_INT32);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(iter, &value);
+    dbus_message_iter_next(iter);
+    return value.i32;
+}
 
-private:
-    DBusMessageIter* iter;
-};
+static QString nextString(DBusMessageIter* iter) {
+    Q_ASSERT(dbus_message_iter_get_arg_type(iter) == DBUS_TYPE_STRING);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(iter, &value);
+    dbus_message_iter_next(iter);
+    return QString::fromUtf8(value.str);
+}
 
-class RawDBusMessageIter {
-public:
-    RawDBusMessageIter(DBusMessage *message) {
-        dbus_message_iter_init(message, &iter);
+static QStringList nextStringList(DBusMessageIter* iter) {
+    DBusMessageIter sub;
+    dbus_message_iter_recurse(iter, &sub);
+    dbus_message_iter_next(iter);
+
+    QStringList list;
+    while (dbus_message_iter_get_arg_type(&sub) != DBUS_TYPE_INVALID) {
+        list.append(nextString(&sub));
     }
+    return list;
+}
 
-    DBusMessageIter* operator&() { return &iter; }
-
-    QVariant next();
-
-private:
-    DBusMessageIter iter;
-};
-
-QVariant RawDBusMessageIter::next() {
-    int type = dbus_message_iter_get_arg_type(&iter);
-    if (type == DBUS_TYPE_INVALID)
+static QVariant nextVariant(DBusMessageIter* iter) {
+    int type = dbus_message_iter_get_arg_type(iter);
+    if (type != DBUS_TYPE_VARIANT)
         return QVariant();
 
-    // Use qScopeGuard in Qt 5.12
-    RawDBusMessageIterNext iterNext(&iter);
+    DBusMessageIter sub;
+    dbus_message_iter_recurse(iter, &sub);
+    dbus_message_iter_next(iter);
 
+    type = dbus_message_iter_get_arg_type(&sub);
     if (dbus_type_is_basic(type)) {
         DBusBasicValue value;
-        dbus_message_iter_get_basic(&iter, &value);
+        dbus_message_iter_get_basic(&sub, &value);
         switch (type) {
         case DBUS_TYPE_BOOLEAN:
             return QVariant(value.bool_val);
@@ -209,19 +221,39 @@ QVariant RawDBusMessageIter::next() {
             return QVariant(value.dbl);
         case DBUS_TYPE_STRING:
             return QVariant(QString::fromUtf8(value.str));
-        default:
-            Q_UNIMPLEMENTED();
-            return QVariant();
         }
     }
 
-    Q_UNIMPLEMENTED();
+    qCWarning(logger)
+            << "Unimplemented conversation of type"
+            << QChar(type)
+            << type;
+
     return QVariant();
+}
+
+static QVariantMap nextVariantMap(DBusMessageIter* iter) {
+    DBusMessageIter sub;
+    dbus_message_iter_recurse(iter, &sub);
+    dbus_message_iter_next(iter);
+
+    QVariantMap map;
+    while (dbus_message_iter_get_arg_type(&sub) != DBUS_TYPE_INVALID) {
+        DBusMessageIter entry;
+        dbus_message_iter_recurse(&sub, &entry);
+        dbus_message_iter_next(&sub);
+        QString key = nextString(&entry);
+        QVariant value = nextVariant(&entry);
+        map.insert(key, value);
+    }
+    return map;
 }
 
 void NotificationsListenerThread::handleNotifyCall(DBusMessage *message)
 {
-    RawDBusMessageIter iter(message);
+    DBusMessageIter iter;
+    dbus_message_iter_init(message, &iter);
+
     if (!dbus_message_has_signature(message, NOTIFY_SIGNATURE)) {
         qCWarning(logger).nospace()
                 << "Call to Notify has wrong signature. Expected "
@@ -230,14 +262,14 @@ void NotificationsListenerThread::handleNotifyCall(DBusMessage *message)
         return;
     }
 
-    QString appName = iter.next().toString();
-    int replacesId = iter.next().toInt();
-    QString appIcon = iter.next().toString();
-    QString summary = iter.next().toString();
-    QString body = iter.next().toString();
-    QStringList actions = iter.next().toStringList();
-    QVariantMap hints = iter.next().toMap();
-    int timeout = iter.next().toInt();
+    QString appName = nextString(&iter);
+    uint replacesId = nextUnsigned(&iter);
+    QString appIcon = nextString(&iter);
+    QString summary = nextString(&iter);
+    QString body = nextString(&iter);
+    QStringList actions = nextStringList(&iter);
+    QVariantMap hints = nextVariantMap(&iter);
+    int timeout = nextInt(&iter);
 
     Q_EMIT Notify(
                 appName, replacesId, appIcon, summary, body, actions, hints,
@@ -247,6 +279,7 @@ void NotificationsListenerThread::handleNotifyCall(DBusMessage *message)
 NotificationsListener::NotificationsListener(KdeConnectPlugin* aPlugin)
     : QObject(aPlugin)
     , m_plugin(aPlugin)
+    , m_thread(new NotificationsListenerThread())
 {
     qRegisterMetaTypeStreamOperators<NotifyingApplication>(
         "NotifyingApplication");
@@ -276,7 +309,7 @@ void NotificationsListener::loadApplications()
         if (!m_applications.contains(app.name))
             m_applications.insert(app.name, app);
     }
-    //qCDebug(logger) << "Loaded" << applications.size() << " applications";
+    qCDebug(logger) << "Loaded" << m_applications.size() << " applications";
 }
 
 bool NotificationsListener::parseImageDataArgument(const QVariant& argument,
@@ -444,6 +477,12 @@ QSharedPointer<QIODevice> NotificationsListener::iconForIconName(
                     Q_UNREACHABLE();
                 }
 
+                if (image.isNull()) {
+                    qCWarning(logger)
+                            << "Could not get theme icon:"
+                            << iconName;
+                }
+
                 result = imageToPng(image);
                 if (result.isNull()) {
                     qCWarning(logger)
@@ -472,7 +511,15 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
 {
     Q_UNUSED(actions);
 
-    //qCDebug(logger) << "Got notification appName=" << appName << "replacesId=" << replacesId << "appIcon=" << appIcon << "summary=" << summary << "body=" << body << "actions=" << actions << "hints=" << hints << "timeout=" << timeout;
+//    qCDebug(logger)
+//            << "Got notification appName=" << appName
+//            << "replacesId=" << replacesId
+//            << "appIcon=" << appIcon
+//            << "summary=" << summary
+//            << "body=" << body
+//            << "actions=" << actions
+//            << "hints=" << hints
+//            << "timeout=" << timeout;
 
     // skip our own notifications
     if (hints.value(QStringLiteral("x-sailfishconnect-hide"), false).toBool())
@@ -541,13 +588,12 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
 
     // TODO: use nemo hints
     // TODO: if id == 0 use return value of call
-    qCDebug(logger) << "Notification hints" << hints;
     //qCDebug(logger) << "Sending notification from" << appName << ":" <<ticker << "; appIcon=" << appIcon;
     NetworkPacket np("kdeconnect.notification", {
         {QStringLiteral("id"), QString::number(replacesId)},
         {QStringLiteral("appName"), appName},
         {QStringLiteral("ticker"), ticker},
-        {QStringLiteral("isClearable"), timeout == 0},
+        {QStringLiteral("isClearable"), timeout == -1},
         {QStringLiteral("title"), summary},
         {QStringLiteral("text"), body},
         {QStringLiteral("requestAnswer"), requestAnswer}, // TODO: request package
@@ -555,8 +601,9 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
     });
 
     // sync any icon data?
+    // Only send icon on first notify (replacesId == 0)
     if (config->get(QStringLiteral("generalSynchronizeIcons"), true)
-            && !m_iconSendIds.contains(replacesId)) {
+            && replacesId == 0) {
         QSharedPointer<QIODevice> iconSource;
         // try different image sources according to priorities in notifications-
         // spec version 1.2:
@@ -582,9 +629,7 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
 #endif
 
         if (iconSource) {
-            if (replacesId > 0)
-                m_iconSendIds.insert(replacesId);
-            //np.setPayload(iconSource, iconSource->size());
+            np.setPayload(iconSource, iconSource->size());
             // TODO: np.set(QStringLiteral("payloadHash"), );
         }
     }

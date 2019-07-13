@@ -154,7 +154,6 @@ private:
     QHash<QString, NotifyingApplication> m_applications;
     NotificationsListenerThread* m_thread;
     //QCache<IconCacheEntry> m_iconCache;
-    QSet<int> m_iconSendIds; ///< notify ids where icon is already send
 };
 
 } // namespace SailfishConnect

@@ -45,6 +45,7 @@ public:
 
     QVariantMap transferInfo();
     QString fileName();
+    bool isOkay() const { return m_port != 0; }
 
     void start() override;
 

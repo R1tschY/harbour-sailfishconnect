@@ -93,7 +93,7 @@ void LanUploadJob::startUploading()
 
 QVariantMap LanUploadJob::transferInfo()
 {
-    Q_ASSERT(m_port != 0);
+    Q_ASSERT(isOkay());
     return {{"port", m_port}};
 }
 

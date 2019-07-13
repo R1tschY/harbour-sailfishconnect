@@ -29,6 +29,7 @@ SendNotificationsPlugin::SendNotificationsPlugin(
 
 bool SendNotificationsPlugin::receivePacket(const NetworkPacket&)
 {
+    // impl. request for existing notifications
     return false;
 }
 

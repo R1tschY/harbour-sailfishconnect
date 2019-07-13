@@ -21,14 +21,12 @@
 
 #pragma once
 
-#include <QtDBus/QDBusAbstractAdaptor>
-#include <QtDBus/QDBusArgument>
 #include <sailfishconnect/device.h>
 #include <QIODevice>
 #include <QSharedPointer>
-#include <QDBusConnection>
 #include <QThread>
 #include <QHash>
+#include <QSet>
 #include <dbus/dbus.h>
 
 class KdeConnectPlugin;
@@ -116,8 +114,15 @@ private:
     void handleNotifyCall(DBusMessage *message);
 };
 
+class IconCacheEntry : public QObject {
+public:
+private:
+    QByteArray pngData;
+    QByteArray md5Hash;
+};
+
 // TODO: make singleton with shapedpointer/weakpointer
-class NotificationsListener : public QDBusAbstractAdaptor
+class NotificationsListener : public QObject
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.freedesktop.Notifications")
@@ -147,7 +152,9 @@ private:
 
     KdeConnectPlugin* m_plugin;
     QHash<QString, NotifyingApplication> m_applications;
-    NotificationsListenerThread m_thread;
+    NotificationsListenerThread* m_thread;
+    //QCache<IconCacheEntry> m_iconCache;
+    QSet<int> m_iconSendIds; ///< notify ids where icon is already send
 };
 
 } // namespace SailfishConnect

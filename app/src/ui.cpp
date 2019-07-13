@@ -51,11 +51,17 @@ UI::UI(AppDaemon* daemon, KeyboardLayoutProvider* keyboardLayoutProvider, QObjec
     m_settings.beginGroup(QStringLiteral("UI"));
 
     auto sessionBus = QDBusConnection::sessionBus();
-    sessionBus.registerObject(
+    if (!sessionBus.registerObject(
         DBUS_PATH,
         DBUS_INTERFACE_NAME,
         this,
-        QDBusConnection::ExportScriptableSlots);
+        QDBusConnection::ExportScriptableSlots))
+    {
+        qCCritical(logger)
+                << "Registering" << DBUS_INTERFACE_NAME
+                << "on" << DBUS_PATH
+                << "failed";
+    }
 }
 
 
@@ -121,7 +127,7 @@ void UI::raise()
     QDBusReply<void> reply = daemonInterface.call(
                 QLatin1String("showMainWindow"));
     if (!reply.isValid()) {
-        qCWarning(logger)
+        qCCritical(logger)
             << "Daemon raise call failed:"
             << reply.error().name() << "/"
             << reply.error().message();

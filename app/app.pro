@@ -23,6 +23,8 @@ DEFINES += \
     QT_USE_QSTRINGBUILDER
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT QT_NO_DEBUG
 
+DEFINES += SAILFISHOS
+
 include(../lib/lib.pri)
 CONFIG += conan_basic_setup
 include(../conanbuildinfo.pri)
@@ -78,13 +80,13 @@ DISTFILES += \
     src/plugins/sendnotifications/metadata.json \
     src/plugins/touchpad/metadata.json \
     qml/components/Touchpad.qml \
-    qml/components/TouchpadPage.qml \
+    qml/pages/TouchpadPage.qml \
     src/plugins/share/metadata.json \
     qml/components/ShareUi.qml \
     qml/pages/TransfersPage.qml \
     src/plugins/telephony/metadata.json \
     src/dbus/ofono/org.ofono.Manager.xml \
-    qml/components/KeyboardPage.qml \
+    qml/pages/KeyboardPage.qml \
     qml/components/Key.qml \
     qml/components/RemoteInput.qml \
     src/plugins/remotekeyboard/metadata.json

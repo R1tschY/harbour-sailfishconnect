@@ -41,6 +41,8 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "SailfishConnect.SendNotifications")
 
+const char* NOTIFY_SIGNATURE = "susssasa{sv}i";
+
 
 void becomeMonitor(DBusConnection* conn, const char* match) {
     // message
@@ -62,7 +64,7 @@ void becomeMonitor(DBusConnection* conn, const char* match) {
                 DBUS_TYPE_INVALID));
 
     // send
-    // TODO: wait and check for error
+    // TODO: wait and check for error: dbus_connection_send_with_reply_and_block
     Q_ASSERT(dbus_connection_send(conn, msg, nullptr));
 
     dbus_message_unref(msg);
@@ -97,7 +99,6 @@ void NotificationsListenerThread::quit()
 {
     if (m_connection) {
         dbus_connection_close(m_connection);
-        wait();
     }
 }
 
@@ -120,7 +121,8 @@ void NotificationsListenerThread::run()
                 "interface='org.freedesktop.Notifications',"
                 "member='Notify'");
 
-    while (dbus_connection_read_write_dispatch(connection, -1))
+    // wake up every minute to see if we are still connected
+    while (dbus_connection_read_write(connection, 60 * 1000))
       ;
 }
 
@@ -220,6 +222,13 @@ QVariant RawDBusMessageIter::next() {
 void NotificationsListenerThread::handleNotifyCall(DBusMessage *message)
 {
     RawDBusMessageIter iter(message);
+    if (!dbus_message_has_signature(message, NOTIFY_SIGNATURE)) {
+        qCWarning(logger).nospace()
+                << "Call to Notify has wrong signature. Expected "
+                << NOTIFY_SIGNATURE << ", got "
+                << dbus_message_get_signature(message);
+        return;
+    }
 
     QString appName = iter.next().toString();
     int replacesId = iter.next().toInt();
@@ -236,7 +245,7 @@ void NotificationsListenerThread::handleNotifyCall(DBusMessage *message)
 }
 
 NotificationsListener::NotificationsListener(KdeConnectPlugin* aPlugin)
-    : QDBusAbstractAdaptor(aPlugin)
+    : QObject(aPlugin)
     , m_plugin(aPlugin)
 {
     qRegisterMetaTypeStreamOperators<NotifyingApplication>(
@@ -247,13 +256,15 @@ NotificationsListener::NotificationsListener(KdeConnectPlugin* aPlugin)
     connect(
         m_plugin->config(), &SailfishConnectPluginConfig::configChanged,
         this, &NotificationsListener::loadApplications);
-    connect(&m_thread, &NotificationsListenerThread::Notify,
+    connect(m_thread, &NotificationsListenerThread::Notify,
             this, &NotificationsListener::onNotify);
 
-    m_thread.start();
+    m_thread->start();
 }
 
-NotificationsListener::~NotificationsListener() = default;
+NotificationsListener::~NotificationsListener() {
+    m_thread->quit();
+}
 
 void NotificationsListener::loadApplications()
 {
@@ -284,6 +295,38 @@ bool NotificationsListener::parseImageDataArgument(const QVariant& argument,
     return true;
 }
 
+static QByteArray imageToPng(const QImage& image) {
+    if (image.isNull())
+        return QByteArray();
+
+    QBuffer buffer;
+    buffer.open(QIODevice::ReadWrite);
+
+    // TODO: cache icons
+    bool success = image.save(buffer.data(), "PNG");
+    if (success) {
+        return buffer.data();
+    } else {
+        return QByteArray();
+    }
+}
+
+static QSharedPointer<QIODevice> imageToPngBuffer(const QImage& image) {
+    if (image.isNull())
+        return QSharedPointer<QIODevice>();
+
+    QSharedPointer<QBuffer> buffer;
+    buffer->open(QIODevice::ReadWrite);
+
+    bool success = image.save(buffer->data(), "PNG");
+    if (success) {
+        buffer->seek(0);
+        return buffer;
+    } else {
+        return QSharedPointer<QIODevice>();
+    }
+}
+
 QSharedPointer<QIODevice> NotificationsListener::iconForImageData(
         const QVariant& argument) const
 {
@@ -312,40 +355,23 @@ QSharedPointer<QIODevice> NotificationsListener::iconForImageData(
     if (hasAlpha)
         image = image.rgbSwapped();  // RGBA --> ARGB
 
-    QSharedPointer<QBuffer> buffer = QSharedPointer<QBuffer>(new QBuffer);
-    if (!buffer || !buffer->open(QIODevice::WriteOnly) ||
-            !image.save(buffer.data(), "PNG")) {
-        qCWarning(logger) << "Could not initialize image buffer";
-        return QSharedPointer<QIODevice>();
-    }
-
-    return buffer;
+    return imageToPngBuffer(image);
 }
 
-static QSharedPointer<QIODevice> imageToPng(const QImage& image) {
-    if (image.isNull())
-        return QSharedPointer<QBuffer>();
-
-    QSharedPointer<QBuffer> buffer;
-    buffer->open(QIODevice::ReadWrite);
-
-    // TODO: cache icons
-    bool success = image.save(buffer.data(), "PNG");
-    if (success) {
-        buffer->seek(0);
-        return buffer;
-    } else {
-        return QSharedPointer<QBuffer>();
-    }
-}
-
-static QSharedPointer<QIODevice> pathToPng(const QString& path) {
+static QByteArray pathToPng(const QString& path) {
     if (path.endsWith(QLatin1String(".png"))) {
-        return QSharedPointer<QIODevice>(new QFile(path));
+        QFile file(path);
+        if (!file.open(QIODevice::ReadOnly)) {
+            qCWarning(logger)
+                    << "Could not open png:"
+                    << path;
+            return QByteArray();
+        }
+        return file.readAll();
     }
 
     auto buffer = imageToPng(QImage(path));
-    if (!buffer) {
+    if (buffer.isEmpty()) {
         qCWarning(logger)
                 << "Could not convert image to png:"
                 << path;
@@ -353,11 +379,11 @@ static QSharedPointer<QIODevice> pathToPng(const QString& path) {
     return buffer;
 }
 
-static QSharedPointer<QIODevice> themeIconToPng(const QString& iconName) {
+static QByteArray themeIconToPng(const QString& iconName) {
     QIcon icon = QIcon::fromTheme(iconName);
     QPixmap pixmap = icon.pixmap(128);
     auto buffer = imageToPng(pixmap.toImage());
-    if (!buffer) {
+    if (buffer.isEmpty()) {
         qCWarning(logger)
                 << "Could not convert theme icon to png:"
                 << iconName;
@@ -370,63 +396,72 @@ QSharedPointer<QIODevice> NotificationsListener::iconForIconName(
 {
     qCDebug(logger) << "convert icon name" << iconName << "to png";
 
+    QByteArray result;
     if (!iconName.contains(QChar('/'))) {
-        return themeIconToPng(iconName);
+        result = themeIconToPng(iconName);
     } else {
         auto url = QUrl::fromUserInput(
             iconName, QString(), QUrl::AssumeLocalFile);
 
         QString scheme = url.scheme();
         if (scheme == QLatin1String("file")) {
-            return pathToPng(url.path());
+            result = pathToPng(url.path());
+#ifdef SAILFISHOS
         } else if (scheme == QLatin1String("image")) {
             auto* imageProvider = static_cast<QQuickImageProvider*>(
                     AppDaemon::instance()->imageProvider(url.host()));
             if (!imageProvider) {
                 qCWarning(logger)
                         << "No image provider" << url.host() << "found.";
-                return QSharedPointer<QIODevice>();
-            }
+                result = QByteArray();
+            } else {
+                QString id = url.path();
+                id.remove(0, 1);
 
-            QString id = url.path();
-            id.remove(0, 1);
+                QSize size;
+                QSize requestedSize(128, 128);
+                QImage image;
+                switch (imageProvider->imageType()) {
+                case QQmlImageProviderBase::Image:
+                    qCDebug(logger)
+                            << "Get image from QQmlImageProvider" << id;
+                    image = imageProvider->requestImage(
+                        id, &size, requestedSize);
+                    break;
+                case QQmlImageProviderBase::Pixmap:
+                    qCDebug(logger)
+                            << "Get pixmap from QQmlImageProvider" << id;
+                    image = imageProvider->requestPixmap(
+                        id, &size, requestedSize).toImage();
+                    break;
+                case QQmlImageProviderBase::Texture:
+                    qCDebug(logger)
+                            << "Get texture from QQmlImageProvider" << id;
+                    image = imageProvider->requestTexture(
+                        id, &size, requestedSize)->image();
+                    break;
+                default:
+                    Q_UNREACHABLE();
+                }
 
-            QSize size;
-            QSize requestedSize(128, 128);
-            QImage image;
-            switch (imageProvider->imageType()) {
-            case QQmlImageProviderBase::Image:
-                qCDebug(logger) << "Get image from QQmlImageProvider" << id;
-                image = imageProvider->requestImage(
-                    id, &size, requestedSize);
-                break;
-            case QQmlImageProviderBase::Pixmap:
-                qCDebug(logger) << "Get pixmap from QQmlImageProvider" << id;
-                image = imageProvider->requestPixmap(
-                    id, &size, requestedSize).toImage();
-                break;
-            case QQmlImageProviderBase::Texture:
-                qCDebug(logger) << "Get texture from QQmlImageProvider" << id;
-                image = imageProvider->requestTexture(
-                    id, &size, requestedSize)->image();
-                break;
-            default:
-                Q_UNREACHABLE();
+                result = imageToPng(image);
+                if (result.isNull()) {
+                    qCWarning(logger)
+                            << "Could not convert theme icon to png:"
+                            << iconName;
+                }
             }
-
-            auto ret = imageToPng(image);
-            if (ret.isNull()) {
-                qCWarning(logger)
-                        << "Could not convert theme icon to png:"
-                        << iconName;
-            }
-            return ret;
+#endif
         } else {
             qCWarning(logger)
                     << "Not supported file scheme for icon file" << scheme;
-            return QSharedPointer<QIODevice>();
+            result = QByteArray();
         }
     }
+
+    auto* buffer = new QBuffer();
+    buffer->setData(result);
+    return QSharedPointer<QIODevice>(buffer);
 }
 
 void NotificationsListener::onNotify(const QString& appName, uint replacesId,
@@ -481,6 +516,9 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
             urgency < config->get<int>(QStringLiteral("generalUrgency"), 0))
         return;
 
+    if (summary.isEmpty())
+        return;
+
     QString ticker = summary;
     if (!body.isEmpty() &&
             config->get(QStringLiteral("generalIncludeBody"), true))
@@ -491,19 +529,34 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
             app.blacklistExpression.match(ticker).hasMatch())
         return;
 
+
+    bool silent = false;
+    bool requestAnswer = false;
+
+#ifdef SAILFISHOS
+    // use x-nemo-timestamp
+    if (hints[QStringLiteral("x-nemo-hidden")].toBool())
+        return;
+#endif
+
+    // TODO: use nemo hints
+    // TODO: if id == 0 use return value of call
+    qCDebug(logger) << "Notification hints" << hints;
     //qCDebug(logger) << "Sending notification from" << appName << ":" <<ticker << "; appIcon=" << appIcon;
     NetworkPacket np("kdeconnect.notification", {
-        {"id", QString::number(replacesId)},
-        {"appName", appName},
-        {"ticker", ticker},
-        {"isClearable", timeout == 0},
-        {"title", summary},
-        {"text", body},
+        {QStringLiteral("id"), QString::number(replacesId)},
+        {QStringLiteral("appName"), appName},
+        {QStringLiteral("ticker"), ticker},
+        {QStringLiteral("isClearable"), timeout == 0},
+        {QStringLiteral("title"), summary},
+        {QStringLiteral("text"), body},
+        {QStringLiteral("requestAnswer"), requestAnswer}, // TODO: request package
+        {QStringLiteral("silent"), silent},
     });
 
     // sync any icon data?
-    // TODO: do not send icon on updates!
-    if (config->get(QStringLiteral("generalSynchronizeIcons"), true)) {
+    if (config->get(QStringLiteral("generalSynchronizeIcons"), true)
+            && !m_iconSendIds.contains(replacesId)) {
         QSharedPointer<QIODevice> iconSource;
         // try different image sources according to priorities in notifications-
         // spec version 1.2:
@@ -517,16 +570,23 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
         // 1.1 backward compatibility
         else if (hints.contains(QStringLiteral("image_path")))
             iconSource = iconForIconName(hints[QStringLiteral("image_path")].toString());
-        else if (hints.contains(QStringLiteral("x-nemo-icon")))
-            iconSource = iconForIconName(hints[QStringLiteral("x-nemo-icon")].toString());
         else if (!appIcon.isEmpty())
             iconSource = iconForIconName(appIcon);
         // < 1.1 backward compatibility
         else if (hints.contains(QStringLiteral("icon_data")))
             iconSource = iconForImageData(hints[QStringLiteral("icon_data")]);
+#ifdef SAILFISHOS
+        // Lipstick compatibility (deprecated)
+        else if (hints.contains(QStringLiteral("x-nemo-icon")))
+            iconSource = iconForIconName(hints[QStringLiteral("x-nemo-icon")].toString());
+#endif
 
-        if (iconSource)
-            np.setPayload(iconSource, iconSource->size());
+        if (iconSource) {
+            if (replacesId > 0)
+                m_iconSendIds.insert(replacesId);
+            //np.setPayload(iconSource, iconSource->size());
+            // TODO: np.set(QStringLiteral("payloadHash"), );
+        }
     }
 
     m_plugin->sendPacket(np);

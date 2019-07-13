@@ -98,8 +98,8 @@ bool LanDeviceLink::sendPacket(NetworkPacket& np, KJobTrackerInterface* jobMgr)
 {
     if (np.hasPayload()) {
         auto* uploadJob = sendPayload(np, jobMgr);
-        np.setPayloadTransferInfo(uploadJob->transferInfo());
-        // TODO: else return?
+        if (uploadJob->isOkay())
+            np.setPayloadTransferInfo(uploadJob->transferInfo());
     }
 
     int written = m_socketLineReader->write(np.serialize());

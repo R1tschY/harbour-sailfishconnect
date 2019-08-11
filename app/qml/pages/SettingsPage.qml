@@ -23,6 +23,8 @@ import SailfishConnect.Core 0.3
 Page {
     id: page
 
+    allowedOrientations: Orientation.All
+
     SilicaFlickable {
         id: pageFlickable
         anchors.fill: parent

@@ -42,6 +42,8 @@ import SailfishConnect.RemoteControl 0.3
 Page {
     id: page
 
+    allowedOrientations: Orientation.All
+
     property var device
     property var plugin:
         device.plugin("SailfishConnect::RemoteControlPlugin")
@@ -55,7 +57,7 @@ Page {
     }
 
     InfoLabel {
-        id: hintLabel
+        id: hintLabelggggggjkkrrrrkkkii
         text: qsTr(
                   "Move finger on screen\n" +
                   "Tap for click\n" +

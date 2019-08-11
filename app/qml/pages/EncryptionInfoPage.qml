@@ -27,6 +27,24 @@ Page {
 
     allowedOrientations: Orientation.All
 
+    function prettifyEncryptionInfo(encInfo) {
+        var re = /\w\w(:\w\w)+/g
+
+        function replacer(match) {
+            var parts = match.split(":")
+            var result = ""
+            for (var i = 0; i < parts.length; i += 5) {
+                result += "  " + parts[i + 0] + ":" + parts[i + 1] + ":"
+                        + parts[i + 2] + ":" + parts[i + 3] + ":" + parts[i + 4]
+                        + "\n"
+            }
+
+            return "<br><pre>" + result + "</pre><br>";
+        }
+
+        return encInfo.replace(re, replacer)
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height
@@ -38,15 +56,18 @@ Page {
             spacing: Theme.paddingLarge
 
             PageHeader {
+                id: header
                 title: qsTr("Encryption info")
             }
 
             Label {
-                text: device.encryptionInfo()
+                x: Theme.horizontalPageMargin
+                width: page.width - 2 * Theme.horizontalPageMargin
+
+                text: prettifyEncryptionInfo(device.encryptionInfo())
                 color: Theme.highlightColor
                 wrapMode: Text.Wrap
-                textFormat: Text.PlainText
-                width: page.width
+                textFormat: Text.StyledText
             }
         }
 

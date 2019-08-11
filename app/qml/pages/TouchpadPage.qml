@@ -57,7 +57,7 @@ Page {
     }
 
     InfoLabel {
-        id: hintLabelggggggjkkrrrrkkkii
+        id: hintLabel
         text: qsTr(
                   "Move finger on screen\n" +
                   "Tap for click\n" +

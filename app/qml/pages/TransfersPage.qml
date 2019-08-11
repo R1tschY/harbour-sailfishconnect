@@ -34,10 +34,8 @@ Page {
 
     function targetFilename(target) {
         var url = Url.fromUrl(target)
-        if (url.scheme === "local") {
+        if (url.scheme === "local" || url.scheme === "remote") {
             return url.fileName
-        } else if (url.scheme === "remote") {
-            return url.path
         } else {
             return url.toString()
         }
@@ -222,11 +220,11 @@ Page {
             Label {
                 id: jobTarget
                 anchors {
-                    left: parent.left
-                    leftMargin: Theme.horizontalPageMargin
-                                + Theme.iconSizeMedium + Theme.paddingMedium
+                    left: progress.right
+                    leftMargin: Theme.paddingMedium
                     right: parent.right
                     top: parent.top
+                    topMargin: Theme.paddingSmall
                 }
 
                 text: targetFilename(target)

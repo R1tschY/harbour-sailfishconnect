@@ -21,11 +21,12 @@
 
 #include "lanuploadjob.h"
 
+#include <QDebug>
+#include <QFile>
+
 #include "lanlinkprovider.h"
 #include "../../kdeconnectconfig.h"
 #include "../../corelogging.h"
-
-#include <QDebug>
 
 namespace SailfishConnect {
 
@@ -99,7 +100,13 @@ QVariantMap LanUploadJob::transferInfo()
 
 QString LanUploadJob::fileName()
 {
-    return QString(); // TODO
+    // TODO: set from outside
+    QFile* file = qobject_cast<QFile*>(source().data());
+    if (file) {
+        return file->fileName();
+    } else {
+        return QString();
+    }
 }
 
 } // namespace SailfishConnect

@@ -70,7 +70,6 @@ bool SharePlugin::receivePacket(const NetworkPacket& np)
                     device()->id(), incomingPath() % "/" % filename);
         Daemon::instance()->jobManager()->registerJob(job);
         connect(job, &KJob::result, this, &SharePlugin::finishedFileTransfer);
-        // TODO: daemon->addJob(job);
         // TODO: add to a job queue in which only x downloads/uploads are
         // running in parallel
         job->start();

@@ -44,6 +44,7 @@ CopyJob::CopyJob(const QString& deviceId,
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &CopyJob::poll);
 
+    setAutoDelete(false);
     setCapabilities(KJob::Killable);
 }
 

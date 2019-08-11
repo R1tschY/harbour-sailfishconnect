@@ -290,7 +290,9 @@ DownloadAlbumArtJob::DownloadAlbumArtJob(
     , m_url(url)
     , m_hash(AlbumArtCache::hashFor(url))
     , m_filePath(filePath)
-{ }
+{
+    setAutoDelete(false);
+}
 
 void DownloadAlbumArtJob::start()
 {

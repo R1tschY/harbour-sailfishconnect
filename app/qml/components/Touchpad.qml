@@ -22,7 +22,7 @@ import SailfishConnect.Core 0.3
 IconListItem {
     title: qsTr("Touchpad")
     source: "image://theme/icon-m-gesture"
-    visible: _device.loadedPlugins.indexOf(
+    visible: _device && _device.loadedPlugins.indexOf(
                  "SailfishConnect::RemoteControlPlugin") >= 0
 
    onClicked:

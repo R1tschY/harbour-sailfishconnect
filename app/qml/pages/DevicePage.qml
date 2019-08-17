@@ -31,7 +31,7 @@ Page {
     property string deviceId
     property Device _device: daemon.getDevice(deviceId)
 
-    property bool connected: _device.isTrusted && _device.isReachable
+    property bool connected: _device && _device.isTrusted && _device.isReachable
 
     SilicaFlickable {
         id: deviceView
@@ -92,7 +92,7 @@ Page {
 
             PageHeader {
                 id: header
-                title: _device.name
+                title: _device ? _device.name : ""
                 _titleItem.textFormat: Text.PlainText
             }
 
@@ -198,7 +198,7 @@ Page {
             }
 
             MenuItem {
-                visible: _device.isTrusted
+                visible: _device && _device.isTrusted
                 text: qsTr("Unpair")
                 onClicked: _device.unpair()
             }

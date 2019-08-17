@@ -23,7 +23,7 @@ import SailfishConnect.Mpris 0.3
 
 Column {
     width: parent.width
-    visible: _device.loadedPlugins.indexOf(
+    visible: _device && _device.loadedPlugins.indexOf(
                  "SailfishConnect::MprisRemotePlugin") >= 0
 
 

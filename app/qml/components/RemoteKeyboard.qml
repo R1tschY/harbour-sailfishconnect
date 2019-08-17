@@ -22,7 +22,7 @@ import SailfishConnect.Core 0.3
 IconListItem {
     title: qsTr("Keyboard")
     source: "image://theme/icon-m-keyboard"
-    visible: _device.loadedPlugins.indexOf(
+    visible: _device && _device.loadedPlugins.indexOf(
                  "SailfishConnect::RemoteKeyboardPlugin") >= 0
 
     onClicked: pageStack.push(

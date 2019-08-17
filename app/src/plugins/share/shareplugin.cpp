@@ -68,6 +68,7 @@ bool SharePlugin::receivePacket(const NetworkPacket& np)
 
         KJob* job = np.createDownloadPayloadJob(
                     device()->id(), incomingPath() % "/" % filename);
+        job->setParent(this);
         Daemon::instance()->jobManager()->registerJob(job);
         connect(job, &KJob::result, this, &SharePlugin::finishedFileTransfer);
         // TODO: add to a job queue in which only x downloads/uploads are

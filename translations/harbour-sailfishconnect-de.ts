@@ -282,7 +282,7 @@
     </message>
     <message>
         <source>Synchronize clipboard between devices.</source>
-        <translation>Synchronisiert den Textinhalt der Zwischenablage.</translation>
+        <translation>Synchronisiert Textinhalt der Zwischenablage.</translation>
     </message>
 </context>
 <context>

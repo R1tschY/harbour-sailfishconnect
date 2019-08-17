@@ -27,7 +27,7 @@ public:
     QString hash() const { return m_hash; }
     QString filePath() const { return m_filePath; }
     QString fileName() const;
-    qlonglong fileSize() const  { return m_fileSize; }
+    qlonglong fileSize() const { return m_fileSize; }
     bool isFetching() const { return m_fileTransfer != nullptr; }
 
 signals:
@@ -54,7 +54,8 @@ public:
     void init();
 
     DownloadAlbumArtJob* startFetching(const QUrl& url);
-    DownloadAlbumArtJob* endFetching(const QUrl& url, const QSharedPointer<QIODevice>& payload);
+    DownloadAlbumArtJob* endFetching(
+            const QUrl& url, const QSharedPointer<QIODevice>& payload);
 
     DownloadAlbumArtJob* getFetchingJob(const QString& hash);
 

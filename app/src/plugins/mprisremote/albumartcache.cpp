@@ -8,6 +8,9 @@
 #include <QLoggingCategory>
 #include <QFileInfo>
 #include <QQmlEngine>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 
 #include <sailfishconnect/io/copyjob.h>
 #include <sailfishconnect/kdeconnectconfig.h>
@@ -50,41 +53,6 @@ AlbumArtCache::AlbumArtCache(
             << "of album art cache";
 }
 
-DownloadAlbumArtJob *AlbumArtCache::endFetching(
-        const QUrl &url, const QSharedPointer<QIODevice> &payload)
-{
-    QString hash = hashFor(url);
-    DownloadAlbumArtJob* job = m_fetching.value(hash);
-    if (job == nullptr) {
-        qCDebug(logger) << "Never started a job for" << url;
-        return nullptr;
-    }
-    if (job->isFetching()) {
-        qCDebug(logger) << "Already downloading" << url;
-        return job;
-    }
-
-    if (payload.isNull()) {
-        qCDebug(logger) << "Empty payload";
-        m_fetching.remove(hash);
-        return nullptr;
-    }
-
-    QSharedPointer<QFile> file { new QFile(cacheFileFor(url)) };
-    if (!file->open(QIODevice::WriteOnly | QIODevice::Unbuffered)) {
-        qCCritical(logger).noquote()
-                << "Failed to create cache file" << file->fileName()
-                << file->errorString();
-        m_fetching.remove(hash);
-        return nullptr;
-    }
-
-    // TODO: support cancelation, copy from DownloadJob
-    auto* fileTransfer = new CopyJob(m_deviceId, payload, file, -1, this);
-    job->gotData(fileTransfer);
-    return job;
-}
-
 DownloadAlbumArtJob *AlbumArtCache::getFetchingJob(const QString &hash)
 {
     return m_fetching.value(hash, nullptr);
@@ -98,25 +66,6 @@ bool AlbumArtCache::isAvailable(const QUrl& url) const
 bool AlbumArtCache::isHashAvailable(const QString &hash) const
 {
     return m_diskCache.contains(hash);
-}
-
-DownloadAlbumArtJob *AlbumArtCache::startFetching(const QUrl &url)
-{
-    if (url.isEmpty())
-        return nullptr;
-
-    QString hash = hashFor(url);
-    if (m_diskCache.contains(hash) || m_fetching.contains(hash)) {
-        qCDebug(logger) << url << "already cached";
-        return nullptr;
-    }
-
-    auto* job = new DownloadAlbumArtJob(url, cacheFileFor(url), this);
-    // TODO: add timeout to remove it after a time when no response
-    m_fetching.insert(hash, job);
-    connect(job, &DownloadAlbumArtJob::finished,
-            this, &AlbumArtCache::fetchFinished);
-    return job;
 }
 
 QImage AlbumArtCache::getAvailable(const QUrl &url)
@@ -152,6 +101,69 @@ QUrl AlbumArtCache::imageUrl(const QUrl &url) const
 {
     return QUrl(QStringLiteral("image://albumart/%1/%2").arg(
                     m_deviceId, cacheFileNameFor(url)));
+}
+
+DownloadAlbumArtJob *AlbumArtCache::startFetching(const QUrl &url)
+{
+    if (url.isEmpty())
+        return nullptr;
+
+    QString hash = hashFor(url);
+    if (m_diskCache.contains(hash) || m_fetching.contains(hash)) {
+        qCDebug(logger) << url << "already cached";
+        return nullptr;
+    }
+
+    auto* job = new DownloadAlbumArtJob(url, cacheFileFor(url), this);
+    // TODO: add timeout to remove it after a time when no response
+    m_fetching.insert(hash, job);
+    connect(job, &DownloadAlbumArtJob::finished,
+            this, &AlbumArtCache::fetchFinished);
+
+    if (!url.isLocalFile()) {
+        auto network = Daemon::instance()->networkAccessManager();
+        auto response = QSharedPointer<QIODevice>(
+                    network->get(QNetworkRequest(url)));
+        endFetching(url, response);
+        return nullptr;  // to not start request to other side
+    } else {
+        return job;
+    }
+}
+
+DownloadAlbumArtJob *AlbumArtCache::endFetching(
+        const QUrl &url, const QSharedPointer<QIODevice>& payload)
+{
+    QString hash = hashFor(url);
+    DownloadAlbumArtJob* job = m_fetching.value(hash);
+    if (job == nullptr) {
+        qCDebug(logger) << "Never started a job for" << url;
+        return nullptr;
+    }
+    if (job->isFetching()) {
+        qCDebug(logger) << "Already downloading" << url;
+        return job;
+    }
+
+    if (payload.isNull()) {
+        qCDebug(logger) << "Empty payload";
+        m_fetching.remove(hash);
+        return nullptr;
+    }
+
+    QSharedPointer<QFile> file { new QFile(cacheFileFor(url)) };
+    if (!file->open(QIODevice::WriteOnly | QIODevice::Unbuffered)) {
+        qCCritical(logger).noquote()
+                << "Failed to create cache file" << file->fileName()
+                << file->errorString();
+        m_fetching.remove(hash);
+        return nullptr;
+    }
+
+    // TODO: support cancelation, copy from DownloadJob
+    auto* fileTransfer = new CopyJob(m_deviceId, payload, file, -1, this);
+    job->gotData(fileTransfer);
+    return job;
 }
 
 void AlbumArtCache::fetchFinished(

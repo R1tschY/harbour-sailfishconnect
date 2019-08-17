@@ -15,13 +15,11 @@ class KJob;
 
 namespace SailfishConnect {
 
-class DownloadAlbumArtJob : public KJob
+class DownloadAlbumArtJob : public QObject
 {
     Q_OBJECT
 public:
     DownloadAlbumArtJob(const QUrl& url, const QString& filePath, QObject* parent = nullptr);
-
-    void start() override;
 
     void gotData(KJob* fileTransfer);
 
@@ -29,12 +27,17 @@ public:
     QString hash() const { return m_hash; }
     QString filePath() const { return m_filePath; }
     QString fileName() const;
+    qlonglong fileSize() const  { return m_fileSize; }
     bool isFetching() const { return m_fileTransfer != nullptr; }
+
+signals:
+    void finished(const QString& cacheFile, const QString& errorString);
 
 private:
     QUrl m_url;
     QString m_hash;
     QString m_filePath;
+    qlonglong m_fileSize;
     KJob* m_fileTransfer = nullptr;
 
     void fetchFinished(KJob* fileTransfer);
@@ -89,42 +92,44 @@ private:
     qint64 m_diskCacheSize = 0; // TODO: use QCache for cache handling
     QDir m_cacheDir;
 
-    void fetchFinished(KJob* job);
-    void fetchResult(KJob *job);
+    void fetchFinished(const QString &cacheFile, const QString &errorString);
 };
 
 
-class AlbumArtProvider : public QQuickAsyncImageProvider
+class AlbumArtProvider : public QObject, public QQuickAsyncImageProvider
 {
+    Q_OBJECT
 public:
-    AlbumArtProvider();
-
     QQuickImageResponse *requestImageResponse(
             const QString &id, const QSize &requestedSize) override;
 
     static void registerImageProvider(QQmlEngine* qmlEngine);
+
+private slots:
+    QQuickImageResponse* unsafeRequestImageResponse(
+            QString id, QSize requestedSize, QThread *targetThread);
+
+private:
+    QQuickImageResponse* unsafeRequestImageResponse_(
+            const QString &id, const QSize &requestedSize);
 };
 
 
 class AlbumArtImageResponse : public QQuickImageResponse {
     Q_OBJECT
 public:
-    AlbumArtImageResponse(
-            AlbumArtCache* cache, DownloadAlbumArtJob* job);
+    AlbumArtImageResponse(DownloadAlbumArtJob* job);
 
     QQuickTextureFactory *textureFactory() const override;
     QString errorString() const override;
 
-public slots:
-    void cancel() override;
-
 private:
-    AlbumArtCache* m_cache = nullptr;
-    DownloadAlbumArtJob* m_job = nullptr;
     QUrl m_url;
     QString m_errorString;
+    QImage m_image;
 
-    void onFinished();
+    void onFinished(const QString &cacheFile, const QString &errorString);
+    void onJobDestroyed();
 };
 
 

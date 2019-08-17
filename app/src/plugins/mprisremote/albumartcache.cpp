@@ -116,8 +116,6 @@ DownloadAlbumArtJob *AlbumArtCache::startFetching(const QUrl &url)
     m_fetching.insert(hash, job);
     connect(job, &DownloadAlbumArtJob::finished,
             this, &AlbumArtCache::fetchFinished);
-    connect(job, &DownloadAlbumArtJob::result,
-            this, &AlbumArtCache::fetchResult);
     return job;
 }
 
@@ -156,28 +154,22 @@ QUrl AlbumArtCache::imageUrl(const QUrl &url) const
                     m_deviceId, cacheFileNameFor(url)));
 }
 
-void AlbumArtCache::fetchFinished(KJob *job)
+void AlbumArtCache::fetchFinished(
+        const QString& cacheFile, const QString& errorString)
 {
-    auto* sender = qobject_cast<DownloadAlbumArtJob*>(job);
-    Q_ASSERT(sender != nullptr);
+    auto* job = qobject_cast<DownloadAlbumArtJob*>(sender());
+    Q_ASSERT(job != nullptr);
 
-    m_fetching.remove(sender->hash());
-}
+    m_fetching.remove(job->hash());
 
-void AlbumArtCache::fetchResult(KJob *job)
-{
-    auto* sender = qobject_cast<DownloadAlbumArtJob*>(job);
-    Q_ASSERT(sender != nullptr);
+    if (errorString.isEmpty()) {
+        m_diskCache.insert(job->hash(), job->fileName());
+        m_diskCacheSize += job->fileSize();
 
-    if (sender->error() != 0)
-        return;
-
-    m_diskCache.insert(sender->hash(), sender->fileName());
-    m_diskCacheSize += sender->totalAmount(KJob::Bytes);
-
-    qCDebug(logger).nospace()
-            << "Added " << sender->url()
-            << " (Disk cache: " << humanizeBytes(m_diskCacheSize) << ")";
+        qCDebug(logger).nospace()
+                << "Added " << job->url()
+                << " (Disk cache: " << humanizeBytes(m_diskCacheSize) << ")";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -187,13 +179,17 @@ void AlbumArtProvider::registerImageProvider(QQmlEngine* qmlEngine) {
                 QStringLiteral("albumart"), new AlbumArtProvider());
 }
 
-AlbumArtProvider::AlbumArtProvider()
+QQuickImageResponse *AlbumArtProvider::unsafeRequestImageResponse(
+        QString id, QSize requestedSize, QThread *targetThread)
 {
-
+    QQuickImageResponse* result = unsafeRequestImageResponse_(
+                id, requestedSize);
+    result->moveToThread(targetThread);
+    return result;
 }
 
-QQuickImageResponse *AlbumArtProvider::requestImageResponse(
-        const QString &id, const QSize &requestedSize)
+QQuickImageResponse *AlbumArtProvider::unsafeRequestImageResponse_(
+        const QString& id, const QSize& requestedSize)
 {
     auto parts = id.split(QChar('/'));
     if (parts.length() != 2) {
@@ -206,6 +202,7 @@ QQuickImageResponse *AlbumArtProvider::requestImageResponse(
         return new CachedAlbumArtImageResponse(QImage());
     }
 
+    qCDebug(logger) << "plugins" << device->loadedPlugins();
     MprisRemotePlugin* plugin = qobject_cast<MprisRemotePlugin*>(
                 device->plugin("SailfishConnect::MprisRemotePlugin"));
     if (plugin == nullptr) {
@@ -218,7 +215,7 @@ QQuickImageResponse *AlbumArtProvider::requestImageResponse(
     QString hash = fileName.baseName();
     DownloadAlbumArtJob* job = cache->getFetchingJob(hash);
     if (job) {
-        return new AlbumArtImageResponse(cache, job);
+        return new AlbumArtImageResponse(job);
     }
 
     if (!cache->isHashAvailable(hash)) {
@@ -226,26 +223,44 @@ QQuickImageResponse *AlbumArtProvider::requestImageResponse(
         return new CachedAlbumArtImageResponse(QImage());
     }
 
+    // TODO: load image in other thread
     return new CachedAlbumArtImageResponse(cache->getCacheFile(parts[1]));
+}
+
+QQuickImageResponse *AlbumArtProvider::requestImageResponse(
+        const QString &id, const QSize &requestedSize)
+{
+    QQuickImageResponse* result = nullptr;
+    bool success = QMetaObject::invokeMethod(
+                this, "unsafeRequestImageResponse",
+                Qt::BlockingQueuedConnection,
+                Q_RETURN_ARG(QQuickImageResponse*, result),
+                Q_ARG(QString, id),
+                Q_ARG(QSize, requestedSize),
+                Q_ARG(QThread*, QThread::currentThread()));
+    return success && result
+            ? result : new CachedAlbumArtImageResponse(QImage());
 }
 
 // -----------------------------------------------------------------------------
 
-AlbumArtImageResponse::AlbumArtImageResponse(AlbumArtCache *cache, DownloadAlbumArtJob *job)
-    : m_cache(cache)
-    , m_job(job)
-    , m_url(job->url())
+AlbumArtImageResponse::AlbumArtImageResponse(DownloadAlbumArtJob *job)
+    : m_url(job->url())
 {
     connect(
-        job, &KJob::finished, this, &AlbumArtImageResponse::onFinished,
+        job, &DownloadAlbumArtJob::finished,
+        this, &AlbumArtImageResponse::onFinished,
+        Qt::QueuedConnection);
+    connect(
+        job, &DownloadAlbumArtJob::destroyed,
+        this, &AlbumArtImageResponse::onJobDestroyed,
         Qt::QueuedConnection);
 }
 
 QQuickTextureFactory *AlbumArtImageResponse::textureFactory() const
 {
-    qCDebug(logger) << "Deliver" << m_cache->getAvailable(m_url);
-    return QQuickTextureFactory::textureFactoryForImage(
-                m_cache->getAvailable(m_url));
+    qCDebug(logger) << "Deliver" << m_url << m_image;
+    return QQuickTextureFactory::textureFactoryForImage(m_image);
 }
 
 QString AlbumArtImageResponse::errorString() const
@@ -253,19 +268,20 @@ QString AlbumArtImageResponse::errorString() const
     return m_errorString;
 }
 
-void AlbumArtImageResponse::cancel()
+void AlbumArtImageResponse::onFinished(
+        const QString& cacheFile, const QString& errorString)
 {
-    qCDebug(logger) << "Cancel image loading" << m_url;
-    if (m_job) {
-        m_job->kill();
+    m_errorString = errorString;
+    if (errorString.isEmpty()) {
+        m_image = QImage(cacheFile);
     }
+
+    emit finished();
 }
 
-void AlbumArtImageResponse::onFinished()
+void AlbumArtImageResponse::onJobDestroyed()
 {
-    m_errorString = m_job->errorString();
-    m_job = nullptr;
-
+    m_errorString = QStringLiteral("job destroyed");
     emit finished();
 }
 
@@ -286,17 +302,11 @@ QQuickTextureFactory *CachedAlbumArtImageResponse::textureFactory() const
 
 DownloadAlbumArtJob::DownloadAlbumArtJob(
         const QUrl &url, const QString &filePath, QObject *parent)
-    : KJob(parent)
+    : QObject(parent)
     , m_url(url)
     , m_hash(AlbumArtCache::hashFor(url))
     , m_filePath(filePath)
-{
-    setAutoDelete(false);
-}
-
-void DownloadAlbumArtJob::start()
-{
-}
+{ }
 
 void DownloadAlbumArtJob::gotData(KJob* fileTransfer)
 {
@@ -318,16 +328,11 @@ void DownloadAlbumArtJob::fetchFinished(KJob* fileTransfer)
         file.open(QIODevice::WriteOnly);
         file.close();
 
-        setError(100);
-        setErrorText(fileTransfer->errorString());
+        finished(m_filePath, fileTransfer->errorString());
     } else {
-        setTotalAmount(
-                    KJob::Bytes, fileTransfer->processedAmount(KJob::Bytes));
-        setProcessedAmount(
-                    KJob::Bytes, fileTransfer->processedAmount(KJob::Bytes));
+        m_fileSize = fileTransfer->processedAmount(KJob::Bytes);
+        finished(m_filePath, QString());
     }
-
-    emitResult();
 }
 
 QString DownloadAlbumArtJob::fileName() const

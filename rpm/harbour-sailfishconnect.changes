@@ -1,23 +1,23 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Sun Jul 14 2019 Richard Liebscher <r1tschy@yahoo.de> 0.4-1
-- Better send notifications plugin
+* Sat Aug 17 2019 Richard Liebscher <r1tschy@posteo.de> 0.4-1
 - Added keyboard plugin (thanks to derFogel)
-- Added album art feature
+- Added album art to media player
 - Added possibility to open downloaded file
-- Changed device page
-- Changed: Clipboard content must now explicitly pushed from phone (see #7)
+- Redesigned device page
+- Enhanced sending notifications
+- Changed: Clipboard content must now explicitly pushed (see #7)
 - Added translation for Finnish, Swedish and Polish (thanks to the translators)
 
-* Sat Mar 02 2019 Richard Liebscher <r1tschy@yahoo.de> 0.3-1
+* Sat Mar 02 2019 Richard Liebscher <r1tschy@posteo.de> 0.3-1
 - Added page to show file transfers
 - Added telephony plugin
 - Fixed various bugs to support GSConnect
 - Fixed crash when unpairing
 - Fixed various small bugs
 
-* Sun Oct 21 2018 Richard Liebscher <r1tschy@yahoo.de> 0.2-2
+* Sun Oct 21 2018 Richard Liebscher <r1tschy@posteo.de> 0.2-2
 - Changed name to Sailfish Connect
 - Added setting to control running in background (new default is off)
 - Added notifications for pairing and ping plugin

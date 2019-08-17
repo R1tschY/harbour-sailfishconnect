@@ -126,6 +126,7 @@ std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
     app->setApplicationDisplayName(PRETTY_PACKAGE_NAME);
     app->setApplicationName(PACKAGE_NAME);
     app->setApplicationVersion(PACKAGE_VERSION);
+    app->setQuitLockEnabled(false);
     return app;
 }
 

@@ -48,8 +48,6 @@ QString DownloadJob::destination() const
 
 void DownloadJob::doStart()
 {
-    emit description(this, tr("Receiving"));
-
     if (QFileInfo::exists(m_destination)) {
         auto destination = nonexistingFile(m_destination);
 
@@ -78,6 +76,7 @@ void DownloadJob::doStart()
     }
     setDestination(std::move(file));
 
+    emit description(this, tr("Receiving"));
     CopyJob::doStart();
 }
 

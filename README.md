@@ -46,10 +46,10 @@ Telepathy | :heavy_check_mark: | :speech_balloon: Send SMS messages from your co
 Mpris | :heavy_check_mark: | :play_or_pause_button: Control multimedia player from your computer.
 Ping | :heavy_check_mark: | :wave: Check connection with a ping.
 Touchpad | :heavy_check_mark: | :computer_mouse: Create mouse input from your phone.
-Share | :construction: | Send and receive files, text and URLs.
+Share | :heavy_check_mark: | Send and receive files, text and URLs.
+Telephony | :heavy_check_mark: | :telephone_receiver: Share call status (incoming or active) with your computer.
+RemoteKeyboard | :heavy_check_mark: | :keyboard: Create keyboard input from your phone.
 SendNotifications | :construction: | Share notifications of your phone.
-Telephony | :construction: | :telephone_receiver: Share call status (incoming or active) with your computer.
-RemoteKeyboard | :construction: | :keyboard: Create keyboard input from your phone.
 RunCommand | :o: | Run user-defined commands on your computer.
 Sftp | :o: | :open_file_folder: Provide access to local files from your computer.
 FindMyPhone | :o: | :vibration_mode: Make finding your phone easier.
@@ -60,19 +60,18 @@ MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control wit
 
 
 ### Core
-* :heavy_check_mark: Pairing
-* :heavy_check_mark: Plugin management
-* :heavy_check_mark: Use background daemon
-* :construction: Downloads/Uploads (Payload)
+* Pairing
+* Plugin management
+* Use background daemon
+* Downloads/Uploads (Payload)
 
 ### UI
-* :heavy_check_mark: Device list
-* :heavy_check_mark: Pairing
-* :heavy_check_mark: Plugin management
-* :construction: SSL key hash view
-* :construction: Device view
-* :construction: Show progress of file transfers
-* :construction: Cover
+* Device list
+* Pairing
+* Plugin management
+* SSL key hash view
+* Device view
+* Show progress of file transfers
 
 ### Backend
 * :heavy_check_mark: LAN
@@ -94,4 +93,6 @@ MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control wit
 
 ## Credits
 
-Sailfish Connect uses an own fork of the core library of the [KDE Connect desktop client](https://cgit.kde.org/kdeconnect-kde.git/). It was ported to use only Qt.
+Sailfish Connect uses an own fork of the core library of the
+[KDE Connect desktop client](https://cgit.kde.org/kdeconnect-kde.git/).
+It was ported to use only Qt.

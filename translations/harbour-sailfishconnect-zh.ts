@@ -32,7 +32,7 @@
     <name>ClipboardUi</name>
     <message>
         <source>Upload clipboard text</source>
-        <translation type="unfinished"></translation>
+        <translation>上传剪切板文本</translation>
     </message>
 </context>
 <context>
@@ -141,23 +141,23 @@
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
-        <translation type="unfinished"></translation>
+        <translation>是否想要连接到此设备?</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>连接</translation>
     </message>
     <message>
         <source>Device is not reachable</source>
-        <translation type="unfinished"></translation>
+        <translation>设备无法访问</translation>
     </message>
     <message>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>操作</translation>
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation type="unfinished"></translation>
+        <translation>等待接受配对………</translation>
     </message>
 </context>
 <context>
@@ -178,30 +178,30 @@
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>%1ms repeat interval</source>
-        <translation type="unfinished"></translation>
+        <translation>%1ms 重复间隔</translation>
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>振动反馈</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">设置</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <source>Change layout</source>
-        <translation type="unfinished"></translation>
+        <translation>更改布局</translation>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>键盘</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">设置</translation>
+        <translation>设置</translation>
     </message>
 </context>
 <context>
@@ -242,14 +242,14 @@
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation type="unfinished"></translation>
+        <translation>无播放项目</translation>
     </message>
 </context>
 <context>
     <name>RemoteKeyboard</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>键盘</translation>
     </message>
 </context>
 <context>
@@ -364,11 +364,11 @@
     <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>远程键盘</translation>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>在远程计算机使用虚拟键盘输入</translation>
     </message>
 </context>
 <context>
@@ -445,7 +445,7 @@
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
-        <translation type="unfinished"></translation>
+        <translation>分享文件</translation>
     </message>
 </context>
 <context>
@@ -491,47 +491,47 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Failed to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>打开文件失败</translation>
     </message>
     <message>
         <source>Internal error</source>
-        <translation type="unfinished"></translation>
+        <translation>内部错误</translation>
     </message>
     <message>
         <source>File does not exit</source>
-        <translation type="unfinished"></translation>
+        <translation>文件不存在</translation>
     </message>
     <message>
         <source>No program found to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>没有找到可以打开文件的应用程序</translation>
     </message>
     <message>
         <source>xdg-open failed</source>
-        <translation type="unfinished"></translation>
+        <translation>xdg-open 失败</translation>
     </message>
     <message>
         <source>xdg-open crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>xdg-open 崩溃</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>打开</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>已取消</translation>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>已失败</translation>
     </message>
     <message>
         <source>Completed</source>
-        <translation type="unfinished"></translation>
+        <translation>已完成</translation>
     </message>
 </context>
 </TS>

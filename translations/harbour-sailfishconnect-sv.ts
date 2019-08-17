@@ -32,7 +32,7 @@
     <name>ClipboardUi</name>
     <message>
         <source>Upload clipboard text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladda upp urklippstext</translation>
     </message>
 </context>
 <context>
@@ -141,23 +141,23 @@
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du ansluta till den här enheten?</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Anslut</translation>
     </message>
     <message>
         <source>Device is not reachable</source>
-        <translation type="unfinished"></translation>
+        <translation>Enheten kan inte nås</translation>
     </message>
     <message>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Åtgärder</translation>
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Väntar på accepterad parkoppling ...</translation>
     </message>
 </context>
 <context>
@@ -178,30 +178,30 @@
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>%1ms repeat interval</source>
-        <translation type="unfinished"></translation>
+        <translation>%1ms upprepningsintervall</translation>
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Vibrationsåterkoppling</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Inställningar</translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>Change layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra layout</translation>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangentbord</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Inställningar</translation>
+        <translation>Inställningar</translation>
     </message>
 </context>
 <context>
@@ -242,14 +242,14 @@
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget spelas</translation>
     </message>
 </context>
 <context>
     <name>RemoteKeyboard</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangentbord</translation>
     </message>
 </context>
 <context>
@@ -364,11 +364,11 @@
     <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjärrtangentbord</translation>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv på fjärrdator med ett virtuellt tangentbord.</translation>
     </message>
 </context>
 <context>
@@ -445,7 +445,7 @@
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Dela en fil</translation>
     </message>
 </context>
 <context>
@@ -491,47 +491,47 @@ Håll kvar för Dra &amp; Släpp</translation>
     </message>
     <message>
         <source>Failed to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte öppna filen</translation>
     </message>
     <message>
         <source>Internal error</source>
-        <translation type="unfinished"></translation>
+        <translation>Internt fel</translation>
     </message>
     <message>
         <source>File does not exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Filen finns inte</translation>
     </message>
     <message>
         <source>No program found to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte hitta något program för att öppna filen</translation>
     </message>
     <message>
         <source>xdg-open failed</source>
-        <translation type="unfinished"></translation>
+        <translation>xdg-open misslyckades</translation>
     </message>
     <message>
         <source>xdg-open crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>xdg-open kraschade</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbruten</translation>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades</translation>
     </message>
     <message>
         <source>Completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Slutfört</translation>
     </message>
 </context>
 </TS>

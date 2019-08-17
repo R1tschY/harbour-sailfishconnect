@@ -32,7 +32,7 @@
     <name>ClipboardUi</name>
     <message>
         <source>Upload clipboard text</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyślij zawartość schowka</translation>
     </message>
 </context>
 <context>
@@ -141,23 +141,23 @@
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy chcesz połączyć się z tym urządzeniem?</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Połącz</translation>
     </message>
     <message>
         <source>Device is not reachable</source>
-        <translation type="unfinished"></translation>
+        <translation>Urządzenie jest nieosiągalne</translation>
     </message>
     <message>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Akcje</translation>
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Oczekiwanie na zaakceptowanie parowania...</translation>
     </message>
 </context>
 <context>
@@ -178,30 +178,30 @@
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>%1ms repeat interval</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 milisekundowy interwał powtarzania</translation>
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Informowanie wibracją</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Ustawienia</translation>
+        <translation>Ustawienia</translation>
     </message>
     <message>
         <source>Change layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmień rozmieszczenie</translation>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Klawiatura</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Ustawienia</translation>
+        <translation>Ustawienia</translation>
     </message>
 </context>
 <context>
@@ -242,14 +242,14 @@
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Nic nie jest odtwarzane</translation>
     </message>
 </context>
 <context>
     <name>RemoteKeyboard</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Klawiatura</translation>
     </message>
 </context>
 <context>
@@ -364,11 +364,11 @@
     <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdalna klawiatura</translation>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pisz na zdalnym komputerze używając wirtualnej klawiatury</translation>
     </message>
 </context>
 <context>
@@ -445,7 +445,7 @@
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Udostępnij plik</translation>
     </message>
 </context>
 <context>
@@ -491,47 +491,47 @@ Krótko przytrzymaj by przeciągnąć i upuścić</translation>
     </message>
     <message>
         <source>Failed to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się otworzyć pliku</translation>
     </message>
     <message>
         <source>Internal error</source>
-        <translation type="unfinished"></translation>
+        <translation>Wewnętrzny błąd</translation>
     </message>
     <message>
         <source>File does not exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik nie istnieje</translation>
     </message>
     <message>
         <source>No program found to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie znaleziono programu do otwarcia pliku</translation>
     </message>
     <message>
         <source>xdg-open failed</source>
-        <translation type="unfinished"></translation>
+        <translation>xdg-open nie zadziałał</translation>
     </message>
     <message>
         <source>xdg-open crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>xdg-open zawiesił się</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Anulowano</translation>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie powiodło się</translation>
     </message>
     <message>
         <source>Completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukończono</translation>
     </message>
 </context>
 </TS>

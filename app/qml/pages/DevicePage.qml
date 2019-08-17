@@ -107,7 +107,8 @@ Page {
                 Label {
                     color: Theme.highlightColor
                     text: qsTr("This device wants to pair with your device.")
-                    // qsTr("Waiting for accepted pairing ...")
+                    width: parent.width
+                    wrapMode: Text.Wrap
                 }
 
                 Row {
@@ -139,6 +140,8 @@ Page {
                 Label {
                     color: Theme.highlightColor
                     text: qsTr("Do you want to connect to this device?")
+                    width: parent.width
+                    wrapMode: Text.Wrap
                 }
 
                 Button {

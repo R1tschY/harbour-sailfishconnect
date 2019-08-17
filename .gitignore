@@ -11,7 +11,11 @@
 .vscode
 
 # Conan
+conan.lock
 conanbuildinfo.pri
 conanbuildinfo.txt
 conaninfo.txt
 graph_info.json
+
+# Python
+__pycache__

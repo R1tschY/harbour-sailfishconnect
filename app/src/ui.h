@@ -91,10 +91,6 @@ private:
 
     QSettings m_settings;
     bool m_runInBackground = false;
-
-    void onMainWindowDestroyed();
-
-    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 
 } // namespace SailfishConnect

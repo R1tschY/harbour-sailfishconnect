@@ -79,10 +79,6 @@ void UI::showMainWindow()
     setRunInBackground(
         m_settings.value("runInBackground", m_runInBackground).toBool());
 
-    connect(
-        m_view, &QQuickView::destroyed,
-        this, &UI::onMainWindowDestroyed);
-
     // view
     m_view->rootContext()->setContextProperty("daemon", m_daemon);
     m_view->rootContext()->setContextProperty("ui", this);
@@ -127,6 +123,7 @@ void UI::raise()
     QDBusReply<void> reply = daemonInterface.call(
                 QLatin1String("showMainWindow"));
     if (!reply.isValid()) {
+        // TODO: send short notification
         qCCritical(logger)
             << "Daemon raise call failed:"
             << reply.error().name() << "/"
@@ -149,12 +146,6 @@ void UI::setRunInBackground(bool value)
 
     qGuiApp->setQuitOnLastWindowClosed(!value);
 
-    if (value) {
-        m_view->installEventFilter(this);
-    } else {
-        m_view->removeEventFilter(this);
-    }
-
     emit runInBackgroundChanged();
 }
 
@@ -164,23 +155,6 @@ QVariant UI::openDevicePageDbusAction(const QString &deviceId)
             QStringLiteral("default"), QString("default"),
             DBUS_SERVICE_NAME, UI::DBUS_PATH, UI::DBUS_INTERFACE_NAME,
             QStringLiteral("openDevicePage"), { deviceId });
-}
-
-void UI::onMainWindowDestroyed()
-{
-    Q_ASSERT(m_view);
-
-    m_view = nullptr;
-}
-
-bool UI::eventFilter(QObject *obj, QEvent *event)
-{
-    if (event->type() == QEvent::Close) {
-        Q_ASSERT(m_view);
-        m_view->deleteLater();
-    }
-
-    return QObject::eventFilter(obj, event);
 }
 
 } // namespace SailfishConnect

@@ -47,7 +47,7 @@ Page {
                     qsTr("Application runs in background after " +
                          "window is closed.")
                 checked: ui.runInBackground
-                onClicked: ui.runInBackground = !runInBackground.checked
+                onClicked: ui.runInBackground = !checked
                 automaticCheck: false
             }
         }

@@ -53,7 +53,7 @@ namespace SailfishConnect {
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
 
 
-QString PACKAGE_VERSION = QStringLiteral("0.3");
+QString PACKAGE_VERSION = QStringLiteral("0.4");
 
 QString DBUS_SERVICE_NAME =
         QStringLiteral("org.harbour.SailfishConnect");

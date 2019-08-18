@@ -10,7 +10,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - venv-cache-{{ .Branch }}
+            - venv-cache2-{{ .Branch }}
 
       - run: mb2 -X -t SailfishOS-3.0.3.9-armv7hl build -d -j 2
       - store_artifacts:
@@ -25,10 +25,9 @@ jobs:
           destination: rpms
 
       - save_cache:
-          key: venv-cache-{{ .Branch }}
+          key: venv-cache2-{{ .Branch }}
           paths:
-            - ~/project/installroot/venv-armv7hl
-            - ~/project/installroot/venv-i486
+            - ~/.cache/pip
 workflows:
   version: 2
   build_and_test:

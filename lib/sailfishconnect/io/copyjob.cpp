@@ -42,7 +42,17 @@ CopyJob::CopyJob(const QString& deviceId,
 {
     m_timer.setInterval(100);
     m_timer.setSingleShot(false);
-    connect(&m_timer, &QTimer::timeout, this, &CopyJob::poll);
+    connect(&m_timer, &QTimer::timeout, this, [this]{
+        poll();
+
+        auto btw = bytesToWrite();
+        setProcessedAmount(KJob::Bytes, m_writtenBytes - btw);
+        qCDebug(logger)
+                << time(nullptr)
+                << m_source->bytesAvailable()
+                << m_bufferSize
+                << btw;
+    });
 
     setCapabilities(KJob::Killable);
 }
@@ -121,7 +131,7 @@ void CopyJob::poll()
     if (m_finished)
         return;
 
-    if (m_bufferSize < m_buffer.size() && bytesToWrite() < 1024 * 1024) {
+    if (m_bufferSize < m_buffer.size() && bytesToWrite() < 16 * 1024 * 1024) {
         qint64 bytes = m_source->read(
                     m_buffer.data() + m_bufferSize, m_buffer.size() - m_bufferSize);
         if (bytes == -1) {
@@ -157,11 +167,9 @@ void CopyJob::poll()
     }
 
     auto btw = bytesToWrite();
-    setProcessedAmount(KJob::Bytes, m_writtenBytes - btw);
-
     if (m_source->bytesAvailable() > 0
             && m_bufferSize != m_buffer.size()
-            && btw < 1024 * 1024) // 1 MB
+            && btw < 16 * 1024 * 1024) // 16 MB
     {
         QMetaObject::invokeMethod(this, "poll", Qt::QueuedConnection);
     }
@@ -170,7 +178,7 @@ void CopyJob::poll()
             && m_bufferSize == 0
             && m_source->bytesAvailable() == 0
             && btw == 0) {
-        qCDebug(logger) << "EOF";
+//        qCDebug(logger) << "EOF";
         finish();
     }
 }
@@ -180,7 +188,7 @@ void CopyJob::pollAtSourceClose()
     if (m_finished)
         return;
 
-    qCDebug(logger) << "Detected source closing";
+//    qCDebug(logger) << "Detected source closing";
 
     m_sourceEof = true;
     poll();
@@ -189,7 +197,7 @@ void CopyJob::pollAtSourceClose()
 void CopyJob::pollAtDestinationClose()
 {
     if (!m_finished) {
-        qCDebug(logger) << "Detected destination closing";
+//        qCDebug(logger) << "Detected destination closing";
         finish();
     }
 }
@@ -216,6 +224,8 @@ void CopyJob::finish()
     }
 
     close();
+
+    qCDebug(logger) << "Finished file transfer" << errorText();
 
     // success
     emitResult();

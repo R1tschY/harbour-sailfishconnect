@@ -69,6 +69,8 @@ if ! grep -sq sailfishos ~/.conan/remotes.json ; then
 conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
 fi
 
+export SAILFISHCONNECT_PACKAGE_VERSION="%{version}-%{release}"
+
 # << build pre
 
 %qtc_qmake5 

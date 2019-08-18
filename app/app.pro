@@ -25,6 +25,8 @@ CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT QT_NO_DEBUG
 
 DEFINES += SAILFISHOS
 
+DEFINES += SAILFISHCONNECT_PACKAGE_VERSION="$$(SAILFISHCONNECT_PACKAGE_VERSION)"
+
 include(../lib/lib.pri)
 CONFIG += conan_basic_setup
 include(../conanbuildinfo.pri)

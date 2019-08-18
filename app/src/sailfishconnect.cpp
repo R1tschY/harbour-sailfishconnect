@@ -127,6 +127,7 @@ std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
     app->setApplicationName(PACKAGE_NAME);
     app->setApplicationVersion(PACKAGE_VERSION);
     app->setQuitLockEnabled(false);
+    app->setQuitOnLastWindowClosed(true);
     return app;
 }
 

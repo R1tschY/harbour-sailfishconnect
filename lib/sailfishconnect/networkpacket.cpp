@@ -146,11 +146,18 @@ bool NetworkPacket::unserialize(const QByteArray& a, NetworkPacket* np)
     auto variant = parser.toVariant().toMap();
     qvariant2qobject(variant, np);
 
-    np->m_payloadSize = variant[QStringLiteral("payloadSize")].toInt(); //Will return 0 if was not present, which is ok
+    // Will return 0 if was not present, which is ok
+    np->m_payloadSize = variant[QStringLiteral("payloadSize")].toLongLong();
     if (np->m_payloadSize == -1) {
-        np->m_payloadSize = np->get<int>(QStringLiteral("size"), -1);
+        np->m_payloadSize = np->get<qint64>(QStringLiteral("size"), -1);
     }
-    np->m_payloadTransferInfo = variant[QStringLiteral("payloadTransferInfo")].toMap(); //Will return an empty qvariantmap if was not present, which is ok
+
+    if (np->m_payloadSize < -1) {
+        qCWarning(coreLogger) << "Invalid payload size" << np->m_payloadSize;
+    }
+
+    //Will return an empty qvariantmap if was not present, which is ok
+    np->m_payloadTransferInfo = variant[QStringLiteral("payloadTransferInfo")].toMap();
 
     return true;
 }

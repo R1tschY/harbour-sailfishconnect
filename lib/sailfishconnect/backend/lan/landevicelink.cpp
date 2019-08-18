@@ -139,6 +139,12 @@ void LanDeviceLink::dataReceived()
     }
 
     if (packet.hasPayloadTransferInfo()) {
+        if (packet.payloadSize() < -1) {
+            qCWarning(coreLogger)
+                    << "Ignore packet because of invalid payload size";
+            return;
+        }
+
         //qCDebug(coreLogger) << "HasPayloadTransferInfo";
         const QVariantMap transferInfo = packet.payloadTransferInfo();
 
@@ -163,7 +169,6 @@ void LanDeviceLink::dataReceived()
     if (m_socketLineReader->bytesAvailable() > 0) {
         QMetaObject::invokeMethod(this, "dataReceived", Qt::QueuedConnection);
     }
-
 }
 
 void LanDeviceLink::socketDisconnected()

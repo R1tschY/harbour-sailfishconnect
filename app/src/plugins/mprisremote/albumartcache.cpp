@@ -122,48 +122,24 @@ DownloadAlbumArtJob *AlbumArtCache::startFetching(const QUrl &url)
 
     if (!url.isLocalFile()) {
         auto network = Daemon::instance()->networkAccessManager();
-        auto response = QSharedPointer<QIODevice>(
-                    network->get(QNetworkRequest(url)));
-        endFetching(url, response);
+        job->gotData(QSharedPointer<QIODevice>(
+            network->get(QNetworkRequest(url))));
         return nullptr;  // to not start request to other side
     } else {
         return job;
     }
 }
 
-DownloadAlbumArtJob *AlbumArtCache::endFetching(
+void AlbumArtCache::endFetching(
         const QUrl &url, const QSharedPointer<QIODevice>& payload)
 {
-    QString hash = hashFor(url);
-    DownloadAlbumArtJob* job = m_fetching.value(hash);
+    DownloadAlbumArtJob* job = m_fetching.value(hashFor(url));
     if (job == nullptr) {
         qCDebug(logger) << "Never started a job for" << url;
-        return nullptr;
-    }
-    if (job->isFetching()) {
-        qCDebug(logger) << "Already downloading" << url;
-        return job;
+        return;
     }
 
-    if (payload.isNull()) {
-        qCDebug(logger) << "Empty payload";
-        m_fetching.remove(hash);
-        return nullptr;
-    }
-
-    QSharedPointer<QFile> file { new QFile(cacheFileFor(url)) };
-    if (!file->open(QIODevice::WriteOnly | QIODevice::Unbuffered)) {
-        qCCritical(logger).noquote()
-                << "Failed to create cache file" << file->fileName()
-                << file->errorString();
-        m_fetching.remove(hash);
-        return nullptr;
-    }
-
-    // TODO: support cancelation, copy from DownloadJob
-    auto* fileTransfer = new CopyJob(m_deviceId, payload, file, -1, this);
-    job->gotData(fileTransfer);
-    return job;
+    job->gotData(payload);
 }
 
 void AlbumArtCache::fetchFinished(
@@ -319,36 +295,106 @@ DownloadAlbumArtJob::DownloadAlbumArtJob(
     , m_filePath(filePath)
 { }
 
-void DownloadAlbumArtJob::gotData(KJob* fileTransfer)
+bool DownloadAlbumArtJob::gotData(const QSharedPointer<QIODevice>& payload)
 {
-    m_fileTransfer = fileTransfer;
+    if (isFetching()) {
+        qCDebug(logger) << "Already downloading" << m_url;
+        return false;
+    }
 
-    connect(fileTransfer, &KJob::result,
+    if (payload.isNull()) {
+        qCDebug(logger) << "Empty payload";
+        emit finished(m_filePath, QStringLiteral("Empty payload"));
+        return false;
+    }
+
+    QSharedPointer<QFile> file { new QFile(m_filePath) };
+    if (!file->open(QIODevice::WriteOnly | QIODevice::Unbuffered)) {
+        qCCritical(logger).noquote()
+                << "Failed to create cache file" << file->fileName()
+                << file->errorString();
+        emit finished(
+            m_filePath, QStringLiteral("Failed to create cache file"));
+        return false;
+    }
+
+    // TODO: support cancelation, copy from DownloadJob
+    m_fileTransfer = new CopyJob(QString(), payload, file, -1, this);
+    connect(m_fileTransfer, &KJob::result,
             this, &DownloadAlbumArtJob::fetchFinished);
+    m_fileTransfer->start();
 
-    fileTransfer->start();
+    return true;
 }
 
 void DownloadAlbumArtJob::fetchFinished(KJob* fileTransfer)
 {
+    if (fileTransfer != m_fileTransfer)
+        return;
+
     if (fileTransfer->error()) {
-        qCDebug(logger) << "Failed download of" << m_url;
-
-        // mark as failed
-        QFile file { m_filePath };
-        file.open(QIODevice::WriteOnly);
-        file.close();
-
-        finished(m_filePath, fileTransfer->errorString());
+        failed(fileTransfer->errorString());
     } else {
+        // TODO: make it prettier :D
+        auto* fileTransferJob = qobject_cast<CopyJob*>(m_fileTransfer);
+        if (fileTransferJob) {
+            auto* reply = qobject_cast<QNetworkReply*>(
+                        fileTransferJob->source().data());
+            if (reply) {
+                // TODO: in Qt 5.9 use QNetworkRequest::UserVerifiedRedirectPolicy
+                QString location = reply->attribute(
+                    QNetworkRequest::RedirectionTargetAttribute).toString();
+                if (!location.isEmpty()) {
+                    m_redirectCount += 1;
+
+                    if (m_redirectCount > 10) {
+                        failed(QStringLiteral("too many redirects"));
+                        return;
+                    }
+
+                    auto network = Daemon::instance()->networkAccessManager();
+                    // TODO: set QNetworkRequest::BackgroundRequestAttribute
+                    m_fileTransfer = nullptr;
+                    gotData(QSharedPointer<QIODevice>(
+                        network->get(QNetworkRequest(location))));
+                    return;
+                }
+
+                int status = reply->attribute(
+                    QNetworkRequest::HttpStatusCodeAttribute).toInt();
+                if (status != 200) {
+                    failed(QStringLiteral("status code was not 200"));
+                    return;
+                }
+            }
+        }
+
         m_fileSize = fileTransfer->processedAmount(KJob::Bytes);
-        finished(m_filePath, QString());
+        emit finished(m_filePath, QString());
     }
+}
+
+void DownloadAlbumArtJob::failed(const QString &error)
+{
+    qCWarning(logger) << "Failed download of" << m_url.toString()
+                      << error;
+
+    // mark as failed
+    QFile file { m_filePath };
+    file.open(QIODevice::WriteOnly);
+    file.close();
+
+    emit finished(m_filePath, error);
 }
 
 QString DownloadAlbumArtJob::fileName() const
 {
     return QFileInfo(m_filePath).fileName();
+}
+
+KJob *DownloadAlbumArtJob::fileTransfer() const
+{
+    return m_fileTransfer;
 }
 
 } // namespace SailfishConnect

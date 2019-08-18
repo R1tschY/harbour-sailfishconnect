@@ -21,7 +21,7 @@ class DownloadAlbumArtJob : public QObject
 public:
     DownloadAlbumArtJob(const QUrl& url, const QString& filePath, QObject* parent = nullptr);
 
-    void gotData(KJob* fileTransfer);
+    bool gotData(const QSharedPointer<QIODevice> &payload);
 
     QUrl url() const { return m_url; }
     QString hash() const { return m_hash; }
@@ -29,6 +29,7 @@ public:
     QString fileName() const;
     qlonglong fileSize() const { return m_fileSize; }
     bool isFetching() const { return m_fileTransfer != nullptr; }
+    KJob *fileTransfer() const;
 
 signals:
     void finished(const QString& cacheFile, const QString& errorString);
@@ -39,7 +40,9 @@ private:
     QString m_filePath;
     qlonglong m_fileSize;
     KJob* m_fileTransfer = nullptr;
+    int m_redirectCount = 0;
 
+    void failed(const QString& error);
     void fetchFinished(KJob* fileTransfer);
 };
 
@@ -54,7 +57,7 @@ public:
     void init();
 
     DownloadAlbumArtJob* startFetching(const QUrl& url);
-    DownloadAlbumArtJob* endFetching(
+    void endFetching(
             const QUrl& url, const QSharedPointer<QIODevice>& payload);
 
     DownloadAlbumArtJob* getFetchingJob(const QString& hash);

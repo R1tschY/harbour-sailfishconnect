@@ -7,6 +7,7 @@
 - Added possibility to open downloaded file
 - Redesigned device page
 - Enhanced sending notifications
+- File transfers are now more robust (especially large transfers)
 - Changed: Clipboard content must now explicitly pushed (see #7)
 - Added translation for Finnish, Swedish and Polish (thanks to the translators)
 

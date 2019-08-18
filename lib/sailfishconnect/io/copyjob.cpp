@@ -22,6 +22,7 @@
 #include <QTimer>
 #include <QFile>
 #include <QSslSocket>
+#include <QNetworkReply>
 #include <algorithm>
 
 namespace SailfishConnect {
@@ -36,15 +37,12 @@ CopyJob::CopyJob(const QString& deviceId,
     : KJob(parent)
     , m_source(source)
     , m_destination(destination)
-    , m_buffer()
     , m_size(size)
     , m_deviceId(deviceId)
 {
     m_timer.setInterval(100);
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, [this]{
-        poll();
-
         auto btw = bytesToWrite();
         setProcessedAmount(KJob::Bytes, m_writtenBytes - btw);
         qCDebug(logger)
@@ -52,6 +50,10 @@ CopyJob::CopyJob(const QString& deviceId,
                 << m_source->bytesAvailable()
                 << m_bufferSize
                 << btw;
+
+        if (m_destination->isSequential()) {
+            poll();
+        }
     });
 
     setCapabilities(KJob::Killable);
@@ -117,6 +119,17 @@ void CopyJob::doStart()
     connect(m_destination.data(), &QIODevice::aboutToClose,
             this, &CopyJob::pollAtDestinationClose);
 
+    // FIXME: QNetworkReply generates unknown read error
+    if (m_source->isSequential()
+            && !qobject_cast<QNetworkReply*>(m_source.data())) {
+        connect(m_source.data(), &QIODevice::readyRead,
+                this, &CopyJob::poll);
+    }
+    if (m_destination->isSequential()) {
+        connect(m_destination.data(), &QIODevice::bytesWritten,
+                this, &CopyJob::poll);
+    }
+
     poll();
     m_timer.start();
 }
@@ -131,7 +144,7 @@ void CopyJob::poll()
     if (m_finished)
         return;
 
-    if (m_bufferSize < m_buffer.size() && bytesToWrite() < 16 * 1024 * 1024) {
+    if (m_bufferSize < m_buffer.size() && bytesToWrite() < 2 * 1024 * 1024) {
         qint64 bytes = m_source->read(
                     m_buffer.data() + m_bufferSize, m_buffer.size() - m_bufferSize);
         if (bytes == -1) {
@@ -169,7 +182,7 @@ void CopyJob::poll()
     auto btw = bytesToWrite();
     if (m_source->bytesAvailable() > 0
             && m_bufferSize != m_buffer.size()
-            && btw < 16 * 1024 * 1024) // 16 MB
+            && btw < 2 * 1024 * 1024)
     {
         QMetaObject::invokeMethod(this, "poll", Qt::QueuedConnection);
     }

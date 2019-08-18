@@ -52,8 +52,14 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
 
+#define STRINGIFY_(x) #x
+#define STRINGIFY(x) STRINGIFY_(x)
 
-QString PACKAGE_VERSION = QStringLiteral("0.4");
+#ifdef SAILFISHCONNECT_PACKAGE_VERSION
+QString PACKAGE_VERSION = STRINGIFY(SAILFISHCONNECT_PACKAGE_VERSION);
+#else
+#error SAILFISHCONNECT_PACKAGE_VERSION is not defined
+#endif
 
 QString DBUS_SERVICE_NAME =
         QStringLiteral("org.harbour.SailfishConnect");

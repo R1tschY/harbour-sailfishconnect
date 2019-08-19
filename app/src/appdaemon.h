@@ -20,6 +20,7 @@
 
 #include <sailfishconnect/daemon.h>
 
+#include <QEventLoopLocker>
 #include <notification.h>
 
 class QQmlEngine;
@@ -45,6 +46,7 @@ public:
     static AppDaemon* instance();
 
 private:
+    QEventLoopLocker m_eventLoopLock;
     Notification notification_;
     QQmlEngine* m_qmlEngine = nullptr;
 };

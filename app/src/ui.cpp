@@ -24,6 +24,7 @@
 #include <QDBusReply>
 #include <QQmlContext>
 #include <QSettings>
+#include <QEventLoopLocker>
 
 #include <sailfishapp.h>
 #include <notification.h>
@@ -43,10 +44,10 @@ const QString UI::DBUS_PATH =
         QStringLiteral("/org/harbour/SailfishConnect/UI");
 
 
-UI::UI(AppDaemon* daemon, KeyboardLayoutProvider* keyboardLayoutProvider,
+UI::UI(KeyboardLayoutProvider* keyboardLayoutProvider,
        bool daemonMode, QObject *parent)
     : QObject(parent)
-    , m_daemon(daemon)
+    , m_daemon(new AppDaemon())
     , m_keyboardLayoutProvider(keyboardLayoutProvider)
     , m_daemonMode(daemonMode)
 {
@@ -66,6 +67,8 @@ UI::UI(AppDaemon* daemon, KeyboardLayoutProvider* keyboardLayoutProvider,
     }
 }
 
+UI::~UI() = default;
+
 
 void UI::showMainWindow()
 {
@@ -78,11 +81,13 @@ void UI::showMainWindow()
     m_daemon->setQmlEngine(m_view->engine());
     AlbumArtProvider::registerImageProvider(m_view->engine());
 
+    m_view->installEventFilter(this);
+
     setRunInBackground(
         m_settings.value("runInBackground", m_runInBackground).toBool());
 
     // view
-    m_view->rootContext()->setContextProperty("daemon", m_daemon);
+    m_view->rootContext()->setContextProperty("daemon", m_daemon.get());
     m_view->rootContext()->setContextProperty("ui", this);
     m_view->rootContext()->setContextProperty("keyboardLayout", m_keyboardLayoutProvider);
     m_view->setSource(SailfishApp::pathToMainQml());
@@ -91,6 +96,7 @@ void UI::showMainWindow()
 
 void UI::quit()
 {
+    m_daemon.reset();
     QCoreApplication::quit();
 }
 
@@ -145,10 +151,20 @@ void UI::setRunInBackground(bool value)
 
     m_runInBackground = value;
     m_settings.setValue("runInBackground", value);
+    m_settings.sync();
 
     qGuiApp->setQuitOnLastWindowClosed(!value);
 
     emit runInBackgroundChanged();
+}
+
+bool UI::eventFilter(QObject *watched, QEvent *event)
+{
+    if (event->type() == QEvent::Close && !m_runInBackground) {
+        quit();
+    }
+
+    return QObject::eventFilter(watched, event);
 }
 
 QVariant UI::openDevicePageDbusAction(const QString &deviceId)

@@ -447,6 +447,10 @@
         <source>Share a file</source>
         <translation>分享文件</translation>
     </message>
+    <message>
+        <source>Select file to send</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Touchpad</name>

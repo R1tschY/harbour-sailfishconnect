@@ -2,6 +2,7 @@
 *~
 *.bak
 *.swp
+*.spec.*
 
 # Qt Creator
 *.user*

@@ -47,7 +47,7 @@ SailfishOS client for KDE-Connect
 %build
 # >> build pre
 
-VENV=$RPM_BUILD_ROOT/venv-%{_target_cpu}
+VENV=$HOME/.venv-conan-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
 
 # install virtualenv

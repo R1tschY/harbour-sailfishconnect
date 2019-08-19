@@ -31,7 +31,7 @@ IconListItem {
     Component {
         id: filePickerPage
         ContentPickerPage {
-            title: "Select file to send"
+            title: qsTr("Select file to send")
             onSelectedContentPropertiesChanged: {
                 _device
                     .plugin("SailfishConnect::SharePlugin")

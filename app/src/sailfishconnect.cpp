@@ -133,7 +133,6 @@ std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
     app->setApplicationName(PACKAGE_NAME);
     app->setApplicationVersion(PACKAGE_VERSION);
     app->setQuitLockEnabled(false);
-    app->setQuitOnLastWindowClosed(true);
     return app;
 }
 
@@ -187,9 +186,8 @@ int main(int argc, char *argv[])
     Ofono::registerTypes();
     registerQmlTypes();
 
-    AppDaemon daemon;
     KeyboardLayoutProvider keyboardLayoutProvider;
-    UI ui(&daemon, &keyboardLayoutProvider, options.daemonMode);
+    UI ui(&keyboardLayoutProvider, options.daemonMode);
     if (!options.daemonMode)
         ui.showMainWindow();
 

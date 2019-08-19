@@ -18,6 +18,7 @@
 #ifndef UI_H
 #define UI_H
 
+#include <memory>
 #include <QObject>
 #include <QString>
 #include <QSettings>
@@ -25,6 +26,7 @@
 
 class QQuickView;
 class QQmlImageProviderBase;
+class QEventLoopLocker;
 
 namespace SailfishConnect {
 
@@ -52,10 +54,10 @@ public:
     static const QString DBUS_PATH;
 
     explicit UI(
-            AppDaemon* daemon,
             KeyboardLayoutProvider* keyboardLayoutProvider,
             bool daemonMode,
             QObject *parent = nullptr);
+    ~UI();
 
     /**
      * @brief notify other main daemon to show app window
@@ -90,12 +92,14 @@ public slots:
 
 private:
     QQuickView* m_view = nullptr;
-    AppDaemon *m_daemon;
+    std::unique_ptr<AppDaemon> m_daemon;
     KeyboardLayoutProvider* m_keyboardLayoutProvider;
 
     QSettings m_settings;
     bool m_runInBackground = false;
     bool m_daemonMode;
+
+    bool eventFilter(QObject *watched, QEvent *event) override;
 };
 
 } // namespace SailfishConnect

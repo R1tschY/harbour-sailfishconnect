@@ -137,6 +137,33 @@ std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
     return app;
 }
 
+namespace {
+
+struct Options {
+    bool daemonMode;
+};
+
+Options parseCommandLine(const QCoreApplication &app) {
+    QCommandLineParser parser;
+    parser.setApplicationDescription(
+        QStringLiteral("Alternative KDE-Connect client for Sailfish OS"));
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    QCommandLineOption daemonOption(QStringList() << "d" << "daemon",
+        QStringLiteral("Start application in daemon mode. "
+                       "Window is not shown until a call without is flag."));
+    parser.addOption(daemonOption);
+
+    parser.process(app);
+
+    return Options {
+        parser.isSet(daemonOption)
+    };
+}
+
+} // namespace
+
 } // SailfishConnect
 
 int main(int argc, char *argv[])
@@ -147,10 +174,13 @@ int main(int argc, char *argv[])
 
     auto app = createApplication(argc, argv);
 
+    auto options = parseCommandLine(*app);
+
     QDBusConnection sessionBus = QDBusConnection::sessionBus();
     if (!sessionBus.registerService(DBUS_SERVICE_NAME)) {
         qCInfo(logger) << "Other daemon exists.";
-        UI::raise();
+        if (!options.daemonMode)
+            UI::raise();
         return 0;
     }
 
@@ -159,8 +189,9 @@ int main(int argc, char *argv[])
 
     AppDaemon daemon;
     KeyboardLayoutProvider keyboardLayoutProvider;
-    UI ui(&daemon, &keyboardLayoutProvider);
-    ui.showMainWindow();
+    UI ui(&daemon, &keyboardLayoutProvider, options.daemonMode);
+    if (!options.daemonMode)
+        ui.showMainWindow();
 
     return app->exec();
 }

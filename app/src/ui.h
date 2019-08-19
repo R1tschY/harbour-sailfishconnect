@@ -51,7 +51,11 @@ public:
     static const QString DBUS_INTERFACE_NAME;
     static const QString DBUS_PATH;
 
-    explicit UI(AppDaemon* daemon, KeyboardLayoutProvider* keyboardLayoutProvider, QObject *parent = nullptr);
+    explicit UI(
+            AppDaemon* daemon,
+            KeyboardLayoutProvider* keyboardLayoutProvider,
+            bool daemonMode,
+            QObject *parent = nullptr);
 
     /**
      * @brief notify other main daemon to show app window
@@ -91,6 +95,7 @@ private:
 
     QSettings m_settings;
     bool m_runInBackground = false;
+    bool m_daemonMode;
 };
 
 } // namespace SailfishConnect

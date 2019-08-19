@@ -43,10 +43,12 @@ const QString UI::DBUS_PATH =
         QStringLiteral("/org/harbour/SailfishConnect/UI");
 
 
-UI::UI(AppDaemon* daemon, KeyboardLayoutProvider* keyboardLayoutProvider, QObject *parent)
+UI::UI(AppDaemon* daemon, KeyboardLayoutProvider* keyboardLayoutProvider,
+       bool daemonMode, QObject *parent)
     : QObject(parent)
     , m_daemon(daemon)
     , m_keyboardLayoutProvider(keyboardLayoutProvider)
+    , m_daemonMode(daemonMode)
 {
     m_settings.beginGroup(QStringLiteral("UI"));
 

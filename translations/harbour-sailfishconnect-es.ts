@@ -123,7 +123,7 @@
     </message>
     <message>
         <source>Encryption info</source>
-        <translation>Información de encriptación</translation>
+        <translation>Encriptación</translation>
     </message>
     <message>
         <source>Plugins</source>
@@ -241,7 +241,7 @@
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation>Nada reprodiciendo</translation>
+        <translation>Nada reproduciendo</translation>
     </message>
 </context>
 <context>
@@ -270,7 +270,7 @@
     </message>
     <message>
         <source>Share battery charge state.</source>
-        <translation>Compartir el estado de carga de la batería.</translation>
+        <translation>Comparte el estado de carga de la batería.</translation>
     </message>
 </context>
 <context>
@@ -389,7 +389,7 @@
     </message>
     <message>
         <source>Send and receive files and URLs.</source>
-        <translation>Enviar y recibir archivos y LURs.</translation>
+        <translation>Envia y recibe archivos y LURs.</translation>
     </message>
 </context>
 <context>
@@ -400,7 +400,7 @@
     </message>
     <message>
         <source>Allow sending of text messages.</source>
-        <translation>Permitir el envío de mensajes de texto.</translation>
+        <translation>Permite el envío de mensajes de texto.</translation>
     </message>
 </context>
 <context>
@@ -411,7 +411,7 @@
     </message>
     <message>
         <source>Send notifications for incoming and missed calls.</source>
-        <translation>Enviar notificaciones para llamadas entrantes y perdidas.</translation>
+        <translation>Envia notificaciones para llamadas entrantes y perdidas.</translation>
     </message>
 </context>
 <context>
@@ -448,7 +448,7 @@
     </message>
     <message>
         <source>Select file to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar archivo para enviar</translation>
     </message>
 </context>
 <context>

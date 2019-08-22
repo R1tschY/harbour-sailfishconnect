@@ -32,7 +32,7 @@
     <name>ClipboardUi</name>
     <message>
         <source>Upload clipboard text</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить текст из буфера обмена</translation>
     </message>
 </context>
 <context>
@@ -141,23 +141,23 @@
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы хотите подключиться к этому устройству?</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Подключить</translation>
     </message>
     <message>
         <source>Device is not reachable</source>
-        <translation type="unfinished"></translation>
+        <translation>Устройство недоступно</translation>
     </message>
     <message>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Действия</translation>
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ожидание подтверждения спаривания ...</translation>
     </message>
 </context>
 <context>
@@ -178,30 +178,30 @@
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>%1ms repeat interval</source>
-        <translation type="unfinished"></translation>
+        <translation>повтор каждые %1 мс</translation>
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Виброотклик</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Настройка</translation>
+        <translation>Настройка</translation>
     </message>
     <message>
         <source>Change layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Сменить раскладку</translation>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиатура</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Настройка</translation>
+        <translation>Настройка</translation>
     </message>
 </context>
 <context>
@@ -242,14 +242,14 @@
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ничто не воспроизводится</translation>
     </message>
 </context>
 <context>
     <name>RemoteKeyboard</name>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиатура</translation>
     </message>
 </context>
 <context>
@@ -364,11 +364,11 @@
     <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаленная клавиатура</translation>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Печатать на удаленном компьютере с помощью виртуальной клавиатуры.</translation>
     </message>
 </context>
 <context>
@@ -445,11 +445,11 @@
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Передать файл</translation>
     </message>
     <message>
         <source>Select file to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите файл для отправки</translation>
     </message>
 </context>
 <context>
@@ -495,47 +495,47 @@ Hold shortly for Drag&apos;n&apos;Drop</source>
     </message>
     <message>
         <source>Failed to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось открыть файл</translation>
     </message>
     <message>
         <source>Internal error</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутренняя ошибка</translation>
     </message>
     <message>
         <source>File does not exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл не существует</translation>
     </message>
     <message>
         <source>No program found to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет приложения способного открыть файл</translation>
     </message>
     <message>
         <source>xdg-open failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка программы xdg-open</translation>
     </message>
     <message>
         <source>xdg-open crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Программа xdg-open неожиданно завершилась</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменить</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>Completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Готово</translation>
     </message>
 </context>
 </TS>

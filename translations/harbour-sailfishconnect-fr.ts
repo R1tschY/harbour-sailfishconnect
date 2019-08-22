@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pl">
+<TS version="2.1" language="fr">
 <context>
     <name>AboutPage</name>
     <message>
         <source>Links</source>
-        <translation>Odnośniki</translation>
+        <translation>Liens</translation>
     </message>
     <message>
         <source>Licence</source>
-        <translation>Licencja</translation>
+        <translation>Licence</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>O Sailfish Connect</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <source>Bug reports on Github</source>
-        <translation>Raporty błędów na Githubie</translation>
+        <translation>Rapports de bugs sur Github</translation>
     </message>
     <message>
         <source>Source code on Github</source>
-        <translation>Kod źródłowy na Githubie</translation>
+        <translation>Code source sur Github</translation>
     </message>
     <message>
         <source>Alternative KDE Connect client for Sailfish OS</source>
-        <translation>Alternatywny klient KDE Connect dla Sailfish OS</translation>
+        <translation>Alternative au client KDE Connect pour Sailfish OS</translation>
     </message>
 </context>
 <context>
     <name>ClipboardUi</name>
     <message>
         <source>Upload clipboard text</source>
-        <translation>Wyślij zawartość schowka</translation>
+        <translation>Envoyer le presse-papiers</translation>
     </message>
 </context>
 <context>
     <name>Device</name>
     <message>
         <source>Already paired</source>
-        <translation>Już sparowane</translation>
+        <translation>Déjà appairé</translation>
     </message>
     <message>
         <source>Device not reachable</source>
-        <translation>Urządzenie nieosiągalne</translation>
+        <translation>Le périphérique n&apos;est pas accessible</translation>
     </message>
     <message>
         <source>SHA1 fingerprint of your device certificate is: %1
 </source>
-        <translation>Odcisk palca SHA1 certyfikatu twojego urządzenia to: %1
+        <translation>L&apos;empreinte SHA1 du certificat de votre appareil est : %1
 </translation>
     </message>
     <message>
         <source>SHA1 fingerprint of remote device certificate is: %1
 </source>
-        <translation>Odcisk palca SHA1 certyfikatu zdalnego urządzenia to: %1
+        <translation>L&apos;empreinte SHA1 du certificat de votre appareil distant est : %1
 </translation>
     </message>
 </context>
@@ -62,31 +62,31 @@
     <name>DeviceListPage</name>
     <message>
         <source>Device Name</source>
-        <translation>Nazwa urządzenia</translation>
+        <translation>Nom de l&apos;Appareil</translation>
     </message>
     <message>
         <source>Paired devices</source>
-        <translation>Sparowane urządzenia</translation>
+        <translation>Appareils appairés</translation>
     </message>
     <message>
         <source>Nearby devices</source>
-        <translation>Urządzenia w pobliżu</translation>
+        <translation>Appareils à proximité</translation>
     </message>
     <message>
         <source>Connected</source>
-        <translation>Połączone</translation>
+        <translation>Connecté</translation>
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation>Oczekująca prośba o parowanie...</translation>
+        <translation>Requête d&apos;appairage en attente...</translation>
     </message>
     <message>
         <source>About ...</source>
-        <translation>O Sailfish Connect</translation>
+        <translation>À propos...</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Odśwież</translation>
+        <translation>Rafraîchir</translation>
     </message>
     <message>
         <source>Sailfish Connect</source>
@@ -94,259 +94,259 @@
     </message>
     <message>
         <source>Settings ...</source>
-        <translation>Ustawienia...</translation>
+        <translation>Paramètres...</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Wyjdź</translation>
+        <translation>Quitter</translation>
     </message>
     <message>
         <source>Transfers ...</source>
-        <translation>Transfery...</translation>
+        <translation>Transferts...</translation>
     </message>
     <message>
         <source>Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.</source>
-        <translation>Zainstaluj KDE Connect lub GSConnect na twoim komputerze i podłącz go do tej samej sieci WLAN.</translation>
+        <translation>Installer KDE Connect ou GSConnect sur votre ordinateur et connecter le au même WLAN</translation>
     </message>
 </context>
 <context>
     <name>DevicePage</name>
     <message>
         <source>Accept</source>
-        <translation>Akceptuj</translation>
+        <translation>Accepter</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation>Odrzuć</translation>
+        <translation>Refuser</translation>
     </message>
     <message>
         <source>This device wants to pair with your device.</source>
-        <translation>To urządzenie chce dokonać parowania z twoim urządzeniem.</translation>
+        <translation>Cet appareil veut s&apos;appairer avec votre appareil</translation>
     </message>
     <message>
         <source>Encryption info</source>
-        <translation>Informacje o szyfrowaniu</translation>
+        <translation>Information sur le Cryptage</translation>
     </message>
     <message>
         <source>Plugins</source>
-        <translation>Wtyczki</translation>
+        <translation>Plugins</translation>
     </message>
     <message>
         <source>Unpair</source>
-        <translation>Rozdziel</translation>
+        <translation>Désappairer</translation>
     </message>
     <message>
         <source>Send ping</source>
-        <translation>Wyślij ping</translation>
+        <translation>Envoyer un ping</translation>
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
-        <translation>Czy chcesz połączyć się z tym urządzeniem?</translation>
+        <translation>Voulez-vous vous connecter à cet appareil ?</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation>Połącz</translation>
+        <translation>Se connecter</translation>
     </message>
     <message>
         <source>Device is not reachable</source>
-        <translation>Urządzenie jest nieosiągalne</translation>
+        <translation>L&apos;appareil n&apos;est pas joignable</translation>
     </message>
     <message>
         <source>Actions</source>
-        <translation>Akcje</translation>
+        <translation>Actions</translation>
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation>Oczekiwanie na zaakceptowanie parowania...</translation>
+        <translation>En attente d&apos;acceptation de l&apos;appairage...</translation>
     </message>
 </context>
 <context>
     <name>DevicePluginsPage</name>
     <message>
         <source>Select Plugins</source>
-        <translation>Wybierz wtyczki</translation>
+        <translation>Sélectionnez des Plugins</translation>
     </message>
 </context>
 <context>
     <name>EncryptionInfoPage</name>
     <message>
         <source>Encryption info</source>
-        <translation>Informacje o szyfrowaniu</translation>
+        <translation>Information sur le Cryptage</translation>
     </message>
 </context>
 <context>
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>%1ms repeat interval</source>
-        <translation>%1ms interwał powtarzania</translation>
+        <translation>%1ms interv. répétition</translation>
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation>Informowanie wibracją</translation>
+        <translation>Vibration au touché</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Ustawienia</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Change layout</source>
-        <translation>Zmień rozmieszczenie</translation>
+        <translation>Changer la disposition</translation>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation>Klawiatura</translation>
+        <translation>Clavier</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Ustawienia</translation>
+        <translation>Paramètres</translation>
     </message>
 </context>
 <context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
-        <translation>To urządzenie nie może być sparowane, ponieważ korzysta ze starej wersji KDE Connect</translation>
+        <translation>Cet appareil ne peut pas être appairé car il fonctionne sur une ancienne version de KDE Connect.</translation>
     </message>
     <message>
         <source>This device cannot be paired because it sends a strange ssl certificate.</source>
-        <translation>To urządzenie nie może być sparowane ponieważ wysyła dziwny certyfikat ssl</translation>
+        <translation>Cet appareil ne peut pas être appairé car il envoie un certificat ssl étrange.</translation>
     </message>
 </context>
 <context>
     <name>LanPairingHandler</name>
     <message>
         <source>Canceled by other peer</source>
-        <translation>Anulowane przez innego uczestnika</translation>
+        <translation>Annulé par l&apos;autre client</translation>
     </message>
     <message>
         <source>%1: Already paired</source>
-        <translation>%1: Sparowane</translation>
+        <translation>%1 : Déjà appairé</translation>
     </message>
     <message>
         <source>Timed out</source>
-        <translation>Upłynął limit czasu</translation>
+        <translation>Temps expiré</translation>
     </message>
 </context>
 <context>
     <name>MprisUi</name>
     <message>
         <source>No remote players</source>
-        <translation>Brak zdalnych odtwarzaczy</translation>
+        <translation>Aucun lecteur distant</translation>
     </message>
     <message>
         <source>Multimedia Controls</source>
-        <translation>Sterowanie multimediami</translation>
+        <translation>Contrôles Multimédia</translation>
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation>Nic nie jest odtwarzane</translation>
+        <translation>Aucune lecture</translation>
     </message>
 </context>
 <context>
     <name>RemoteKeyboard</name>
     <message>
         <source>Keyboard</source>
-        <translation>Klawiatura</translation>
+        <translation>Clavier</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::AppDaemon</name>
     <message>
         <source>Pairing request</source>
-        <translation>Prośba o parowanie</translation>
+        <translation>Demande d&apos;appairage</translation>
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation>Oczekująca prośba o parowanie...</translation>
+        <translation>Demande d&apos;appairage en attentea</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::BatteryPluginFactory</name>
     <message>
         <source>Battery report</source>
-        <translation>Informacja o baterii</translation>
+        <translation>Compte-rendu de la batterie</translation>
     </message>
     <message>
         <source>Share battery charge state.</source>
-        <translation>Udostępnij stan naładowania baterii.</translation>
+        <translation>Partager l&apos;état de charge de la batterie.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::ClipboardPluginFactory</name>
     <message>
         <source>Clipboard</source>
-        <translation>Schowek</translation>
+        <translation>Presse-papiers</translation>
     </message>
     <message>
         <source>Synchronize clipboard between devices.</source>
-        <translation>Synchronizuj schowek pomiędzy urządzeniami.</translation>
+        <translation>Synchroniser le presse-papiers entre les appareils.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::CopyJob</name>
     <message>
         <source>Read error: %1</source>
-        <translation>Błąd odczytu: %1</translation>
+        <translation>Erreur de lecture : %1</translation>
     </message>
     <message>
         <source>Write error: %1</source>
-        <translation>Błąd zapisu: %1</translation>
+        <translation>Erreur d&apos;écriture : %1</translation>
     </message>
     <message>
         <source>Input stream is not readable.</source>
-        <translation>Nie można oczytać strumienia wejścia.</translation>
+        <translation>Impossible de lire le flux d&apos;entré.</translation>
     </message>
     <message>
         <source>Output stream is not writable.</source>
-        <translation>Nie można zapisać w strumieniu wyjścia.</translation>
+        <translation>Impossible d&apos;écrire sur le flux de sortie.</translation>
     </message>
     <message>
         <source>Read more bytes of input stream than expected.</source>
-        <translation>Odczytano więcej bajtów ze strumienia wejściowego niż oczekiwano.</translation>
+        <translation>Trop de bytes lus sur le flux d&apos;entré que prévu.</translation>
     </message>
     <message>
         <source>Early end of input stream</source>
-        <translation>Przedwczesne zakończenie strumienia wejściowego</translation>
+        <translation>Fin de flux d&apos;entrée inattendue</translation>
     </message>
     <message>
         <source>Early end of output stream</source>
-        <translation>Przedwczesne zakończenie strumienia wyjściowego</translation>
+        <translation>Fin de flux de sortie inattendue</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::DownloadJob</name>
     <message>
         <source>Cannot create destination folder</source>
-        <translation>Nie można utworzyć folderu docelowego</translation>
+        <translation>Impossible de créer un dossier de destination</translation>
     </message>
     <message>
         <source>Could not open file for writing: %1</source>
-        <translation>Nie można otworzyć pliku do zapisu: %1</translation>
+        <translation>Impossible d&apos;ouvrir le fichier en écriture :  %1</translation>
     </message>
     <message>
         <source>Receiving</source>
-        <translation>Otrzymywanie</translation>
+        <translation>Réception</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::LanUploadJob</name>
     <message>
         <source>Couldn&apos;t find an available port</source>
-        <translation>Nie znaleziono dostępnego portu</translation>
+        <translation>Impossible de trouver un port disponible</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::MprisRemotePluginFactory</name>
     <message>
         <source>Multimedia controls</source>
-        <translation>Sterowanie multimediami</translation>
+        <translation>Contrôles Multimédia</translation>
     </message>
     <message>
         <source>Control your media player from remote.</source>
-        <translation>Steruj odtwarzaczem z pilota.</translation>
+        <translation>Contrôler votre lecteur à distance</translation>
     </message>
 </context>
 <context>
@@ -357,113 +357,113 @@
     </message>
     <message>
         <source>Ping other device and receive pings.</source>
-        <translation>Otrzymuj i wysyłaj ping do innych urządzeń.</translation>
+        <translation>Ping d&apos;autre périphériques et recevoir des pings</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation>Zdalna klawiatura</translation>
+        <translation>Clavier distant</translation>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation>Pisz na zdalnym komputerze używając wirtualnej klawiatury</translation>
+        <translation>Taper sur le périphérique distant en utilisant le clavier virtuel.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::SendNotificationsPluginFactory</name>
     <message>
         <source>Send notifcations</source>
-        <translation>Wysyłaj powiadomienia</translation>
+        <translation>Envoyer des notifications</translation>
     </message>
     <message>
         <source>Work in progress: Send notifications to the remote computer.</source>
-        <translation>Prace w toku: Wysyłaj powiadomienia do zdalnego komputera.</translation>
+        <translation>En travaux : Envoyer des notifications vers un ordinateur distant</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::SharePluginFactory</name>
     <message>
         <source>Share</source>
-        <translation>Udostępnij</translation>
+        <translation>Partager</translation>
     </message>
     <message>
         <source>Send and receive files and URLs.</source>
-        <translation>Wysyłaj i odbieraj pliki oraz linki.</translation>
+        <translation>Envoyer ou recevoir des fichiers et des URLs.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TelepathyPluginFactory</name>
     <message>
         <source>Send SMS</source>
-        <translation>Wyślij SMS</translation>
+        <translation>Envoyer des SMS</translation>
     </message>
     <message>
         <source>Allow sending of text messages.</source>
-        <translation>Zezwól na wysyłanie wiadomości tekstowych.</translation>
+        <translation>Autoriser l&apos;envoi de messages texts</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TelephonyPluginFactory</name>
     <message>
         <source>Call notifications</source>
-        <translation>Powiadomienia o nadchodzących połączeniach</translation>
+        <translation>Notifications d&apos;appel</translation>
     </message>
     <message>
         <source>Send notifications for incoming and missed calls.</source>
-        <translation>Wysyłaj powiadomienia o nadchodzących i nieodebranych połączeniach</translation>
+        <translation>Envoyer des notifications pour des appels en cours ou manqués.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
         <source>Touchpad</source>
-        <translation>Panel dotykowy</translation>
+        <translation>Touchpad</translation>
     </message>
     <message>
         <source>Control remote computer through mouse movements and clicks.</source>
-        <translation>Kontroluj zdalny komputer z użyciem ruchów i naciśnięć myszy</translation>
+        <translation>Contrôler l&apos;ordinateur distant grâce aux mouvements de souris et aux cliques.</translation>
     </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
-        <translation>Ustawienia</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Run in background</source>
-        <translation>Pozostawiaj uruchomione w tle</translation>
+        <translation>Fonctionner en tâche de fond</translation>
     </message>
     <message>
         <source>Application runs in background after window is closed.</source>
-        <translation>Aplikacja pozostaje uruchomiona w tle po zamknięciu okna</translation>
+        <translation>L&apos;application fonctionne en tâche de fond après que la fenêtre ait été fermée.</translation>
     </message>
 </context>
 <context>
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
-        <translation>Udostępnij plik</translation>
+        <translation>Partager un fichier</translation>
     </message>
     <message>
         <source>Select file to send</source>
-        <translation>Wybierz plik do wysłania</translation>
+        <translation>Sélectionner le fichier à envoyer</translation>
     </message>
 </context>
 <context>
     <name>Touchpad</name>
     <message>
         <source>Touchpad</source>
-        <translation>Panel dotykowy</translation>
+        <translation>Touchpad</translation>
     </message>
 </context>
 <context>
     <name>TouchpadPage</name>
     <message>
         <source>Touchpad</source>
-        <translation>Panel dotykowy</translation>
+        <translation>Touchpad</translation>
     </message>
     <message>
         <source></source>
@@ -473,69 +473,69 @@
         <source>Move finger on screen
 Tap for click
 Hold shortly for Drag&apos;n&apos;Drop</source>
-        <translation>Poruszaj palcem po ekranie
-Dotknij by kliknąć
-Krótko przytrzymaj by przeciągnąć i upuścić</translation>
+        <translation>Bouger le doigt sur l&apos;écran
+Taper pour cliquer
+Presser doucement pour glissé-déposé</translation>
     </message>
 </context>
 <context>
     <name>TransfersPage</name>
     <message>
         <source>Transfers</source>
-        <translation>Transfery</translation>
+        <translation>Transferts</translation>
     </message>
     <message>
         <source>Yet no downloads or uploads</source>
-        <translation>Brak dotychczasowych pobrań ani wysłań</translation>
+        <translation>Aucun téléchargement ou envoi pour le moment</translation>
     </message>
     <message>
         <source>of</source>
         <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
-        <translation>z</translation>
+        <translation>sur</translation>
     </message>
     <message>
         <source>Failed to open file</source>
-        <translation>Nie udało się otworzyć pliku</translation>
+        <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
         <source>Internal error</source>
-        <translation>Wewnętrzny błąd</translation>
+        <translation>Erreur interne</translation>
     </message>
     <message>
         <source>File does not exit</source>
-        <translation>Plik nie istnieje</translation>
+        <translation>Le fichier ne peut être fermé</translation>
     </message>
     <message>
         <source>No program found to open file</source>
-        <translation>Nie znaleziono programu do otwarcia pliku</translation>
+        <translation>Aucun programme trouvé pour ouvrir ce fichier</translation>
     </message>
     <message>
         <source>xdg-open failed</source>
-        <translation>xdg-open nie zadziałał</translation>
+        <translation>xdg-open a échoué</translation>
     </message>
     <message>
         <source>xdg-open crashed</source>
-        <translation>xdg-open zawiesił się</translation>
+        <translation>xdg-open a crashé</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Anuluj</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Otwórz</translation>
+        <translation>Ouvrir</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation>Anulowano</translation>
+        <translation>Annulé</translation>
     </message>
     <message>
         <source>Failed</source>
-        <translation>Nie powiodło się</translation>
+        <translation>A échoué</translation>
     </message>
     <message>
         <source>Completed</source>
-        <translation>Ukończono</translation>
+        <translation>Terminé</translation>
     </message>
 </context>
 </TS>

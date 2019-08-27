@@ -449,7 +449,7 @@
     </message>
     <message>
         <source>Select file to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle zu sendende Datei</translation>
     </message>
 </context>
 <context>

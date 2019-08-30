@@ -123,7 +123,7 @@
     </message>
     <message>
         <source>Encryption info</source>
-        <translation>Encriptación</translation>
+        <translation>Información de encriptación</translation>
     </message>
     <message>
         <source>Plugins</source>
@@ -241,7 +241,7 @@
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation>Nada reproduciendo</translation>
+        <translation>Nada reprodiciendo</translation>
     </message>
 </context>
 <context>
@@ -270,7 +270,7 @@
     </message>
     <message>
         <source>Share battery charge state.</source>
-        <translation>Comparte el estado de carga de la batería.</translation>
+        <translation>Compartir el estado de carga de la batería.</translation>
     </message>
 </context>
 <context>
@@ -282,6 +282,17 @@
     <message>
         <source>Synchronize clipboard between devices.</source>
         <translation>Sincroniza el portapapeles entre dispositivos.</translation>
+    </message>
+</context>
+<context>
+    <name>SailfishConnect::ContactsPluginFactory</name>
+    <message>
+        <source>Contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share contacts.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -389,7 +400,7 @@
     </message>
     <message>
         <source>Send and receive files and URLs.</source>
-        <translation>Envia y recibe archivos y LURs.</translation>
+        <translation>Enviar y recibir archivos y LURs.</translation>
     </message>
 </context>
 <context>
@@ -400,7 +411,7 @@
     </message>
     <message>
         <source>Allow sending of text messages.</source>
-        <translation>Permite el envío de mensajes de texto.</translation>
+        <translation>Permitir el envío de mensajes de texto.</translation>
     </message>
 </context>
 <context>
@@ -411,7 +422,7 @@
     </message>
     <message>
         <source>Send notifications for incoming and missed calls.</source>
-        <translation>Envia notificaciones para llamadas entrantes y perdidas.</translation>
+        <translation>Enviar notificaciones para llamadas entrantes y perdidas.</translation>
     </message>
 </context>
 <context>
@@ -448,7 +459,7 @@
     </message>
     <message>
         <source>Select file to send</source>
-        <translation>Seleccionar archivo para enviar</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

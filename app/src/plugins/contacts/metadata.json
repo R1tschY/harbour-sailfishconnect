@@ -1,0 +1,11 @@
+{
+    "Id": "SailfishConnect::ContactsPlugin",
+    "IncomingCapabilities": [
+      "kdeconnect.contacts.request_all_uids_timestamps", 
+      "kdeconnect.contacts.request_vcards_by_uid"
+    ],
+    "OutcomingCapabilities": [
+      "kdeconnect.contacts.response_uids_timestamps",
+      "kdeconnect.contacts.response_vcards"
+    ]
+}

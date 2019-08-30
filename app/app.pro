@@ -13,7 +13,7 @@
 TARGET = harbour-sailfishconnect
 
 CONFIG += sailfishapp c++14
-QT += network dbus feedback
+QT += network dbus feedback sql
 
 PKGCONFIG += sailfishapp dbus-1 contextkit-statefs nemonotifications-qt5
 DEFINES += \
@@ -35,6 +35,9 @@ INCLUDEPATH += $$PWD/src
 
 SOURCES += \
     src/appdaemon.cpp \
+    src/plugins/contacts/contactsplugin.cpp \
+    src/plugins/contacts/contactsreader.cpp \
+    src/plugins/contacts/contactsstore.cpp \
     src/ui/devicelistmodel.cpp \
     src/sailfishconnect.cpp \
     src/plugins/battery/batteryplugin.cpp \
@@ -75,6 +78,7 @@ DISTFILES += \
     qml/harbour-sailfishconnect.qml \
     harbour-sailfishconnect.desktop \
     src/plugins/battery/metadata.json \
+    src/plugins/contacts/metadata.json \
     src/plugins/ping/metadata.json \
     qml/components/ClipboardUi.qml \
     qml/pages/SettingsPage.qml \
@@ -97,6 +101,9 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
 HEADERS += \
     src/appdaemon.h \
+    src/plugins/contacts/contactsplugin.h \
+    src/plugins/contacts/contactsreader.h \
+    src/plugins/contacts/contactsstore.h \
     src/ui/devicelistmodel.h \
     src/plugins/battery/batteryplugin.h \
     src/plugins/ping/pingplugin.h \

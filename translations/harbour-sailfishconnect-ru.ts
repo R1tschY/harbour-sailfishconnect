@@ -286,6 +286,17 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::ContactsPluginFactory</name>
+    <message>
+        <source>Contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share contacts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::CopyJob</name>
     <message>
         <source>Read error: %1</source>

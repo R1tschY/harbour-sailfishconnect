@@ -449,7 +449,7 @@
     </message>
     <message>
         <source>Select file to send</source>
-        <translation type="unfinished"></translation>
+        <translation>选择文件以发送</translation>
     </message>
 </context>
 <context>

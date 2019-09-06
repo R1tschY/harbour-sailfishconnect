@@ -223,18 +223,20 @@ void CopyJob::finish()
     m_finished = true;
     m_timer.stop();
 
+    setProcessedAmount(KJob::Bytes, m_writtenBytes);
+
     if (m_bufferSize != 0) {
         setError(2);
         setErrorText(tr("Early end of output stream"));
     }
 
-    if (m_size > 0 && m_writtenBytes > m_size) {
+    if (m_size >= 0 && m_writtenBytes > m_size) {
         setError(2);
         setErrorText(tr("Read more bytes of input stream than "
                         "expected."));
     }
 
-    if (m_size > 0 && m_writtenBytes < m_size) {
+    if (m_size >= 0 && m_writtenBytes < m_size) {
         setError(2);
         setErrorText(tr("Early end of input stream"));
     }

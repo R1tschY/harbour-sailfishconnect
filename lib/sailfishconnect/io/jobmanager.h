@@ -72,8 +72,8 @@ private:
     QUrl m_target;
 
     QString m_errorString;
-    qulonglong m_totalBytes;
-    qulonglong m_processedBytes;
+    qulonglong m_totalBytes = -1;
+    qulonglong m_processedBytes = 0;
 
     QString m_title;
     QPair<QString, QString> m_field1;

@@ -85,7 +85,6 @@ private:
     std::array<char, 512 * 1024> m_buffer;
 
     void pollAtSourceClose();
-    void pollAtDestinationClose();
 
     void closeSource();
     void closeDestination();

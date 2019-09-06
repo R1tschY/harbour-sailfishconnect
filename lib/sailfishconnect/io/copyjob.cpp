@@ -117,7 +117,7 @@ void CopyJob::doStart()
     connect(m_source.data(), &QIODevice::readChannelFinished,
             this, &CopyJob::pollAtSourceClose);
     connect(m_destination.data(), &QIODevice::aboutToClose,
-            this, &CopyJob::pollAtDestinationClose);
+            this, &CopyJob::finish);
 
     // FIXME: QNetworkReply generates unknown read error
     if (m_source->isSequential()
@@ -128,6 +128,10 @@ void CopyJob::doStart()
     if (m_destination->isSequential()) {
         connect(m_destination.data(), &QIODevice::bytesWritten,
                 this, &CopyJob::poll);
+    }
+    if (m_sslSocket) {
+        connect(m_sslSocket, &QAbstractSocket::disconnected,
+                this, &CopyJob::finish);
     }
 
     poll();
@@ -188,11 +192,15 @@ void CopyJob::poll()
     }
 
     if (m_sourceEof
-            && m_bufferSize == 0
             && m_source->bytesAvailable() == 0
+            && m_bufferSize == 0
             && btw == 0) {
-//        qCDebug(logger) << "EOF";
-        finish();
+        qCDebug(logger) << "EOF";
+        if (m_sslSocket) {
+            m_sslSocket->disconnectFromHost();
+        } else {
+            finish();
+        }
     }
 }
 
@@ -207,16 +215,11 @@ void CopyJob::pollAtSourceClose()
     poll();
 }
 
-void CopyJob::pollAtDestinationClose()
-{
-    if (!m_finished) {
-//        qCDebug(logger) << "Detected destination closing";
-        finish();
-    }
-}
-
 void CopyJob::finish()
 {
+    if (m_finished)
+        return;
+
     m_finished = true;
     m_timer.stop();
 

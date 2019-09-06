@@ -4,6 +4,7 @@
 * Sun Sep 01 2019 Richard Liebscher <r1tschy@posteo.de> 0.4.1-1
 - Fix bug of app quiting after file transfer of any kind when screen is off
 - Added translation for French and one missing translatable string (thanks to the translators)
+- Fix file upload to GSConnect
 
 * Sun Aug 18 2019 Richard Liebscher <r1tschy@posteo.de> 0.4-1
 - Added keyboard plugin (thanks to derFogel)

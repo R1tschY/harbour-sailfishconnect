@@ -30,6 +30,7 @@ PkgConfigBR:
   - Qt5Test
   - contextkit-statefs
   - nemonotifications-qt5
+  - keepalive
 
 # Build dependencies without a pkgconfig setup can be listed here
 PkgBR:

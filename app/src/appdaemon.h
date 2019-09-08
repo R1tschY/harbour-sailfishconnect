@@ -20,8 +20,10 @@
 
 #include <sailfishconnect/daemon.h>
 
+#include <QSet>
 #include <QEventLoopLocker>
 #include <notification.h>
+#include <backgroundactivity.h>
 
 class QQmlEngine;
 class QQmlImageProviderBase;
@@ -47,8 +49,14 @@ public:
 
 private:
     QEventLoopLocker m_eventLoopLock;
+    QSet<QString> m_connectedDevices;
+    BackgroundActivity m_backgroundActivity;
     Notification notification_;
     QQmlEngine* m_qmlEngine = nullptr;
+
+    void onDeviceAdded(const QString &id);
+    void onDeviceMayConnectedChanged();
+    void onWakeUp();
 };
 
 } // namespace SailfishConnect

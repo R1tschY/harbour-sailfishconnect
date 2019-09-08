@@ -74,6 +74,18 @@ AppDaemon::AppDaemon(QObject *parent)
 {
     notification_.setAppName(PRETTY_PACKAGE_NAME);
     notification_.setCategory("device");
+
+    connect(this, &Daemon::deviceAdded,
+            this, &AppDaemon::onDeviceAdded);
+
+    connect(
+        &m_backgroundActivity, &BackgroundActivity::running,
+        this, &AppDaemon::onWakeUp);
+    m_backgroundActivity.setWakeupFrequency(BackgroundActivity::ThirtySeconds);
+
+    for (auto* device : asConst(devicesList())) {
+        onDeviceAdded(device->id());
+    }
 }
 
 void AppDaemon::askPairingConfirmation(Device *device)
@@ -123,6 +135,50 @@ void AppDaemon::setQmlEngine(QQmlEngine *qmlEngine)
         connect(m_qmlEngine, &QObject::destroyed,
                 this, [this]() { setQmlEngine(nullptr); });
     }
+}
+
+void AppDaemon::onDeviceAdded(const QString& id)
+{
+    Device* device = getDevice(id);
+    if (device == nullptr)
+        return;
+
+    if (device->isTrusted() && device->isReachable()) {
+        m_connectedDevices.insert(device->id());
+    }
+
+    connect(device, &Device::reachableChanged,
+            this, &AppDaemon::onDeviceMayConnectedChanged);
+    connect(device, &Device::trustedChanged,
+            this, &AppDaemon::onDeviceMayConnectedChanged);
+}
+
+void AppDaemon::onDeviceMayConnectedChanged()
+{
+    auto device = qobject_cast<Device*>(sender());
+    if (device->isTrusted() && device->isReachable()) {
+        m_connectedDevices.insert(device->id());
+    } else {
+        m_connectedDevices.remove(device->id());
+    }
+
+    qCDebug(logger)
+        << "Device changed, got"
+        << m_connectedDevices.size() << "connected devices";
+    m_backgroundActivity.setState(
+        m_connectedDevices.size()
+        ? BackgroundActivity::Waiting : BackgroundActivity::Stopped);
+}
+
+void AppDaemon::onWakeUp()
+{
+//    qCDebug(logger)
+//        << QDateTime::currentDateTime().toString() << "Received wakeup, got"
+//        << m_connectedDevices.size() << "connected devices";
+
+    // immediately to go sleep, hope that is sufficient to keep connections
+    // alive
+    m_backgroundActivity.wait();
 }
 
 AppDaemon *AppDaemon::instance()

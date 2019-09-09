@@ -13,7 +13,7 @@ CHANGELOG_FILE = (
     Path(__file__).parent.parent / "rpm" / "harbour-sailfishconnect.changes"
 )
 HEADER_RE = re.compile(
-    r"^\* (?P<date>\w+ \w+ \d+ \d+) (?P<author>[^<]+) <(?P<email>[^>]+)> (?P<version>[\w.~]+)-(?P<release>\d+)",
+    r"^\* (?P<date>\w+ \w+ \d+ \d+) (?P<author>[^<]+) <(?P<email>[^>]+)> (?P<version>[^\-]+)-(?P<release>\d+)",
     re.M,
 )
 
@@ -78,7 +78,7 @@ def find_first_header(changelog: str) -> ChangelogHeader:
 
 def format_datetime(datetime):
     locale.setlocale(locale.LC_ALL, "C")
-    return datetime.strftime("%a %b %e %Y")
+    return datetime.strftime("%a %b %d %Y")
 
 
 def apply_commandfn(fn, args):

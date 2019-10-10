@@ -219,6 +219,9 @@ void LanDeviceLink::setPairStatus(PairStatus status)
         QStringList commonName = cert.issuerInfo(QSslCertificate::CommonName);
         if (commonName.length() != 1
                 || Device::sanitizeDeviceId(commonName.first()) != deviceId()) {
+            qCWarning(coreLogger)
+                    << "Strange ssl common names" << commonName
+                    << "expected" << deviceId();
             Q_EMIT pairingError(tr("This device cannot be paired because it "
                                    "sends a strange ssl certificate."));
             return;

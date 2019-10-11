@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <bad-style ignore-dirs=".git gtest">
-    <match-regex files="\.(cpp|h|qml|py)\Z" message="copyright missing">
+    <match-regex files="\.(cpp|h|qml|py)$" message="copyright missing">
         This program is free software. you can redistribute it
     </match-regex>
-    <match-regex files="\.(cpp|h)\Z" regex="\A/\*\n" message="source file should start with /*" />
+    <match-regex files="\.(cpp|h)$" regex="\A/\*\n" message="source file should start with /*" />
 
     <!-- QML rules -->
-    <dont-match-regex files="\.qml\Z" regex=" == " message="use === instead of =="/>
-    <dont-match-regex files="\.qml\Z" regex=";\n" message="dont use ; at EOL"/>
+    <dont-match-regex files="\.qml$" regex="\s==\s" message="use === instead of =="/>
+    <dont-match-regex files="\.qml$" regex=";\n" message="dont use ; at EOL"/>
 </bad-style>

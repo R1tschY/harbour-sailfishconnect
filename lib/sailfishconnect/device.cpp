@@ -546,8 +546,7 @@ QString Device::sanitizeDeviceId(const QString& deviceId)
 {
     static QRegularExpression regexp("[^A-Za-z0-9_]");
 
-    // GSConnect 26 sends trailing newline: #28
-    QString result = deviceId.trimmed();
+    QString result = deviceId;
     result.replace(regexp, QLatin1String("_"));
     return result;
 }

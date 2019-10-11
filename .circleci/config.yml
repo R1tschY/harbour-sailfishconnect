@@ -12,6 +12,8 @@ jobs:
           keys:
             - venv-cache3
 
+      - run: sb2 -t SailfishOS-3.0.3.9-armv7hl python3 scripts/bad-style.py bad-style.xml
+
       - run: mb2 -X -t SailfishOS-3.0.3.9-armv7hl build -d -j 2
       - store_artifacts:
           path: ~/project/RPMS/

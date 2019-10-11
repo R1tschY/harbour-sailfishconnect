@@ -27,5 +27,5 @@ IconListItem {
 
     onClicked: pageStack.push(
                    Qt.resolvedUrl("../pages/KeyboardPage.qml"),
-                   { device: _device });
+                   { device: _device })
 }

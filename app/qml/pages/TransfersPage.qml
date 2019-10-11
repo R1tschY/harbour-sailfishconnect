@@ -64,7 +64,7 @@ Page {
 //            return
 //        }
 
-//        if (xdgOpen.state == "Running") {
+//        if (xdgOpen.state === "Running") {
 //            xdgOpen.waitForFinished()
 //        }
 

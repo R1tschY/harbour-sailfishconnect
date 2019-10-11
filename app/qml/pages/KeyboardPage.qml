@@ -34,16 +34,16 @@ Page {
     function displayCorrectChar(data) {
         if (page.chars && typeof data["symView"] !== "undefined") {
             // dont show text on arrow keys
-            if (["up", "down", "left", "right"].indexOf(data["symView"]) != -1) return " ";
+            if (["up", "down", "left", "right"].indexOf(data["symView"]) !== -1) return " "
             if (modifiers.shift && typeof data["symView2"] !== "undefined") {
-                return data["symView2"];
+                return data["symView2"]
             }
-            return data["symView"];
+            return data["symView"]
         } else {
             if (modifiers.shift && typeof data["captionShifted"] !== "undefined") {
-                return data["captionShifted"];
+                return data["captionShifted"]
             }
-            return data["caption"];
+            return data["caption"]
         }
     }
 
@@ -58,7 +58,7 @@ Page {
             MenuItem {
                 text: qsTr("Settings")
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("KeyboardChangeLayoutPage.qml"));
+                    pageStack.push(Qt.resolvedUrl("KeyboardChangeLayoutPage.qml"))
                 }
             }
         }
@@ -81,14 +81,14 @@ Page {
                             } else {
                                 plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
                                 if (modifiers.shift === 1) {
-                                    modifiers.shift = 0;
+                                    modifiers.shift = 0
                                 }
                             }
                             if (modifiers.ctrl === 1) {
-                                modifiers.ctrl = 0;
+                                modifiers.ctrl = 0
                             }
                             if (modifiers.alt === 1) {
-                                modifiers.alt = 0;
+                                modifiers.alt = 0
                             }
                         }
                     }
@@ -110,14 +110,14 @@ Page {
                             } else {
                                 plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
                                 if (modifiers.shift === 1) {
-                                    modifiers.shift = 0;
+                                    modifiers.shift = 0
                                 }
                             }
                             if (modifiers.ctrl === 1) {
-                                modifiers.ctrl = 0;
+                                modifiers.ctrl = 0
                             }
                             if (modifiers.alt === 1) {
-                                modifiers.alt = 0;
+                                modifiers.alt = 0
                             }
                         }
                     }
@@ -139,14 +139,14 @@ Page {
                             } else {
                                 plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
                                 if (modifiers.shift === 1) {
-                                    modifiers.shift = 0;
+                                    modifiers.shift = 0
                                 }
                             }
                             if (modifiers.ctrl === 1) {
-                                modifiers.ctrl = 0;
+                                modifiers.ctrl = 0
                             }
                             if (modifiers.alt === 1) {
-                                modifiers.alt = 0;
+                                modifiers.alt = 0
                             }
                         }
                     }
@@ -167,16 +167,16 @@ Page {
                             if (modelData["caption"] === "shift") {
                                 if (page.chars) {
                                     if (modifiers.shift === 0) {
-                                        return "1/2";
+                                        return "1/2"
                                     }
-                                    return "2/2";
+                                    return "2/2"
                                 } else {
-                                    return " ";
+                                    return " "
                                 }
                             } else if (modelData["caption"] === "backspace") {
-                                return " ";
+                                return " "
                             } else {
-                                return displayCorrectChar(data);
+                                return displayCorrectChar(data)
                             }
                         }
 
@@ -199,26 +199,26 @@ Page {
                         onClicked: {
                             if (modelData["caption"] === "shift") {
                                 modifiers.shift = (modifiers.shift + 1) % 3
-                                if (page.chars && modifiers.shift === 1) modifiers.shift = 2;
-                                return;
+                                if (page.chars && modifiers.shift === 1) modifiers.shift = 2
+                                return
                             } else if (modelData["caption"] === "backspace") {
-                                plugin.sendKeyPress("backspace");
+                                plugin.sendKeyPress("backspace")
                             } else if (modelData["symView"] === "up") {
-                                plugin.sendKeyPress("up", false, modifiers.ctrl, modifiers.alt);
+                                plugin.sendKeyPress("up", false, modifiers.ctrl, modifiers.alt)
                             } else {
                                 if (page.chars) {
-                                    plugin.sendKeyPress(label, false, modifiers.ctrl, modifiers.alt);
+                                    plugin.sendKeyPress(label, false, modifiers.ctrl, modifiers.alt)
                                 } else {
-                                    plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt);
+                                    plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
                                     if (modifiers.shift === 1) {
-                                        modifiers.shift = 0;
+                                        modifiers.shift = 0
                                     }
                                 }
                                 if (modifiers.ctrl === 1) {
-                                    modifiers.ctrl = 0;
+                                    modifiers.ctrl = 0
                                 }
                                 if (modifiers.alt === 1) {
-                                    modifiers.alt = 0;
+                                    modifiers.alt = 0
                                 }
                             }
                         }
@@ -246,29 +246,29 @@ Page {
                             width: parent.width
                             height: parent.height
                             fillMode: Image.PreserveAspectFit
-                            visible: (["left", "right", "down"].indexOf(modelData["symView"]) != -1) && page.chars
+                            visible: (["left", "right", "down"].indexOf(modelData["symView"]) !== -1) && page.chars
 
                             source: visible ? "image://theme/icon-m-" + modelData["symView"] : ""
                         }
 
                         onClicked: {
-                            if (label == "?123" || label == "ABC") {
-                                page.chars = !page.chars;
-                                modifiers.shift = 0;
-                                modifiers.alt = 0;
-                                modifiers.ctrl = 0;
-                            } else if (label == "alt") {
+                            if (label === "?123" || label === "ABC") {
+                                page.chars = !page.chars
+                                modifiers.shift = 0
+                                modifiers.alt = 0
+                                modifiers.ctrl = 0
+                            } else if (label === "alt") {
                                 modifiers.alt = (modifiers.alt + 1) % 3
-                            } else if (label == "ctrl") {
+                            } else if (label === "ctrl") {
                                 modifiers.ctrl = (modifiers.ctrl + 1) % 3
-                            } else if (label == "enter") {
-                                plugin.sendKeyPress("enter", modifiers.shift, modifiers.ctrl, modifiers.alt);
+                            } else if (label === "enter") {
+                                plugin.sendKeyPress("enter", modifiers.shift, modifiers.ctrl, modifiers.alt)
                             } else if (modelData["symView"] === "left") {
-                                plugin.sendKeyPress("left", false, modifiers.ctrl, modifiers.alt);
+                                plugin.sendKeyPress("left", false, modifiers.ctrl, modifiers.alt)
                             } else if (modelData["symView"] === "down") {
-                                plugin.sendKeyPress("down", false, modifiers.ctrl, modifiers.alt);
+                                plugin.sendKeyPress("down", false, modifiers.ctrl, modifiers.alt)
                             } else if (modelData["symView"] === "right") {
-                                plugin.sendKeyPress("right", false, modifiers.ctrl, modifiers.alt);
+                                plugin.sendKeyPress("right", false, modifiers.ctrl, modifiers.alt)
                             }
                         }
                     }

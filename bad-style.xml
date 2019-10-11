@@ -7,5 +7,6 @@
 
     <!-- QML rules -->
     <dont-match-regex files="\.qml$" regex="\s==\s" message="use === instead of =="/>
+    <dont-match-regex files="\.qml$" regex="\s!=\s" message="use !== instead of !="/>
     <dont-match-regex files="\.qml$" regex=";\n" message="dont use ; at EOL"/>
 </bad-style>

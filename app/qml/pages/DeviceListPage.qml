@@ -267,7 +267,7 @@ Page {
     }
 
     function openDevicePage(deviceId) {
-        if (typeof pageStack == "undefined")
+        if (typeof pageStack === "undefined")
             return; // happens when using QmlLive
 
         console.log("opening device " + deviceId)

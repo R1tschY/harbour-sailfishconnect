@@ -39,7 +39,7 @@ Page {
                         + "\n"
             }
 
-            return "<br><pre>" + result + "</pre><br>";
+            return "<br><pre>" + result + "</pre><br>"
         }
 
         return encInfo.replace(re, replacer)

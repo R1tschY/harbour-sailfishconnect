@@ -1,17 +1,15 @@
 #include "process.h"
 
 #include <QtQml>
+#include "qtcompat_p.h"
 
-#include <sailfishconnect/helper/cpphelper.h>
 
 namespace QmlJs {
-
-using namespace SailfishConnect;
 
 Process::Process(QObject *parent) : QObject(parent)
 {
     connect(&m_inner, &QProcess::errorOccurred, this, &Process::errorOccurred);
-    connect(&m_inner, Overload<int>::of(&QProcess::finished),
+    connect(&m_inner, QOverload<int>::of(&QProcess::finished),
             this, &Process::finished);
     connect(&m_inner, &QProcess::started, this, &Process::started);
     connect(&m_inner, &QProcess::stateChanged, this, &Process::stateChanged);

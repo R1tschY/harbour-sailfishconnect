@@ -1,5 +1,0 @@
-{
-    "Id": "SailfishConnect::TelepathyPlugin",
-    "IncomingCapabilities": ["kdeconnect.sms.request"],
-    "OutcomingCapabilities": []
-}

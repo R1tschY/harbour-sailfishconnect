@@ -1,5 +1,0 @@
-{
-    "Id": "SailfishConnect::TelephonyPlugin",
-    "IncomingCapabilities": ["kdeconnect.telephony.request_mute"],
-    "OutcomingCapabilities": ["kdeconnect.telephony"]
-}

@@ -1,5 +1,0 @@
-{
-    "Id": "SailfishConnect::RemoteControlPlugin",
-    "IncomingCapabilities": [],
-    "OutcomingCapabilities": ["kdeconnect.mousepad.request"]
-}

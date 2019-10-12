@@ -19,10 +19,10 @@
 
 #include <QLoggingCategory>
 
-#include <sailfishconnect/daemon.h>
-#include <sailfishconnect/device.h>
-#include <sailfishconnect/kdeconnectplugin.h>
-#include <sailfishconnect/pluginloader.h>
+#include <daemon.h>
+#include <device.h>
+#include <kdeconnectplugin.h>
+#include <pluginloader.h>
 
 namespace SailfishConnect {
 
@@ -46,15 +46,18 @@ QVariant DevicePluginsModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     auto& pluginId = pluginIds_[index.row()];
+    auto metadata = PluginLoader::instance()->getPluginInfo(pluginId);
+
     switch (role) {
     case NameRole:
-        return PluginManager::instance()->pluginName(pluginId);
+        return metadata.name();
     case DescriptionRole:
-        return PluginManager::instance()->pluginDescription(pluginId);
+        return metadata.description();
     case EnabledRole:
         return device_->isPluginEnabled(pluginId);
     case IconUrlRole:
-        return PluginManager::instance()->pluginIconUrl(pluginId);
+        // FIXME: use sailfish os icons or a wrapper
+        return metadata.iconName();
     }
 
     return QVariant();

@@ -7,11 +7,22 @@
 *.user*
 *.autosave
 
-# VS Code
+# IDEs
 .vscode
+.buildconfig
 
 # Conan
 conanbuildinfo.pri
 conanbuildinfo.txt
+conanbuildinfo.cmake
 conaninfo.txt
+conan.lock
 graph_info.json
+.venv*
+
+# RPM
+*.list
+
+# CMake
+/build*
+/rpmbuilddir

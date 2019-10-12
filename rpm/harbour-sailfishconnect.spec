@@ -33,6 +33,7 @@ BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  cmake
 BuildRequires:  python3-devel
 BuildRequires:  desktop-file-utils
+BuildRequires:  extra-cmake-modules
 
 %description
 SailfishOS client for KDE-Connect
@@ -47,7 +48,7 @@ SailfishOS client for KDE-Connect
 %build
 # >> build pre
 
-VENV=$RPM_BUILD_ROOT/venv-%{_target_cpu}
+VENV=~/.venv-sailfishconnect-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
 
 # install virtualenv
@@ -69,26 +70,29 @@ if ! grep -sq sailfishos ~/.conan/remotes.json ; then
 conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
 fi
 
+if [ ! -d rpmbuilddir ]; then
+mkdir -p rpmbuilddir
+fi
+cd rpmbuilddir
+conan install .. --profile=../dev/profiles/%{_target_cpu}
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/usr ..
+cd ..
+make -C rpmbuilddir -j VERBOSE=1 %{?_smp_mflags}
+
 # << build pre
-
-%qtc_qmake5 
-
-%qtc_make %{?_smp_mflags}
-
 # >> build post
 # << build post
-
 %install
 rm -rf %{buildroot}
 # >> install pre
+DESTDIR=%{buildroot} make -C rpmbuilddir VERBOSE=1 install
+mkdir -p %{_bindir}
 # << install pre
-%qmake5_install
 
 # >> install post
 # << install post
-
-desktop-file-install --delete-original       \
-  --dir %{buildroot}%{_datadir}/applications             \
+desktop-file-install --delete-original \
+  --dir %{buildroot}%{_datadir}/applications \
    %{buildroot}%{_datadir}/applications/*.desktop
 
 %files

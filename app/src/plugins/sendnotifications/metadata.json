@@ -1,6 +1,0 @@
-{
-    "Id": "SailfishConnect::SendNotitifcationsPlugin",
-    "IncomingCapabilities": ["kdeconnect.notification.request"],
-    "OutcomingCapabilities": ["kdeconnect.notification"],
-    "EnabledByDefault": false
-}

@@ -18,9 +18,9 @@
 #ifndef APPDAEMON_H
 #define APPDAEMON_H
 
-#include <sailfishconnect/daemon.h>
+#include <daemon.h>
 
-#include <notification.h>
+//#include <notification.h>
 
 class QQmlEngine;
 class QQmlImageProviderBase;
@@ -29,13 +29,14 @@ namespace SailfishConnect {
 
 class AppDaemon : public Daemon
 {
-    Q_OBJECT
+    Q_OBJECT  
 public:
     AppDaemon(QObject* parent = nullptr);
 
     void askPairingConfirmation(Device* device) override;
-
     void reportError(const QString & title, const QString & description) override;
+    void quit() override;
+    void sendSimpleNotification(const QString&, const QString&, const QString&, const QString&) override;
 
     QQmlImageProviderBase *imageProvider(const QString &providerId) const;
 
@@ -45,7 +46,7 @@ public:
     static AppDaemon* instance();
 
 private:
-    Notification notification_;
+    //Notification notification_;
     QQmlEngine* m_qmlEngine = nullptr;
 };
 

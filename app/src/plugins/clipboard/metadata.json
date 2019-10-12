@@ -1,5 +1,0 @@
-{
-    "Id": "SailfishConnect::ClipboardPlugin",
-    "IncomingCapabilities": ["kdeconnect.clipboard"],
-    "OutcomingCapabilities": ["kdeconnect.clipboard"]
-}

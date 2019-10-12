@@ -28,6 +28,7 @@
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusReply>
+#include <QDebug>
 #include <sailfishapp.h>
 
 #include <execinfo.h>
@@ -35,18 +36,22 @@
 #include <unistd.h>
 
 #include "appdaemon.h"
-#include <sailfishconnect/device.h>
-#include <sailfishconnect/kdeconnectplugin.h>
-#include "plugins/mprisremote/mprisremoteplugin.h"
-#include "plugins/touchpad/touchpadplugin.h"
+#include <device.h>
+#include <kdeconnectplugin.h>
+//#include "plugins/mprisremote/mprisremoteplugin.h"
+//#include "plugins/touchpad/touchpadplugin.h"
 #include "ui/devicelistmodel.h"
 #include "ui/sortfiltermodel.h"
 #include "ui/devicepluginsmodel.h"
-#include "ui/mprisplayersmodel.h"
-#include "ui/jobsmodel.h"
+// #include "ui/mprisplayersmodel.h"
+// #include "ui/jobsmodel.h"
 #include "ui.h"
 #include "js/qmlregister.h"
 #include "dbus/ofono.h"
+
+#include <QtPlugin>
+
+Q_IMPORT_PLUGIN(opensslPlugin)
 
 namespace SailfishConnect {
 
@@ -64,13 +69,6 @@ QString PACKAGE_NAME =
 QString PRETTY_PACKAGE_NAME =
         QStringLiteral("Sailfish Connect");
 
-void logBacktrace()
-{
-    void* array[32];
-    size_t size = backtrace (array, 32);
-    backtrace_symbols_fd(array, size, STDERR_FILENO);
-}
-
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray localMsg = qFormatLogMessage(type, context, msg).toLocal8Bit();
@@ -79,14 +77,10 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     case QtInfoMsg:
     case QtWarningMsg:
     case QtCriticalMsg:
-        if (msg.contains("BACKTRACE")) { // XXX
-            logBacktrace();
-        }
         fprintf(stderr, "%s\n", localMsg.constData());
         break;
     case QtFatalMsg:
         fprintf(stderr, "%s\n", localMsg.constData());
-        logBacktrace();
         abort();
     }
 }
@@ -99,23 +93,24 @@ void registerQmlTypes() {
                 "SailfishConnect.UI", 0, 3, "SortFilterModel");
     qmlRegisterType<DevicePluginsModel>(
                 "SailfishConnect.UI", 0, 3, "DevicePluginsModel");
-    qmlRegisterType<JobsModel>(
-                "SailfishConnect.UI", 0, 3, "JobsModel");
-    qmlRegisterType<MprisPlayersModel>(
-                "SailfishConnect.UI", 0, 3, "MprisPlayersModel");
+    // qmlRegisterType<JobsModel>(
+    //             "SailfishConnect.UI", 0, 3, "JobsModel");
+    // qmlRegisterType<MprisPlayersModel>(
+    //             "SailfishConnect.UI", 0, 3, "MprisPlayersModel");
 
-    qmlRegisterType<Device>(
-                "SailfishConnect.Core", 0, 3, "Device");
+    qmlRegisterUncreatableType<Device>(
+                "SailfishConnect.Core", 0, 3, "Device",
+                QStringLiteral("Instances of are only creatable from C++."));
     qmlRegisterUncreatableType<KdeConnectPlugin>(
                 "SailfishConnect.Core", 0, 3, "Plugin",
-                QStringLiteral("instance of abstract type cannot be created"));
+                QStringLiteral("Instances of are only creatable from C++."));
 
-    qmlRegisterUncreatableType<MprisPlayer>(
-                "SailfishConnect.Mpris", 0, 3, "MprisPlayer",
-                QStringLiteral("not intented to be created from users"));
-    qmlRegisterUncreatableType<TouchpadPlugin>(
-                "SailfishConnect.RemoteControl", 0, 3, "RemoteControlPlugin",
-                QStringLiteral("not intented to be created from users"));    
+    // qmlRegisterUncreatableType<MprisPlayer>(
+    //             "SailfishConnect.Mpris", 0, 3, "MprisPlayer",
+    //             QStringLiteral("not intented to be created from users"));
+    // qmlRegisterUncreatableType<TouchpadPlugin>(
+    //             "SailfishConnect.RemoteControl", 0, 3, "RemoteControlPlugin",
+    //             QStringLiteral("not intented to be created from users"));    
 
     QmlJs::registerTypes();
 }
@@ -123,8 +118,6 @@ void registerQmlTypes() {
 std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
 {
     std::unique_ptr<QGuiApplication> app(SailfishApp::application(argc, argv));
-    app->setApplicationDisplayName(PRETTY_PACKAGE_NAME);
-    app->setApplicationName(PACKAGE_NAME);
     app->setApplicationVersion(PACKAGE_VERSION);
     return app;
 }
@@ -135,24 +128,26 @@ int main(int argc, char *argv[])
 {  
     using namespace SailfishConnect;
 
+    qDebug() << __PRETTY_FUNCTION__ << __LINE__;
     qInstallMessageHandler(myMessageOutput);
 
     auto app = createApplication(argc, argv);
-
+qDebug() << __PRETTY_FUNCTION__ << __LINE__;
     QDBusConnection sessionBus = QDBusConnection::sessionBus();
     if (!sessionBus.registerService(DBUS_SERVICE_NAME)) {
         qCInfo(logger) << "Other daemon exists.";
         UI::raise();
         return 0;
     }
-
+qDebug() << __PRETTY_FUNCTION__ << __LINE__;
     Ofono::registerTypes();
     registerQmlTypes();
-
+qDebug() << __PRETTY_FUNCTION__ << __LINE__;
     AppDaemon daemon;
-    KeyboardLayoutProvider keyboardLayoutProvider;
-    UI ui(&daemon, &keyboardLayoutProvider);
+    qDebug() << __PRETTY_FUNCTION__ << __LINE__;
+    //KeyboardLayoutProvider keyboardLayoutProvider;
+    UI ui(&daemon);
     ui.showMainWindow();
-
+qDebug() << __PRETTY_FUNCTION__ << __LINE__;
     return app->exec();
 }

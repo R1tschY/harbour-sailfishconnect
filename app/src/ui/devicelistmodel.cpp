@@ -22,9 +22,9 @@
 #include <cstdint>
 #include <QUrl>
 
-#include <sailfishconnect/daemon.h>
-#include <sailfishconnect/device.h>
-#include <sailfishconnect/helper/cpphelper.h>
+#include <daemon.h>
+#include <device.h>
+#include <qtcompat_p.h>
 
 namespace SailfishConnect {
 
@@ -60,7 +60,7 @@ DeviceListModel::DeviceListModel(QObject *parent)
     connect(m_daemon, &Daemon::deviceRemoved,
             this, &DeviceListModel::deviceIdRemoved);
 
-    for (auto& device : asConst(m_devices)) {
+    for (auto& device : qAsConst(m_devices)) {
         connectDevice(device);
     }
 }

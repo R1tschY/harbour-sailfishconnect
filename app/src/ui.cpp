@@ -26,11 +26,10 @@
 #include <QSettings>
 
 #include <sailfishapp.h>
-#include <notification.h>
+// #include <notification.h>
 
 #include "sailfishconnect.h"
 #include "appdaemon.h"
-#include "plugins/mprisremote/albumartcache.h"
 
 namespace SailfishConnect {
 
@@ -43,10 +42,9 @@ const QString UI::DBUS_PATH =
         QStringLiteral("/org/harbour/SailfishConnect/UI");
 
 
-UI::UI(AppDaemon* daemon, KeyboardLayoutProvider* keyboardLayoutProvider, QObject *parent)
+UI::UI(AppDaemon* daemon, QObject *parent)
     : QObject(parent)
     , m_daemon(daemon)
-    , m_keyboardLayoutProvider(keyboardLayoutProvider)
 {
     m_settings.beginGroup(QStringLiteral("UI"));
 
@@ -74,7 +72,7 @@ void UI::showMainWindow()
 
     m_view = SailfishApp::createView();
     m_daemon->setQmlEngine(m_view->engine());
-    AlbumArtProvider::registerImageProvider(m_view->engine());
+    // AlbumArtProvider::registerImageProvider(m_view->engine());
 
     setRunInBackground(
         m_settings.value("runInBackground", m_runInBackground).toBool());
@@ -86,7 +84,7 @@ void UI::showMainWindow()
     // view
     m_view->rootContext()->setContextProperty("daemon", m_daemon);
     m_view->rootContext()->setContextProperty("ui", this);
-    m_view->rootContext()->setContextProperty("keyboardLayout", m_keyboardLayoutProvider);
+    // m_view->rootContext()->setContextProperty("keyboardLayout", m_keyboardLayoutProvider);
     m_view->setSource(SailfishApp::pathToMainQml());
     m_view->showFullScreen();
 }
@@ -160,10 +158,11 @@ void UI::setRunInBackground(bool value)
 
 QVariant UI::openDevicePageDbusAction(const QString &deviceId)
 {
-    return Notification::remoteAction(
-            QStringLiteral("default"), QString("default"),
-            DBUS_SERVICE_NAME, UI::DBUS_PATH, UI::DBUS_INTERFACE_NAME,
-            QStringLiteral("openDevicePage"), { deviceId });
+    // return Notification::remoteAction(
+    //         QStringLiteral("default"), QString("default"),
+    //         DBUS_SERVICE_NAME, UI::DBUS_PATH, UI::DBUS_INTERFACE_NAME,
+    //         QStringLiteral("openDevicePage"), { deviceId });
+    return QVariant();
 }
 
 void UI::onMainWindowDestroyed()

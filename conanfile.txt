@@ -1,5 +1,8 @@
 [requires]
-KCoreAddons/5.36.0@sailfishos/stable
+KCoreAddons/5.36.0@r1tschy/stable
+KI18n/5.36.0@r1tschy/stable
+KConfig/5.36.0@r1tschy/stable
+QCA/2.2.1@r1tschy/stable
 
 [generators]
-qmake
+cmake_find_package

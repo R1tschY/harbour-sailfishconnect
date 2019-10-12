@@ -17,9 +17,9 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import SailfishConnect.UI 0.3
+//import SailfishConnect.UI 0.3
 import SailfishConnect.Core 0.3
-import SailfishConnect.Mpris 0.3
+//import SailfishConnect.Mpris 0.3
 import "../components"
 
 
@@ -29,7 +29,7 @@ Page {
     allowedOrientations: Orientation.All
 
     property string deviceId
-    property Device _device: daemon.getDevice(deviceId)
+    property var _device: daemon.getDevice(deviceId)
 
     property bool connected: _device.isTrusted && _device.isReachable
 
@@ -163,12 +163,12 @@ Page {
                 SectionHeader {
                     text: qsTr("Actions")
                 }
-                ShareUi { id: shareUi }
+                /*ShareUi { id: shareUi }
                 ClipboardUi { id: clipboardUi }
                 Touchpad { id: touchpad }
                 RemoteKeyboard { id: remoteKeyboard}
 
-                MprisUi { id: mprisUi }
+                MprisUi { id: mprisUi }*/
             }
 
             ViewPlaceholder {

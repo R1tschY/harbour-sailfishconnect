@@ -138,4 +138,8 @@ AppDaemon *AppDaemon::instance()
     return static_cast<AppDaemon*>(Daemon::instance());
 }
 
+Device* AppDaemon::getDevice(const QString& deviceId) {
+    return Daemon::getDevice(deviceId);
+}
+
 } // namespace SailfishConnect

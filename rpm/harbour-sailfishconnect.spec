@@ -33,6 +33,7 @@ BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  cmake
 BuildRequires:  python3-devel
 BuildRequires:  desktop-file-utils
+BuildRequires:  extra-cmake-modules
 
 %description
 SailfishOS client for KDE-Connect

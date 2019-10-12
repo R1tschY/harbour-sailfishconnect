@@ -8,4 +8,5 @@ ssh \
   -p 2222 \
   -i "$SDK/vmshare/ssh/private_keys/engine/mersdk" \
   -o UserKnownHostsFile=/dev/null \
-  -o StrictHostKeyChecking=no
+  -o StrictHostKeyChecking=no \
+  "$@"

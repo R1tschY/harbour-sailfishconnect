@@ -100,10 +100,10 @@ void registerQmlTypes() {
 
     qmlRegisterUncreatableType<Device>(
                 "SailfishConnect.Core", 0, 3, "Device",
-                QStringLiteral("Instances of are only creatable from C++."));
+                QStringLiteral("Instances of Device are only creatable from C++."));
     qmlRegisterUncreatableType<KdeConnectPlugin>(
                 "SailfishConnect.Core", 0, 3, "Plugin",
-                QStringLiteral("Instances of are only creatable from C++."));
+                QStringLiteral("Instances of Plugin are only creatable from C++."));
 
     // qmlRegisterUncreatableType<MprisPlayer>(
     //             "SailfishConnect.Mpris", 0, 3, "MprisPlayer",
@@ -128,26 +128,26 @@ int main(int argc, char *argv[])
 {  
     using namespace SailfishConnect;
 
-    qDebug() << __PRETTY_FUNCTION__ << __LINE__;
     qInstallMessageHandler(myMessageOutput);
+    QLoggingCategory::setFilterRules("kdeconnect.core=true");
 
     auto app = createApplication(argc, argv);
-qDebug() << __PRETTY_FUNCTION__ << __LINE__;
+
     QDBusConnection sessionBus = QDBusConnection::sessionBus();
     if (!sessionBus.registerService(DBUS_SERVICE_NAME)) {
         qCInfo(logger) << "Other daemon exists.";
         UI::raise();
         return 0;
     }
-qDebug() << __PRETTY_FUNCTION__ << __LINE__;
+
     Ofono::registerTypes();
     registerQmlTypes();
-qDebug() << __PRETTY_FUNCTION__ << __LINE__;
+
     AppDaemon daemon;
-    qDebug() << __PRETTY_FUNCTION__ << __LINE__;
+
     //KeyboardLayoutProvider keyboardLayoutProvider;
     UI ui(&daemon);
     ui.showMainWindow();
-qDebug() << __PRETTY_FUNCTION__ << __LINE__;
+
     return app->exec();
 }

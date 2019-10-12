@@ -3,4 +3,4 @@
 	url = https://github.com/google/googletest
 [submodule "kdeconnect/kdeconnect"]
 	path = kdeconnect/kdeconnect
-	url = https://invent.kde.org/kde/kdeconnect-kde.git
+	url = https://invent.kde.org/richardliebscher/kdeconnect-kde.git

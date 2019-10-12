@@ -23,6 +23,7 @@ graph_info.json
 # RPM
 *.list
 
-# CMake
+# Build dirs
 /build*
 /rpmbuilddir
+/RPMS

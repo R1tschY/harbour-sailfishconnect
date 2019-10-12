@@ -13,7 +13,7 @@ Name:       harbour-sailfishconnect
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    SailfishOS client for KDE-Connect
-Version:    0.4
+Version:    0.6
 Release:    0.1
 Group:      Qt/Qt
 License:    LICENSE
@@ -33,7 +33,6 @@ BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  cmake
 BuildRequires:  python3-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  extra-cmake-modules
 
 %description
 SailfishOS client for KDE-Connect
@@ -48,7 +47,7 @@ SailfishOS client for KDE-Connect
 %build
 # >> build pre
 
-VENV=~/.venv-sailfishconnect-%{_target_cpu}
+VENV=$HOME/.venv-conan-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
 
 # install virtualenv
@@ -70,12 +69,13 @@ if ! grep -sq sailfishos ~/.conan/remotes.json ; then
 conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
 fi
 
+export SAILFISHCONNECT_PACKAGE_VERSION="%{version}-%{release}"
 if [ ! -d rpmbuilddir ]; then
 mkdir -p rpmbuilddir
 fi
 cd rpmbuilddir
 conan install .. --profile=../dev/profiles/%{_target_cpu}
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/usr ..
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=/usr ..
 cd ..
 make -C rpmbuilddir -j VERBOSE=1 %{?_smp_mflags}
 

@@ -10,13 +10,12 @@ jobs:
 
       - restore_cache:
           keys:
-            - venv-cache-{{ .Branch }}
+            - venv-cache3
 
       - run: mb2 -X -t SailfishOS-3.0.3.9-armv7hl build -d -j 2
       - store_artifacts:
           path: ~/project/RPMS/
           destination: rpms
-      - run: mb2 -X -t SailfishOS-3.0.3.9-armv7hl make check
 
       - run: git clean -f -x
       - run: mb2 -X -t SailfishOS-3.0.3.9-i486 build -d -j 2
@@ -25,10 +24,10 @@ jobs:
           destination: rpms
 
       - save_cache:
-          key: venv-cache-{{ .Branch }}
+          key: venv-cache3
           paths:
-            - ~/project/installroot/venv-armv7hl
-            - ~/project/installroot/venv-i486
+            - ~/.venv-conan-armv7hl
+            - ~/.venv-conan-i486
 workflows:
   version: 2
   build_and_test:

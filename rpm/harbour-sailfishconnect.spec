@@ -76,7 +76,8 @@ mkdir -p rpmbuilddir
 fi
 cd rpmbuilddir
 conan install .. --profile=../dev/profiles/%{_target_cpu}
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=/usr ..
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=OFF -DSAILFISHOS=ON \
+  -DCMAKE_INSTALL_PREFIX=/usr ..
 cd ..
 make -C rpmbuilddir -j VERBOSE=1 %{?_smp_mflags}
 

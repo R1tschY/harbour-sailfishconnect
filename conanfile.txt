@@ -1,8 +1,8 @@
 [requires]
-KCoreAddons/5.36.0@r1tschy/stable
-KI18n/5.36.0@r1tschy/stable
-KConfig/5.36.0@r1tschy/stable
-QCA/2.2.1@r1tschy/stable
+KF5CoreAddons/5.36.0@r1tschy/stable
+KF5I18n/5.36.0@r1tschy/stable
+KF5Config/5.36.0@r1tschy/stable
+Qca-qt5/2.2.1@r1tschy/stable
 
 [generators]
-cmake_find_package
+cmake_find_package_multi

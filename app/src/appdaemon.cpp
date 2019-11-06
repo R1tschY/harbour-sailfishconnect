@@ -30,6 +30,7 @@
 #include <device.h>
 #include "sailfishconnect.h"
 #include "ui.h"
+#include "io/jobmanager.h"
 
 namespace SailfishConnect {
 
@@ -70,7 +71,7 @@ namespace {
 
 
 AppDaemon::AppDaemon(QObject *parent)
-: Daemon(parent)
+: Daemon(parent), m_jobmanager(new JobManager(this))
 {
     // notification_.setAppName(PRETTY_PACKAGE_NAME);
     // notification_.setCategory("device");
@@ -106,6 +107,10 @@ void AppDaemon::quit() {
 
 void AppDaemon::sendSimpleNotification(const QString&, const QString&, const QString&, const QString&) {
 
+}
+
+KJobTrackerInterface* AppDaemon::jobTracker() {
+    return m_jobmanager;
 }
 
 QQmlImageProviderBase *AppDaemon::imageProvider(const QString &providerId) const

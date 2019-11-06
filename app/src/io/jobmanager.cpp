@@ -19,9 +19,9 @@
 
 #include <QLoggingCategory>
 
-#include <sailfishconnect/helper/cpphelper.h>
-#include <sailfishconnect/downloadjob.h>
-#include <sailfishconnect/backend/lan/lanuploadjob.h>
+#include "../helper/cpphelper.h"
+#include <compositefiletransferjob.h>
+#include <backends/lan/compositeuploadjob.h>
 
 
 namespace SailfishConnect {
@@ -36,10 +36,10 @@ JobInfo::JobInfo(KJob *job, QObject *parent)
     m_state = QStringLiteral("running");
 
     // TODO: use interface
-    auto* copyJob = qobject_cast<CopyJob*>(m_impl);
-    if (copyJob) {
-        m_deviceId = copyJob->deviceId();
-    }
+    // auto* copyJob = qobject_cast<CopyJob*>(m_impl);
+    // if (copyJob) {
+    //     m_deviceId = copyJob->deviceId();
+    // }
 
     getTarget();
 
@@ -99,23 +99,23 @@ void JobInfo::getTarget()
 
     // TODO: use interface
 
-    auto* downloadJob = qobject_cast<DownloadJob*>(m_impl);
-    if (downloadJob) {
-        QUrl url;
-        url.setScheme("local");
-        url.setPath(downloadJob->destination());
-        setTarget(url);
-        return;
-    }
+    // auto* downloadJob = qobject_cast<CompositeFileTransferJob*>(m_impl);
+    // if (downloadJob) {
+    //     QUrl url;
+    //     url.setScheme("local");
+    //     url.setPath(downloadJob->destination().toLocalFile());
+    //     setTarget(url);
+    //     return;
+    // }
 
-    auto* uploadJob = qobject_cast<LanUploadJob*>(m_impl);
-    if (uploadJob) {
-        QUrl url;
-        url.setScheme("remote");
-        url.setPath(uploadJob->fileName());
-        setTarget(url);
-        return;
-    }
+    // auto* uploadJob = qobject_cast<CompositeUploadJob*>(m_impl);
+    // if (uploadJob) {
+    //     QUrl url;
+    //     url.setScheme("remote");
+    //     url.setPath(uploadJob->fileName());
+    //     setTarget(url);
+    //     return;
+    // }
 }
 
 void JobInfo::setTarget(const QUrl& value)

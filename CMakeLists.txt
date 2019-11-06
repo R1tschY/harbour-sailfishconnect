@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.11)
 cmake_policy(SET CMP0071 NEW)
-project(SailfishConnect VERSION 0.5 LANGUAGES CXX)
+project(SailfishConnect VERSION 0.5 LANGUAGES C CXX)
+
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup(TARGETS)
 
 set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})
-set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR} ${CMAKE_PREFIX_PATH})
+
 add_definitions(-DQT_STATICPLUGIN)
 
 set(BUILD_SHARED_LIBS OFF)

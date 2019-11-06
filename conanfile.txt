@@ -5,4 +5,5 @@ KF5Config/5.36.0@r1tschy/stable
 Qca-qt5/2.2.1@r1tschy/stable
 
 [generators]
-cmake_find_package_multi
+cmake
+cmake_find_package

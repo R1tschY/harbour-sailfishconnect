@@ -20,11 +20,6 @@
 
 namespace SailfishConnect {
 
-// template<typename F>
-// auto byKey(F&& f) {
-//     return [f](const auto& t1, const auto& t2) { return f(t1) < f(t2); };
-// }
-
 namespace details {
 
 template<typename F>

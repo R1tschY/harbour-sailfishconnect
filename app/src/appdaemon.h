@@ -28,6 +28,8 @@ class Device;
 
 namespace SailfishConnect {
 
+class JobManager;
+
 class AppDaemon : public Daemon
 {
     Q_OBJECT  
@@ -39,6 +41,7 @@ public:
     void reportError(const QString & title, const QString & description) override;
     void quit() override;
     void sendSimpleNotification(const QString&, const QString&, const QString&, const QString&) override;
+    KJobTrackerInterface* jobTracker() override;
 
     QQmlImageProviderBase *imageProvider(const QString &providerId) const;
 
@@ -53,6 +56,7 @@ public:
 private:
     //Notification notification_;
     QQmlEngine* m_qmlEngine = nullptr;
+    JobManager* m_jobmanager = nullptr;
 };
 
 } // namespace SailfishConnect

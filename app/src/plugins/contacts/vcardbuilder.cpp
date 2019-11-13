@@ -15,13 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "contactsstore.h"
+#include "vcardbuilder.h"
+
+#include <QMetaObject>
+#include <QRegularExpression>
+#include <sailfishconnect/helper/cpphelper.h>
 
 namespace SailfishConnect {
 
-ContactsStore::ContactsStore(QObject *parent) : QObject(parent)
+VCardBuilder::VCardBuilder()
 {
+    m_vCard.append(QStringLiteral("BEGIN:VCARD\nVERSION:4.0\n"));
+}
 
+void VCardBuilder::addRawProperty(const QString &name, const QString &rawValue)
+{
+    m_vCard.append(name % QChar(':') % rawValue % QChar('\n'));
+}
+
+QString VCardBuilder::result()
+{
+    return m_vCard + QStringLiteral("END:VCARD\n");
 }
 
 } // namespace SailfishConnect

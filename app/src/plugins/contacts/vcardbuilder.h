@@ -15,30 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONTACTSSTORE_H
-#define CONTACTSSTORE_H
+#ifndef CONTACTSREADER_H
+#define CONTACTSREADER_H
 
-#include <QObject>
+#include <QString>
+
 
 namespace SailfishConnect {
 
-struct Contact {
-    QString uId;
-    QString displayName;
-    QStringList tel;
-};
-
-class ContactsStore : public QObject
+class VCardBuilder
 {
-    Q_OBJECT
 public:
-    explicit ContactsStore(QObject *parent = nullptr);
+    VCardBuilder();
 
-signals:
+    void addRawProperty(const QString& name, const QString& rawValue);
 
-public slots:
+    QString result();
+
+private:
+    QString m_vCard;
 };
 
 } // namespace SailfishConnect
 
-#endif // CONTACTSSTORE_H
+#endif // CONTACTSREADER_H

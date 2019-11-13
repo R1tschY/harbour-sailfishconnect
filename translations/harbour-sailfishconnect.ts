@@ -442,11 +442,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Run in background</source>
+        <source>Run as service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Application runs in background after window is closed.</source>
+        <source>Application starts at system start and runs in background.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

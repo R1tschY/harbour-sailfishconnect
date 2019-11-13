@@ -444,12 +444,12 @@
         <translation>Asetukset</translation>
     </message>
     <message>
-        <source>Run in background</source>
-        <translation>Suorita taustalla</translation>
+        <source>Run as service</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Application runs in background after window is closed.</source>
-        <translation>Ohjelma toimii taustalla kun ikkuna on suljettu.</translation>
+        <source>Application starts at system start and runs in background.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

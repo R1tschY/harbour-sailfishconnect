@@ -444,12 +444,12 @@
         <translation>Inställningar</translation>
     </message>
     <message>
-        <source>Run in background</source>
-        <translation>Kör i bakgrunden</translation>
+        <source>Run as service</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Application runs in background after window is closed.</source>
-        <translation>Appen körs i bakgrunden efter att fönstret stängts.</translation>
+        <source>Application starts at system start and runs in background.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

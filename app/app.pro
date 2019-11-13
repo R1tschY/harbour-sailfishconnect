@@ -73,16 +73,14 @@ DISTFILES += \
     qml/pages/AboutPage.qml \
     qml/pages/EncryptionInfoPage.qml \
     qml/components/MprisUi.qml \
-    rpm/harbour-sailfishconnect.yaml \
-    rpm/harbour-sailfishconnect.spec \
     qml/harbour-sailfishconnect.qml \
     harbour-sailfishconnect.desktop \
+    harbour-sailfishconnect.service \
     src/plugins/battery/metadata.json \
     src/plugins/contacts/metadata.json \
     src/plugins/ping/metadata.json \
     qml/components/ClipboardUi.qml \
     qml/pages/SettingsPage.qml \
-    rpm/harbour-sailfishconnect.changes \
     src/plugins/sendnotifications/metadata.json \
     src/plugins/touchpad/metadata.json \
     qml/components/Touchpad.qml \
@@ -96,8 +94,6 @@ DISTFILES += \
     qml/components/Key.qml \
     qml/components/RemoteInput.qml \
     src/plugins/remotekeyboard/metadata.json
-
-SAILFISHAPP_ICONS = 86x86 108x108 128x128
 
 HEADERS += \
     src/appdaemon.h \
@@ -132,3 +128,10 @@ HEADERS += \
     src/plugins/mprisremote/albumartcache.h \
     src/js/process.h \
     src/js/path.h
+
+
+SAILFISHAPP_ICONS = 86x86 108x108 128x128
+
+service_file.path = /usr/share/$${TARGET}/
+service_file.files = $${TARGET}.service
+INSTALLS += service_file

@@ -17,35 +17,39 @@
 
 #include "ui.h"
 
-#include <QLoggingCategory>
-#include <QGuiApplication>
-#include <QQuickView>
 #include <QDBusInterface>
 #include <QDBusReply>
-#include <QQmlContext>
-#include <QSettings>
 #include <QEventLoopLocker>
+#include <QGuiApplication>
+#include <QLoggingCategory>
+#include <QProcess>
+#include <QQmlContext>
+#include <QQuickView>
+#include <QSettings>
 
-#include <sailfishapp.h>
 #include <notification.h>
+#include <sailfishapp.h>
 
-#include "sailfishconnect.h"
 #include "appdaemon.h"
 #include "plugins/mprisremote/albumartcache.h"
+#include "sailfishconnect.h"
 
 namespace SailfishConnect {
 
-static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
+static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui");
 
-const QString UI::DBUS_INTERFACE_NAME =
-        QStringLiteral("org.harbour.SailfishConnect.UI");
+const QString UI::DBUS_INTERFACE_NAME = QStringLiteral("org.harbour.SailfishConnect.UI");
 
-const QString UI::DBUS_PATH =
-        QStringLiteral("/org/harbour/SailfishConnect/UI");
+const QString UI::DBUS_PATH = QStringLiteral("/org/harbour/SailfishConnect/UI");
+
+#ifndef BUILD_FOR_HARBOUR
+const QString SERVICE_FILE_LOCATION =
+        "/usr/share/" % PACKAGE_NAME % "/" % PACKAGE_NAME % ".service";
+#endif
 
 
 UI::UI(KeyboardLayoutProvider* keyboardLayoutProvider,
-       bool daemonMode, QObject *parent)
+    bool daemonMode, QObject* parent)
     : QObject(parent)
     , m_daemon(new AppDaemon())
     , m_keyboardLayoutProvider(keyboardLayoutProvider)
@@ -55,20 +59,18 @@ UI::UI(KeyboardLayoutProvider* keyboardLayoutProvider,
 
     auto sessionBus = QDBusConnection::sessionBus();
     if (!sessionBus.registerObject(
-        DBUS_PATH,
-        DBUS_INTERFACE_NAME,
-        this,
-        QDBusConnection::ExportScriptableSlots))
-    {
+            DBUS_PATH,
+            DBUS_INTERFACE_NAME,
+            this,
+            QDBusConnection::ExportScriptableSlots)) {
         qCCritical(logger)
-                << "Registering" << DBUS_INTERFACE_NAME
-                << "on" << DBUS_PATH
-                << "failed";
+            << "Registering" << DBUS_INTERFACE_NAME
+            << "on" << DBUS_PATH
+            << "failed";
     }
 }
 
 UI::~UI() = default;
-
 
 void UI::showMainWindow()
 {
@@ -100,18 +102,53 @@ void UI::quit()
     QCoreApplication::quit();
 }
 
-void UI::openDevicePage(const QString &deviceId)
+void UI::openDevicePage(const QString& deviceId)
 {
     if (m_daemon->getDevice(deviceId) == nullptr) {
         // TODO: create device
-        qCWarning(logger)
-                << "while opening device page: device with id"
-                << deviceId << "does not exist.";
+        qCCritical(logger)
+            << "while opening device page: device with id"
+            << deviceId << "does not exist.";
         return;
     }
 
     qCDebug(logger) << "opening device page" << deviceId;
     emit openingDevicePage(deviceId);
+}
+
+static void handleSystemCtlResult(QProcess* systemCtl, bool enabled) {
+    systemCtl->deleteLater();
+
+    if (systemCtl->exitStatus() != QProcess::NormalExit) {
+        qCCritical(logger)
+            << "Unable to "
+            << (enabled ? "register" : "unregister")
+            << "service: systemctl crashed:"
+            << systemCtl->errorString();
+    }
+    else if (systemCtl->exitCode() != 0) {
+        qCCritical(logger).nospace()
+            << "Unable to "
+            << (enabled ? "register" : "unregister")
+            << " service: systemctl exited with "
+            << systemCtl->exitCode() << ": "
+            << systemCtl->readAll();
+    } else {
+        qCDebug(logger) 
+            << (enabled ? "Registered" : "Unregistered")
+            << "service:"
+            << systemCtl->readAll();
+    }
+}
+
+void UI::onRegisteredService()
+{
+    handleSystemCtlResult(qobject_cast<QProcess*>(sender()), true);
+}
+
+void UI::onUnregisteredService()
+{
+    handleSystemCtlResult(qobject_cast<QProcess*>(sender()), false);
 }
 
 void UI::raise()
@@ -129,7 +166,7 @@ void UI::raise()
     }
 
     QDBusReply<void> reply = daemonInterface.call(
-                QLatin1String("showMainWindow"));
+        QLatin1String("showMainWindow"));
     if (!reply.isValid()) {
         // TODO: send short notification
         qCCritical(logger)
@@ -155,10 +192,22 @@ void UI::setRunInBackground(bool value)
 
     qGuiApp->setQuitOnLastWindowClosed(!value);
 
+#ifndef BUILD_FOR_HARBOUR
+    QProcess* systemctl = new QProcess(this);
+    systemctl->setProcessChannelMode(QProcess::MergedChannels);
+    if (value) {
+        connect(systemctl, SIGNAL(finished(int)), this, SLOT(onRegisteredService()));
+        systemctl->start("systemctl", { "--user", "enable", SERVICE_FILE_LOCATION });
+    } else {
+        connect(systemctl, SIGNAL(finished(int)), this, SLOT(onUnregisteredService()));
+        systemctl->start("systemctl", { "--user", "disable", SERVICE_FILE_LOCATION });
+    }
+#endif
+
     emit runInBackgroundChanged();
 }
 
-bool UI::eventFilter(QObject *watched, QEvent *event)
+bool UI::eventFilter(QObject* watched, QEvent* event)
 {
     if (event->type() == QEvent::Close && !m_runInBackground) {
         quit();
@@ -167,12 +216,12 @@ bool UI::eventFilter(QObject *watched, QEvent *event)
     return QObject::eventFilter(watched, event);
 }
 
-QVariant UI::openDevicePageDbusAction(const QString &deviceId)
+QVariant UI::openDevicePageDbusAction(const QString& deviceId)
 {
     return Notification::remoteAction(
-            QStringLiteral("default"), QString("default"),
-            DBUS_SERVICE_NAME, UI::DBUS_PATH, UI::DBUS_INTERFACE_NAME,
-            QStringLiteral("openDevicePage"), { deviceId });
+        QStringLiteral("default"), QString("default"),
+        DBUS_SERVICE_NAME, UI::DBUS_PATH, UI::DBUS_INTERFACE_NAME,
+        QStringLiteral("openDevicePage"), { deviceId });
 }
 
 } // namespace SailfishConnect

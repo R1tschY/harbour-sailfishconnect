@@ -444,12 +444,12 @@
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <source>Run in background</source>
-        <translation>Laufe im Hintergrund</translation>
+        <source>Run as service</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Application runs in background after window is closed.</source>
-        <translation>Die Anwendung läuft im Hintergrund weiter, wenn das Fenster geschlossen wird.</translation>
+        <source>Application starts at system start and runs in background.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

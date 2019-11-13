@@ -444,12 +444,12 @@
         <translation>Настройка</translation>
     </message>
     <message>
-        <source>Run in background</source>
-        <translation>Работать в фоновом режиме</translation>
+        <source>Run as service</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Application runs in background after window is closed.</source>
-        <translation>Программа продолжит работать в фоне после закрытия её окна.</translation>
+        <source>Application starts at system start and runs in background.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

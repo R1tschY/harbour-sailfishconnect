@@ -42,10 +42,10 @@ Page {
 
             TextSwitch {
                 id: runInBackground
-                text: qsTr("Run in background")
+                text: qsTr("Run as service")
                 description:
-                    qsTr("Application runs in background after " +
-                         "window is closed.")
+                    qsTr("Application starts at system start and runs in " +
+                         "background.")
                 checked: ui.runInBackground
                 onClicked: ui.runInBackground = !checked
                 automaticCheck: false

@@ -444,12 +444,12 @@
         <translation>设置</translation>
     </message>
     <message>
-        <source>Run in background</source>
-        <translation>在后台运行</translation>
+        <source>Run as service</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Application runs in background after window is closed.</source>
-        <translation>窗口关闭之后应用转到后台运行</translation>
+        <source>Application starts at system start and runs in background.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

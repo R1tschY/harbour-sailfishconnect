@@ -18,11 +18,11 @@
 #ifndef UI_H
 #define UI_H
 
-#include <memory>
-#include <QObject>
-#include <QString>
-#include <QSettings>
 #include "plugins/remotekeyboard/keyboardlayoutprovider.h"
+#include <QObject>
+#include <QSettings>
+#include <QString>
+#include <memory>
 
 class QQuickView;
 class QQmlImageProviderBase;
@@ -38,25 +38,24 @@ class AppDaemon;
  * - dbus interface to ui
  * - creates the QQuickView with the main window
  */
-class UI : public QObject
-{
+class UI : public QObject {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.harbour.SailfishConnect.UI")
 
     Q_PROPERTY(
-            bool runInBackground
+        bool runInBackground
             READ runInBackground
-            WRITE setRunInBackground
-            NOTIFY runInBackgroundChanged)
+                WRITE setRunInBackground
+                    NOTIFY runInBackgroundChanged)
 
 public:
     static const QString DBUS_INTERFACE_NAME;
     static const QString DBUS_PATH;
 
     explicit UI(
-            KeyboardLayoutProvider* keyboardLayoutProvider,
-            bool daemonMode,
-            QObject *parent = nullptr);
+        KeyboardLayoutProvider* keyboardLayoutProvider,
+        bool daemonMode,
+        QObject* parent = nullptr);
     ~UI();
 
     /**
@@ -67,7 +66,7 @@ public:
     bool runInBackground();
     void setRunInBackground(bool value);
 
-    static QVariant openDevicePageDbusAction(const QString &deviceId);
+    static QVariant openDevicePageDbusAction(const QString& deviceId);
 
 signals:
     void runInBackgroundChanged();
@@ -90,6 +89,10 @@ public slots:
      */
     Q_SCRIPTABLE void openDevicePage(const QString& deviceId);
 
+private slots:
+    void onRegisteredService();
+    void onUnregisteredService();
+
 private:
     QQuickView* m_view = nullptr;
     std::unique_ptr<AppDaemon> m_daemon;
@@ -99,7 +102,7 @@ private:
     bool m_runInBackground = false;
     bool m_daemonMode;
 
-    bool eventFilter(QObject *watched, QEvent *event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
 };
 
 } // namespace SailfishConnect

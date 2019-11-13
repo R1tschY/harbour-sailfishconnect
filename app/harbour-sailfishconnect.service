@@ -1,0 +1,12 @@
+[Unit]
+Description=SailfishConnect
+Requires=lipstick.service
+After=lipstick.service
+
+[Service]
+Type=dbus
+ExecStart=/usr/bin/harbour-sailfishconnect --daemon
+BusName=org.harbour.SailfishConnect
+
+[Install]
+WantedBy=post-user-session.target

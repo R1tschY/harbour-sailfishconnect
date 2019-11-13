@@ -444,12 +444,12 @@
         <translation>Paramètres</translation>
     </message>
     <message>
-        <source>Run in background</source>
-        <translation>Fonctionner en tâche de fond</translation>
+        <source>Run as service</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Application runs in background after window is closed.</source>
-        <translation>L&apos;application fonctionne en tâche de fond après que la fenêtre ait été fermée.</translation>
+        <source>Application starts at system start and runs in background.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -443,12 +443,12 @@
         <translation>Ajustes</translation>
     </message>
     <message>
-        <source>Run in background</source>
-        <translation>Activar demonio</translation>
+        <source>Run as service</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Application runs in background after window is closed.</source>
-        <translation>La aplicación se ejecuta en segundo plano tras cerrar la ventana.</translation>
+        <source>Application starts at system start and runs in background.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

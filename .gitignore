@@ -20,3 +20,9 @@ graph_info.json
 
 # Python
 __pycache__
+
+# Build
+/build*
+/rpmbuilddir
+/RPMS
+/*.list

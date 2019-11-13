@@ -460,7 +460,7 @@
     </message>
     <message>
         <source>Select file to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Valitse lähetettävä tiedosto</translation>
     </message>
 </context>
 <context>

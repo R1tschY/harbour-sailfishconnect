@@ -37,28 +37,28 @@ SOURCES += \
     src/appdaemon.cpp \
     src/plugins/contacts/contactsplugin.cpp \
     src/plugins/contacts/vcardbuilder.cpp \
-    src/ui/devicelistmodel.cpp \
+    src/models/devicelistmodel.cpp \
     src/sailfishconnect.cpp \
     src/plugins/battery/batteryplugin.cpp \
     src/plugins/ping/pingplugin.cpp \
     src/plugins/clipboard/clipboardplugin.cpp \
-    src/ui/devicepluginsmodel.cpp \
+    src/models/devicepluginsmodel.cpp \
     src/ui.cpp \
     src/plugins/telepathy/telepathyplugin.cpp \
     src/plugins/mprisremote/mprisremoteplugin.cpp \
-    src/ui/mprisplayersmodel.cpp \
+    src/models/mprisplayersmodel.cpp \
     src/plugins/sendnotifications/notificationslistener.cpp \
     src/plugins/sendnotifications/notifyingapplication.cpp \
     src/plugins/sendnotifications/sendnotificationsplugin.cpp \
     src/plugins/touchpad/touchpadplugin.cpp \
     src/plugins/share/shareplugin.cpp \
-    src/ui/jobsmodel.cpp \
+    src/models/jobsmodel.cpp \
     src/js/url.cpp \
     src/js/qmlregister.cpp \
     src/js/humanize.cpp \
     src/plugins/telephony/telephonyplugin.cpp \
     src/dbus/ofono.cpp \
-    src/ui/sortfiltermodel.cpp \
+    src/models/sortfiltermodel.cpp \
     src/plugins/remotekeyboard/keyboardlayoutprovider.cpp \
     src/plugins/remotekeyboard/remotekeyboard.cpp\
     src/plugins/mprisremote/albumartcache.cpp \
@@ -98,29 +98,29 @@ HEADERS += \
     src/appdaemon.h \
     src/plugins/contacts/contactsplugin.h \
     src/plugins/contacts/vcardbuilder.h \
-    src/ui/devicelistmodel.h \
+    src/models/devicelistmodel.h \
     src/plugins/battery/batteryplugin.h \
     src/plugins/ping/pingplugin.h \
     src/plugins/clipboard/clipboardplugin.h \
-    src/ui/devicepluginsmodel.h \
+    src/models/devicepluginsmodel.h \
     src/ui.h \
     src/sailfishconnect.h \
     src/plugins/telepathy/telepathyplugin.h \
     src/plugins/mprisremote/mprisremoteplugin.h \
-    src/ui/mprisplayersmodel.h \
+    src/models/mprisplayersmodel.h \
     src/plugins/sendnotifications/notificationslistener.h \
     src/plugins/sendnotifications/notifyingapplication.h \
     src/plugins/sendnotifications/sendnotificationsplugin.h \
     src/plugins/touchpad/touchpadplugin.h \
     src/plugins/share/shareplugin.h \
-    src/ui/jobsmodel.h \
+    src/models/jobsmodel.h \
     src/js/url.h \
     src/js/qmlregister.h \
     src/js/humanize.h \
     src/plugins/telephony/telephonyplugin.h \
     src/dbus/tuple.h \
     src/dbus/ofono.h \
-    src/ui/sortfiltermodel.h \
+    src/models/sortfiltermodel.h \
     src/plugins/remotekeyboard/keyboardlayoutprovider.h \
     src/plugins/remotekeyboard/remotekeyboard.h \
     src/plugins/mprisremote/albumartcache.h \

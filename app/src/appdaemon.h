@@ -28,20 +28,23 @@ class QQmlImageProviderBase;
 
 namespace SailfishConnect {
 
-class AppDaemon : public Daemon
-{
+class ContactsManager;
+
+class AppDaemon : public Daemon {
     Q_OBJECT
 public:
     AppDaemon(QObject* parent = nullptr);
 
     void askPairingConfirmation(Device* device) override;
 
-    void reportError(const QString & title, const QString & description) override;
+    void reportError(const QString& title, const QString& description) override;
 
-    QQmlImageProviderBase *imageProvider(const QString &providerId) const;
+    QQmlImageProviderBase* imageProvider(const QString& providerId) const;
 
-    QQmlEngine *qmlEngine() const { return m_qmlEngine; }
-    void setQmlEngine(QQmlEngine *qmlEngine);
+    ContactsManager* getContacts();
+
+    QQmlEngine* qmlEngine() const { return m_qmlEngine; }
+    void setQmlEngine(QQmlEngine* qmlEngine);
 
     static AppDaemon* instance();
 
@@ -49,6 +52,7 @@ private:
     QEventLoopLocker m_eventLoopLock;
     Notification notification_;
     QQmlEngine* m_qmlEngine = nullptr;
+    ContactsManager* m_contacts = nullptr;
 };
 
 } // namespace SailfishConnect

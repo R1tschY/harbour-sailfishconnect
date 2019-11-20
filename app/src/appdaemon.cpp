@@ -17,68 +17,69 @@
 
 #include "appdaemon.h"
 
-#include <QLoggingCategory>
-#include <QTimer>
-#include <QSettings>
-#include <QFile>
-#include <QQmlEngine>
 #include <QCoreApplication>
+#include <QFile>
+#include <QLoggingCategory>
+#include <QQmlEngine>
+#include <QSettings>
+#include <QTimer>
 
-#include <sailfishconnect/backend/pairinghandler.h>
-#include <sailfishconnect/systeminfo.h>
-#include <sailfishconnect/helper/cpphelper.h>
-#include <sailfishconnect/device.h>
+#include "helper/contactsmanager.h"
 #include "sailfishconnect.h"
 #include "ui.h"
+#include <sailfishconnect/backend/pairinghandler.h>
+#include <sailfishconnect/device.h>
+#include <sailfishconnect/helper/cpphelper.h>
+#include <sailfishconnect/systeminfo.h>
 
 namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
 
-namespace {
-
-class SailfishOsConfig : public SystemInfo
+    namespace
 {
-public:
-    QString defaultName() const override;
-    QString deviceType() const override;
-};
 
-QString SailfishOsConfig::defaultName() const
-{
-    const QString hwReleaseFile = QStringLiteral("/etc/hw-release");
-    // QSettings will crash if the file does not exist or can be created, like in this case by us in /etc.
-    // E.g. in the SFOS SDK Emulator there is no such file, so check before to protect against the crash.
-    if (QFile::exists(hwReleaseFile)) {
-        QSettings hwRelease(hwReleaseFile, QSettings::IniFormat);
-        auto hwName = hwRelease.value(QStringLiteral("NAME")).toString();
-        if (!hwName.isEmpty()) {
-            return hwName;
+    class SailfishOsConfig : public SystemInfo {
+    public:
+        QString defaultName() const override;
+        QString deviceType() const override;
+    };
+
+    QString SailfishOsConfig::defaultName() const
+    {
+        const QString hwReleaseFile = QStringLiteral("/etc/hw-release");
+        // QSettings will crash if the file does not exist or can be created, like in this case by us in /etc.
+        // E.g. in the SFOS SDK Emulator there is no such file, so check before to protect against the crash.
+        if (QFile::exists(hwReleaseFile)) {
+            QSettings hwRelease(hwReleaseFile, QSettings::IniFormat);
+            auto hwName = hwRelease.value(QStringLiteral("NAME")).toString();
+            if (!hwName.isEmpty()) {
+                return hwName;
+            }
         }
+
+        return SystemInfo::defaultName();
     }
 
-    return SystemInfo::defaultName();
-}
-
-QString SailfishOsConfig::deviceType() const
-{
-    // TODO: How to detect tablet?
-    return QStringLiteral("phone");
-}
+    QString SailfishOsConfig::deviceType() const
+    {
+        // TODO: How to detect tablet?
+        return QStringLiteral("phone");
+    }
 
 } // namespace
 
-
-AppDaemon::AppDaemon(QObject *parent)
-: Daemon(makeUniquePtr<SailfishOsConfig>(), parent)
+AppDaemon::AppDaemon(QObject* parent)
+    : Daemon(makeUniquePtr<SailfishOsConfig>(), parent)
+    , m_contacts(new ContactsManager(this))
 {
     notification_.setAppName(PRETTY_PACKAGE_NAME);
     notification_.setCategory("device");
 }
 
-void AppDaemon::askPairingConfirmation(Device *device)
-{    
-    Notification *notification = new Notification(this);
+void AppDaemon::askPairingConfirmation(Device* device)
+{
+    Notification* notification = new Notification(this);
 
     notification->setAppName(QCoreApplication::applicationName());
     notification->setSummary(device->name());
@@ -87,20 +88,20 @@ void AppDaemon::askPairingConfirmation(Device *device)
     notification->setPreviewBody(tr("Pairing request"));
     notification->setExpireTimeout(PairingHandler::pairingTimeoutMsec() * 0.75);
     notification->setRemoteActions(
-                { UI::openDevicePageDbusAction(device->id()) });
+        { UI::openDevicePageDbusAction(device->id()) });
 
     connect(notification, &Notification::closed,
-            [=](uint reason) { notification->deleteLater(); });
+        [=](uint reason) { notification->deleteLater(); });
 
     notification->publish();
 }
 
-void AppDaemon::reportError(const QString &title, const QString &description)
+void AppDaemon::reportError(const QString& title, const QString& description)
 {
     qCCritical(logger) << title << description;
 }
 
-QQmlImageProviderBase *AppDaemon::imageProvider(const QString &providerId) const
+QQmlImageProviderBase* AppDaemon::imageProvider(const QString& providerId) const
 {
     if (!m_qmlEngine)
         return nullptr;
@@ -108,7 +109,12 @@ QQmlImageProviderBase *AppDaemon::imageProvider(const QString &providerId) const
     return m_qmlEngine->imageProvider(providerId);
 }
 
-void AppDaemon::setQmlEngine(QQmlEngine *qmlEngine)
+ContactsManager* AppDaemon::getContacts()
+{
+    return m_contacts;
+}
+
+void AppDaemon::setQmlEngine(QQmlEngine* qmlEngine)
 {
     if (m_qmlEngine == qmlEngine)
         return;
@@ -121,11 +127,11 @@ void AppDaemon::setQmlEngine(QQmlEngine *qmlEngine)
 
     if (m_qmlEngine) {
         connect(m_qmlEngine, &QObject::destroyed,
-                this, [this]() { setQmlEngine(nullptr); });
+            this, [this]() { setQmlEngine(nullptr); });
     }
 }
 
-AppDaemon *AppDaemon::instance()
+AppDaemon* AppDaemon::instance()
 {
     return static_cast<AppDaemon*>(Daemon::instance());
 }

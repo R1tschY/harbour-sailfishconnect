@@ -21,22 +21,22 @@
 #include <QFileInfo>
 #include <QLoggingCategory>
 #include <QSet>
-#include <QSqlError>
-#include <QSqlQuery>
 #include <QUrl>
 #include <QtGlobal>
 
-#include "vcardbuilder.h"
-#include <contextproperty.h>
+#include <appdaemon.h>
+#include <helper/contactsmanager.h>
+#include <helper/vcardbuilder.h>
+#include <sailfishconnect/daemon.h>
 #include <sailfishconnect/device.h>
 #include <sailfishconnect/helper/cpphelper.h>
 #include <sailfishconnect/networkpacket.h>
 
 namespace SailfishConnect {
 
-static Q_LOGGING_CATEGORY(logger, "kdeconnect.plugin.contacts")
+static Q_LOGGING_CATEGORY(logger, "kdeconnect.plugin.contacts");
 
-    QString PACKET_TYPE_CONTACTS_REQUEST_ALL_UIDS_TIMESTAMP = QStringLiteral("kdeconnect.contacts.request_all_uids_timestamps");
+QString PACKET_TYPE_CONTACTS_REQUEST_ALL_UIDS_TIMESTAMP = QStringLiteral("kdeconnect.contacts.request_all_uids_timestamps");
 
 QString PACKET_TYPE_CONTACTS_REQUEST_VCARDS_BY_UIDS = QStringLiteral("kdeconnect.contacts.request_vcards_by_uid");
 
@@ -44,119 +44,42 @@ QString PACKAGE_TYPE_CONTACTS_RESPONSE_UIDS_TIMESTAMPS = QStringLiteral("kdeconn
 
 QString PACKET_TYPE_CONTACTS_RESPONSE_VCARDS = QStringLiteral("kdeconnect.contacts.response_vcards");
 
-QString QTCONTACTS_SQLITE_STORE = QStringLiteral("/home/nemo/.local/share/system/Contacts"
-                                                 "/qtcontacts-sqlite/contacts.db");
-
 ContactsPlugin::ContactsPlugin(
     Device* device, QString name, QSet<QString> outgoingCapabilities)
     : KdeConnectPlugin(device, name, outgoingCapabilities)
 {
-    m_db = QSqlDatabase::addDatabase(
-        QStringLiteral("QSQLITE"),
-        QStringLiteral("QTCONTACTS_SQLITE_STORE"));
-    if (!m_db.isValid()) {
-        qCCritical(logger) << "QSQLITE database driver is not available.";
-        return;
-    }
-
-    m_db.setDatabaseName(QTCONTACTS_SQLITE_STORE);
-    if (!m_db.open()) {
-        qCCritical(logger) << "Cannot open contacts database"
-                           << QTCONTACTS_SQLITE_STORE
-                           << ":" << m_db.lastError().text();
-        return;
-    }
 }
 
 bool ContactsPlugin::receivePacket(const NetworkPacket& np)
 {
     if (np.type() == PACKET_TYPE_CONTACTS_REQUEST_ALL_UIDS_TIMESTAMP) {
-        QSqlQuery timeStampQuery(m_db);
-        if (!timeStampQuery.exec(
-                QStringLiteral("SELECT contactId, modified FROM Contacts"))) {
-            qCCritical(logger) << "Getting modified timestamps failed:"
-                               << timeStampQuery.lastError().text();
-            return true;
-        }
-
-        QStringList ids;
         NetworkPacket resultNp(PACKAGE_TYPE_CONTACTS_RESPONSE_UIDS_TIMESTAMPS);
-        while (timeStampQuery.next()) {
-            QString id = QString::number(timeStampQuery.value(0).toInt());
-            QDateTime modified = timeStampQuery.value(1).toDateTime();
 
-            ids.append(id);
-            resultNp.set(id, modified.toMSecsSinceEpoch());
+        auto times = AppDaemon::instance()->getContacts()->getLastModifiedTimes();
+        if (times.isEmpty())
+            return true;
+
+        for (auto iter = times.begin(); iter != times.end(); ++iter) {
+            resultNp.set(iter.key(), iter.value().toMSecsSinceEpoch());
         }
 
-        resultNp.set(QStringLiteral("uids"), ids);
+        resultNp.set(QStringLiteral("uids"), times.keys());
         sendPacket(resultNp);
         return true;
     }
 
     if (np.type() == PACKET_TYPE_CONTACTS_REQUEST_VCARDS_BY_UIDS) {
-        QSet<QString> requestedIds = np.get<QStringList>("uids").toSet();
-
-        QSqlQuery phoneNumbersQuery(m_db);
-        if (!phoneNumbersQuery.exec(QStringLiteral(
-                "SELECT DISTINCT contactId, phoneNumber FROM PhoneNumbers"))) {
-            qCCritical(logger) << "Getting phone numbers failed:"
-                               << phoneNumbersQuery.lastError().text();
-            return true;
-        }
-
-        QMap<QString, QStringList> phoneNumbers;
-        while (phoneNumbersQuery.next()) {
-            QString id = QString::number(phoneNumbersQuery.value(0).toInt());
-            QString phoneNumber = phoneNumbersQuery.value(1).toString();
-            if (phoneNumbers.contains(id)) {
-                phoneNumbers[id].append(phoneNumber);
-            } else {
-                phoneNumbers.insert(id, { phoneNumber });
-            }
-        }
-
-        QSqlQuery dataQuery(m_db);
-        if (!dataQuery.exec(QStringLiteral(
-                "SELECT contactId, modified, displayLabel, firstName, lastName "
-                "FROM Contacts"))) {
-            qCCritical(logger) << "Getting contact details failed:"
-                               << dataQuery.lastError().text();
-            return true;
-        }
-
-        QStringList ids;
         NetworkPacket resultNp(PACKET_TYPE_CONTACTS_RESPONSE_VCARDS);
-        while (dataQuery.next()) {
-            QString id = QString::number(dataQuery.value(0).toInt());
-            if (!requestedIds.contains(id))
-                continue;
 
-            QDateTime modified = dataQuery.value(1).toDateTime();
-            QString displayLabel = dataQuery.value(2).toString();
-            QString firstName = dataQuery.value(3).toString();
-            QString lastName = dataQuery.value(4).toString();
+        auto vcards = AppDaemon::instance()->getContacts()->exportVCards(np.get<QStringList>("uids"), device()->id());
+        if (vcards.isEmpty())
+            return true;
 
-            VCardBuilder vcf;
-            vcf.addRawProperty(QStringLiteral("FN"), displayLabel);
-            for (auto& tel : phoneNumbers.value(id)) {
-                vcf.addRawProperty(QStringLiteral("TEL;TYPE=home"), tel);
-            }
-            vcf.addRawProperty(
-                QStringLiteral("N"),
-                QStringLiteral("%1;%2;;;").arg(lastName, firstName));
-            vcf.addRawProperty(
-                QStringLiteral("X-KDECONNECT-ID-DEV-") + device()->id(),
-                id);
-            vcf.addRawProperty(
-                QStringLiteral("X-KDECONNECT-TIMESTAMP"),
-                QString::number(modified.toMSecsSinceEpoch()));
-
-            ids.append(id);
-            resultNp.set(id, vcf.result());
+        for (auto iter = vcards.begin(); iter != vcards.end(); ++iter) {
+            resultNp.set(iter.key(), iter.value());
         }
 
-        resultNp.set(QStringLiteral("uids"), ids);
+        resultNp.set(QStringLiteral("uids"), vcards.keys());
         sendPacket(resultNp);
         return true;
     }

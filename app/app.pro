@@ -35,8 +35,9 @@ INCLUDEPATH += $$PWD/src
 
 SOURCES += \
     src/appdaemon.cpp \
+    src/helper/contactsmanager.cpp \
     src/plugins/contacts/contactsplugin.cpp \
-    src/plugins/contacts/vcardbuilder.cpp \
+    src/helper/vcardbuilder.cpp \
     src/models/devicelistmodel.cpp \
     src/sailfishconnect.cpp \
     src/plugins/battery/batteryplugin.cpp \
@@ -96,8 +97,9 @@ DISTFILES += \
 
 HEADERS += \
     src/appdaemon.h \
+    src/helper/contactsmanager.h \
     src/plugins/contacts/contactsplugin.h \
-    src/plugins/contacts/vcardbuilder.h \
+    src/helper/vcardbuilder.h \
     src/models/devicelistmodel.h \
     src/plugins/battery/batteryplugin.h \
     src/plugins/ping/pingplugin.h \

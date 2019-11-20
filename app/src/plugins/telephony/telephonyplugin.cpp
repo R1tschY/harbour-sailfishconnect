@@ -24,6 +24,8 @@
 
 #include <dbus/ofono.h>
 #include <dbus/tuple.h>
+#include <appdaemon.h>
+#include <helper/contactsmanager.h>
 
 namespace SailfishConnect {
 
@@ -200,13 +202,15 @@ void TelephonyPlugin::sendTelephonyPacket(
 
     m_send_call_state[callPath] = event;
 
+    QString phoneNumber = call->lineIdentification();
+    QString displayName = AppDaemon::instance()->getContacts()->lookUpName(phoneNumber);
+
     sendPacket(NetworkPacket {
         PACKET_TYPE_TELEPHONY,
         {
             { QStringLiteral("event"), event },
-            { QStringLiteral("phoneNumber"), call->lineIdentification() },
-            // TODO: look at contacts:
-            { QStringLiteral("contactName"), call->lineIdentification() },
+            { QStringLiteral("phoneNumber"), phoneNumber },
+            { QStringLiteral("contactName"), displayName },
         }
     });
 }
@@ -220,13 +224,15 @@ void TelephonyPlugin::sendCancelTelephonyPacket(TelephonyCall* call)
                 callPath, QStringLiteral("talking"));
     m_send_call_state.remove(callPath);
 
+    QString phoneNumber = call->lineIdentification();
+    QString displayName = AppDaemon::instance()->getContacts()->lookUpName(phoneNumber);
+
     sendPacket(NetworkPacket {
         PACKET_TYPE_TELEPHONY,
         {
             { QStringLiteral("event"), lastState },
-            { QStringLiteral("phoneNumber"), call->lineIdentification() },
-            // TODO: look at contacts:
-            { QStringLiteral("contactName"), call->lineIdentification() },
+            { QStringLiteral("phoneNumber"), phoneNumber },
+            { QStringLiteral("contactName"), displayName },
             { QStringLiteral("isCancel"), true }
         }
     });

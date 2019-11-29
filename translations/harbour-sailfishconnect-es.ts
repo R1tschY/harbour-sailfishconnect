@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>Alternative KDE Connect client for Sailfish OS</source>
-        <translation>Un cliente alternativo de KDE Connect para Sailfish SO</translation>
+        <translation>Un cliente no oficial de KDE Connect para Sailfish SO</translation>
     </message>
 </context>
 <context>
@@ -48,7 +48,7 @@
     <message>
         <source>SHA1 fingerprint of your device certificate is: %1
 </source>
-        <translation>La huella digital SHA1 de su certificado de dispositivo es: %1</translation>
+        <translation>La huella digital SHA1 del certificado del dispositivo es: %1</translation>
     </message>
     <message>
         <source>SHA1 fingerprint of remote device certificate is: %1
@@ -60,7 +60,7 @@
     <name>DeviceListPage</name>
     <message>
         <source>Device Name</source>
-        <translation>Nombre del dispositivo</translation>
+        <translation>Nombre de dispositivo</translation>
     </message>
     <message>
         <source>Paired devices</source>
@@ -104,7 +104,7 @@
     </message>
     <message>
         <source>Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.</source>
-        <translation>Instale KDE Connect o GSConnect en la computadora y conéctarlo a la misma red WLAN.</translation>
+        <translation>Instalar KDEConnect o GSConnect en la computadora y conéctarlo a la misma red WLAN.</translation>
     </message>
 </context>
 <context>
@@ -123,7 +123,7 @@
     </message>
     <message>
         <source>Encryption info</source>
-        <translation>Información de encriptación</translation>
+        <translation>Detalles de encriptación</translation>
     </message>
     <message>
         <source>Plugins</source>
@@ -169,7 +169,7 @@
     <name>EncryptionInfoPage</name>
     <message>
         <source>Encryption info</source>
-        <translation>Información de encriptación</translation>
+        <translation>Detalles de encriptación</translation>
     </message>
 </context>
 <context>
@@ -180,7 +180,7 @@
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation>Retroalimentación de vibración</translation>
+        <translation>Vibración haptico</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -288,11 +288,11 @@
     <name>SailfishConnect::ContactsPluginFactory</name>
     <message>
         <source>Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Contactos</translation>
     </message>
     <message>
         <source>Share contacts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Compartir contactos</translation>
     </message>
 </context>
 <context>
@@ -444,11 +444,11 @@
     </message>
     <message>
         <source>Run as service</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecutar como servicio</translation>
     </message>
     <message>
         <source>Application starts at system start and runs in background.</source>
-        <translation type="unfinished"></translation>
+        <translation>La aplicación comienza en el inicio del sistema y se ejecuta en segundo plano.</translation>
     </message>
 </context>
 <context>

@@ -292,7 +292,7 @@
     </message>
     <message>
         <source>Share contacts.</source>
-        <translation>Compartir contacto</translation>
+        <translation>Compartir contactos</translation>
     </message>
 </context>
 <context>

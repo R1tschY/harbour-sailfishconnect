@@ -1,0 +1,151 @@
+#!/usr/bin/env python3
+
+import re
+import os
+import sys
+import xml.etree.ElementTree as ET
+from dataclasses import dataclass
+from typing import List
+import shlex
+import asyncio
+
+HOME_MOUNT = "/home/mersdk/share"
+
+
+class UnmappablePathError(ValueError):
+  pass
+
+class BuildEnvStartError(RuntimeError):
+  pass
+
+
+async def process_stream(stream, dest):
+  user_dir = os.path.expanduser(b"~/")
+
+  while True:
+    buf = await stream.readline()
+    if not buf:
+      break
+
+    buf = buf.replace(b'/home/mersdk/share/', user_dir)
+
+    dest.write(buf)
+    dest.flush()
+
+
+async def run_cmd(program: str, *args: str):
+    proc = await asyncio.create_subprocess_exec(
+      program, *args,
+      stdout=asyncio.subprocess.PIPE,
+      stderr=asyncio.subprocess.PIPE
+    )
+    await proc.wait()
+    return proc.returncode, await proc.stdout.read(), await proc.stderr.read()
+
+
+@dataclass
+class SailfishSDK:
+  install_folder: str
+  verbose: int = 1
+
+  @classmethod
+  def from_env(cls):
+    return cls(install_folder=get_sdk_install_folder())
+
+  async def is_vm_runnung(self) -> bool:
+    errcode, stdout, stderr = await run_cmd("VBoxManage", "list", "runningvms")
+    if errcode != 0:
+      raise BuildEnvStartError("Failed to list runnings VMs", stderr.encode())
+
+    return re.search(br'^"Sailfish OS Build Engine" \{', stdout) is not None
+
+  async def start_vm(self):
+    if await self.is_vm_runnung():
+      print("✔️ VM already running")
+      return
+
+    print("… Start VM", end="", flush=True)
+
+    errcode, _stdout, stderr = await run_cmd(
+      "VBoxManage", "startvm", "Sailfish OS Build Engine", "--type", "headless")
+    if errcode != 0:
+      raise BuildEnvStartError("Failed to start VM", stderr.encode())
+
+    await asyncio.sleep(1.0)
+
+    if not await self.is_vm_runnung():
+      raise BuildEnvStartError("Unstable start of VM")
+
+    print("\r✔️\n", end="", flush=True)
+
+  async def stop_vm(self):
+    if not await self.is_vm_runnung():
+      return
+
+    errcode, _stdout, stderr = await run_cmd(
+      "VBoxManage", "controlvm", "Sailfish OS Build Engine", "acpipowerbutton")
+    if errcode != 0:
+      raise BuildEnvStartError("Failed to stop VM", stderr.encode())
+
+  async def run_ssh(self, args: List[str], local_dir: str = None) -> None:
+    await self.start_vm()
+
+    if args:
+      args_as_str = " ".join([shlex.quote(arg) for arg in args])
+    else:
+      args_as_str = "bash"
+
+    if local_dir is not None:
+      sdk_dir = local2sdk(local_dir)
+      args_as_str = f"cd {shlex.quote(sdk_dir)} && ({args_as_str})"
+
+    proc = await asyncio.create_subprocess_exec(
+      "ssh",
+      "mersdk@127.0.0.1",
+      "-p", "2222",
+      "-i", os.path.join(self.install_folder, "vmshare/ssh/private_keys/engine/mersdk"),
+      "-o", "UserKnownHostsFile=/dev/null",
+      "-o", "StrictHostKeyChecking=no",
+      "-q", "-t",
+      args_as_str,
+      stdout=asyncio.subprocess.PIPE,
+      stderr=asyncio.subprocess.PIPE
+    )
+
+    await asyncio.gather(
+      process_stream(proc.stderr, sys.stdout.buffer),
+      process_stream(proc.stdout, sys.stderr.buffer)) 
+    await proc.wait()
+
+    return proc.returncode
+
+
+def get_sdk_install_folder():
+  mersdk_xml = os.path.expanduser("~/.config/SailfishOS-SDK/qtcreator/mersdk.xml")
+  root = ET.parse(mersdk_xml)
+  values = root.findall(".//data[variable='MerSDK.InstallDir']/value")
+  if values:
+      return values[0].text
+  else:
+      return os.path.expanduser("~/SailfishOS")
+
+
+def local2sdk(path: str) -> str:
+  user_dir = os.path.expanduser("~/")
+  if path.startswith(user_dir):
+    return HOME_MOUNT + "/" + path[len(user_dir):]
+  else:
+    raise UnmappablePathError()
+
+
+def main():
+  sdk = SailfishSDK.from_env()
+  try:
+    sys.exit(asyncio.run(sdk.run_ssh(sys.argv[1:], local_dir=os.getcwd())))
+  except UnmappablePathError:
+    print(f"Current working directory must be in home directory.", file=sys.stderr)
+    sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

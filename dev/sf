@@ -1,15 +1,23 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.7
 
+import sys
 import re
 import os
-import sys
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 import shlex
+import argparse
 import asyncio
+import logging
 
 HOME_MOUNT = "/home/mersdk/share"
+
+COMMANDS = {}
+
+def command(fn):
+  COMMANDS[fn.__name__] = fn
+  return fn
 
 
 class UnmappablePathError(ValueError):
@@ -47,10 +55,28 @@ async def run_cmd(program: str, *args: str):
 class SailfishSDK:
   install_folder: str
   verbose: int = 1
+  running_processes: List = field(init=False)
+
+  logger = logging.getLogger(__qualname__)
+
+  def __post_init__(self):
+    self.running_processes = []
 
   @classmethod
   def from_env(cls):
     return cls(install_folder=get_sdk_install_folder())
+
+  @property
+  def ssh_base_args(self):
+    return [
+      "ssh",
+      "mersdk@127.0.0.1",
+      "-p", "2222",
+      "-i", os.path.join(self.install_folder, "vmshare/ssh/private_keys/engine/mersdk"),
+      "-o", "UserKnownHostsFile=/dev/null",
+      "-o", "StrictHostKeyChecking=no",
+      "-q",
+    ]
 
   async def is_vm_runnung(self) -> bool:
     errcode, stdout, stderr = await run_cmd("VBoxManage", "list", "runningvms")
@@ -87,45 +113,104 @@ class SailfishSDK:
     if errcode != 0:
       raise BuildEnvStartError("Failed to stop VM", stderr.encode())
 
-  async def run_ssh(self, args: List[str], local_dir: str = None) -> None:
+  async def run_ssh(self, 
+      args: List[str], 
+      local_dir: str = None, 
+      terminal: bool = False,
+      replace_paths: bool = True
+  ) -> None:
     await self.start_vm()
 
+    self.logger.debug(f"RUN SSH: args={args}")
+
     if args:
-      args_as_str = " ".join([shlex.quote(arg) for arg in args])
+      cmdln = " ".join([shlex.quote(arg) for arg in args])
     else:
-      args_as_str = "bash"
+      # TODO: move logic out of here
+      cmdln = "bash"
+      terminal = True
+      replace_paths = False
 
     if local_dir is not None:
       sdk_dir = local2sdk(local_dir)
-      args_as_str = f"cd {shlex.quote(sdk_dir)} && ({args_as_str})"
+      cmdln = f"cd {shlex.quote(sdk_dir)} && ({cmdln})"
+
+    ssh_extra_args = []
+    if terminal:
+      ssh_extra_args.append("-t")
 
     proc = await asyncio.create_subprocess_exec(
-      "ssh",
-      "mersdk@127.0.0.1",
-      "-p", "2222",
-      "-i", os.path.join(self.install_folder, "vmshare/ssh/private_keys/engine/mersdk"),
-      "-o", "UserKnownHostsFile=/dev/null",
-      "-o", "StrictHostKeyChecking=no",
-      "-q", "-t",
-      args_as_str,
-      stdout=asyncio.subprocess.PIPE,
-      stderr=asyncio.subprocess.PIPE
+      *self.ssh_base_args,
+      *ssh_extra_args,
+      cmdln,
+      stdout=asyncio.subprocess.PIPE if replace_paths else None,
+      stderr=asyncio.subprocess.PIPE if replace_paths else None
     )
 
-    await asyncio.gather(
-      process_stream(proc.stderr, sys.stdout.buffer),
-      process_stream(proc.stdout, sys.stderr.buffer)) 
-    await proc.wait()
+    if replace_paths:
+      await asyncio.gather(
+        process_stream(proc.stderr, sys.stdout.buffer),
+        process_stream(proc.stdout, sys.stderr.buffer))
 
+    await proc.wait()
     return proc.returncode
+
+  def _ssh_base_args_for_device(self, name: str):
+    devices_xml = os.path.expanduser(
+      os.path.join(self.install_folder, "vmshare", "devices.xml")
+    )
+    root = ET.parse(devices_xml)
+    device = root.find(f"./device[@name='{name}']")
+    if device is None:
+      raise ValueError(f"Device `{name}` does not exist")
+    return [
+      "ssh",
+      f"nemo@{device.find('./ip').text}",
+      "-p", device.find('./sshport').text,
+      "-i", os.path.join(
+        self.install_folder, 
+        "vmshare", 
+        device.find('./sshkeypath').text),
+      "-q",
+    ]
+
+  async def run_on_device(self, 
+      args: List[str], 
+      device: str,
+      terminal: bool = False,
+  ) -> int:
+    cmdln = " ".join([shlex.quote(arg) for arg in args])
+
+    ssh_extra_args = []
+    if terminal:
+      ssh_extra_args.append("-t")
+
+    proc = await asyncio.create_subprocess_exec(
+      *self._ssh_base_args_for_device(device),
+      *ssh_extra_args,
+      cmdln,
+    )
+    self.running_processes.append(proc)
+    await proc.wait()
+    self.running_processes.remove(proc)
+    return proc.returncode
+
+  def terminate_processes(self):
+    for proc in self.running_processes:
+      try:
+        proc.terminate()
+      except ProcessLookupError:
+        pass
+
+
 
 
 def get_sdk_install_folder():
   mersdk_xml = os.path.expanduser("~/.config/SailfishOS-SDK/qtcreator/mersdk.xml")
   root = ET.parse(mersdk_xml)
-  values = root.findall(".//data[variable='MerSDK.InstallDir']/value")
-  if values:
-      return values[0].text
+  value = root.find(".//data[variable='MerSDK.InstallDir']/value")
+  if value is not None:
+      return value.text
   else:
       return os.path.expanduser("~/SailfishOS")
 
@@ -138,13 +223,106 @@ def local2sdk(path: str) -> str:
     raise UnmappablePathError()
 
 
+@command
+async def run(sdk: SailfishSDK, cmdln) -> int:
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--terminal", "-t", 
+    action="store_true",
+    help="Force pseudo-terminal allocation. This option disables the --replace-paths option.")
+  parser.add_argument("--replace-paths", "-p", 
+    type=bool,
+    default=True,
+    help="Convert SDK paths in output to paths in home directory.")
+  parser.add_argument("cmd", nargs=argparse.REMAINDER)
+  args = parser.parse_args(cmdln)
+
+  replace_paths = args.replace_paths and not args.terminal
+
+  return await sdk.run_ssh(
+    args.cmd, 
+    local_dir=os.getcwd(),
+    terminal=args.terminal,
+    replace_paths=replace_paths
+  )
+
+
+@command
+async def stop(sdk: SailfishSDK, cmdln) -> int:
+  parser = argparse.ArgumentParser()
+  _args = parser.parse_args(cmdln)
+
+  await sdk.stop_vm()
+  return 0
+
+
+@command
+async def build(sdk: SailfishSDK, cmdln) -> int:
+  parser = argparse.ArgumentParser()
+  parser.add_argument(
+    "--target", "-t", help="Sailfish SDK build target", required=True)
+  args = parser.parse_args(cmdln)
+
+  return await sdk.run_ssh(
+    ["mb2", "-t", args.target, "build"], 
+    local_dir=os.getcwd(),
+    terminal=False,
+    replace_paths=True
+  )
+
+
+@command
+async def deploy(sdk: SailfishSDK, cmdln) -> int:
+  parser = argparse.ArgumentParser()
+  parser.add_argument(
+    "--device", "-d", help="Sailfish target device", required=True)
+  parser.add_argument(
+    "--target", "-t", help="Sailfish SDK build target", required=True)
+  args = parser.parse_args(cmdln)
+
+  return await sdk.run_ssh(
+    ["mb2", "--device", args.device, "--target", args.target, "deploy", "--sdk"], 
+    local_dir=os.getcwd(),
+    terminal=False,
+    replace_paths=True
+  )
+
+
+@command
+async def device(sdk: SailfishSDK, cmdln) -> int:
+  parser = argparse.ArgumentParser()
+  parser.add_argument(
+    "--device", "-d", help="Sailfish target device", required=True)
+  parser.add_argument("cmd", nargs=argparse.REMAINDER)
+  args = parser.parse_args(cmdln)
+
+  return await sdk.run_on_device(
+    args.cmd, 
+    terminal=True,
+    device=args.device
+  )
+
+
 def main():
   sdk = SailfishSDK.from_env()
+  logging.basicConfig(level=logging.DEBUG)
+
+  parser = argparse.ArgumentParser()
+  parser.add_argument("command", choices=COMMANDS.keys())
+  parser.add_argument("args", nargs=argparse.REMAINDER)
+  args = parser.parse_args()
+
   try:
-    sys.exit(asyncio.run(sdk.run_ssh(sys.argv[1:], local_dir=os.getcwd())))
+    command = COMMANDS[args.command](sdk, args.args)
+    sys.exit(asyncio.run(command) or 0)
   except UnmappablePathError:
     print(f"Current working directory must be in home directory.", file=sys.stderr)
     sys.exit(1)
+  except ValueError as exp:
+    print(exp, file=sys.stderr)
+    sys.exit(1)
+  except KeyboardInterrupt:
+    sdk.terminate_processes()
+    sys.exit(130)
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@
 TARGET = harbour-sailfishconnect
 
 CONFIG += sailfishapp c++14
-QT += network dbus feedback
+QT += network dbus feedback sql
 
 PKGCONFIG += sailfishapp dbus-1 contextkit-statefs nemonotifications-qt5
 DEFINES += \
@@ -25,6 +25,8 @@ CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT QT_NO_DEBUG
 
 DEFINES += SAILFISHOS
 
+DEFINES += SAILFISHCONNECT_PACKAGE_VERSION="$$(SAILFISHCONNECT_PACKAGE_VERSION)"
+
 include(../lib/lib.pri)
 CONFIG += conan_basic_setup
 include(../conanbuildinfo.pri)
@@ -33,28 +35,31 @@ INCLUDEPATH += $$PWD/src
 
 SOURCES += \
     src/appdaemon.cpp \
-    src/ui/devicelistmodel.cpp \
+    src/helper/contactsmanager.cpp \
+    src/plugins/contacts/contactsplugin.cpp \
+    src/helper/vcardbuilder.cpp \
+    src/models/devicelistmodel.cpp \
     src/sailfishconnect.cpp \
     src/plugins/battery/batteryplugin.cpp \
     src/plugins/ping/pingplugin.cpp \
     src/plugins/clipboard/clipboardplugin.cpp \
-    src/ui/devicepluginsmodel.cpp \
+    src/models/devicepluginsmodel.cpp \
     src/ui.cpp \
     src/plugins/telepathy/telepathyplugin.cpp \
     src/plugins/mprisremote/mprisremoteplugin.cpp \
-    src/ui/mprisplayersmodel.cpp \
+    src/models/mprisplayersmodel.cpp \
     src/plugins/sendnotifications/notificationslistener.cpp \
     src/plugins/sendnotifications/notifyingapplication.cpp \
     src/plugins/sendnotifications/sendnotificationsplugin.cpp \
     src/plugins/touchpad/touchpadplugin.cpp \
     src/plugins/share/shareplugin.cpp \
-    src/ui/jobsmodel.cpp \
+    src/models/jobsmodel.cpp \
     src/js/url.cpp \
     src/js/qmlregister.cpp \
     src/js/humanize.cpp \
     src/plugins/telephony/telephonyplugin.cpp \
     src/dbus/ofono.cpp \
-    src/ui/sortfiltermodel.cpp \
+    src/models/sortfiltermodel.cpp \
     src/plugins/remotekeyboard/keyboardlayoutprovider.cpp \
     src/plugins/remotekeyboard/remotekeyboard.cpp\
     src/plugins/mprisremote/albumartcache.cpp \
@@ -68,15 +73,14 @@ DISTFILES += \
     qml/pages/AboutPage.qml \
     qml/pages/EncryptionInfoPage.qml \
     qml/components/MprisUi.qml \
-    rpm/harbour-sailfishconnect.yaml \
-    rpm/harbour-sailfishconnect.spec \
     qml/harbour-sailfishconnect.qml \
     harbour-sailfishconnect.desktop \
+    harbour-sailfishconnect.service \
     src/plugins/battery/metadata.json \
+    src/plugins/contacts/metadata.json \
     src/plugins/ping/metadata.json \
     qml/components/ClipboardUi.qml \
     qml/pages/SettingsPage.qml \
-    rpm/harbour-sailfishconnect.changes \
     src/plugins/sendnotifications/metadata.json \
     src/plugins/touchpad/metadata.json \
     qml/components/Touchpad.qml \
@@ -91,35 +95,43 @@ DISTFILES += \
     qml/components/RemoteInput.qml \
     src/plugins/remotekeyboard/metadata.json
 
-SAILFISHAPP_ICONS = 86x86 108x108 128x128
-
 HEADERS += \
     src/appdaemon.h \
-    src/ui/devicelistmodel.h \
+    src/helper/contactsmanager.h \
+    src/plugins/contacts/contactsplugin.h \
+    src/helper/vcardbuilder.h \
+    src/models/devicelistmodel.h \
     src/plugins/battery/batteryplugin.h \
     src/plugins/ping/pingplugin.h \
     src/plugins/clipboard/clipboardplugin.h \
-    src/ui/devicepluginsmodel.h \
+    src/models/devicepluginsmodel.h \
     src/ui.h \
     src/sailfishconnect.h \
     src/plugins/telepathy/telepathyplugin.h \
     src/plugins/mprisremote/mprisremoteplugin.h \
-    src/ui/mprisplayersmodel.h \
+    src/models/mprisplayersmodel.h \
     src/plugins/sendnotifications/notificationslistener.h \
     src/plugins/sendnotifications/notifyingapplication.h \
     src/plugins/sendnotifications/sendnotificationsplugin.h \
     src/plugins/touchpad/touchpadplugin.h \
     src/plugins/share/shareplugin.h \
-    src/ui/jobsmodel.h \
+    src/models/jobsmodel.h \
     src/js/url.h \
     src/js/qmlregister.h \
     src/js/humanize.h \
     src/plugins/telephony/telephonyplugin.h \
     src/dbus/tuple.h \
     src/dbus/ofono.h \
-    src/ui/sortfiltermodel.h \
+    src/models/sortfiltermodel.h \
     src/plugins/remotekeyboard/keyboardlayoutprovider.h \
     src/plugins/remotekeyboard/remotekeyboard.h \
     src/plugins/mprisremote/albumartcache.h \
     src/js/process.h \
     src/js/path.h
+
+
+SAILFISHAPP_ICONS = 86x86 108x108 128x128
+
+service_file.path = /usr/share/$${TARGET}/
+service_file.files = $${TARGET}.service
+INSTALLS += service_file

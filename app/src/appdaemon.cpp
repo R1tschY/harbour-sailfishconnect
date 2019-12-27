@@ -17,20 +17,22 @@
 
 #include "appdaemon.h"
 
-#include <QLoggingCategory>
-#include <QTimer>
-#include <QSettings>
-#include <QFile>
-#include <QQmlEngine>
 #include <QCoreApplication>
+#include <QFile>
+#include <QLoggingCategory>
+#include <QQmlEngine>
+#include <QSettings>
+#include <QTimer>
 
 #include <backends/pairinghandler.h>
 //#include <systeminfo.h>
 //#include <helper/cpphelper.h>
 #include <device.h>
-#include "sailfishconnect.h"
+#include "sailfishconnect-config.h"
 #include "ui.h"
+#include "helper/contactsmanager.h"
 #include "io/jobmanager.h"
+
 
 namespace SailfishConnect {
 
@@ -71,7 +73,9 @@ namespace {
 
 
 AppDaemon::AppDaemon(QObject *parent)
-: Daemon(parent), m_jobmanager(new JobManager(this))
+: Daemon(parent)
+, m_jobmanager(new JobManager(this))
+, m_contacts(new ContactsManager(this))
 {
     // notification_.setAppName(PRETTY_PACKAGE_NAME);
     // notification_.setCategory("device");
@@ -96,7 +100,7 @@ void AppDaemon::askPairingConfirmation(Device *device)
     // notification->publish();
 }
 
-void AppDaemon::reportError(const QString &title, const QString &description)
+void AppDaemon::reportError(const QString& title, const QString& description)
 {
     qCCritical(logger) << title << description;
 }
@@ -113,7 +117,7 @@ KJobTrackerInterface* AppDaemon::jobTracker() {
     return m_jobmanager;
 }
 
-QQmlImageProviderBase *AppDaemon::imageProvider(const QString &providerId) const
+QQmlImageProviderBase* AppDaemon::imageProvider(const QString& providerId) const
 {
     if (!m_qmlEngine)
         return nullptr;
@@ -121,7 +125,12 @@ QQmlImageProviderBase *AppDaemon::imageProvider(const QString &providerId) const
     return m_qmlEngine->imageProvider(providerId);
 }
 
-void AppDaemon::setQmlEngine(QQmlEngine *qmlEngine)
+ContactsManager* AppDaemon::getContacts()
+{
+    return m_contacts;
+}
+
+void AppDaemon::setQmlEngine(QQmlEngine* qmlEngine)
 {
     if (m_qmlEngine == qmlEngine)
         return;
@@ -134,11 +143,11 @@ void AppDaemon::setQmlEngine(QQmlEngine *qmlEngine)
 
     if (m_qmlEngine) {
         connect(m_qmlEngine, &QObject::destroyed,
-                this, [this]() { setQmlEngine(nullptr); });
+            this, [this]() { setQmlEngine(nullptr); });
     }
 }
 
-AppDaemon *AppDaemon::instance()
+AppDaemon* AppDaemon::instance()
 {
     return static_cast<AppDaemon*>(Daemon::instance());
 }

@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru">
+<TS version="2.1" language="it">
 <context>
     <name>AboutPage</name>
     <message>
         <source>Links</source>
-        <translation>Ссылки</translation>
+        <translation>Link</translation>
     </message>
     <message>
         <source>Licence</source>
-        <translation>Лицензия</translation>
+        <translation>Licenza</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>О программе</translation>
+        <translation>Info su</translation>
     </message>
     <message>
         <source>Bug reports on Github</source>
-        <translation>Сообщения об ошибках на Github</translation>
+        <translation>Segnala bug su GitHub</translation>
     </message>
     <message>
         <source>Source code on Github</source>
-        <translation>Исходный код на Github</translation>
+        <translation>Codice sorgente su GitHub</translation>
     </message>
     <message>
         <source>Alternative KDE Connect client for Sailfish OS</source>
-        <translation>Альтернативный клиент KDE Connect для Sailfish OS</translation>
+        <translation>Client KDE Connect per Sailfish OS</translation>
     </message>
 </context>
 <context>
     <name>ClipboardUi</name>
     <message>
         <source>Upload clipboard text</source>
-        <translation>Загрузить текст из буфера обмена</translation>
+        <translation>Condividi appunti</translation>
     </message>
 </context>
 <context>
     <name>Device</name>
     <message>
         <source>Already paired</source>
-        <translation>Уже связано</translation>
+        <translation>Già connesso</translation>
     </message>
     <message>
         <source>Device not reachable</source>
-        <translation>Устройство недоступно</translation>
+        <translation>Dispositivo non raggiungibile</translation>
     </message>
     <message>
         <source>SHA1 fingerprint of your device certificate is: %1
 </source>
-        <translation>SHA1 отпечаток сертификата вашего устройства: %1
+        <translation>L&apos;impronta SHA1 del certificato del tuo dispositivo è: %1
 </translation>
     </message>
     <message>
         <source>SHA1 fingerprint of remote device certificate is: %1
 </source>
-        <translation>SHA1 отпечаток сертификата удаленного устройства: %1
+        <translation>L&apos;impronta SHA1 del certificato del dispositivo remoto è: %1
 </translation>
     </message>
 </context>
@@ -62,227 +62,227 @@
     <name>DeviceListPage</name>
     <message>
         <source>Device Name</source>
-        <translation>Имя устройства</translation>
+        <translation>Nome dispositivo</translation>
     </message>
     <message>
         <source>Paired devices</source>
-        <translation>Связанные устройства</translation>
+        <translation>Dispositivi connessi</translation>
     </message>
     <message>
         <source>Nearby devices</source>
-        <translation>Устройства поблизости</translation>
+        <translation>Dispositivi vicini</translation>
     </message>
     <message>
         <source>Connected</source>
-        <translation>Подключено</translation>
+        <translation>Connesso</translation>
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation>Запрос на связывание ...</translation>
+        <translation>Richiesta connessione in attesa...</translation>
     </message>
     <message>
         <source>About ...</source>
-        <translation>Об устройстве ...</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Обновить</translation>
+        <translation>Ricarica</translation>
     </message>
     <message>
         <source>Sailfish Connect</source>
-        <translation>Sailfish Коннект</translation>
+        <translation>Sailfish Connect</translation>
     </message>
     <message>
         <source>Settings ...</source>
-        <translation>Настройка ...</translation>
+        <translation>Impostazioni</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Выход</translation>
+        <translation>Esci</translation>
     </message>
     <message>
         <source>Transfers ...</source>
-        <translation>Передачи...</translation>
+        <translation>Trasferimenti</translation>
     </message>
     <message>
         <source>Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.</source>
-        <translation>Установите на свой компьютер KDE Connect или GSConnect и подключите телефон к той же сети, что и компьютер.</translation>
+        <translation>Installa KDE Connect o GSConnect sul tuo computer e connettilo alla stessa WLAN.</translation>
     </message>
 </context>
 <context>
     <name>DevicePage</name>
     <message>
         <source>Accept</source>
-        <translation>Принять</translation>
+        <translation>Accetta</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation>Отклонить</translation>
+        <translation>Rifiuta</translation>
     </message>
     <message>
         <source>This device wants to pair with your device.</source>
-        <translation>Это устройство хочет связаться с вашим устройством.</translation>
+        <translation>Questo dispositivo richiede una connessione con te.</translation>
     </message>
     <message>
         <source>Encryption info</source>
-        <translation>О шифровании</translation>
+        <translation>Info crittografia</translation>
     </message>
     <message>
         <source>Plugins</source>
-        <translation>Модули</translation>
+        <translation>Plugin</translation>
     </message>
     <message>
         <source>Unpair</source>
-        <translation>Отвязать</translation>
+        <translation>Disaccoppia</translation>
     </message>
     <message>
         <source>Send ping</source>
-        <translation>Послать пинг</translation>
+        <translation>Invia ping</translation>
     </message>
     <message>
         <source>Do you want to connect to this device?</source>
-        <translation>Вы хотите подключиться к этому устройству?</translation>
+        <translation>Vuoi connetterti a questo dispositivo?</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation>Подключить</translation>
+        <translation>Connetti</translation>
     </message>
     <message>
         <source>Device is not reachable</source>
-        <translation>Устройство недоступно</translation>
+        <translation>Dispositivo non raggiungibile</translation>
     </message>
     <message>
         <source>Actions</source>
-        <translation>Действия</translation>
+        <translation>Azioni</translation>
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation>Ожидание подтверждения спаривания ...</translation>
+        <translation>In attesa che la richiesta sia accettata ...</translation>
     </message>
 </context>
 <context>
     <name>DevicePluginsPage</name>
     <message>
         <source>Select Plugins</source>
-        <translation>Выберите модули</translation>
+        <translation>Seleziona plugin</translation>
     </message>
 </context>
 <context>
     <name>EncryptionInfoPage</name>
     <message>
         <source>Encryption info</source>
-        <translation>Шифрование</translation>
+        <translation>Info crittografia</translation>
     </message>
 </context>
 <context>
     <name>KeyboardChangeLayoutPage</name>
     <message>
         <source>%1ms repeat interval</source>
-        <translation>повтор каждые %1 мс</translation>
+        <translation>Intervallo di ripetizione %1ms</translation>
     </message>
     <message>
         <source>Vibration feedback</source>
-        <translation>Виброотклик</translation>
+        <translation>Vibrazione</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Настройка</translation>
+        <translation>Impostazioni</translation>
     </message>
     <message>
         <source>Change layout</source>
-        <translation>Сменить раскладку</translation>
+        <translation>Cambia layout</translation>
     </message>
 </context>
 <context>
     <name>KeyboardPage</name>
     <message>
         <source>Keyboard</source>
-        <translation>Клавиатура</translation>
+        <translation>Tastiera</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Настройка</translation>
+        <translation>Impostazioni</translation>
     </message>
 </context>
 <context>
     <name>LanDeviceLink</name>
     <message>
         <source>This device cannot be paired because it is running an old version of KDE Connect.</source>
-        <translation>Невозможно установить связь с устройством, потому что оно использует старую версию KDE Connect.</translation>
+        <translation>Impossibile connettersi a questo dispositivo perché utilizza una vecchia versione di KDE Connect.</translation>
     </message>
     <message>
         <source>This device cannot be paired because it sends a strange ssl certificate.</source>
-        <translation>Невозможно установить связь с устройством, потому что оно шлет странный SSL-сертификат.</translation>
+        <translation>Impossibile connettersi a questo dispositivo perché invia una certificato ssl non valido.</translation>
     </message>
 </context>
 <context>
     <name>LanPairingHandler</name>
     <message>
         <source>Canceled by other peer</source>
-        <translation>Отказано другой стороной</translation>
+        <translation>Annullato dall&apos;altro dispositivo</translation>
     </message>
     <message>
         <source>%1: Already paired</source>
-        <translation>%1: Уже связано</translation>
+        <translation>%1 già connesso</translation>
     </message>
     <message>
         <source>Timed out</source>
-        <translation>Истек срок ожидания</translation>
+        <translation>Scaduto</translation>
     </message>
 </context>
 <context>
     <name>MprisUi</name>
     <message>
         <source>No remote players</source>
-        <translation>Нет удаленных проигрывателей</translation>
+        <translation>Nessun player remoto</translation>
     </message>
     <message>
         <source>Multimedia Controls</source>
-        <translation>Управление проигрывателем</translation>
+        <translation>Controlli multimediali</translation>
     </message>
     <message>
         <source>Nothing playing</source>
-        <translation>Ничто не воспроизводится</translation>
+        <translation>Niente in riproduzione</translation>
     </message>
 </context>
 <context>
     <name>RemoteKeyboard</name>
     <message>
         <source>Keyboard</source>
-        <translation>Клавиатура</translation>
+        <translation>Tastiera</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::AppDaemon</name>
     <message>
         <source>Pairing request</source>
-        <translation>Запрос на связывание</translation>
+        <translation>Richiesta connessione</translation>
     </message>
     <message>
         <source>Pending pairing request ...</source>
-        <translation>Ожидание запроса на связывание ...</translation>
+        <translation>Richiesta connessione in attesa...</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::BatteryPluginFactory</name>
     <message>
         <source>Battery report</source>
-        <translation>Аккумулятор</translation>
+        <translation>Stato batteria</translation>
     </message>
     <message>
         <source>Share battery charge state.</source>
-        <translation>Сообщать об уровне заряда.</translation>
+        <translation>Condividi lo stato della batteria.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::ClipboardPluginFactory</name>
     <message>
         <source>Clipboard</source>
-        <translation>Буфер обмена</translation>
+        <translation>Appunti</translation>
     </message>
     <message>
         <source>Synchronize clipboard between devices.</source>
-        <translation>Синхронизировать буфер обмена между устройствами.</translation>
+        <translation>Sincronizza appunti tra i dispositivi.</translation>
     </message>
 </context>
 <context>
@@ -300,148 +300,148 @@
     <name>SailfishConnect::CopyJob</name>
     <message>
         <source>Read error: %1</source>
-        <translation>Ошибка чтения: %1</translation>
+        <translation>Errore lettura: %1</translation>
     </message>
     <message>
         <source>Write error: %1</source>
-        <translation>Ошибка записи: %1</translation>
+        <translation>Errore scrittura: %1</translation>
     </message>
     <message>
         <source>Input stream is not readable.</source>
-        <translation>Входной поток недоступен для чтения.</translation>
+        <translation>Contenuto in arrivo non leggibile.</translation>
     </message>
     <message>
         <source>Output stream is not writable.</source>
-        <translation>Выходной поток недоступен для записи</translation>
+        <translation>Contenuto in uscita non scrivibile.</translation>
     </message>
     <message>
         <source>Read more bytes of input stream than expected.</source>
-        <translation>Получено больше байтов из входного потока, чем ожидалось.</translation>
+        <translation>Contenuto in arrivo contiene più byte di quelli previsti.</translation>
     </message>
     <message>
         <source>Early end of input stream</source>
-        <translation>Поток данных на вход прерван</translation>
+        <translation>Contenuto in arrivo chiuso anticipatamente</translation>
     </message>
     <message>
         <source>Early end of output stream</source>
-        <translation>Поток данных на выход прерван</translation>
+        <translation>Contenuto in uscisa chiuso anticipatamente</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::DownloadJob</name>
     <message>
         <source>Cannot create destination folder</source>
-        <translation>Невозможно создать каталог назначения</translation>
+        <translation>Impossibile creare cartella di destinazione</translation>
     </message>
     <message>
         <source>Could not open file for writing: %1</source>
-        <translation>Невозможно открыть файл на запись: %1</translation>
+        <translation>Impossibile aprire file in scrittura: %1</translation>
     </message>
     <message>
         <source>Receiving</source>
-        <translation>Получение</translation>
+        <translation>In ricezione</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::LanUploadJob</name>
     <message>
         <source>Couldn&apos;t find an available port</source>
-        <translation>Нет доступных портов</translation>
+        <translation>Impossibile trovare una porta aperta</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::MprisRemotePluginFactory</name>
     <message>
         <source>Multimedia controls</source>
-        <translation>Управление проигрывателями</translation>
+        <translation>Controlli multimediali</translation>
     </message>
     <message>
         <source>Control your media player from remote.</source>
-        <translation>Удаленное управление медиапроигрывателем.</translation>
+        <translation>Controlla il tuo player multimediale da remoto.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::PingPluginFactory</name>
     <message>
         <source>Ping</source>
-        <translation>Пинг</translation>
+        <translation>Ping</translation>
     </message>
     <message>
         <source>Ping other device and receive pings.</source>
-        <translation>Отправка и получение пинг-запросов.</translation>
+        <translation>Invia ping all&apos;altro dispositivo o ricevi ping.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::RemoteKeyboardPluginFactory</name>
     <message>
         <source>Remote Keyboard</source>
-        <translation>Удаленная клавиатура</translation>
+        <translation>Tastiera remota</translation>
     </message>
     <message>
         <source>Type on remote compute using a virtual keyboard.</source>
-        <translation>Печатать на удаленном компьютере с помощью виртуальной клавиатуры.</translation>
+        <translation>Scrivi sul computer remoto usando una tastiera virtuale.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::SendNotificationsPluginFactory</name>
     <message>
         <source>Send notifcations</source>
-        <translation>Посылать уведомления</translation>
+        <translation>Invia notifiche</translation>
     </message>
     <message>
         <source>Work in progress: Send notifications to the remote computer.</source>
-        <translation>В разработке: Функция передачи уведомлений на удаленный компьютер.</translation>
+        <translation>(In lavorazione) Invia notifiche al computer remoto.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::SharePluginFactory</name>
     <message>
         <source>Share</source>
-        <translation>Доступ к файлам</translation>
+        <translation>Condividi</translation>
     </message>
     <message>
         <source>Send and receive files and URLs.</source>
-        <translation>Передача и получение файлов и URL.</translation>
+        <translation>Invia e ricevi file e URL.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TelepathyPluginFactory</name>
     <message>
         <source>Send SMS</source>
-        <translation>Отправка СМС</translation>
+        <translation>Invia SMS</translation>
     </message>
     <message>
         <source>Allow sending of text messages.</source>
-        <translation>Разрешить отправку СМС.</translation>
+        <translation>Permetti l&apos;invio di SMS.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TelephonyPluginFactory</name>
     <message>
         <source>Call notifications</source>
-        <translation>Уведомления о звонках</translation>
+        <translation>Notifiche chiamata</translation>
     </message>
     <message>
         <source>Send notifications for incoming and missed calls.</source>
-        <translation>Посылать уведомления о входящих и пропущенных звонках.</translation>
+        <translation>Invia notifiche per chiamate in arrivo o perse.</translation>
     </message>
 </context>
 <context>
     <name>SailfishConnect::TouchpadPluginFactory</name>
     <message>
         <source>Touchpad</source>
-        <translation>Тачпад</translation>
+        <translation>Touchpad</translation>
     </message>
     <message>
         <source>Control remote computer through mouse movements and clicks.</source>
-        <translation>Позволяет управлять удаленным компьютером путем эмуляции мыши.</translation>
+        <translation>Controlla il computer remoto tramite mouse.</translation>
     </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
-        <translation>Настройка</translation>
+        <translation>Impostazioni</translation>
     </message>
     <message>
         <source>Run as service</source>
@@ -456,25 +456,25 @@
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
-        <translation>Передать файл</translation>
+        <translation>Invia un file</translation>
     </message>
     <message>
         <source>Select file to send</source>
-        <translation>Выберите файл для отправки</translation>
+        <translation>Seleziona file da inviare</translation>
     </message>
 </context>
 <context>
     <name>Touchpad</name>
     <message>
         <source>Touchpad</source>
-        <translation>Тачпад</translation>
+        <translation>Touchpad</translation>
     </message>
 </context>
 <context>
     <name>TouchpadPage</name>
     <message>
         <source>Touchpad</source>
-        <translation>Тачпад</translation>
+        <translation>Touchpad</translation>
     </message>
     <message>
         <source></source>
@@ -484,69 +484,69 @@
         <source>Move finger on screen
 Tap for click
 Hold shortly for Drag&apos;n&apos;Drop</source>
-        <translation>Проведите пальцем по экрану
-Коснитесь, чтобы выделить
-Подержите, чтобы перетащить</translation>
+        <translation>Muovi dito sullo schermo
+Premi per click
+Tieni premuto per drag&apos;n&apos;drop</translation>
     </message>
 </context>
 <context>
     <name>TransfersPage</name>
     <message>
         <source>Transfers</source>
-        <translation>Передачи</translation>
+        <translation>Trasferimenti</translation>
     </message>
     <message>
         <source>Yet no downloads or uploads</source>
-        <translation>Пока нет передачи данных</translation>
+        <translation>Ancora nessun file trasferito</translation>
     </message>
     <message>
         <source>of</source>
         <extracomment>Download progress, for example: 3MB of 50MB</extracomment>
-        <translation>из</translation>
+        <translation>di</translation>
     </message>
     <message>
         <source>Failed to open file</source>
-        <translation>Не удалось открыть файл</translation>
+        <translation>Impossibile aprire file</translation>
     </message>
     <message>
         <source>Internal error</source>
-        <translation>Внутренняя ошибка</translation>
+        <translation>Errore interno</translation>
     </message>
     <message>
         <source>File does not exit</source>
-        <translation>Файл не существует</translation>
+        <translation>File non esiste</translation>
     </message>
     <message>
         <source>No program found to open file</source>
-        <translation>Нет приложения способного открыть файл</translation>
+        <translation>Nessuna app trovata per aprire il file</translation>
     </message>
     <message>
         <source>xdg-open failed</source>
-        <translation>Ошибка программы xdg-open</translation>
+        <translation>Errore xdg-open</translation>
     </message>
     <message>
         <source>xdg-open crashed</source>
-        <translation>Программа xdg-open неожиданно завершилась</translation>
+        <translation>Crash xdg-open</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Отменить</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Открыть</translation>
+        <translation>Apri</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation>Отмена</translation>
+        <translation>Annullato</translation>
     </message>
     <message>
         <source>Failed</source>
-        <translation>Ошибка</translation>
+        <translation>Fallito</translation>
     </message>
     <message>
         <source>Completed</source>
-        <translation>Готово</translation>
+        <translation>Completato</translation>
     </message>
 </context>
 </TS>

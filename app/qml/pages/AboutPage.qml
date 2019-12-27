@@ -41,21 +41,36 @@ Page {
 
             Label {
                 text: "<b>Sailfish Connect</b>" // TODO: QT5.9: Qt.application.displayName
+
+                wrapMode: Text.Wrap
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                horizontalAlignment: Text.AlignHCenter
+
                 color: Theme.highlightColor
-                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Label {
                 text: Qt.application.version
+
+                wrapMode: Text.Wrap
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                horizontalAlignment: Text.AlignHCenter
+
                 color: Theme.highlightColor
-                anchors.horizontalCenter: parent.horizontalCenter
+                textFormat: Text.PlainText
             }
 
             Label {
-                wrapMode: Text.WordWrap
                 text: qsTr("Alternative KDE Connect client for Sailfish OS")
+
+                wrapMode: Text.Wrap
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                horizontalAlignment: Text.AlignHCenter
+
                 color: Theme.highlightColor
-                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             SectionHeader {

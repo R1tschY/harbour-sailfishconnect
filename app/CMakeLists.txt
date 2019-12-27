@@ -1,7 +1,7 @@
 set(OUTPUT_NAME harbour-sailfishconnect)
 
 # Qt
-find_package(Qt5 COMPONENTS Core Network Qml Gui Quick DBus REQUIRED)
+find_package(Qt5 COMPONENTS Core Network Qml Sql Gui Quick DBus REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -11,8 +11,13 @@ include(FindPkgConfig)
 pkg_search_module(SAILFISH sailfishapp REQUIRED)
 
 # exe
+set(CONFIG_SOURCE src/sailfishconnect-config.cpp)
+configure_file(
+    ${CONFIG_SOURCE}.in ${CONFIG_SOURCE}
+    @ONLY
+)
 file(GLOB_RECURSE SailfishConnectApp_SOURCES "*.cpp")
-add_executable(SailfishConnectApp ${SailfishConnectApp_SOURCES})
+add_executable(SailfishConnectApp ${SailfishConnectApp_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_SOURCE})
 
 set_target_properties(SailfishConnectApp
   PROPERTIES
@@ -27,6 +32,7 @@ target_link_libraries(SailfishConnectApp
   Qt5::Core
   Qt5::Quick
   Qt5::DBus
+  Qt5::Sql
   kdeconnectcore
   kdeconnectinterfaces
   ${SAILFISH_LDFLAGS}

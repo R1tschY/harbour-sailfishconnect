@@ -1,6 +1,6 @@
 Name: harbour-sailfishconnect
 Summary: SailfishOS client for KDE-Connect
-Version: 0.7
+Version: 0.6
 Release: 0.1
 # The contents of the Group field should be one of the groups listed here:
 # http://gitorious.org/meego-developer-tools/spectacle/blobs/master/data/GROUPS
@@ -14,9 +14,7 @@ Sources:
 Description: |
   SailfishOS client for KDE-Connect
 Configure: none
-# The qtc5 builder inserts macros to allow QtCreator to have fine
-# control over qmake/make execution
-Builder: qtc5
+Builder: none
 
 # This section specifies build dependencies that are resolved using pkgconfig.
 # This is the preferred way of specifying build dependencies for your package.
@@ -25,6 +23,7 @@ PkgConfigBR:
   - openssl >= 1.0.1
   - Qt5Core
   - Qt5Network
+  - Qt5Sql
   - Qt5Qml
   - Qt5Quick
   - Qt5Test

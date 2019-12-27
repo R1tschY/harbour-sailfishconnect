@@ -15,28 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SAILFISHCONNECT_H
-#define SAILFISHCONNECT_H
+#ifndef CONTACTSMANAGER_H
+#define CONTACTSMANAGER_H
 
-#include <QString>
+#include <QDateTime>
+#include <QMap>
+#include <QObject>
+#include <QSqlDatabase>
 
 namespace SailfishConnect {
 
-/**
- * @brief dbus service name of Sailfish Connect
- */
-extern QString DBUS_SERVICE_NAME;
+class ContactsManager : public QObject {
+    Q_OBJECT
+public:
+    explicit ContactsManager(QObject* parent = nullptr);
 
-/**
- * @brief package name (normally sailfishconnect)
- */
-extern QString PACKAGE_NAME;
+    QMap<QString, QDateTime> getLastModifiedTimes();
+    QMap<QString, QString> exportVCards(const QStringList& requestedIds, const QString& deviceId);
+    QString lookUpName(const QString& phoneNumber);
 
-/**
- * @brief pretty package name (normally "Sailfish Connect")
- */
-extern QString PRETTY_PACKAGE_NAME;
+private:
+    QSqlDatabase m_db;
+};
 
 } // namespace SailfishConnect
 
-#endif // SAILFISHCONNECT_H
+#endif // CONTACTSMANAGER_H

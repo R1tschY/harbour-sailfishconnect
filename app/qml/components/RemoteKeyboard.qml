@@ -22,10 +22,10 @@ import SailfishConnect.Api 0.7
 IconListItem {
     title: qsTr("Keyboard")
     source: "image://theme/icon-m-keyboard"
-    visible: _device.loadedPlugins.indexOf(
+    visible: _device && _device.loadedPlugins.indexOf(
                  "SailfishConnect::RemoteKeyboardPlugin") >= 0
 
     onClicked: pageStack.push(
                    Qt.resolvedUrl("../pages/KeyboardPage.qml"),
-                   { device: _device });
+                   { device: _device })
 }

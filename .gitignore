@@ -2,6 +2,7 @@
 *~
 *.bak
 *.swp
+*.spec.*
 
 # Qt Creator
 *.user*
@@ -13,12 +14,16 @@
 .mypy_cache
 
 # Conan
+conan.lock
 conanbuildinfo.pri
 conanbuildinfo.txt
 conanbuildinfo.cmake
 conaninfo.txt
 conan.lock
 graph_info.json
+
+# Python
+__pycache__
 .venv*
 
 # RPM

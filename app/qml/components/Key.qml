@@ -28,7 +28,7 @@ Rectangle {
     property string label: ""
     property int markValue: 0
 
-    visible: label != ""
+    visible: label !== ""
 
     signal clicked()
 
@@ -60,10 +60,10 @@ Rectangle {
 
         onTriggered: {
             if (keyboardLayout.feedback) {
-                keyboardLayout.pressFeedback();
+                keyboardLayout.pressFeedback()
             }
 
-            parent.clicked();
+            parent.clicked()
         }
     }
 
@@ -73,30 +73,30 @@ Rectangle {
 
         onClicked: {
             if (keyboardLayout.feedback) {
-                keyboardLayout.pressFeedback();
+                keyboardLayout.pressFeedback()
             }
 
-            parent.clicked();
+            parent.clicked()
         }
 
         onPressAndHold: {
-            timer.start();
+            timer.start()
         }
 
         onReleased: {
             if (keyboardLayout.feedback) {
-                keyboardLayout.releaseFeedback();
+                keyboardLayout.releaseFeedback()
             }
 
-            timer.stop();
+            timer.stop()
         }
 
         onEntered: {
-            parent.color = Theme.highlightColor;
+            parent.color = Theme.highlightColor
         }
 
         onExited: {
-            parent.color = "transparent";
+            parent.color = "transparent"
         }
     }
 }

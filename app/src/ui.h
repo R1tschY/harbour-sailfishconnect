@@ -18,13 +18,16 @@
 #ifndef UI_H
 #define UI_H
 
+// #include "plugins/remotekeyboard/keyboardlayoutprovider.h"
 #include <QObject>
-#include <QString>
 #include <QSettings>
+#include <QString>
+#include <memory>
 
 class QQuickView;
 class QQmlImageProviderBase;
 class KeyboardLayoutProvider;
+class QEventLoopLocker;
 
 namespace SailfishConnect {
 
@@ -37,22 +40,22 @@ class DaemonApi;
  * - dbus interface to ui
  * - creates the QQuickView with the main window
  */
-class UI : public QObject
-{
+class UI : public QObject {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.harbour.SailfishConnect.UI")
 
     Q_PROPERTY(
-            bool runInBackground
+        bool runInBackground
             READ runInBackground
-            WRITE setRunInBackground
-            NOTIFY runInBackgroundChanged)
+                WRITE setRunInBackground
+                    NOTIFY runInBackgroundChanged)
 
 public:
     static const QString DBUS_INTERFACE_NAME;
     static const QString DBUS_PATH;
 
-    explicit UI(AppDaemon* daemon, QObject *parent = nullptr);
+    explicit UI(bool daemonMode, QObject *parent = nullptr);
+    ~UI();
 
     /**
      * @brief notify other main daemon to show app window
@@ -62,7 +65,7 @@ public:
     bool runInBackground();
     void setRunInBackground(bool value);
 
-    static QVariant openDevicePageDbusAction(const QString &deviceId);
+    static QVariant openDevicePageDbusAction(const QString& deviceId);
 
 signals:
     void runInBackgroundChanged();
@@ -85,18 +88,21 @@ public slots:
      */
     Q_SCRIPTABLE void openDevicePage(const QString& deviceId);
 
+private slots:
+    void onRegisteredService();
+    void onUnregisteredService();
+
 private:
     QQuickView* m_view = nullptr;
-    AppDaemon *m_daemon;
+    std::unique_ptr<AppDaemon> m_daemon;
     DaemonApi* m_daemonIf;
     //KeyboardLayoutProvider* m_keyboardLayoutProvider;
 
     QSettings m_settings;
     bool m_runInBackground = false;
+    bool m_daemonMode;
 
-    void onMainWindowDestroyed();
-
-    bool eventFilter(QObject *obj, QEvent *event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
 };
 
 } // namespace SailfishConnect

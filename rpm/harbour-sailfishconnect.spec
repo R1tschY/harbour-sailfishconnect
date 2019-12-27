@@ -8,12 +8,8 @@ Name:       harbour-sailfishconnect
 # >> macros
 # << macros
 
-%{!?qtc_qmake:%define qtc_qmake %qmake}
-%{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
-%{!?qtc_make:%define qtc_make make}
-%{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    SailfishOS client for KDE-Connect
-Version:    0.7
+Version:    0.6
 Release:    0.1
 Group:      Qt/Qt
 License:    LICENSE
@@ -23,9 +19,9 @@ Source100:  harbour-sailfishconnect.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(openssl) >= 1.0.1
-BuildRequires:  gettext-devel
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Network)
+BuildRequires:  pkgconfig(Qt5Sql)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Test)
@@ -78,19 +74,24 @@ fi
 cd rpmbuilddir
 conan install .. --profile=../dev/profiles/%{_target_cpu}
 cmake \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DBUILD_SHARED_LIBS=ON \
-  -DCMAKE_INSTALL_PREFIX=/usr \
-  -DCMAKE_VERBOSE_MAKEFILE=ON \
-  -DSAILFISHOS=ON \
-  -G Ninja \
-  ..
+-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+-DBUILD_SHARED_LIBS=ON \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_VERBOSE_MAKEFILE=ON \
+-DSAILFISHOS=ON \
+-G Ninja \
+..
 cd ..
 cmake --build rpmbuilddir -- %{?_smp_mflags}
 
+
 # << build pre
+
+
+
 # >> build post
 # << build post
+
 %install
 rm -rf %{buildroot}
 # >> install pre
@@ -100,12 +101,10 @@ mkdir -p %{_bindir}
 
 # >> install post
 # << install post
-desktop-file-install --delete-original \
-  --dir %{buildroot}%{_datadir}/applications \
-   %{buildroot}%{_datadir}/applications/*.desktop
 
-mkdir -p %{buildroot}%{_datadir}/harbour-sailfishconnect/lib/kdeconnect
-cp %{buildroot}%{_libdir}/qt5/plugins/kdeconnect/* %{buildroot}%{_datadir}/harbour-sailfishconnect/lib/kdeconnect
+desktop-file-install --delete-original       \
+  --dir %{buildroot}%{_datadir}/applications             \
+   %{buildroot}%{_datadir}/applications/*.desktop
 
 %files
 %defattr(-,root,root,-)

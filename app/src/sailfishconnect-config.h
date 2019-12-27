@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Richard Liebscher <richard.liebscher@gmail.com>.
+ * Copyright 2019 Richard Liebscher <richard.liebscher@gmail.com>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,16 +15,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import Sailfish.Silica 1.0
-import SailfishConnect.Api 0.7
+#ifndef SAILFISHCONNECT_H
+#define SAILFISHCONNECT_H
 
-IconListItem {
-    title: qsTr("Upload clipboard text")
-    source: "image://theme/icon-m-clipboard"
-    visible: _device && _device.loadedPlugins.indexOf(
-                 "SailfishConnect::ClipboardPlugin") >= 0
+#include <QString>
 
-    onClicked:
-        _device.plugin("SailfishConnect::ClipboardPlugin").pushClipboard()
-}
+namespace SailfishConnect {
+
+/**
+ * @brief dbus service name of Sailfish Connect
+ */
+extern QString DBUS_SERVICE_NAME;
+
+/**
+ * @brief package version
+ */
+extern QString PACKAGE_VERSION;
+
+/**
+ * @brief package name (normally "harbour-sailfishconnect")
+ */
+extern QString PACKAGE_NAME;
+
+/**
+ * @brief pretty package name (normally "Sailfish Connect")
+ */
+extern QString PRETTY_PACKAGE_NAME;
+
+} // namespace SailfishConnect
+
+#endif // SAILFISHCONNECT_H

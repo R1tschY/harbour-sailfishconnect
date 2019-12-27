@@ -284,6 +284,17 @@
     </message>
 </context>
 <context>
+    <name>SailfishConnect::ContactsPluginFactory</name>
+    <message>
+        <source>Contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share contacts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SailfishConnect::CopyJob</name>
     <message>
         <source>Read error: %1</source>
@@ -431,11 +442,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Run in background</source>
+        <source>Run as service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Application runs in background after window is closed.</source>
+        <source>Application starts at system start and runs in background.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -443,6 +454,10 @@
     <name>ShareUi</name>
     <message>
         <source>Share a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select file to send</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

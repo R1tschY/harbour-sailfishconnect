@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "sailfishconnect.h"
+#include "sailfishconnect-config.h"
 
 #ifdef QT_QML_DEBUG
 #include <QtQuick>
@@ -50,11 +50,12 @@
 
 //#include "plugins/mprisremote/mprisremoteplugin.h"
 //#include "plugins/touchpad/touchpadplugin.h"
-#include "ui/devicelistmodel.h"
-#include "ui/sortfiltermodel.h"
-#include "ui/devicepluginsmodel.h"
-// #include "ui/mprisplayersmodel.h"
-// #include "ui/jobsmodel.h"
+#include "models/devicelistmodel.h"
+#include "models/sortfiltermodel.h"
+#include "models/devicepluginsmodel.h"
+// #include "models/mprisplayersmodel.h"
+// #include "models/jobsmodel.h"
+
 #include "ui.h"
 #include "js/qmlregister.h"
 #include "dbus/ofono.h"
@@ -68,18 +69,6 @@ Q_IMPORT_PLUGIN(opensslPlugin)
 namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
-
-
-QString PACKAGE_VERSION = QStringLiteral("0.3");
-
-QString DBUS_SERVICE_NAME =
-        QStringLiteral("org.harbour.SailfishConnect");
-
-QString PACKAGE_NAME =
-        QStringLiteral("harbour-sailfishconnect");
-
-QString PRETTY_PACKAGE_NAME =
-        QStringLiteral("Sailfish Connect");
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -145,8 +134,36 @@ std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
 {
     std::unique_ptr<QGuiApplication> app(SailfishApp::application(argc, argv));
     app->setApplicationVersion(PACKAGE_VERSION);
+    app->setQuitLockEnabled(false);
     return app;
 }
+
+namespace {
+
+struct Options {
+    bool daemonMode;
+};
+
+Options parseCommandLine(const QCoreApplication &app) {
+    QCommandLineParser parser;
+    parser.setApplicationDescription(
+        QStringLiteral("Alternative KDE-Connect client for Sailfish OS"));
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    QCommandLineOption daemonOption(QStringList() << "d" << "daemon",
+        QStringLiteral("Start application in daemon mode. "
+                       "Window is not shown until a call without is flag."));
+    parser.addOption(daemonOption);
+
+    parser.process(app);
+
+    return Options {
+        parser.isSet(daemonOption)
+    };
+}
+
+} // namespace
 
 } // namespace SailfishConnect
 
@@ -159,21 +176,24 @@ int main(int argc, char *argv[])
 
     auto app = createApplication(argc, argv);
 
+    auto options = parseCommandLine(*app);
+
     QDBusConnection sessionBus = QDBusConnection::sessionBus();
     if (!sessionBus.registerService(DBUS_SERVICE_NAME)) {
         qCInfo(logger) << "Other daemon exists.";
-        UI::raise();
+        if (!options.daemonMode)
+            UI::raise();
         return 0;
     }
 
     Ofono::registerTypes();
     registerQmlTypes();
 
-    AppDaemon daemon;
-
     //KeyboardLayoutProvider keyboardLayoutProvider;
-    UI ui(&daemon);
+    UI ui(options.daemonMode);
     ui.showMainWindow();
+    if (!options.daemonMode)
+        ui.showMainWindow();
 
     return app->exec();
 }

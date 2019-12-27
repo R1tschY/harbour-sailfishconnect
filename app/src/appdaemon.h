@@ -21,6 +21,7 @@
 #include <daemon.h>
 
 //#include <notification.h>
+#include <QEventLoopLocker>
 
 class QQmlEngine;
 class QQmlImageProviderBase;
@@ -29,11 +30,13 @@ class Device;
 namespace SailfishConnect {
 
 class JobManager;
+class ContactsManager;
 
 class AppDaemon : public Daemon
 {
     Q_OBJECT  
     Q_CLASSINFO("D-Bus Interface", "org.kde.kdeconnect.daemon")
+
 public:
     AppDaemon(QObject* parent = nullptr);
 
@@ -43,17 +46,23 @@ public:
     void sendSimpleNotification(const QString&, const QString&, const QString&, const QString&) override;
     KJobTrackerInterface* jobTracker() override;
 
-    QQmlImageProviderBase *imageProvider(const QString &providerId) const;
+    QQmlImageProviderBase* imageProvider(const QString& providerId) const;
 
-    QQmlEngine *qmlEngine() const { return m_qmlEngine; }
-    void setQmlEngine(QQmlEngine *qmlEngine);
+    ContactsManager* getContacts();
+
+    QQmlEngine* qmlEngine() const { return m_qmlEngine; }
+    void setQmlEngine(QQmlEngine* qmlEngine);
 
     static AppDaemon* instance();
 
 private:
+    QEventLoopLocker m_eventLoopLock;
+    
     //Notification notification_;
+
     QQmlEngine* m_qmlEngine = nullptr;
     JobManager* m_jobmanager = nullptr;
+    ContactsManager* m_contacts = nullptr;
 };
 
 } // namespace SailfishConnect

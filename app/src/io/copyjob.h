@@ -82,7 +82,7 @@ private:
     QString m_deviceId;
 
     std::size_t m_bufferSize = 0;
-    std::array<char, 64 * 1024> m_buffer;
+    std::array<char, 512 * 1024> m_buffer;
 
     void pollAtSourceClose();
     void pollAtDestinationClose();

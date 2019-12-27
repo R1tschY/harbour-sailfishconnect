@@ -40,7 +40,7 @@ Page {
                 valueText: qsTr("%1ms repeat interval").arg(value)
 
                 onValueChanged: {
-                    if (keyboardLayout.repeatInterval != value) keyboardLayout.repeatInterval = value;
+                    if (keyboardLayout.repeatInterval !== value) keyboardLayout.repeatInterval = value
                 }
             }
 
@@ -49,7 +49,7 @@ Page {
                 checked: keyboardLayout.feedback
 
                 onCheckedChanged: {
-                    if (keyboardLayout.feedback != checked) keyboardLayout.feedback = checked;
+                    if (keyboardLayout.feedback !== checked) keyboardLayout.feedback = checked
                 }
             }
 
@@ -67,7 +67,7 @@ Page {
                             text: modelData["long"]
 
                             onClicked: {
-                                keyboardLayout.layout = modelData["short"];
+                                keyboardLayout.layout = modelData["short"]
                             }
                         }
                     }
@@ -76,10 +76,10 @@ Page {
                 function getLayoutIndex(name) {
                     for (var i = 0; i < keyboardLayout.layouts().length; i++) {
                         if (keyboardLayout.layouts()[i]["short"] === name) {
-                            return i;
+                            return i
                         }
                     }
-                    return 0;
+                    return 0
                 }
             }
         }

@@ -18,6 +18,7 @@
 #include "devicepluginsmodel.h"
 
 #include <QLoggingCategory>
+#include <KPluginLoader>
 
 #include <daemon.h>
 #include <device.h>
@@ -26,37 +27,42 @@
 
 namespace SailfishConnect {
 
-static Q_LOGGING_CATEGORY(logger, "SailfishConnect::DevicePluginsModel")
+static Q_LOGGING_CATEGORY(logger, "SailfishConnect::DevicePluginsModel");
 
-DevicePluginsModel::DevicePluginsModel(QObject *parent)
+static QString KDECONNECT_PLUGIN_DIR = 
+    QStringLiteral("/usr/share/harbour-sailfishconnect/lib/kdeconnect/");
+
+
+DevicePluginsModel::DevicePluginsModel(QObject* parent)
     : QAbstractListModel(parent)
-{ }
+    , m_plugins(KPluginLoader::findPlugins(KDECONNECT_PLUGIN_DIR))
+{
+}
 
-int DevicePluginsModel::rowCount(const QModelIndex &parent) const
+int DevicePluginsModel::rowCount(const QModelIndex& parent) const
 {
     if (parent.isValid())
         return 0;
 
-    return pluginIds_.size();
+    return m_plugins.size();
 }
 
-QVariant DevicePluginsModel::data(const QModelIndex &index, int role) const
+QVariant DevicePluginsModel::data(const QModelIndex& index, int role) const
 {
-    if (!index.isValid() || index.row() >= pluginIds_.length())
+    if (!index.isValid() || index.row() >= m_plugins.length())
         return QVariant();
 
-    auto& pluginId = pluginIds_[index.row()];
-    auto metadata = PluginLoader::instance()->getPluginInfo(pluginId);
-
+    auto& metadata = m_plugins[index.row()];
     switch (role) {
+    case IdRole:
+        return metadata.pluginId();
     case NameRole:
         return metadata.name();
     case DescriptionRole:
         return metadata.description();
     case EnabledRole:
-        return device_->isPluginEnabled(pluginId);
+        return device_->isPluginEnabled(metadata.pluginId());
     case IconUrlRole:
-        // FIXME: use sailfish os icons or a wrapper
         return metadata.iconName();
     }
 
@@ -64,16 +70,16 @@ QVariant DevicePluginsModel::data(const QModelIndex &index, int role) const
 }
 
 bool DevicePluginsModel::setData(
-        const QModelIndex& idx, const QVariant& value, int role)
+    const QModelIndex& idx, const QVariant& value, int role)
 {
-    if (!idx.isValid() || idx.row() >= pluginIds_.length())
+    if (!idx.isValid() || idx.row() >= m_plugins.length())
         return false;
 
     if (role == EnabledRole) {
         // setPluginEnabled triggers pluginsChanged triggers setDevice
         // which resets the model
         if (data(idx, EnabledRole) != value) {
-            auto& pluginId = pluginIds_[idx.row()];
+            auto pluginId = m_plugins[idx.row()].pluginId();
             device_->setPluginEnabled(pluginId, value.toBool());
         }
         return true;
@@ -82,18 +88,15 @@ bool DevicePluginsModel::setData(
     return false;
 }
 
-Qt::ItemFlags DevicePluginsModel::flags(const QModelIndex &index) const
+Qt::ItemFlags DevicePluginsModel::flags(const QModelIndex& index) const
 {
-    if (!index.isValid() || index.row() >= pluginIds_.length())
-        return Qt::NoItemFlags;
-
-    return Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled |
-            Qt::ItemNeverHasChildren;
+    return Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren;
 }
 
 QHash<int, QByteArray> DevicePluginsModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
+    roles[IdRole] = "pluginId";
     roles[NameRole] = "pluginName";
     roles[EnabledRole] = "pluginEnabled";
     roles[IconUrlRole] = "pluginIconUrl";
@@ -117,16 +120,13 @@ void DevicePluginsModel::setDevice(Device* value)
 
     if (device_) {
         device_->disconnect(this);
-        pluginIds_.clear();
     }
 
     device_ = value;
 
     if (device_) {
         connect(device_, &Device::destroyed,
-                this, [&](){ setDevice(nullptr); });
-
-        pluginIds_ = device_->supportedPlugins();
+            this, [&]() { setDevice(nullptr); });
     }
 
     endResetModel();

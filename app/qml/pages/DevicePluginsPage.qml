@@ -24,6 +24,13 @@ Page {
     id: page
 
     property string device
+    readonly property var _pluginIcons: pluginIcons()
+
+    function pluginIcons() {
+        return {
+            "kdeconnect_ping": "image://theme/icon-m-accept"
+        }
+    }
 
     allowedOrientations: Orientation.All
 
@@ -50,7 +57,7 @@ Page {
             IconTextSwitch {
                 id: pluginSwitch
                 text: pluginName
-                icon.source: pluginIconUrl
+                icon.source: _pluginIcons[pluginId]
                 description: pluginDescription
                 onCheckedChanged: pluginEnabled = checked
 

@@ -19,6 +19,8 @@
 
 #include <QAbstractListModel>
 #include <QStringList>
+#include <QVector>
+#include <KPluginMetaData>
 
 class Device;
 
@@ -39,7 +41,8 @@ public:
         EnabledRole = Qt::CheckStateRole,
 
         DescriptionRole = Qt::UserRole,
-        IconUrlRole
+        IconUrlRole,
+        IdRole,
     };
 
     explicit DevicePluginsModel(QObject *parent = 0);
@@ -65,7 +68,7 @@ signals:
 private:
     Device* device_ = nullptr;
 
-    QStringList pluginIds_;
+    QVector<KPluginMetaData> m_plugins;
 
     void setDevice(Device* value);
     void update();

@@ -81,7 +81,7 @@ class MatchRegexRule:
         self.message = message
 
     def canHandle(self, file: Path):
-        return self.files.search(file.name) is not None
+        return self.files.search(os.fspath(file)) is not None
 
     def handleFile(self, file: Path, content: str):
         if not self.regex.search(content):
@@ -138,6 +138,7 @@ def main():
     # apply
     failures = []
     matchedFiles = 0
+    cwd = Path('.')
     for root, dirs, files in os.walk('.'):
         for dir in dirs:
             if dir in ignoredirs:
@@ -145,7 +146,7 @@ def main():
 
         for file in files:
             content = None
-            path = Path(root) / file
+            path = (Path(root) / file).relative_to(cwd)
             for rule in rules:
                 if rule.canHandle(path):
                     if content is None:

@@ -30,6 +30,7 @@
 
 #include "sailfishconnect.h"
 #include "appdaemon.h"
+#include "dbus/kdeconnect.h"
 
 namespace SailfishConnect {
 
@@ -45,6 +46,7 @@ const QString UI::DBUS_PATH =
 UI::UI(AppDaemon* daemon, QObject *parent)
     : QObject(parent)
     , m_daemon(daemon)
+    , m_daemonIf(new DaemonApi(this))
 {
     m_settings.beginGroup(QStringLiteral("UI"));
 
@@ -82,7 +84,7 @@ void UI::showMainWindow()
         this, &UI::onMainWindowDestroyed);
 
     // view
-    m_view->rootContext()->setContextProperty("daemon", m_daemon);
+    m_view->rootContext()->setContextProperty("daemon", m_daemonIf);
     m_view->rootContext()->setContextProperty("ui", this);
     // m_view->rootContext()->setContextProperty("keyboardLayout", m_keyboardLayoutProvider);
     m_view->setSource(SailfishApp::pathToMainQml());

@@ -48,9 +48,6 @@ public:
     QQmlEngine *qmlEngine() const { return m_qmlEngine; }
     void setQmlEngine(QQmlEngine *qmlEngine);
 
-    // make it only in AppDaemon scriptable
-    Q_SCRIPTABLE Device* getDevice(const QString& deviceId);
-
     static AppDaemon* instance();
 
 private:

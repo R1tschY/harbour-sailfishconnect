@@ -29,6 +29,7 @@ class KeyboardLayoutProvider;
 namespace SailfishConnect {
 
 class AppDaemon;
+class DaemonApi;
 
 /**
  * @brief manages ui
@@ -87,6 +88,7 @@ public slots:
 private:
     QQuickView* m_view = nullptr;
     AppDaemon *m_daemon;
+    DaemonApi* m_daemonIf;
     //KeyboardLayoutProvider* m_keyboardLayoutProvider;
 
     QSettings m_settings;

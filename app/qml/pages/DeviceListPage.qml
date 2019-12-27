@@ -19,6 +19,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Nemo.Notifications 1.0
 import SailfishConnect.UI 0.3
+import SailfishConnect.Api 0.7
 
 Page {
     id: page
@@ -27,9 +28,27 @@ Page {
 
     allowedOrientations: Orientation.All
 
+    DBusServiceWatcher {
+        id: kdeconnectService
+        service: "org.kde.kdeconnect"
+
+        onRegisteredChanged: {
+            if (kdeconnectService.registered) {
+                announcedNameField.text = daemon.announcedName()
+            }
+        }
+    }
+
+    BusyIndicator {
+        size: BusyIndicatorSize.Large
+        anchors.centerIn: parent
+        running: !kdeconnectService.registered
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
+        visible: kdeconnectService.registered
 
         ViewPlaceholder {
             enabled: !startup
@@ -50,10 +69,10 @@ Page {
             }
 
             TextField {
+                id: announcedNameField
                 width: parent.width
                 label: qsTr("Device Name")
-                placeholderText: daemon.announcedName()
-                text: daemon.announcedName()
+                text: kdeconnectService.registered ? daemon.announcedName() : ""
 
                 onActiveFocusChanged: {
                     if (activeFocus)

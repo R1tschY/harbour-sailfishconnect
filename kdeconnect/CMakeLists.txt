@@ -40,6 +40,4 @@ function(kcoreaddons_add_plugin plugin)
 endfunction()
 
 
-set(SAILFISHOS ON)
-set(BUILD_SHARED_LIBS OFF)
 add_subdirectory(kdeconnect)

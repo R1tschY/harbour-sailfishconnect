@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "sailfishconnect.h"
+
 #ifdef QT_QML_DEBUG
 #include <QtQuick>
 #endif
@@ -38,6 +40,14 @@
 #include "appdaemon.h"
 #include <device.h>
 #include <kdeconnectplugin.h>
+
+#include <devicessortproxymodel.h>
+#include <devicesmodel.h>
+#include <notificationsmodel.h>
+#include <remotecommandsmodel.h>
+#include <remotesinksmodel.h>
+
+
 //#include "plugins/mprisremote/mprisremoteplugin.h"
 //#include "plugins/touchpad/touchpadplugin.h"
 #include "ui/devicelistmodel.h"
@@ -48,6 +58,8 @@
 #include "ui.h"
 #include "js/qmlregister.h"
 #include "dbus/ofono.h"
+#include "dbus/kdeconnect.h"
+#include "dbus/servicewatcher.h"
 
 #include <QtPlugin>
 
@@ -86,6 +98,17 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 }
 
 void registerQmlTypes() {
+    qmlRegisterType<DevicesModel>(
+        "org.kde.kdeconnect", 1, 0, "DevicesModel");
+    qmlRegisterType<NotificationsModel>(
+        "org.kde.kdeconnect", 1, 0, "NotificationsModel");
+    qmlRegisterType<RemoteCommandsModel>(
+        "org.kde.kdeconnect", 1, 0, "RemoteCommandsModel");
+    qmlRegisterType<DevicesSortProxyModel>(
+        "org.kde.kdeconnect", 1, 0, "DevicesSortProxyModel");
+    qmlRegisterType<RemoteSinksModel>(
+        "org.kde.kdeconnect", 1, 0, "RemoteSinksModel");
+
     // TODO: register in plugin factories when possible
     qmlRegisterType<DeviceListModel>(
                 "SailfishConnect.UI", 0, 3, "DeviceListModel");
@@ -98,12 +121,15 @@ void registerQmlTypes() {
     // qmlRegisterType<MprisPlayersModel>(
     //             "SailfishConnect.UI", 0, 3, "MprisPlayersModel");
 
-    qmlRegisterUncreatableType<Device>(
-                "SailfishConnect.Core", 0, 3, "Device",
-                QStringLiteral("Instances of Device are only creatable from C++."));
-    qmlRegisterUncreatableType<KdeConnectPlugin>(
-                "SailfishConnect.Core", 0, 3, "Plugin",
-                QStringLiteral("Instances of Plugin are only creatable from C++."));
+    QString uncreatableError =
+        QStringLiteral("Instances are only creatable from C++.");
+    qRegisterMetaType<DeviceApi*>("DeviceApi*");
+    qmlRegisterUncreatableType<DeviceApi>(
+                "SailfishConnect.Api", 0, 7, "DeviceApi", uncreatableError);
+    qmlRegisterUncreatableType<DaemonApi>(
+                "SailfishConnect.Api", 0, 7, "DaemonApi", uncreatableError);
+    qmlRegisterType<DBusServiceWatcher>(
+                "SailfishConnect.Api", 0, 7, "DBusServiceWatcher");
 
     // qmlRegisterUncreatableType<MprisPlayer>(
     //             "SailfishConnect.Mpris", 0, 3, "MprisPlayer",
@@ -122,7 +148,7 @@ std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
     return app;
 }
 
-} // SailfishConnect
+} // namespace SailfishConnect
 
 int main(int argc, char *argv[])
 {  

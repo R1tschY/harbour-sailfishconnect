@@ -13,7 +13,7 @@ Name:       harbour-sailfishconnect
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    SailfishOS client for KDE-Connect
-Version:    0.6
+Version:    0.7
 Release:    0.1
 Group:      Qt/Qt
 License:    LICENSE
@@ -32,9 +32,9 @@ BuildRequires:  pkgconfig(Qt5Test)
 BuildRequires:  pkgconfig(contextkit-statefs)
 BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  cmake
+BuildRequires:  ninja
 BuildRequires:  python3-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  extra-cmake-modules
 
 %description
 SailfishOS client for KDE-Connect
@@ -77,10 +77,16 @@ mkdir -p rpmbuilddir
 fi
 cd rpmbuilddir
 conan install .. --profile=../dev/profiles/%{_target_cpu}
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=OFF -DSAILFISHOS=ON \
-  -DCMAKE_INSTALL_PREFIX=/usr ..
+cmake \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DBUILD_SHARED_LIBS=ON \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_VERBOSE_MAKEFILE=ON \
+  -DSAILFISHOS=ON \
+  -G Ninja \
+  ..
 cd ..
-make -C rpmbuilddir -j VERBOSE=1 %{?_smp_mflags}
+cmake --build rpmbuilddir -- %{?_smp_mflags}
 
 # << build pre
 # >> build post
@@ -88,7 +94,7 @@ make -C rpmbuilddir -j VERBOSE=1 %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 # >> install pre
-DESTDIR=%{buildroot} make -C rpmbuilddir VERBOSE=1 install
+DESTDIR=%{buildroot} cmake --build rpmbuilddir --target install
 mkdir -p %{_bindir}
 # << install pre
 
@@ -97,6 +103,9 @@ mkdir -p %{_bindir}
 desktop-file-install --delete-original \
   --dir %{buildroot}%{_datadir}/applications \
    %{buildroot}%{_datadir}/applications/*.desktop
+
+mkdir -p %{buildroot}%{_datadir}/harbour-sailfishconnect/lib/kdeconnect
+cp %{buildroot}%{_libdir}/qt5/plugins/kdeconnect/* %{buildroot}%{_datadir}/harbour-sailfishconnect/lib/kdeconnect
 
 %files
 %defattr(-,root,root,-)

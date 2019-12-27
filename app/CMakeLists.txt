@@ -28,6 +28,7 @@ target_link_libraries(SailfishConnectApp
   Qt5::Quick
   Qt5::DBus
   kdeconnectcore
+  kdeconnectinterfaces
   ${SAILFISH_LDFLAGS}
 )
 

@@ -10,6 +10,7 @@
 # IDEs
 .vscode
 .buildconfig
+.mypy_cache
 
 # Conan
 conanbuildinfo.pri
@@ -22,6 +23,7 @@ graph_info.json
 
 # RPM
 *.list
+/rpm/*.spec.*
 
 # Build dirs
 /build*

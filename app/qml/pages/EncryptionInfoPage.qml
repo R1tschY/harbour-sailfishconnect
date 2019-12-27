@@ -23,7 +23,7 @@ import SailfishConnect.Api 0.7
 Page {
     id: page
 
-    property Device device
+    property var device
 
     allowedOrientations: Orientation.All
 
@@ -42,7 +42,7 @@ Page {
             }
 
             Label {
-                text: device.encryptionInfo()
+                text: device ? device.encryptionInfo() : ""
                 color: Theme.highlightColor
                 wrapMode: Text.Wrap
                 textFormat: Text.PlainText

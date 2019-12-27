@@ -25,6 +25,8 @@ public:
     Q_SCRIPTABLE void rejectPairing() {
         checkForDbusError(DeviceDbusInterface::rejectPairing());
     }
+
+    Q_SCRIPTABLE QString encryptionInfo();
 };
 
 class DaemonApi : public DaemonDbusInterface {

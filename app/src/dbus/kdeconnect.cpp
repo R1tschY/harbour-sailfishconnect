@@ -20,6 +20,19 @@ void checkForDbusError(const QDBusPendingCall& async) {
         });
 }
 
+QString DeviceApi::encryptionInfo() {
+    auto reply = DeviceDbusInterface::encryptionInfo();
+    reply.waitForFinished();
+    if (!reply.isValid()) {
+        qCWarning(logger) 
+            << "Getting encryptionInfo failed" 
+            << reply.error();
+        return QString();
+    } else {
+        return reply.value();
+    }
+}
+
 QString DaemonApi::announcedName() {
     auto reply = DaemonDbusInterface::announcedName();
     reply.waitForFinished();

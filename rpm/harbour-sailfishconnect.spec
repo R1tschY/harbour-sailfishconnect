@@ -51,22 +51,27 @@ SailfishOS client for KDE-Connect
 VENV=$HOME/.venv-conan-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
 
+# create virtualenv and install conan
+if [ ! -f "$VENV/bin/conan" ] ; then
+
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then
 pip3 install --no-warn-script-location --user virtualenv
 fi
 
-# create virtualenv and install conan
-if [ ! -f "$VENV/bin/conan" ] ; then
 ~/.local/bin/virtualenv --python=python3 "$VENV"
 source "$VENV/bin/activate"
 pip install conan
+
 else
+
 source "$VENV/bin/activate"
+
 fi
 
 # speed up conan remote add
 if ! grep -sq sailfishos ~/.conan/remotes.json ; then
+conan remote remove conan-center
 conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
 fi
 

@@ -443,12 +443,12 @@
         <translation>Ajustes</translation>
     </message>
     <message>
-        <source>Run as service</source>
-        <translation>Ejecutar como servicio</translation>
-    </message>
-    <message>
         <source>Application starts at system start and runs in background.</source>
         <translation>La aplicación comienza en el inicio del sistema y se ejecuta en segundo plano.</translation>
+    </message>
+    <message>
+        <source>Run as background service</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

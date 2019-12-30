@@ -42,7 +42,7 @@ Page {
 
             TextSwitch {
                 id: runInBackground
-                text: qsTr("Run as service")
+                text: qsTr("Run as background service")
                 description:
                     qsTr("Application starts at system start and runs in " +
                          "background.")

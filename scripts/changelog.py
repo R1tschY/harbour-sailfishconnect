@@ -124,7 +124,7 @@ COMMANDS = {"release": release}
 
 def main():
     argparser = argparse.ArgumentParser(description="Edit changelog")
-    argparser.add_argument("command", help="One of " + ", ".join(COMMANDS.keys()))
+    argparser.add_argument("command", choices=COMMANDS.keys(), help="One of " + ", ".join(COMMANDS.keys()))
     argparser.add_argument("args", nargs=argparse.REMAINDER)
     args = argparser.parse_args()
 

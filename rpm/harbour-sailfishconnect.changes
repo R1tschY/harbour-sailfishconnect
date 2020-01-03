@@ -1,7 +1,7 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Mon Dec 30 2019 Richard Liebscher <r1tschy@posteo.de> 0.5-1
+* Fri Jan  3 2020 Richard Liebscher <r1tschy@posteo.de> 0.5-1
 - Added Contacts plugin.
 - Resolve Phonenumbers to contact names in telephony plugin.
 - Starts now at system start as systemd user service when in background mode

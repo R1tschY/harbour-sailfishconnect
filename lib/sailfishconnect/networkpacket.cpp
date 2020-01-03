@@ -73,31 +73,16 @@ void NetworkPacket::createIdentityPacket(KdeConnectConfig* config, NetworkPacket
     //qCDebug(coreLogger) << "createIdentityPacket" << np->serialize();
 }
 
-template<class T>
-QVariantMap qobject2qvariant(const T* object)
-{
-    QVariantMap map;
-    auto metaObject = T::staticMetaObject;
-    for(int i = metaObject.propertyOffset(); i < metaObject.propertyCount(); ++i) {
-        QMetaProperty prop = metaObject.property(i);
-        map.insert(QString::fromLatin1(prop.name()), prop.readOnGadget(object));
-    }
-
-    return map;
-}
-
 QByteArray NetworkPacket::serialize() const
 {
     //Object -> QVariant
-    //QVariantMap variant;
-    //variant["id"] = mId;
-    //variant["type"] = mType;
-    //variant["body"] = mBody;
-    QVariantMap variant = qobject2qvariant(this);
+    QVariantMap variant;
+    variant["id"] = m_id;
+    variant["type"] = m_type;
+    variant["body"] = m_body;
 
     if (hasPayload()) {
-        qCDebug(coreLogger) << "Serializing payloadTransferInfo";
-        variant[QStringLiteral("payloadSize")] = payloadSize();
+        variant[QStringLiteral("payloadSize")] = m_payloadSize;
         variant[QStringLiteral("payloadTransferInfo")] = m_payloadTransferInfo;
     }
 

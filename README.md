@@ -85,7 +85,6 @@ MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control wit
 
 ## Known Issues
 
-* SendNotifications: GSConnect does not show some of the notifications
 * LAN: A connection through USB-Ethernet and develeper mode is not possible.
 * LAN: Sometimes link gets destroyed right after first connection
    * Symptom: No connection to other device after app start, but connection is possible.

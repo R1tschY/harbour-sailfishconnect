@@ -525,6 +525,8 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
     if (hints.value(QStringLiteral("x-sailfishconnect-hide"), false).toBool())
         return;
 
+    // qCDebug(logger) << "Notification hints:" << hints << "Actions:" << actions;
+
     auto* config = m_plugin->config();
 
     NotifyingApplication app;

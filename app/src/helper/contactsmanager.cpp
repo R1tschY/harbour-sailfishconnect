@@ -97,8 +97,8 @@ QMap<QString, QString> ContactsManager::exportVCards(const QStringList& ids, con
 
     QSqlQuery dataQuery(m_db);
     if (!dataQuery.exec(QStringLiteral(
-            "SELECT contactId, modified, displayLabel, firstName, lastName "
-            "FROM Contacts"))) {
+            "SELECT contactId, modified, displayLabel, firstName, lastName"
+            " FROM Contacts"))) {
         qCCritical(logger) << "Getting contact details failed:"
                            << dataQuery.lastError().text();
         return {};
@@ -140,8 +140,8 @@ QString ContactsManager::lookUpName(const QString& phoneNumber)
     QSqlQuery dataQuery(m_db);
     dataQuery.prepare(QStringLiteral(
         "SELECT displayLabel FROM Contacts"
-        "JOIN Phonenumbers ON Phonenumbers.contactId == Contacts.contactId"
-        "WHERE Phonenumbers.phoneNumber == ?"));
+        " JOIN Phonenumbers ON Phonenumbers.contactId == Contacts.contactId"
+        " WHERE Phonenumbers.phoneNumber == ?"));
     dataQuery.bindValue(0, phoneNumber);
 
     if (!dataQuery.exec()) {

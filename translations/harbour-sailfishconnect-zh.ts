@@ -289,11 +289,11 @@
     <name>SailfishConnect::ContactsPluginFactory</name>
     <message>
         <source>Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>联系人</translation>
     </message>
     <message>
         <source>Share contacts.</source>
-        <translation type="unfinished"></translation>
+        <translation>分享联系人。</translation>
     </message>
 </context>
 <context>
@@ -445,11 +445,11 @@
     </message>
     <message>
         <source>Application starts at system start and runs in background.</source>
-        <translation type="unfinished"></translation>
+        <translation>系统启动之后，启动软件并保持后台运行。</translation>
     </message>
     <message>
         <source>Run as background service</source>
-        <translation type="unfinished"></translation>
+        <translation>作为后台服务运行</translation>
     </message>
 </context>
 <context>

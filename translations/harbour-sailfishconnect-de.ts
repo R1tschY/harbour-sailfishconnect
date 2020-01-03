@@ -449,7 +449,7 @@
     </message>
     <message>
         <source>Run as background service</source>
-        <translation type="unfinished"></translation>
+        <translation>Laufe als Hintergrunddienst</translation>
     </message>
 </context>
 <context>

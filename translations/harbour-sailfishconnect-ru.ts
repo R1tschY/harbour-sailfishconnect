@@ -157,7 +157,7 @@
     </message>
     <message>
         <source>Waiting for accepted pairing ...</source>
-        <translation>Ожидание подтверждения спаривания ...</translation>
+        <translation>Ожидание подтверждения связывания ...</translation>
     </message>
 </context>
 <context>
@@ -289,11 +289,11 @@
     <name>SailfishConnect::ContactsPluginFactory</name>
     <message>
         <source>Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Контакты</translation>
     </message>
     <message>
         <source>Share contacts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Поделиться контактами</translation>
     </message>
 </context>
 <context>
@@ -335,7 +335,7 @@
     </message>
     <message>
         <source>Could not open file for writing: %1</source>
-        <translation>Невозможно открыть файл на запись: %1</translation>
+        <translation>Невозможно открыть для записи файл: %1</translation>
     </message>
     <message>
         <source>Receiving</source>
@@ -408,7 +408,7 @@
     <name>SailfishConnect::TelepathyPluginFactory</name>
     <message>
         <source>Send SMS</source>
-        <translation>Отправка СМС</translation>
+        <translation>Отправить СМС</translation>
     </message>
     <message>
         <source>Allow sending of text messages.</source>
@@ -445,11 +445,11 @@
     </message>
     <message>
         <source>Application starts at system start and runs in background.</source>
-        <translation type="unfinished"></translation>
+        <translation>Программа будет запускаться во время загрузки системы и работать в фоновом режиме.</translation>
     </message>
     <message>
         <source>Run as background service</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускать в качестве системной службы</translation>
     </message>
 </context>
 <context>

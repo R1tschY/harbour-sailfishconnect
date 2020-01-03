@@ -128,7 +128,6 @@ Page {
         program: "xdg-open"
 
         onFinished: {
-            console.log("onFinished")
             if (!xdgOpen.normalExit || xdgOpen.exitCode !== 0) {
                 xdgOpenNotification.previewSummary = qsTr("Failed to open file")
                 if (xdgOpen.normalExit) {

@@ -52,14 +52,12 @@ public:
 
 private:
     QEventLoopLocker m_eventLoopLock;
-    QSet<QString> m_connectedDevices;
     BackgroundActivity m_backgroundActivity;
     Notification notification_;
     QQmlEngine* m_qmlEngine = nullptr;
     ContactsManager* m_contacts = nullptr;
 
-    void onDeviceAdded(const QString &id);
-    void onDeviceMayConnectedChanged();
+    void onDeviceVisibilityChanged();
     void onWakeUp();
 };
 

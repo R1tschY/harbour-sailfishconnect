@@ -85,6 +85,7 @@ MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control wit
 
 ## Known Issues
 
+* RemoteKeyboard: Special keys (except modifiers) are interpreted as text by GSConnect
 * LAN: A connection through USB-Ethernet and develeper mode is not possible.
 * LAN: Sometimes link gets destroyed right after first connection
    * Symptom: No connection to other device after app start, but connection is possible.

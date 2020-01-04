@@ -448,7 +448,7 @@
     </message>
     <message>
         <source>Run as background service</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo demonio</translation>
     </message>
 </context>
 <context>

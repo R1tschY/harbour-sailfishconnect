@@ -33,6 +33,7 @@ BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  pkgconfig(keepalive)
 BuildRequires:  cmake
 BuildRequires:  python3-devel
+BuildRequires:  python3-pip
 BuildRequires:  desktop-file-utils
 
 %description

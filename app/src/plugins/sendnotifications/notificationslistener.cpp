@@ -132,7 +132,7 @@ void NotificationsListenerThread::handleMessage(
     switch (dbus_message_get_type (message))
     {
       case DBUS_MESSAGE_TYPE_METHOD_CALL:
-        qCDebug(logger) << "DBUS_MESSAGE_TYPE_METHOD_CALL";
+//        qCDebug(logger) << "DBUS_MESSAGE_TYPE_METHOD_CALL";
         break;
       case DBUS_MESSAGE_TYPE_METHOD_RETURN:
         qCDebug(logger) << "DBUS_MESSAGE_TYPE_METHOD_RETURN";
@@ -519,11 +519,16 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
 //            << "body=" << body
 //            << "actions=" << actions
 //            << "hints=" << hints
-//            << "timeout=" << timeout;
+//            << "timeout=" << timeout
+//            << "owner=" << hints.value(
+//                   QStringLiteral("x-nemo-owner")).toString();
 
+#ifdef SAILFISHOS
     // skip our own notifications
-    if (hints.value(QStringLiteral("x-sailfishconnect-hide"), false).toBool())
+    if (hints.value(QStringLiteral("x-nemo-owner")).toString()
+            == QStringLiteral("harbour-sailfishconnect"))
         return;
+#endif
 
     // qCDebug(logger) << "Notification hints:" << hints << "Actions:" << actions;
 

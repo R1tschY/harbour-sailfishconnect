@@ -37,6 +37,7 @@ INCLUDEPATH += $$PWD/src
 SOURCES += \
     src/appdaemon.cpp \
     src/helper/contactsmanager.cpp \
+    src/helper/jobsnotificator.cpp \
     src/plugins/contacts/contactsplugin.cpp \
     src/helper/vcardbuilder.cpp \
     src/models/devicelistmodel.cpp \
@@ -99,6 +100,7 @@ DISTFILES += \
 HEADERS += \
     src/appdaemon.h \
     src/helper/contactsmanager.h \
+    src/helper/jobsnotificator.h \
     src/plugins/contacts/contactsplugin.h \
     src/helper/vcardbuilder.h \
     src/models/devicelistmodel.h \

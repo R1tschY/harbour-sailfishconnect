@@ -45,11 +45,6 @@ CopyJob::CopyJob(const QString& deviceId,
     connect(&m_timer, &QTimer::timeout, this, [this]{
         auto btw = bytesToWrite();
         setProcessedAmount(KJob::Bytes, m_writtenBytes - btw);
-        qCDebug(logger)
-                << time(nullptr)
-                << m_source->bytesAvailable()
-                << m_bufferSize
-                << btw;
 
         if (m_destination->isSequential()) {
             poll();

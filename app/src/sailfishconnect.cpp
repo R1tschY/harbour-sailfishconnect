@@ -47,6 +47,7 @@
 #include "ui.h"
 #include "js/qmlregister.h"
 #include "dbus/ofono.h"
+#include "helper/jobsnotificator.h"
 
 namespace SailfishConnect {
 
@@ -190,6 +191,8 @@ int main(int argc, char *argv[])
     UI ui(&keyboardLayoutProvider, options.daemonMode);
     if (!options.daemonMode)
         ui.showMainWindow();
+
+    JobsNotificator jobNotificator(Daemon::instance()->jobManager());
 
     return app->exec();
 }

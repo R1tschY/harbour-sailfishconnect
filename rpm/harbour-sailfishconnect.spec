@@ -33,7 +33,9 @@ BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  pkgconfig(keepalive)
 BuildRequires:  cmake
 BuildRequires:  python3-devel
+%if "%(grep 'VERSION_ID' /etc/os-release | cut -d= -f2)" == "3.2.1.20"
 BuildRequires:  python3-pip
+%endif
 BuildRequires:  desktop-file-utils
 
 %description

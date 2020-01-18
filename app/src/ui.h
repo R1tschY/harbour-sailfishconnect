@@ -95,7 +95,7 @@ private slots:
 private:
     QQuickView* m_view = nullptr;
     std::unique_ptr<AppDaemon> m_daemon;
-    DaemonApi* m_daemonIf;
+    DaemonApi* m_daemonApi;
     //KeyboardLayoutProvider* m_keyboardLayoutProvider;
 
     QSettings m_settings;

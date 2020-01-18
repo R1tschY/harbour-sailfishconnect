@@ -45,13 +45,13 @@ const QString UI::DBUS_PATH = QStringLiteral("/org/harbour/SailfishConnect/UI");
 
 #ifndef BUILD_FOR_HARBOUR
 const QString SERVICE_FILE_LOCATION =
-        "/usr/share/" % PACKAGE_NAME % "/" % PACKAGE_NAME % ".service";
+        QStringLiteral("/usr/share/harbour-sailfishconnect/harbour-sailfishconnect.service");
 #endif
 
 UI::UI(bool daemonMode, QObject *parent)
     : QObject(parent)
     , m_daemon(new AppDaemon())
-    , m_daemonIf(new DaemonApi(this))
+    , m_daemonApi(new DaemonApi(this))
     , m_daemonMode(daemonMode)
 {
     m_settings.beginGroup(QStringLiteral("UI"));
@@ -88,7 +88,7 @@ void UI::showMainWindow()
         m_settings.value("runInBackground", m_runInBackground).toBool());
 
     // view
-    m_view->rootContext()->setContextProperty("daemon", m_daemon.get());
+    m_view->rootContext()->setContextProperty("daemon", m_daemonApi);
     m_view->rootContext()->setContextProperty("ui", this);
     // m_view->rootContext()->setContextProperty("keyboardLayout", m_keyboardLayoutProvider);
     m_view->setSource(SailfishApp::pathToMainQml());

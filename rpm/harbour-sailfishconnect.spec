@@ -29,6 +29,7 @@ BuildRequires:  pkgconfig(contextkit-statefs)
 BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  cmake
 BuildRequires:  ninja
+BuildRequires:  gettext
 BuildRequires:  python3-devel
 BuildRequires:  desktop-file-utils
 
@@ -74,8 +75,8 @@ fi
 cd rpmbuilddir
 conan install .. --profile=../dev/profiles/%{_target_cpu}
 cmake \
--DCMAKE_BUILD_TYPE=RelWithDebInfo \
--DBUILD_SHARED_LIBS=ON \
+-DCMAKE_BUILD_TYPE=Debug \
+-DBUILD_SHARED_LIBS=OFF \
 -DCMAKE_INSTALL_PREFIX=/usr \
 -DCMAKE_VERBOSE_MAKEFILE=ON \
 -DSAILFISHOS=ON \

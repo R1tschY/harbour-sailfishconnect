@@ -8,9 +8,9 @@ KF5Config/5.36.0@r1tschy/stable
 Qca-qt5/2.2.1@r1tschy/stable
 
 [options]
-KF5CoreAddons:shared=True
-KF5I18n:shared=True
-KF5Config:shared=True
+KF5CoreAddons:shared=False
+KF5I18n:shared=False
+KF5Config:shared=False
 
 Qca-qt5:shared=False
 

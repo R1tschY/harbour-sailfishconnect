@@ -10,36 +10,52 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(FindPkgConfig)
 pkg_search_module(SAILFISH sailfishapp REQUIRED)
 
+# plugins
+include(Plugins.cmake)
+add_static_plugins_lib(
+  NAME sailfishconnectplugins
+  PLUGINS
+    Ping
+    Battery
+    RemoteCommands
+    RemoteControl
+    RemoteSystemVolume
+    Clipboard
+    Presenter
+)
+
 # exe
 set(CONFIG_SOURCE src/sailfishconnect-config.cpp)
 configure_file(
     ${CONFIG_SOURCE}.in ${CONFIG_SOURCE}
     @ONLY
 )
-file(GLOB_RECURSE SailfishConnectApp_SOURCES "*.cpp")
-add_executable(SailfishConnectApp ${SailfishConnectApp_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_SOURCE})
+file(GLOB_RECURSE sailfishconnectapp_SOURCES "*.cpp")
+add_executable(sailfishconnectapp ${sailfishconnectapp_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_SOURCE})
 
-set_target_properties(SailfishConnectApp
+set_target_properties(sailfishconnectapp
   PROPERTIES
   OUTPUT_NAME ${OUTPUT_NAME}
 )
 
-target_include_directories(SailfishConnectApp 
+target_include_directories(sailfishconnectapp 
   PRIVATE ${SAILFISH_INCLUDE_DIRS}
 )
 
-target_link_libraries(SailfishConnectApp
+target_link_libraries(sailfishconnectapp
   Qt5::Core
   Qt5::Quick
   Qt5::DBus
   Qt5::Sql
+  ${SAILFISH_LDFLAGS}
+
   kdeconnectcore
   kdeconnectinterfaces
-  ${SAILFISH_LDFLAGS}
+  sailfishconnectplugins
 )
 
 # Install
-install(TARGETS SailfishConnectApp
+install(TARGETS sailfishconnectapp
     RUNTIME DESTINATION bin
 )
 install(DIRECTORY qml

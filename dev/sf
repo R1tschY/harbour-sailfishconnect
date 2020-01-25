@@ -95,7 +95,7 @@ class SailfishSDK:
     errcode, _stdout, stderr = await run_cmd(
       "VBoxManage", "startvm", "Sailfish OS Build Engine", "--type", "headless")
     if errcode != 0:
-      raise BuildEnvStartError("Failed to start VM", stderr.encode())
+      raise BuildEnvStartError("Failed to start VM", stderr.decode())
 
     await asyncio.sleep(1.0)
 

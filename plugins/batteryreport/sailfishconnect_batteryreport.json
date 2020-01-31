@@ -1,0 +1,27 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "r1tschy@posteo.de",
+                "Name": "Richard Liebscher",
+                "Name[x-test]": "xxRichard Liebscherxx"
+            }
+        ],
+        "Description": "Share battery charge state",
+        "EnabledByDefault": true,
+        "Icon": "preferences-system-power-management",
+        "Id": "sailfishconnect_battery",
+        "License": "GPL",
+        "Name": "Battery report",
+        "ServiceTypes": [
+            "KdeConnect/Plugin"
+        ],
+        "Version": "0.1"
+    },
+    "X-KdeConnect-OutgoingPacketType": [
+        "kdeconnect.battery"
+    ],
+    "X-KdeConnect-SupportedPacketType": [
+        "kdeconnect.battery.request"
+    ]
+}

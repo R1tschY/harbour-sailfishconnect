@@ -13,7 +13,8 @@ pkg_search_module(SAILFISH sailfishapp REQUIRED)
 # plugins
 include(Plugins.cmake)
 add_static_plugins_lib(
-  NAME sailfishconnectplugins
+  NAME kdeconnectplugins
+  PREFIX kdeconnect
   PLUGINS
     Ping
     Battery
@@ -22,6 +23,12 @@ add_static_plugins_lib(
     RemoteSystemVolume
     Clipboard
     Presenter
+)
+add_static_plugins_lib(
+  NAME sailfishconnectplugins
+  PREFIX sailfishconnect
+  PLUGINS
+    BatteryReport
 )
 
 # exe
@@ -51,6 +58,7 @@ target_link_libraries(sailfishconnectapp
 
   kdeconnectcore
   kdeconnectinterfaces
+  kdeconnectplugins
   sailfishconnectplugins
 )
 

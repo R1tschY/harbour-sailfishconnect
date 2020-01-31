@@ -28,9 +28,22 @@ add_definitions(-DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050600
 if (NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   add_definitions(-DQT_NO_DEBUG_OUTPUT -DQT_NO_DEBUG)
 endif()
+add_definitions(-DSAILFISHOS)
+
+# KDE Connect
+add_subdirectory(kdeconnect)
+
+# Sailfish Connect
+find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+
+find_package(Qt5 REQUIRED COMPONENTS DBus Network)
+find_package(KF5 REQUIRED COMPONENTS I18n CoreAddons Config)
+include(KDECompilerSettings NO_POLICY_SCOPE)
+include(KDECMakeSettings)
 
 add_subdirectory(app)
-add_subdirectory(kdeconnect)
+add_subdirectory(plugins)
 #add_subdirectory(tests)
 
 # Install libraries

@@ -32,6 +32,7 @@ Humanize::Humanize(QObject *parent) : QObject(parent)
 QString Humanize::bytes(qint64 bytes)
 {
     // return humanizeBytes(bytes);
+    return QString();
 }
 
 void Humanize::registerType()

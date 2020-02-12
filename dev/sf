@@ -203,8 +203,6 @@ class SailfishSDK:
         pass
 
 
-
-
 def get_sdk_install_folder():
   mersdk_xml = os.path.expanduser("~/.config/SailfishOS-SDK/qtcreator/mersdk.xml")
   root = ET.parse(mersdk_xml)
@@ -292,11 +290,20 @@ async def device(sdk: SailfishSDK, cmdln) -> int:
   parser = argparse.ArgumentParser()
   parser.add_argument(
     "--device", "-d", help="Sailfish target device", required=True)
+  parser.add_argument(
+    "--qmllive", "-l", help="Start for QmlLive", action="store_true")
   parser.add_argument("cmd", nargs=argparse.REMAINDER)
   args = parser.parse_args(cmdln)
 
+  if args.qmllive:
+    args.cmd.insert(0, "qmlliveruntime-sailfish")
+    args.cmd.insert(1, "--")
+
+  cmd = [
+    "bash", "--login", "-c", " ".join([shlex.quote(arg) for arg in args.cmd])
+  ]
   return await sdk.run_on_device(
-    args.cmd, 
+    cmd, 
     terminal=True,
     device=args.device
   )

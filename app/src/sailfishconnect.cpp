@@ -112,20 +112,20 @@ void registerQmlTypes() {
 
     QString uncreatableError =
         QStringLiteral("Instances are only creatable from C++.");
+        
+    qmlRegisterUncreatableType<DaemonApi>(
+                "SailfishConnect.Api", 0, 7, "DaemonApi", uncreatableError);
+
     qRegisterMetaType<DeviceApi*>("DeviceApi*");
     qmlRegisterUncreatableType<DeviceApi>(
                 "SailfishConnect.Api", 0, 7, "DeviceApi", uncreatableError);
-    qmlRegisterUncreatableType<DaemonApi>(
-                "SailfishConnect.Api", 0, 7, "DaemonApi", uncreatableError);
+
+    qRegisterMetaType<RemoteControlApi*>("RemoteControlApi*");
+    qmlRegisterUncreatableType<RemoteControlApi>(
+                "SailfishConnect.Api", 0, 7, "RemoteControlApi", uncreatableError);
+
     qmlRegisterType<DBusServiceWatcher>(
                 "SailfishConnect.Api", 0, 7, "DBusServiceWatcher");
-
-    // qmlRegisterUncreatableType<MprisPlayer>(
-    //             "SailfishConnect.Mpris", 0, 3, "MprisPlayer",
-    //             QStringLiteral("not intented to be created from users"));
-    // qmlRegisterUncreatableType<TouchpadPlugin>(
-    //             "SailfishConnect.RemoteControl", 0, 3, "RemoteControlPlugin",
-    //             QStringLiteral("not intented to be created from users"));    
 
     QmlJs::registerTypes();
 }

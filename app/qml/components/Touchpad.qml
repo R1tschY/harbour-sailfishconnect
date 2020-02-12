@@ -20,10 +20,10 @@ import Sailfish.Silica 1.0
 import SailfishConnect.Api 0.7
 
 IconListItem {
-    title: qsTr("Touchpad")
-    source: "image://theme/icon-m-gesture"
-    visible: _device && _device.loadedPlugins.indexOf(
-                 "SailfishConnect::RemoteControlPlugin") >= 0
+    title: qsTr("Open touchpad")
+    source: "image://theme/icon-m-gesture"  
+    visible: _device && _device.loadedPlugins().indexOf(
+        "kdeconnect_remotecontrol") >= 0
 
    onClicked:
        pageStack.push(

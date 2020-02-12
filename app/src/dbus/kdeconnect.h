@@ -21,6 +21,33 @@ namespace SailfishConnect {
 
 void checkForDbusError(const QDBusPendingCall& async);
 
+// template<typename T>
+// void checkForDbusError(const QDBusPendingReply<T>& reply) {
+//     reply.waitForFinished();
+//     if (!reply.isValid()) {
+//         qCWarning(api_logger) 
+//             << "Getting announcedName failed" 
+//             << reply.error();
+//         return QString();
+//     } else {
+//         return reply.value();
+//     }
+// }
+
+class RemoteControlApi : public RemoteControlDbusInterface {
+    Q_OBJECT
+public:
+    using RemoteControlDbusInterface::RemoteControlDbusInterface;
+
+    Q_SCRIPTABLE void moveCursor(const QPoint &p) {
+        checkForDbusError(RemoteControlDbusInterface::moveCursor(p));
+    }
+
+    Q_SCRIPTABLE void sendCommand(const QString &name, bool val) {
+        checkForDbusError(RemoteControlDbusInterface::sendCommand(name, val));
+    }
+};
+
 
 class DeviceApi : public DeviceDbusInterface {
     Q_OBJECT
@@ -43,7 +70,23 @@ public:
         checkForDbusError(DeviceDbusInterface::rejectPairing());
     }
 
-    Q_SCRIPTABLE QString encryptionInfo();
+    Q_SCRIPTABLE QString encryptionInfo() {
+        return DeviceDbusInterface::encryptionInfo();
+    }
+
+    Q_SCRIPTABLE QStringList loadedPlugins() {
+        return DeviceDbusInterface::loadedPlugins();
+    }
+
+    Q_SCRIPTABLE bool isPluginEnabled(const QString& pluginId) {
+        return DeviceDbusInterface::isPluginEnabled(pluginId);
+    }
+
+    // plugins
+
+    Q_SCRIPTABLE RemoteControlApi* getRemoteControl() {
+        return new RemoteControlApi(id());
+    }
 };
 
 class DaemonApi : public DaemonDbusInterface {
@@ -51,7 +94,9 @@ class DaemonApi : public DaemonDbusInterface {
 public:
     using DaemonDbusInterface::DaemonDbusInterface;
 
-    Q_SCRIPTABLE QString announcedName();
+    Q_SCRIPTABLE QString announcedName() {
+        return DaemonDbusInterface::announcedName();
+    }
 
     Q_SCRIPTABLE void setAnnouncedName(const QString& value) {
         checkForDbusError(DaemonDbusInterface::setAnnouncedName(value));

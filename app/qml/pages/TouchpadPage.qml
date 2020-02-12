@@ -37,7 +37,6 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
 import SailfishConnect.Api 0.7
-import SailfishConnect.RemoteControl 0.3
 
 Page {
     id: page
@@ -45,8 +44,7 @@ Page {
     allowedOrientations: Orientation.All
 
     property var device
-    property var plugin:
-        device.plugin("SailfishConnect::RemoteControlPlugin")
+    property var plugin: device.getRemoteControl()
     property int lastX: 0xDEAD
     property int lastY: 0xDEAD
     property bool moved: false
@@ -84,7 +82,7 @@ Page {
             if (pressed) {
                 moved = true
                 if (lastX !== 0xDEAD && plugin !== null) {
-                    plugin.move(mouse.x - lastX, mouse.y - lastY)
+                    plugin.moveCursor(Qt.point(mouse.x - lastX, mouse.y - lastY))
                 }
 
                 lastX = mouse.x
@@ -119,11 +117,11 @@ Page {
 
         onWheel: {
             // FIXME: is ignored
-            if (plugin !== null) {
-                plugin.scroll(
-                    wheel.angleDelta.x / 120,
-                    wheel.angleDelta.y / 120)
-            }
+            // if (plugin !== null) {
+            //     plugin.scroll(
+            //         wheel.angleDelta.x / 120,
+            //         wheel.angleDelta.y / 120)
+            // }
         }
     }
 

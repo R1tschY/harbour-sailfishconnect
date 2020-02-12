@@ -166,9 +166,10 @@ Page {
                 SectionHeader {
                     text: qsTr("Actions")
                 }
+                Touchpad { id: touchpad }
+                
                 /*ShareUi { id: shareUi }
                 ClipboardUi { id: clipboardUi }
-                Touchpad { id: touchpad }
                 RemoteKeyboard { id: remoteKeyboard}
 
                 MprisUi { id: mprisUi }*/

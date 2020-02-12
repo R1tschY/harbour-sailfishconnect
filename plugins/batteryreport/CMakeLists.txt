@@ -12,5 +12,5 @@ target_link_libraries(sailfishconnect_batteryreport
     KF5::I18n
 )
 target_include_directories(sailfishconnect_batteryreport
-    SYSTEM PRIVATE ${INCLUDE_DIRS}
+    SYSTEM PRIVATE ${ContextkitStatefs_INCLUDE_DIRS}
 )

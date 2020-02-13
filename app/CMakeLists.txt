@@ -32,8 +32,8 @@ add_static_plugins_lib(
 )
 
 # plugin clients
-generate_plugin_client(
-  sailfishconnect_PLUGIN_CLIENTS ${PROJECT_SOURCE_DIR}/plugins/clipboard/clipboardplugin.h clipboardpluginclient)
+#generate_plugin_client(
+#  sailfishconnect_PLUGIN_CLIENTS ${PROJECT_SOURCE_DIR}/plugins/clipboard/clipboardplugin.h clipboardpluginclient)
 
 # exe
 set(CONFIG_SOURCE src/sailfishconnect-config.cpp)

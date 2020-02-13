@@ -167,9 +167,9 @@ Page {
                     text: qsTr("Actions")
                 }
                 Touchpad { id: touchpad }
+                ClipboardUi { id: clipboardUi }
                 
                 /*ShareUi { id: shareUi }
-                ClipboardUi { id: clipboardUi }
                 RemoteKeyboard { id: remoteKeyboard}
 
                 MprisUi { id: mprisUi }*/

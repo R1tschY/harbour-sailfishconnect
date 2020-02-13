@@ -22,9 +22,9 @@ import SailfishConnect.Api 0.7
 IconListItem {
     title: qsTr("Upload clipboard text")
     source: "image://theme/icon-m-clipboard"
-    visible: _device && _device.loadedPlugins.indexOf(
-                 "SailfishConnect::ClipboardPlugin") >= 0
+    visible: _device && _device.loadedPlugins().indexOf(
+        "sailfishconnect_clipboard") >= 0   
 
     onClicked:
-        _device.plugin("SailfishConnect::ClipboardPlugin").pushClipboard()
+        _device.pluginCall("sailfishconnect_clipboard", "pushClipboard")
 }

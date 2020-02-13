@@ -21,7 +21,6 @@ add_static_plugins_lib(
     RemoteCommands
     RemoteControl
     RemoteSystemVolume
-    Clipboard
     Presenter
 )
 add_static_plugins_lib(
@@ -29,7 +28,12 @@ add_static_plugins_lib(
   PREFIX sailfishconnect
   PLUGINS
     BatteryReport
+    Clipboard
 )
+
+# plugin clients
+generate_plugin_client(
+  sailfishconnect_PLUGIN_CLIENTS ${PROJECT_SOURCE_DIR}/plugins/clipboard/clipboardplugin.h clipboardpluginclient)
 
 # exe
 set(CONFIG_SOURCE src/sailfishconnect-config.cpp)
@@ -38,7 +42,10 @@ configure_file(
     @ONLY
 )
 file(GLOB_RECURSE sailfishconnectapp_SOURCES "*.cpp")
-add_executable(sailfishconnectapp ${sailfishconnectapp_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_SOURCE})
+add_executable(sailfishconnectapp 
+  ${sailfishconnectapp_SOURCES}
+  ${sailfishconnect_PLUGIN_CLIENTS}
+  ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_SOURCE})
 
 set_target_properties(sailfishconnectapp
   PROPERTIES

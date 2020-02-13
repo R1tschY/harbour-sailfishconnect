@@ -31,3 +31,16 @@ function(add_static_plugins_lib)
     target_link_libraries("${add_static_plugins_lib_NAME}" PRIVATE ${targets})
     target_sources("${add_static_plugins_lib_NAME}" INTERFACE "${source_path}")
 endfunction()
+
+
+function(generate_plugin_client src_var source_h output_h)
+    set(xml_file ${CMAKE_CURRENT_BINARY_DIR}/${output_h}.xml)
+    qt5_generate_dbus_interface(${source_h} ${xml_file})
+
+    set_source_files_properties(${xml_file} PROPERTIES NO_NAMESPACE true)
+
+    qt5_add_dbus_interface(_source ${xml_file} ${output_h})
+    set_property(SOURCE ${_source} PROPERTY SKIP_AUTOMOC ON)
+    set_property(SOURCE ${output_h} PROPERTY SKIP_AUTOMOC ON)
+    set(${src_var} ${${src_var}} ${_source} PARENT_SCOPE)
+endfunction()

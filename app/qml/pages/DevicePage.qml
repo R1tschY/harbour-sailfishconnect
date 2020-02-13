@@ -195,7 +195,7 @@ Page {
                 text: qsTr("Plugins")
                 onClicked: pageStack.push(
                                Qt.resolvedUrl("DevicePluginsPage.qml"),
-                               { device: deviceId })
+                               { device: _device })
             }
 
             MenuItem {

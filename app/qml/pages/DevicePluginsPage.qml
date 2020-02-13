@@ -18,18 +18,17 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import SailfishConnect.UI 0.3
+import SailfishConnect.Api 0.7
 
 
 Page {
     id: page
 
-    property string device
-    readonly property var _pluginIcons: pluginIcons()
-
-    function pluginIcons() {
-        return {
-            "kdeconnect_ping": "image://theme/icon-m-accept"
-        }
+    property var device
+    readonly property var _pluginIcons: {
+        "kdeconnect_ping": "image://theme/icon-m-accept",
+        "sailfishconnect_batteryreport": "image://theme/icon-m-battery",
+        "sailfishconnect_ping": "image://theme/icon-m-clipboard",
     }
 
     allowedOrientations: Orientation.All
@@ -39,9 +38,8 @@ Page {
         model: SortFilterModel {
             sortRole: "pluginName"
             filterMode: "none"
-            sourceModel: DevicePluginsModel {
-                deviceId: device
-            }
+            sourceModel: DevicePluginsModel { }
+            Component.onCompleted: sourceModel.device = device
         }
 
         anchors.fill: parent
@@ -57,7 +55,7 @@ Page {
             IconTextSwitch {
                 id: pluginSwitch
                 text: pluginName
-                icon.source: _pluginIcons[pluginId]
+                icon.source: _pluginIcons[pluginId] || ""
                 description: pluginDescription
                 onCheckedChanged: pluginEnabled = checked
 

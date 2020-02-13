@@ -22,18 +22,19 @@
 #include <QVector>
 #include <KPluginMetaData>
 
-class Device;
 
 namespace SailfishConnect {
+
+class DeviceApi;
 
 class DevicePluginsModel : public QAbstractListModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString deviceId
-               READ deviceId
-               WRITE setDeviceId
-               NOTIFY deviceIdChanged)
+    Q_PROPERTY(DeviceApi* device
+               READ device
+               WRITE setDevice
+               NOTIFY deviceChanged)
 
 public:
     enum ExtraRoles {
@@ -57,20 +58,19 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
-    QString deviceId();
-    void setDeviceId(const QString& value);
+    DeviceApi* device();
+    void setDevice(DeviceApi* value);
 
     QHash<int, QByteArray> roleNames() const override;
 
 signals:
-    void deviceIdChanged();
+    void deviceChanged();
 
 private:
-    Device* device_ = nullptr;
+    DeviceApi* device_ = nullptr;
 
     QVector<KPluginMetaData> m_plugins;
 
-    void setDevice(Device* value);
     void update();
 };
 

@@ -17,11 +17,11 @@ add_static_plugins_lib(
   PREFIX kdeconnect
   PLUGINS
     Ping
-    Battery
-    RemoteCommands
-    RemoteControl
-    RemoteSystemVolume
-    Presenter
+#    Battery
+#    RemoteCommands
+#    RemoteControl
+#    RemoteSystemVolume
+#    Presenter
 )
 add_static_plugins_lib(
   NAME sailfishconnectplugins

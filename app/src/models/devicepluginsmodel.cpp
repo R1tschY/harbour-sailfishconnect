@@ -18,25 +18,26 @@
 #include "devicepluginsmodel.h"
 
 #include <QLoggingCategory>
-#include <KPluginLoader>
+#include <QPluginLoader>
 
-#include <daemon.h>
-#include <device.h>
-#include <kdeconnectplugin.h>
-#include <pluginloader.h>
+#include "../dbus/kdeconnect.h"
 
 namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "SailfishConnect::DevicePluginsModel");
 
-static QString KDECONNECT_PLUGIN_DIR = 
-    QStringLiteral("/usr/share/harbour-sailfishconnect/lib/kdeconnect/");
-
 
 DevicePluginsModel::DevicePluginsModel(QObject* parent)
     : QAbstractListModel(parent)
-    , m_plugins(KPluginLoader::findPlugins(KDECONNECT_PLUGIN_DIR))
 {
+    const QVector<QStaticPlugin> staticPlugins = QPluginLoader::staticPlugins();
+    for (auto& staticPlugin : staticPlugins) {
+        QJsonObject jsonMetadata = staticPlugin.metaData().value(QStringLiteral("MetaData")).toObject();
+        KPluginMetaData metadata(jsonMetadata, QString());
+        if (metadata.serviceTypes().contains(QStringLiteral("KdeConnect/Plugin"))) {
+            m_plugins.append(metadata);
+        }
+    }
 }
 
 int DevicePluginsModel::rowCount(const QModelIndex& parent) const
@@ -61,7 +62,8 @@ QVariant DevicePluginsModel::data(const QModelIndex& index, int role) const
     case DescriptionRole:
         return metadata.description();
     case EnabledRole:
-        return device_->isPluginEnabled(metadata.pluginId());
+        // TODO: request enabled plugins only once
+        return device_ ? device_->isPluginEnabled(metadata.pluginId()) : false;
     case IconUrlRole:
         return metadata.iconName();
     }
@@ -72,7 +74,7 @@ QVariant DevicePluginsModel::data(const QModelIndex& index, int role) const
 bool DevicePluginsModel::setData(
     const QModelIndex& idx, const QVariant& value, int role)
 {
-    if (!idx.isValid() || idx.row() >= m_plugins.length())
+    if (!idx.isValid() || idx.row() >= m_plugins.length() || device_ == nullptr)
         return false;
 
     if (role == EnabledRole) {
@@ -104,17 +106,12 @@ QHash<int, QByteArray> DevicePluginsModel::roleNames() const
     return roles;
 }
 
-QString DevicePluginsModel::deviceId()
+DeviceApi* DevicePluginsModel::device()
 {
-    return (device_) ? device_->id() : QString();
+    return device_;
 }
 
-void DevicePluginsModel::setDeviceId(const QString& value)
-{
-    setDevice(Daemon::instance()->getDevice(value));
-}
-
-void DevicePluginsModel::setDevice(Device* value)
+void DevicePluginsModel::setDevice(DeviceApi* value)
 {
     beginResetModel();
 
@@ -125,13 +122,13 @@ void DevicePluginsModel::setDevice(Device* value)
     device_ = value;
 
     if (device_) {
-        connect(device_, &Device::destroyed,
+        connect(device_, &DeviceApi::destroyed,
             this, [&]() { setDevice(nullptr); });
     }
 
     endResetModel();
 
-    emit deviceIdChanged();
+    emit deviceChanged();
 }
 
 } // namespace SailfishConnect

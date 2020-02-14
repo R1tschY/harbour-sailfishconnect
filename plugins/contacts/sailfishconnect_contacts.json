@@ -1,0 +1,29 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "r1tschy@posteo.de",
+                "Name": "Richard Liebscher",
+                "Name[x-test]": "xxRichard Liebscherxx"
+            }
+        ],
+        "Description": "Share contacts",
+        "EnabledByDefault": true,
+        "Icon": null,
+        "Id": "sailfishconnect_contacts",
+        "License": "GPL",
+        "Name": "Contacts",
+        "ServiceTypes": [
+            "KdeConnect/Plugin"
+        ],
+        "Version": "0.1"
+    },
+    "X-KdeConnect-OutgoingPacketType": [
+        "kdeconnect.contacts.response_uids_timestamps",
+        "kdeconnect.contacts.response_vcards"
+    ],
+    "X-KdeConnect-SupportedPacketType": [
+        "kdeconnect.contacts.request_all_uids_timestamps", 
+        "kdeconnect.contacts.request_vcards_by_uid"
+    ]
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Richard Liebscher <richard.liebscher@gmail.com>.
+ * Copyright 2018 Richard Liebscher <richard.liebscher@gmail.com>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,27 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "vcardbuilder.h"
+#pragma once
 
-#include <QMetaObject>
-#include <QStringBuilder>
-#include "cpphelper.h"
+#include <core/kdeconnectplugin.h>
 
-namespace SailfishConnect {
-
-VCardBuilder::VCardBuilder()
+class ContactsPlugin : public KdeConnectPlugin
 {
-    m_vCard.append(QStringLiteral("BEGIN:VCARD\nVERSION:4.0\n"));
-}
+    Q_OBJECT
+public:
+    using KdeConnectPlugin::KdeConnectPlugin;
 
-void VCardBuilder::addRawProperty(const QString &name, const QString &rawValue)
-{
-    m_vCard.append(name % QChar(':') % rawValue % QChar('\n'));
-}
-
-QString VCardBuilder::result()
-{
-    return m_vCard + QStringLiteral("END:VCARD\n");
-}
-
-} // namespace SailfishConnect
+    void connected() override {}
+    bool receivePacket(const NetworkPacket &np) override;
+};

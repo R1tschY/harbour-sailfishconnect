@@ -23,6 +23,11 @@ set(CMAKE_BUILD_WITH_INSTALL_RPATH OFF)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH OFF)
 set(CMAKE_INSTALL_RPATH "${LIB_INSTALL_DIR}")
 
+# AUTOMOC
+set(CMAKE_AUTOMOC_DEPEND_FILTERS
+  "K_PLUGIN_CLASS_WITH_JSON" "[\n][ \t]*K_PLUGIN_CLASS_WITH_JSON[ \t]*\\(\\w+,[ \t]*\"([^\"]+)\""
+)
+
 # compile definitions
 add_definitions(-DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050600 -DQT_USE_QSTRINGBUILDER)
 if (NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
@@ -37,12 +42,13 @@ add_subdirectory(kdeconnect)
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
-find_package(Qt5 REQUIRED COMPONENTS DBus Network)
+find_package(Qt5 REQUIRED COMPONENTS Core DBus Network Gui Sql)
 find_package(KF5 REQUIRED COMPONENTS I18n CoreAddons Config)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 
 add_subdirectory(app)
+add_subdirectory(pluginscommon)
 add_subdirectory(plugins)
 #add_subdirectory(tests)
 

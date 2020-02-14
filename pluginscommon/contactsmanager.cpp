@@ -20,6 +20,7 @@
 #include <QLoggingCategory>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlDatabase>
 
 #include "vcardbuilder.h"
 
@@ -30,8 +31,21 @@ static Q_LOGGING_CATEGORY(logger, "kdeconnect.contactsmanager");
 static QString QTCONTACTS_SQLITE_STORE = QStringLiteral(
     "/home/nemo/.local/share/system/Contacts/qtcontacts-sqlite/contacts.db");
 
-ContactsManager::ContactsManager(QObject* parent)
-    : QObject(parent)
+namespace {
+
+class SailfishOsContactsManager : public ContactsManager {
+public:
+    SailfishOsContactsManager();
+
+    QMap<QString, QDateTime> getLastModifiedTimes() override;
+    QMap<QString, QString> exportVCards(const QStringList& requestedIds, const QString& deviceId) override;
+    QString lookUpName(const QString& phoneNumber) override;
+
+private:
+    QSqlDatabase m_db;
+};
+    
+SailfishOsContactsManager::SailfishOsContactsManager()
 {
     m_db = QSqlDatabase::addDatabase(
         QStringLiteral("QSQLITE"),
@@ -50,7 +64,7 @@ ContactsManager::ContactsManager(QObject* parent)
     }
 }
 
-QMap<QString, QDateTime> ContactsManager::getLastModifiedTimes()
+QMap<QString, QDateTime> SailfishOsContactsManager::getLastModifiedTimes()
 {
     QMap<QString, QDateTime> result;
 
@@ -71,7 +85,7 @@ QMap<QString, QDateTime> ContactsManager::getLastModifiedTimes()
     return result;
 }
 
-QMap<QString, QString> ContactsManager::exportVCards(const QStringList& ids, const QString& deviceId)
+QMap<QString, QString> SailfishOsContactsManager::exportVCards(const QStringList& ids, const QString& deviceId)
 {
     QMap<QString, QString> result;
     QSet<QString> requestedIds = ids.toSet();
@@ -97,8 +111,8 @@ QMap<QString, QString> ContactsManager::exportVCards(const QStringList& ids, con
 
     QSqlQuery dataQuery(m_db);
     if (!dataQuery.exec(QStringLiteral(
-            "SELECT contactId, modified, displayLabel, firstName, lastName "
-            "FROM Contacts"))) {
+            "SELECT contactId, modified, displayLabel, firstName, lastName"
+            " FROM Contacts"))) {
         qCCritical(logger) << "Getting contact details failed:"
                            << dataQuery.lastError().text();
         return {};
@@ -135,13 +149,13 @@ QMap<QString, QString> ContactsManager::exportVCards(const QStringList& ids, con
     return result;
 }
 
-QString ContactsManager::lookUpName(const QString& phoneNumber)
+QString SailfishOsContactsManager::lookUpName(const QString& phoneNumber)
 {
     QSqlQuery dataQuery(m_db);
     dataQuery.prepare(QStringLiteral(
         "SELECT displayLabel FROM Contacts"
-        "JOIN Phonenumbers ON Phonenumbers.contactId == Contacts.contactId"
-        "WHERE Phonenumbers.phoneNumber == ?"));
+        " JOIN Phonenumbers ON Phonenumbers.contactId == Contacts.contactId"
+        " WHERE Phonenumbers.phoneNumber == ?"));
     dataQuery.bindValue(0, phoneNumber);
 
     if (!dataQuery.exec()) {
@@ -156,6 +170,13 @@ QString ContactsManager::lookUpName(const QString& phoneNumber)
         qCInfo(logger) << "Getting contact name failed: no entry found";
         return phoneNumber;
     }
+}
+
+} // namespace 
+
+ContactsManager& ContactsManager::instance() {
+    static SailfishOsContactsManager instance;
+    return instance;
 }
 
 } // namespace SailfishConnect

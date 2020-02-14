@@ -25,7 +25,7 @@ function(add_static_plugins_lib)
     file(WRITE "${source_path}" "${source_code}")
 
     set(dummy_path "${CMAKE_CURRENT_BINARY_DIR}/${add_static_plugins_lib_NAME}-dummy.cpp")
-    file(WRITE "${dummy_path}" "")
+    file(WRITE "${dummy_path}" "// dummy file")
     
     add_library("${add_static_plugins_lib_NAME}" STATIC ${dummy_path})
     target_link_libraries("${add_static_plugins_lib_NAME}" PRIVATE ${targets})

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Richard Liebscher <richard.liebscher@gmail.com>.
+ * Copyright 2018 Richard Liebscher <richard.liebscher@gmail.com>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,27 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONTACTSREADER_H
-#define CONTACTSREADER_H
 
-#include <QString>
+#ifndef TELEPATHYPLUGIN_H
+#define TELEPATHYPLUGIN_H
+
+#include <QDBusError>
+
+#include <core/kdeconnectplugin.h>
 
 
-namespace SailfishConnect {
-
-class VCardBuilder
+class TelepathyPlugin : public KdeConnectPlugin
 {
+    Q_OBJECT
 public:
-    VCardBuilder();
+    using KdeConnectPlugin::KdeConnectPlugin;
 
-    void addRawProperty(const QString& name, const QString& rawValue);
+    void connected() override { }
+    bool receivePacket(const NetworkPacket &np) override;
 
-    QString result();
-
-private:
-    QString m_vCard;
+private slots:
+    void startSmsSuccess();
+    void startSmsError(const QDBusError& error);
 };
 
-} // namespace SailfishConnect
-
-#endif // CONTACTSREADER_H
+#endif // TELEPATHYPLUGIN_H

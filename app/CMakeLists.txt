@@ -29,6 +29,10 @@ add_static_plugins_lib(
   PLUGINS
     BatteryReport
     Clipboard
+    Contacts
+    Share
+    Telepathy
+    Telephony
 )
 
 # plugin clients

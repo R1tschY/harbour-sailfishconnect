@@ -125,11 +125,6 @@ QQmlImageProviderBase* AppDaemon::imageProvider(const QString& providerId) const
     return m_qmlEngine->imageProvider(providerId);
 }
 
-ContactsManager* AppDaemon::getContacts()
-{
-    return m_contacts;
-}
-
 void AppDaemon::setQmlEngine(QQmlEngine* qmlEngine)
 {
     if (m_qmlEngine == qmlEngine)

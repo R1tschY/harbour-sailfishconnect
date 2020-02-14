@@ -48,8 +48,6 @@ public:
 
     QQmlImageProviderBase* imageProvider(const QString& providerId) const;
 
-    ContactsManager* getContacts();
-
     QQmlEngine* qmlEngine() const { return m_qmlEngine; }
     void setQmlEngine(QQmlEngine* qmlEngine);
 
@@ -62,7 +60,6 @@ private:
 
     QQmlEngine* m_qmlEngine = nullptr;
     JobManager* m_jobmanager = nullptr;
-    ContactsManager* m_contacts = nullptr;
 };
 
 } // namespace SailfishConnect

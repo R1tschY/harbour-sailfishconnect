@@ -58,7 +58,6 @@
 
 #include "ui.h"
 #include "js/qmlregister.h"
-#include "dbus/ofono.h"
 #include "dbus/kdeconnect.h"
 #include "dbus/servicewatcher.h"
 
@@ -185,8 +184,7 @@ int main(int argc, char *argv[])
             UI::raise();
         return 0;
     }
-
-    Ofono::registerTypes();
+    
     registerQmlTypes();
 
     //KeyboardLayoutProvider keyboardLayoutProvider;

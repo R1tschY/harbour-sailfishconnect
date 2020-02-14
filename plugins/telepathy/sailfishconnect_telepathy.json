@@ -1,0 +1,25 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "r1tschy@posteo.de",
+                "Name": "Richard Liebscher",
+                "Name[x-test]": "xxRichard Liebscherxx"
+            }
+        ],
+        "Description": "Allow sending of text messages",
+        "EnabledByDefault": true,
+        "Id": "sailfishconnect_telepathy",
+        "License": "GPLv3",
+        "Name": "Send SMS",
+        "ServiceTypes": [
+            "KdeConnect/Plugin"
+        ],
+        "Version": "0.1"
+    },
+    "X-KdeConnect-OutgoingPacketType": [
+    ],
+    "X-KdeConnect-SupportedPacketType": [
+        "kdeconnect.sms.request"
+    ]
+}

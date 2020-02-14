@@ -15,29 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONTACTSMANAGER_H
-#define CONTACTSMANAGER_H
+#include "vcardbuilder.h"
 
-#include <QDateTime>
-#include <QMap>
-#include <QObject>
-#include <QSqlDatabase>
+#include <QMetaObject>
+#include <QRegularExpression>
 
 namespace SailfishConnect {
 
-class ContactsManager : public QObject {
-    Q_OBJECT
-public:
-    explicit ContactsManager(QObject* parent = nullptr);
+VCardBuilder::VCardBuilder()
+{
+    m_vCard.append(QStringLiteral("BEGIN:VCARD\nVERSION:4.0\n"));
+}
 
-    QMap<QString, QDateTime> getLastModifiedTimes();
-    QMap<QString, QString> exportVCards(const QStringList& requestedIds, const QString& deviceId);
-    QString lookUpName(const QString& phoneNumber);
+void VCardBuilder::addRawProperty(const QString &name, const QString &rawValue)
+{
+    m_vCard.append(name % QChar(':') % rawValue % QChar('\n'));
+}
 
-private:
-    QSqlDatabase m_db;
-};
+QString VCardBuilder::result()
+{
+    return m_vCard + QStringLiteral("END:VCARD\n");
+}
 
 } // namespace SailfishConnect
-
-#endif // CONTACTSMANAGER_H

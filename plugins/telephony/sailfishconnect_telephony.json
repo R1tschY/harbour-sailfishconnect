@@ -1,0 +1,26 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "r1tschy@posteo.de",
+                "Name": "Richard Liebscher",
+                "Name[x-test]": "xxRichard Liebscherxx"
+            }
+        ],
+        "Description": "Send notifications for incoming and missed calls",
+        "EnabledByDefault": true,
+        "Id": "sailfishconnect_telephony",
+        "License": "GPLv3",
+        "Name": "Call notifications",
+        "ServiceTypes": [
+            "KdeConnect/Plugin"
+        ],
+        "Version": "0.1"
+    },
+    "X-KdeConnect-OutgoingPacketType": [
+        "kdeconnect.telephony"
+    ],
+    "X-KdeConnect-SupportedPacketType": [
+        "kdeconnect.telephony.request_mute"
+    ]
+}

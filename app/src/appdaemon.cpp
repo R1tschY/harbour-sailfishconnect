@@ -22,6 +22,7 @@
 #include <QLoggingCategory>
 #include <QQmlEngine>
 #include <QSettings>
+#include <QHostInfo>
 #include <QTimer>
 
 #include <backends/pairinghandler.h>
@@ -30,7 +31,6 @@
 #include <device.h>
 #include "sailfishconnect-config.h"
 #include "ui.h"
-#include "helper/contactsmanager.h"
 #include "io/jobmanager.h"
 
 
@@ -38,44 +38,9 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
 
-namespace {
-
-// class SailfishOsConfig : public SystemInfo
-// {
-// public:
-//     QString defaultName() const override;
-//     QString deviceType() const override;
-// };
-
-// QString SailfishOsConfig::defaultName() const
-// {
-//     const QString hwReleaseFile = QStringLiteral("/etc/hw-release");
-//     // QSettings will crash if the file does not exist or can be created, like in this case by us in /etc.
-//     // E.g. in the SFOS SDK Emulator there is no such file, so check before to protect against the crash.
-//     if (QFile::exists(hwReleaseFile)) {
-//         QSettings hwRelease(hwReleaseFile, QSettings::IniFormat);
-//         auto hwName = hwRelease.value(QStringLiteral("NAME")).toString();
-//         if (!hwName.isEmpty()) {
-//             return hwName;
-//         }
-//     }
-
-//     return SystemInfo::defaultName();
-// }
-
-// QString SailfishOsConfig::deviceType() const
-// {
-//     // TODO: How to detect tablet?
-//     return QStringLiteral("phone");
-// }
-
-} // namespace
-
-
 AppDaemon::AppDaemon(QObject *parent)
 : Daemon(parent)
 , m_jobmanager(new JobManager(this))
-, m_contacts(new ContactsManager(this))
 {
     // notification_.setAppName(PRETTY_PACKAGE_NAME);
     // notification_.setCategory("device");
@@ -115,6 +80,25 @@ void AppDaemon::sendSimpleNotification(const QString&, const QString&, const QSt
 
 KJobTrackerInterface* AppDaemon::jobTracker() {
     return m_jobmanager;
+}
+
+QString AppDaemon::defaultName() {
+    const QString hwReleaseFile = QStringLiteral("/etc/hw-release");
+    // QSettings will crash if the file does not exist or can be created, like in this case by us in /etc.
+    // E.g. in the SFOS SDK Emulator there is no such file, so check before to protect against the crash.
+    if (QFile::exists(hwReleaseFile)) {
+        QSettings hwRelease(hwReleaseFile, QSettings::IniFormat);
+        auto hwName = hwRelease.value(QStringLiteral("NAME")).toString();
+        if (!hwName.isEmpty()) {
+            return hwName;
+        }
+    }
+        
+    return QString::fromUtf8(qgetenv("USER")) % '@' % QHostInfo::localHostName();
+}
+
+QString AppDaemon::deviceType() {
+    return QStringLiteral("phone");
 }
 
 QQmlImageProviderBase* AppDaemon::imageProvider(const QString& providerId) const

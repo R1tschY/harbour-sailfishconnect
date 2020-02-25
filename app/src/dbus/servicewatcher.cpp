@@ -23,9 +23,11 @@
 
 namespace SailfishConnect {
 
-static Q_LOGGING_CATEGORY(logger, "sailfishconnect.dbus.service-watcher")
+static Q_LOGGING_CATEGORY(logger, "sailfishconnect.dbus.service-watcher");
 
-    DBusServiceWatcher::DBusServiceWatcher(QObject* parent)
+// TODO: Use QDBusServiceWatcher
+
+DBusServiceWatcher::DBusServiceWatcher(QObject* parent)
     : QObject(parent)
     , m_interface(QDBusConnection::sessionBus().interface())
 {

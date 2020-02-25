@@ -166,8 +166,20 @@ Page {
                 SectionHeader {
                     text: qsTr("Actions")
                 }
-                Touchpad { id: touchpad }
-                ClipboardUi { id: clipboardUi }
+                PluginAction {
+                    device: _device,
+                    title: qsTr("Open touchpad")
+                    icon: "image://theme/icon-m-gesture"  
+                    pluginId: "kdeconnect_remotecontrol"
+                    onClicked: openPage("../pages/TouchpadPage.qml")
+                }
+                PluginAction {
+                    device: _device,
+                    title: qsTr("Upload clipboard text")
+                    icon: "image://theme/icon-m-clipboard"
+                    pluginId: "sailfishconnect_clipboard"
+                    onClicked: pluginCall("pushClipboard")
+                }
                 
                 /*ShareUi { id: shareUi }
                 RemoteKeyboard { id: remoteKeyboard}

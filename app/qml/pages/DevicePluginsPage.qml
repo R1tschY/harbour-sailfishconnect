@@ -28,11 +28,12 @@ Page {
     readonly property var _pluginIcons: {
         "kdeconnect_ping": "image://theme/icon-m-accept",
         "sailfishconnect_batteryreport": "image://theme/icon-m-battery",
-        "sailfishconnect_ping": "image://theme/icon-m-clipboard",
+        "sailfishconnect_clipboard": "image://theme/icon-m-clipboard",
         "sailfishconnect_contacts": "image://theme/icon-m-contact",
         "sailfishconnect_share": "image://theme/icon-m-share",
         "sailfishconnect_telepathy": "image://theme/icon-m-sms",
-        "sailfishconnect_telephony": "image://theme/icon-m-answer",
+        "sailfishconnect_sendnotifications": "image://theme/icon-m-notifications",
+        "sailfishconnect_mprisremote": "image://theme/icon-m-media",
     }
 
     allowedOrientations: Orientation.All

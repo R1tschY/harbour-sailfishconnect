@@ -17,14 +17,21 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import SailfishConnect.Api 0.7
 
 IconListItem {
-    title: qsTr("Upload clipboard text")
-    source: "image://theme/icon-m-clipboard"
-    visible: _device && _device.loadedPlugins().indexOf(
-        "sailfishconnect_clipboard") >= 0   
+    property var device
+    property string pluginId
+    property alias icon: source
 
-    onClicked:
-        _device.pluginCall("sailfishconnect_clipboard", "pushClipboard")
+    visible: device && device.loadedPlugins.indexOf(pluginId) >= 0   
+
+    function openPage(pagePath) {
+        pageStack.push(
+            Qt.resolvedUrl(pagePath),
+            { device: _device })
+    }
+
+    function pluginCall(functionName) {
+        device.pluginCall(pluginId, functionName)
+    }
 }

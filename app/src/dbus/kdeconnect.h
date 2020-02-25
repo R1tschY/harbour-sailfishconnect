@@ -51,8 +51,9 @@ public:
 
 class DeviceApi : public DeviceDbusInterface {
     Q_OBJECT
+    Q_PROPERTY(QStringList loadedPlugins READ loadedPlugins NOTIFY pluginsChangedProxy)
 public:
-    using DeviceDbusInterface::DeviceDbusInterface;
+    explicit DeviceApi(const QString& deviceId, QObject* parent = nullptr);
 
     Q_SCRIPTABLE void unpair() {
         checkForDbusError(DeviceDbusInterface::unpair());
@@ -74,9 +75,7 @@ public:
         return DeviceDbusInterface::encryptionInfo();
     }
 
-    Q_SCRIPTABLE QStringList loadedPlugins() {
-        return DeviceDbusInterface::loadedPlugins();
-    }
+    Q_SCRIPTABLE QStringList loadedPlugins();
 
     Q_SCRIPTABLE bool isPluginEnabled(const QString& pluginId) {
         return DeviceDbusInterface::isPluginEnabled(pluginId);
@@ -87,6 +86,13 @@ public:
     Q_SCRIPTABLE RemoteControlApi* getRemoteControl() {
         return new RemoteControlApi(id());
     }
+
+Q_SIGNALS:
+    void pluginsChangedProxy();
+
+private:
+    QStringList m_loadedPlugins;
+    bool m_loadedPluginsLoaded = false;
 };
 
 class DaemonApi : public DaemonDbusInterface {

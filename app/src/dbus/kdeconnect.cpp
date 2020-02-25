@@ -23,6 +23,24 @@ namespace SailfishConnect {
 
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.dbus-api")
 
+DeviceApi::DeviceApi(const QString& deviceId, QObject* parent)
+: DeviceDbusInterface(deviceId, parent)
+{
+    connect(this, &DeviceApi::pluginsChanged, this, [this] { 
+        m_loadedPluginsLoaded = false; 
+        Q_EMIT pluginsChangedProxy();
+    });
+}
+
+QStringList DeviceApi::loadedPlugins() {
+    if (!m_loadedPluginsLoaded) {
+        m_loadedPlugins = DeviceDbusInterface::loadedPlugins();
+        m_loadedPluginsLoaded = true;
+    }
+
+    return m_loadedPlugins;
+}
+
 void checkForDbusError(const QDBusPendingCall& async) {
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(async);
     QObject::connect(

@@ -82,7 +82,7 @@ KJobTrackerInterface* AppDaemon::jobTracker() {
     return m_jobmanager;
 }
 
-QString AppDaemon::defaultName() {
+QString AppDaemon::defaultName() const {
     const QString hwReleaseFile = QStringLiteral("/etc/hw-release");
     // QSettings will crash if the file does not exist or can be created, like in this case by us in /etc.
     // E.g. in the SFOS SDK Emulator there is no such file, so check before to protect against the crash.
@@ -97,7 +97,7 @@ QString AppDaemon::defaultName() {
     return QString::fromUtf8(qgetenv("USER")) % '@' % QHostInfo::localHostName();
 }
 
-QString AppDaemon::deviceType() {
+QString AppDaemon::deviceType() const {
     return QStringLiteral("phone");
 }
 

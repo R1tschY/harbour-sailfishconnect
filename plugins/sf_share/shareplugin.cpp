@@ -85,11 +85,11 @@ bool SharePlugin::receivePacket(const NetworkPacket& np)
         textFile.write(text.toUtf8());
         textFile.close();
 
-        emit received(QUrl::fromLocalFile(textFile.fileName()));
+        Q_EMIT received(QUrl::fromLocalFile(textFile.fileName()));
     } else if (np.has(QStringLiteral("url"))) {
         QUrl url = QUrl::fromEncoded(np.get<QByteArray>(QStringLiteral("url")));
         QDesktopServices::openUrl(url);
-        emit received(url);
+        Q_EMIT received(url);
     } else {
         qCWarning(logger) << "Empty share received";
     }

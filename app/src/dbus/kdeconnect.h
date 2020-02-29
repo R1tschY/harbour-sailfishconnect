@@ -16,6 +16,10 @@
  */
 
 #include <dbusinterfaces.h>
+#include <core/kdeconnectpluginconfig.h>
+#include <QJSValue>
+
+class KdeConnectPluginConfig;
 
 namespace SailfishConnect {
 
@@ -48,10 +52,37 @@ public:
     }
 };
 
+class RemoteCommandsApi : public RemoteCommandsDbusInterface {
+    Q_OBJECT
+public:
+    using RemoteCommandsDbusInterface::RemoteCommandsDbusInterface;
+
+    Q_SCRIPTABLE void triggerCommand(const QString& key) {
+        checkForDbusError(RemoteCommandsDbusInterface::triggerCommand(key));
+    }
+};
+
+class PluginConfigApi : public KdeConnectPluginConfig {
+    Q_OBJECT
+public:
+    using KdeConnectPluginConfig::KdeConnectPluginConfig;
+
+    Q_SCRIPTABLE QVariant get(const QString& key){
+        return KdeConnectPluginConfig::get(key, {});
+    }
+
+    Q_SCRIPTABLE QVariant get(const QString& key, const QVariant& defaultValue) {
+        return KdeConnectPluginConfig::get(key, defaultValue);
+    }
+
+    Q_SCRIPTABLE void set(const QString& key, const QVariant& value) {
+        KdeConnectPluginConfig::set(key, value);
+    }
+};
 
 class DeviceApi : public DeviceDbusInterface {
     Q_OBJECT
-    Q_PROPERTY(QStringList loadedPlugins READ loadedPlugins NOTIFY pluginsChangedProxy)
+    Q_PROPERTY(QStringList loadedPlugins_ READ loadedPlugins_ NOTIFY pluginsChangedProxy)
 public:
     explicit DeviceApi(const QString& deviceId, QObject* parent = nullptr);
 
@@ -75,7 +106,9 @@ public:
         return DeviceDbusInterface::encryptionInfo();
     }
 
-    Q_SCRIPTABLE QStringList loadedPlugins();
+    QStringList loadedPlugins_();
+
+    Q_SCRIPTABLE bool isPluginLoaded(const QString& pluginId);
 
     Q_SCRIPTABLE bool isPluginEnabled(const QString& pluginId) {
         return DeviceDbusInterface::isPluginEnabled(pluginId);
@@ -85,6 +118,14 @@ public:
 
     Q_SCRIPTABLE RemoteControlApi* getRemoteControl() {
         return new RemoteControlApi(id());
+    }
+
+    Q_SCRIPTABLE RemoteCommandsApi* getRemoteCommands() {
+        return new RemoteCommandsApi(id());
+    }
+
+    Q_SCRIPTABLE PluginConfigApi* getPluginConfig(const QString& pluginId) {
+        return new PluginConfigApi(id(), pluginId);
     }
 
 Q_SIGNALS:

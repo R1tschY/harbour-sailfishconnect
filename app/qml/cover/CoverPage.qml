@@ -83,7 +83,7 @@ CoverBackground {
 
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-            onTriggered: daemon.forceOnNetworkChange("user request")
+            onTriggered: daemon.forceOnNetworkChange()
         }
     }
 }

@@ -19,11 +19,12 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 IconListItem {
+    id: item
     property var device
     property string pluginId
-    property alias icon: source
+    property alias icon: item.source
 
-    visible: device && device.loadedPlugins.indexOf(pluginId) >= 0   
+    visible: device && device.isPluginLoaded(pluginId)
 
     function openPage(pagePath) {
         pageStack.push(

@@ -17,9 +17,10 @@ add_static_plugins_lib(
   PREFIX kdeconnect
   PLUGINS
     Ping
+    RemoteControl
+    RemoteCommands
+    RunCommand
 #    Battery
-#    RemoteCommands
-#    RemoteControl
 #    RemoteSystemVolume
 #    Presenter
 )

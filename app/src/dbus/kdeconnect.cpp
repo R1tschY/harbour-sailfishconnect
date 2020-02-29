@@ -41,6 +41,10 @@ QStringList DeviceApi::loadedPlugins() {
     return m_loadedPlugins;
 }
 
+bool DeviceApi::isPluginLoaded(const QString& pluginId) {
+    return loadedPlugins_().contains(pluginId);
+}
+
 void checkForDbusError(const QDBusPendingCall& async) {
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(async);
     QObject::connect(

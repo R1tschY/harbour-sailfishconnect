@@ -123,6 +123,14 @@ void registerQmlTypes() {
     qmlRegisterUncreatableType<RemoteControlApi>(
                 "SailfishConnect.Api", 0, 7, "RemoteControlApi", uncreatableError);
 
+    qRegisterMetaType<RemoteCommandsApi*>("RemoteCommandsApi*");
+    qmlRegisterUncreatableType<RemoteCommandsApi>(
+                "SailfishConnect.Api", 0, 7, "RemoteCommandsApi", uncreatableError);
+
+    qRegisterMetaType<PluginConfigApi*>("PluginConfigApi*");
+    qmlRegisterUncreatableType<PluginConfigApi>(
+                "SailfishConnect.Api", 0, 7, "PluginConfigApi", uncreatableError);
+
     qmlRegisterType<DBusServiceWatcher>(
                 "SailfishConnect.Api", 0, 7, "DBusServiceWatcher");
 

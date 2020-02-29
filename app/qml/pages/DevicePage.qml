@@ -167,18 +167,25 @@ Page {
                     text: qsTr("Actions")
                 }
                 PluginAction {
-                    device: _device,
+                    device: _device
                     title: qsTr("Open touchpad")
                     icon: "image://theme/icon-m-gesture"  
                     pluginId: "kdeconnect_remotecontrol"
                     onClicked: openPage("../pages/TouchpadPage.qml")
                 }
                 PluginAction {
-                    device: _device,
+                    device: _device
                     title: qsTr("Upload clipboard text")
                     icon: "image://theme/icon-m-clipboard"
                     pluginId: "sailfishconnect_clipboard"
                     onClicked: pluginCall("pushClipboard")
+                }
+                PluginAction {
+                    device: _device
+                    title: qsTr("Run command...")
+                    icon: "image://theme/icon-m-wizard"
+                    pluginId: "kdeconnect_remotecommands"
+                    onClicked: openPage("../pages/RemoteCommandsPage.qml")
                 }
                 
                 /*ShareUi { id: shareUi }

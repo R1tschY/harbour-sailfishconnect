@@ -20,13 +20,15 @@ import Sailfish.Silica 1.0
 import SailfishConnect.UI 0.3
 import SailfishConnect.Api 0.7
 
-
 Page {
     id: page
 
-    property var device
+    property QtObject device
     readonly property var _pluginIcons: {
         "kdeconnect_ping": "image://theme/icon-m-accept",
+        "kdeconnect_remotecontrol": "image://theme/icon-m-gesture",
+        "kdeconnect_remotecommands": "image://theme/icon-m-wizard",
+        "kdeconnect_runcommand": "image://theme/icon-m-wizard",
         "sailfishconnect_batteryreport": "image://theme/icon-m-battery",
         "sailfishconnect_clipboard": "image://theme/icon-m-clipboard",
         "sailfishconnect_contacts": "image://theme/icon-m-contact",
@@ -34,6 +36,10 @@ Page {
         "sailfishconnect_telepathy": "image://theme/icon-m-sms",
         "sailfishconnect_sendnotifications": "image://theme/icon-m-notifications",
         "sailfishconnect_mprisremote": "image://theme/icon-m-media",
+    }
+
+    readonly property var _pluginConfigs: {
+        "kdeconnect_runcommand": Qt.resolvedUrl("pluginConfigs/RunCommandsPage.qml")
     }
 
     allowedOrientations: Orientation.All
@@ -52,19 +58,36 @@ Page {
             title: qsTr("Select Plugins")
         }
 
-        delegate: BackgroundItem {
+        delegate: ListItem {
             id: delegate
+
+            property bool hasConfig: !!_pluginConfigs[pluginId]
+
             width: page.width
-            height: pluginSwitch.height
+            contentHeight: pluginSwitch.height
+            menu: hasConfig ? contextMenu : null
 
             IconTextSwitch {
                 id: pluginSwitch
-                text: pluginName
+                text: pluginName + (hasConfig ? "..." : "")
                 icon.source: _pluginIcons[pluginId] || ""
                 description: pluginDescription
                 onCheckedChanged: pluginEnabled = checked
+                onPressAndHold: openMenu()
 
                 Component.onCompleted: pluginSwitch.checked = pluginEnabled
+            }
+
+            Component {
+                id: contextMenu
+                ContextMenu {
+                    MenuItem {
+                        text: qsTr("Edit config")
+                        onClicked: pageStack.push(
+                            _pluginConfigs[pluginId],
+                            { device: device })
+                    }
+                }
             }
         }
 

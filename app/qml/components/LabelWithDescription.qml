@@ -18,21 +18,30 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-IconListItem {
-    id: item
-    property var device
-    property string pluginId
-    property alias icon: item.source
+Column {
+    property bool highlighted: false
+    property alias title: mainLabel.text
+    property alias description: descripionLabel.text
 
-    visible: device && device.isPluginLoaded(pluginId)
-
-    function openPage(pagePath) {
-        pageStack.push(
-            Qt.resolvedUrl(pagePath),
-            { device: _device })
+    Label {
+        id: mainLabel
+        width: parent.width
+        
+        color: highlighted
+                ? Theme.highlightColor
+                : Theme.primaryColor
+        truncationMode: TruncationMode.Fade
+        textFormat: Text.PlainText
     }
+    Label {
+        id: descripionLabel
+        width: parent.width
 
-    function pluginCall(functionName) {
-        device.pluginCall(pluginId, functionName)
+        color: highlighted
+                ? Theme.secondaryHighlightColor
+                : Theme.secondaryColor
+        font.pixelSize: Theme.fontSizeExtraSmall
+        truncationMode: TruncationMode.Fade
+        textFormat: Text.PlainText
     }
 }

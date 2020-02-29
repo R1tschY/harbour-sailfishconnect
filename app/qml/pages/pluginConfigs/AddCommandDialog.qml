@@ -18,10 +18,12 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
 import SailfishConnect.Api 0.7
+import "../../components"
 
 Dialog {
     id: page
 
+    property string key: ""
     property alias name: nameField.text
     property alias command: commandField.text
 
@@ -29,24 +31,90 @@ Dialog {
 
     canAccept: !!name && !!command
 
-    Column {
-        width: parent.width
-
-        DialogHeader { }
-
-        TextField {
-            id: nameField
-            width: parent.width
-            placeholderText: qsTr("Name of command")
-            label: qsTr("Name")
+    // https://bugreports.qt.io/browse/QTBUG-16289
+    property var _predefined: [
+        {
+            "name": qsTr("Reboot"),
+            "command": "dsmetool --reboot"
+        },
+        {
+            "name": qsTr("Lock device"),
+            "command": ("dbus-send --system --type=method_call \\\n" +
+               "    --dest=org.nemomobile.devicelock /devicelock \\\n" +
+               "    org.nemomobile.lipstick.devicelock.setState int32:1")
         }
+    ]
 
-        TextField {
-            id: commandField
+    ListModel {
+        id: predefinedModel
+
+        Component.onCompleted: {
+            for (var command in _predefined) {
+                append(_predefined[command])
+            }
+        }
+    }
+
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: mainColumn.height
+
+        Column {
+            id: mainColumn
             width: parent.width
-            placeholderText: qsTr("Shell command to execute")
-            label: qsTr("Command")
-            inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
+
+            DialogHeader { }
+
+            TextField {
+                id: nameField
+                width: parent.width
+                placeholderText: qsTr("Name of command")
+                label: qsTr("Name")
+                focus: true
+            }
+
+            TextArea {
+                id: commandField
+                width: parent.width
+                placeholderText: qsTr("Shell command to execute")
+                label: qsTr("Command")
+                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
+            }
+
+            SectionHeader {
+                text: qsTr("Pre-defined commands")
+                visible: predefinedView.count > 0
+            }
+
+            ColumnView {
+                id: predefinedView
+                width: parent.width
+                itemHeight: Theme.itemSizeMedium
+
+                model: predefinedModel
+
+                delegate: ListItem {
+                    id: listItem
+                    width: page.width
+                    contentHeight: item.height
+
+                    LabelWithDescription {
+                        id: item
+                        width: page.width - 2 * Theme.horizontalPageMargin
+                        x: Theme.horizontalPageMargin
+                        
+                        title: name
+                        description: command
+
+                        highlighted: listItem.highlighted
+                    }
+
+                    onClicked: {
+                        nameField.text = name
+                        commandField.text = command
+                    }
+                }
+            }
         }
     }
 }

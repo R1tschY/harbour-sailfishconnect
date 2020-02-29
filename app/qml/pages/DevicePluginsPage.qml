@@ -69,9 +69,10 @@ Page {
 
             IconTextSwitch {
                 id: pluginSwitch
-                text: pluginName + (hasConfig ? "..." : "")
+                text: pluginName
                 icon.source: _pluginIcons[pluginId] || ""
-                description: pluginDescription
+                description: pluginDescription 
+                    + (hasConfig ? "<br><i>%1</i>".arg(qsTr("Open configuration throught context menu")) : "")
                 onCheckedChanged: pluginEnabled = checked
                 onPressAndHold: openMenu()
 
@@ -82,7 +83,7 @@ Page {
                 id: contextMenu
                 ContextMenu {
                     MenuItem {
-                        text: qsTr("Edit config")
+                        text: qsTr("Open configuration")
                         onClicked: pageStack.push(
                             _pluginConfigs[pluginId],
                             { device: device })

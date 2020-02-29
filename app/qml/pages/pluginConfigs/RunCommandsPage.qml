@@ -18,6 +18,7 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
 import SailfishConnect.Api 0.7
+import "../../components"
 
 Page {
     id: page
@@ -60,6 +61,13 @@ Page {
                 "name": name,
                 "command": command,
             })
+            save()
+        }
+
+        function editCommand(key, name, command) {
+            var index = findByKey(key)
+            setProperty(index, "name", name)
+            setProperty(index, "command", command)
             save()
         }
 
@@ -111,41 +119,36 @@ Page {
             id: listItem
             menu: contextMenu
             width: page.width
-            contentHeight: Theme.itemSizeMedium
+            contentHeight: item.height
             ListView.onRemove: animateRemoval(listItem)
 
-            Column {
+            LabelWithDescription {
+                id: item
                 width: page.width - 2 * Theme.horizontalPageMargin
                 x: Theme.horizontalPageMargin
+                
+                title: name
+                description: command
 
-                Label {
-                    width: parent.width
-                    
-                    text: name
-                    
-                    color: listItem.highlighted
-                            ? Theme.highlightColor
-                            : Theme.primaryColor
-                    truncationMode: TruncationMode.Fade
-                    textFormat: Text.PlainText
-                }
-                Label {
-                    width: parent.width
-
-                    text: command
-                    
-                    color: listItem.highlighted
-                            ? Theme.secondaryHighlightColor
-                            : Theme.secondaryColor
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    truncationMode: TruncationMode.Fade
-                    textFormat: Text.PlainText
-                }
+                highlighted: listItem.highlighted
             }
 
             Component {
                 id: contextMenu
                 ContextMenu {
+                    MenuItem {
+                        text: qsTr("Edit")
+                        onClicked: {
+                            var dialog = pageStack.push(
+                                Qt.resolvedUrl("AddCommandDialog.qml"),
+                                {"key": key, "name": name, "command": command})
+                            dialog.accepted.connect(function() {
+                                commandsModel.editCommand(
+                                    dialog.key, dialog.name.trim(), dialog.command.trim())
+                            })
+                        }
+                    }
+
                     MenuItem {
                         text: qsTr("Remove")
                         onClicked: commandsModel.removeByKey(key)
@@ -160,13 +163,9 @@ Page {
                 onClicked: {
                     var dialog = pageStack.push(Qt.resolvedUrl("AddCommandDialog.qml"))
                     dialog.accepted.connect(function() {
-                        commandsModel.addCommand(dialog.name, dialog.command)
+                        commandsModel.addCommand(dialog.name.trim(), dialog.command.trim())
                     })
                 }
-            }
-            MenuItem {
-                text: qsTr("Add predefined command")
-                onClicked: console.log("Clicked option 2")
             }
         }
 

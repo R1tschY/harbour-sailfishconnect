@@ -17,6 +17,11 @@
 
 #include "sailfishconnect-config.h"
 
+#include <libintl.h>
+#include <execinfo.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 #ifdef QT_QML_DEBUG
 #include <QtQuick>
 #endif
@@ -31,11 +36,9 @@
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QDebug>
+#include <KLocalizedString>
+#include <kcoreaddons_version.h>
 #include <sailfishapp.h>
-
-#include <execinfo.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 #include "appdaemon.h"
 #include <device.h>
@@ -67,6 +70,8 @@ Q_IMPORT_PLUGIN(opensslPlugin)
 
 namespace SailfishConnect {
 
+namespace {
+
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
@@ -83,6 +88,32 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
         fprintf(stderr, "%s\n", localMsg.constData());
         abort();
     }
+}
+
+void initI18n() {
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,38,0)
+    QByteArray dataDirs = qgetenv("XDG_DATA_DIRS");
+    if (dataDirs.isEmpty()) {
+        dataDirs = "/usr/local/share/:/usr/share/";
+    }
+    dataDirs.append(QStringLiteral(":/usr/share/%1/").arg(PACKAGE_NAME).toUtf8());
+
+    if (!qputenv("XDG_DATA_DIRS", dataDirs)) {
+        qCWarning(logger) << "Failed to set XDG_DATA_DIRS. Translations will be missing.";  
+    }
+#else
+    QString localeDir = QStringLiteral("/usr/share/%1/locale").arg(PACKAGE_NAME);
+    KLocalizedString::addDomainLocaleDir("kdeconnect-core", localeDir);
+    KLocalizedString::addDomainLocaleDir("kdeconnect-plugins", localeDir);
+    KLocalizedString::addDomainLocaleDir("sailfishconnect-app", localeDir);
+    KLocalizedString::addDomainLocaleDir("sailfishconnect-plugins", localeDir);
+#endif
+
+    KLocalizedString::setApplicationDomain("sailfishconnect-app");
+
+    qCDebug(logger) << "availableApplicationTranslations" << KLocalizedString::availableApplicationTranslations();  
+    qCDebug(logger) << "languages" << KLocalizedString::languages();
+    qCDebug(logger) << i18n("Alternative KDE Connect client for Sailfish OS");
 }
 
 void registerQmlTypes() {
@@ -145,8 +176,6 @@ std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
     return app;
 }
 
-namespace {
-
 struct Options {
     bool daemonMode;
 };
@@ -178,13 +207,26 @@ int main(int argc, char *argv[])
 {  
     using namespace SailfishConnect;
 
-    qInstallMessageHandler(myMessageOutput);
-    QLoggingCategory::setFilterRules("kdeconnect.core=true");
+    puts("   ____     _ ______     __   _____                       __");
+    puts("  / __/__ _(_) / _(_)__ / /  / ___/__  ___  ___  ___ ____/ /_");
+    puts(" _\\ \\/ _ `/ / / _/ (_-</ _ \\/ /__/ _ \\/ _ \\/ _ \\/ -_) __/ __/");
+    puts("/___/\\_,_/_/_/_//_/___/_//_/\\___/\\___/_//_/_//_/\\__/\\__/\\__/");
+    puts(QStringLiteral(" --- Version %1").arg(PACKAGE_VERSION).toUtf8().constData());
 
+    // Logging
+    qInstallMessageHandler(myMessageOutput);
+    QLoggingCategory::setFilterRules("kdeconnect.*=true");
+
+    // I18n
+    initI18n();
+
+    // Application
     auto app = createApplication(argc, argv);
 
+    // Command line
     auto options = parseCommandLine(*app);
 
+    // DBus
     QDBusConnection sessionBus = QDBusConnection::sessionBus();
     if (!sessionBus.registerService(DBUS_SERVICE_NAME)) {
         qCInfo(logger) << "Other daemon exists.";
@@ -193,8 +235,10 @@ int main(int argc, char *argv[])
         return 0;
     }
     
+    // QML
     registerQmlTypes();
 
+    // UI
     //KeyboardLayoutProvider keyboardLayoutProvider;
     UI ui(options.daemonMode);
     ui.showMainWindow();

@@ -36,7 +36,7 @@ Page {
             spacing: Theme.paddingLarge
 
             PageHeader {
-                title: qsTr("About")
+                title: i18n("About")
             }
 
             Label {
@@ -63,7 +63,7 @@ Page {
             }
 
             Label {
-                text: qsTr("Alternative KDE Connect client for Sailfish OS")
+                text: i18n("Alternative KDE Connect client for Sailfish OS")
 
                 wrapMode: Text.Wrap
                 x: Theme.horizontalPageMargin
@@ -74,7 +74,7 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr("Links")
+                text: i18n("Links")
             }
 
             Column {
@@ -84,7 +84,7 @@ Page {
                 Label {
                     text:
                         "<a href=\"https://github.com/R1tschY/harbour-sailfishconnect/issues\">" +
-                        qsTr("Bug reports on Github") + "</a>"
+                        i18n("Bug reports on Github") + "</a>"
                     color: Theme.highlightColor
                     linkColor: Theme.primaryColor
                     onLinkActivated: Qt.openUrlExternally(link)
@@ -93,7 +93,7 @@ Page {
                 Label {
                     text:
                         "<a href=\"https://github.com/R1tschY/harbour-sailfishconnect\">" +
-                        qsTr("Source code on Github") + "</a>"
+                        i18n("Source code on Github") + "</a>"
                     color: Theme.highlightColor
                     linkColor: Theme.primaryColor
                     onLinkActivated: Qt.openUrlExternally(link)
@@ -101,7 +101,7 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr("Licence")
+                text: i18n("Licence")
             }
             Label {
                 x: Theme.horizontalPageMargin

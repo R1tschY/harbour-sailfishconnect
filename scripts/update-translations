@@ -6,11 +6,60 @@ cd "${SCRIPT_DIR}/.."
 SDK=`dev/get-sdk-install-folder`
 REMOTE_ROOT="${PWD/#$HOME//home/mersdk/share}"
 
-# dev/build-shell << EOF
-#   set -e
-#   cd "$REMOTE_ROOT"
-#   mb2 -X -t \$(sdk-assistant target list | grep armv7 | sort -r | head -1) make qm 
-# EOF
+TRANSLATIONS="de es fi fr it pl ru sv zh_CN"
+KDECONNECT_DOMAINS="kdeconnect-core kdeconnect-plugins"
+SAILFISHCONNECT_DOMAINS="sailfishconnect-app sailfishconnect-plugins"
 
-tx push --translations --language es --source
-tx pull --all --force
+EXTOPTS="--c++ --kde \
+    --from-code=UTF-8 \
+    -c i18n \
+    -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3 \
+    -kki18n:1 -kki18nc:1c,2 -kki18np:1,2 -kki18ncp:1c,2,3 \
+    -kI18N_NOOP:1 -kI18NC_NOOP:1c,2"
+EXTOPTS="--c++ --kde \
+    --from-code=UTF-8 \
+    -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3 \
+    -kki18n:1 -kki18nc:1c,2 -kki18np:1,2 -kki18ncp:1c,2,3 \
+    -kI18N_NOOP:1 -kI18NC_NOOP:1c,2"
+XGETTEXT="xgettext $EXTOPTS"
+potdir=po/templates
+podir=po
+
+echo "-- Create templates"
+mkdir -p $potdir
+$XGETTEXT `find plugins/ -name '*.cpp'` -o $potdir/sailfishconnect-plugins.pot
+$XGETTEXT `find app/ -name '*.cpp' -o -name '*.qml'` -o $potdir/sailfishconnect-app.pot
+
+echo "-- Merge translations"
+for translation in $TRANSLATIONS
+do
+    for domain in $SAILFISHCONNECT_DOMAINS
+    do
+        dest="$podir/$translation/$domain.po"
+        if [ -f "$dest" ]
+        then
+            echo "Merge $translation for $domain"
+            mkdir -p "$podir/$translation"
+            msgmerge -q --lang=$translation -o "$dest.new" "$dest" "$potdir/$domain.pot"
+            mv "$dest.new" "$dest"
+        else
+            echo "Create $translation for $domain"
+            cp "$potdir/$domain.pot" "$dest"
+        fi
+    done
+done
+
+# Get translations from KDE i18n project
+echo "-- Pull translations from l10n-kf5 project"
+for translation in $TRANSLATIONS
+do
+    for domain in $KDECONNECT_DOMAINS
+    do
+        mkdir -p "$podir/$translation"
+        echo "Download $translation for $domain"
+        curl -sS --fail \
+            -A "Mozilla/5.0 (X11; Ubuntu) Gecko/20100101 Firefox/73.0" \
+            "https://websvn.kde.org/*checkout*/trunk/l10n-kf5/$translation/messages/kdenetwork/$domain.po" \
+            -o "$podir/$translation/$domain.po" || true
+    done
+done

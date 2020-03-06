@@ -91,7 +91,7 @@ Page {
 
         if (error) {
             return "%1 - %2"
-                .arg(qsTr("Failed"))
+                .arg(i18n("Failed"))
                 .arg(deviceName)
         }
 
@@ -106,16 +106,16 @@ Page {
                 .arg(deviceName)
                 .arg(Humanize.bytes(processedBytes))
                 //: Download progress, for example: 3MB of 50MB
-                .arg(qsTr("of"))
+                .arg(i18n("of"))
                 .arg(Humanize.bytes(totalBytes))
         } else if (currentState === "finished") {
             return "%1 - %2 - %3"
-                .arg(qsTr("Completed"))
+                .arg(i18n("Completed"))
                 .arg(deviceName)
                 .arg(Humanize.bytes(processedBytes))
         } else if (currentState === "canceled") {
             return "%1 - %2"
-                .arg(qsTr("Canceled"))
+                .arg(i18n("Canceled"))
                 .arg(deviceName)
         }
     }
@@ -130,25 +130,25 @@ Page {
         onFinished: {
             console.log("onFinished")
             if (!xdgOpen.normalExit || xdgOpen.exitCode !== 0) {
-                xdgOpenNotification.previewSummary = qsTr("Failed to open file")
+                xdgOpenNotification.previewSummary = i18n("Failed to open file")
                 if (xdgOpen.normalExit) {
                     var errorMessage = {
                         // Error in command line syntax.
-                        1: qsTr("Internal error"),
+                        1: i18n("Internal error"),
 
                         // One of the files passed on the command line did not exist.
-                        2: qsTr("File does not exit"),
+                        2: i18n("File does not exit"),
 
                         // A required tool could not be found.
-                        3: qsTr("No program found to open file"),
+                        3: i18n("No program found to open file"),
 
                         // The action failed.
-                        4: qsTr("xdg-open failed"),
+                        4: i18n("xdg-open failed"),
                     }
 
                     xdgOpenNotification.previewBody = errorMessage[xdgOpen.exitCode]
                 } else {
-                    xdgOpenNotification.previewBody = qsTr("xdg-open crashed")
+                    xdgOpenNotification.previewBody = i18n("xdg-open crashed")
                 }
                 xdgOpenNotification.publish()
             }
@@ -160,7 +160,7 @@ Page {
         model: JobsModel { }
         anchors.fill: parent
         header: PageHeader {
-            title: qsTr("Transfers")
+            title: i18n("Transfers")
         }
 
         delegate: ListItem {
@@ -175,17 +175,17 @@ Page {
 
             menu: ContextMenu {
                 MenuItem {
-                    text: qsTr("Cancel")
+                    text: i18n("Cancel")
                     visible: currentState === "running"
                     onClicked: canceled = true
                 }
                 MenuItem {
-                    text: qsTr("Open")
+                    text: i18n("Open")
                     visible: isTargetLocal && wasSuccessful
                     onClicked: openFile(target)
                 }
 //                TODO: MenuItem {
-//                    text: qsTr("Open containing directory")
+//                    text: i18n("Open containing directory")
 //                    visible: isTargetLocal && wasSuccessful
 //                    onClicked: openFileDir(target)
 //                }
@@ -258,7 +258,7 @@ Page {
 
         ViewPlaceholder {
             enabled: listView.count === 0
-            text: qsTr("Yet no downloads or uploads")
+            text: i18n("Yet no downloads or uploads")
         }
 
         VerticalScrollDecorator { flickable: listView }

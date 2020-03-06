@@ -110,7 +110,7 @@ Page {
         anchors.fill: parent
 
         header: PageHeader {
-            title: qsTr("Edit commands")
+            title: i18n("Edit commands")
         }
 
         model: commandsModel
@@ -137,7 +137,7 @@ Page {
                 id: contextMenu
                 ContextMenu {
                     MenuItem {
-                        text: qsTr("Edit")
+                        text: i18n("Edit")
                         onClicked: {
                             var dialog = pageStack.push(
                                 Qt.resolvedUrl("AddCommandDialog.qml"),
@@ -150,7 +150,7 @@ Page {
                     }
 
                     MenuItem {
-                        text: qsTr("Remove")
+                        text: i18n("Remove")
                         onClicked: commandsModel.removeByKey(key)
                     }
                 }
@@ -159,7 +159,7 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("Add new command")
+                text: i18n("Add new command")
                 onClicked: {
                     var dialog = pageStack.push(Qt.resolvedUrl("AddCommandDialog.qml"))
                     dialog.accepted.connect(function() {
@@ -173,7 +173,7 @@ Page {
             id: placeholder
             enabled: view.count === 0
             flickable: view
-            text: qsTr("No commands defined")
+            text: i18n("No commands defined")
         }
 
         VerticalScrollDecorator { flickable: view }

@@ -45,7 +45,7 @@ Page {
 
                 PropertyChanges {
                     target: placeholder
-                    text: qsTr("Device is not reachable")
+                    text: i18n("Device is not reachable")
                 }
             },
             State {
@@ -72,7 +72,7 @@ Page {
 
                 PropertyChanges {
                     target: placeholder
-                    text: qsTr("Waiting for accepted pairing ...")
+                    text: i18n("Waiting for accepted pairing ...")
                 }
             },
             State {
@@ -106,7 +106,7 @@ Page {
 
                 Label {
                     color: Theme.highlightColor
-                    text: qsTr("This device wants to pair with your device.")
+                    text: i18n("This device wants to pair with your device.")
                     width: parent.width
                     wrapMode: Text.Wrap
                 }
@@ -118,12 +118,12 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Button {
-                        text: qsTr("Accept")
+                        text: i18n("Accept")
                         onClicked: _device.acceptPairing()
                     }
 
                     Button {
-                        text: qsTr("Reject")
+                        text: i18n("Reject")
                         onClicked: _device.rejectPairing()
                     }
                 }
@@ -139,7 +139,7 @@ Page {
 
                 Label {
                     color: Theme.highlightColor
-                    text: qsTr("Do you want to connect to this device?")
+                    text: i18n("Do you want to connect to this device?")
                     width: parent.width
                     wrapMode: Text.Wrap
                 }
@@ -149,7 +149,7 @@ Page {
                     visible: trustEntry.state === ""
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    text: qsTr("Connect")
+                    text: i18n("Connect")
                     onClicked: {
                         _device.requestPair()
                     }
@@ -164,25 +164,25 @@ Page {
                 // Plugin UIs
 
                 SectionHeader {
-                    text: qsTr("Actions")
+                    text: i18n("Actions")
                 }
                 PluginAction {
                     device: _device
-                    title: qsTr("Open touchpad")
+                    title: i18n("Open touchpad")
                     icon: "image://theme/icon-m-gesture"  
                     pluginId: "kdeconnect_remotecontrol"
                     onClicked: openPage("../pages/TouchpadPage.qml")
                 }
                 PluginAction {
                     device: _device
-                    title: qsTr("Upload clipboard text")
+                    title: i18n("Upload clipboard text")
                     icon: "image://theme/icon-m-clipboard"
                     pluginId: "sailfishconnect_clipboard"
                     onClicked: pluginCall("pushClipboard")
                 }
                 PluginAction {
                     device: _device
-                    title: qsTr("Run command...")
+                    title: i18n("Run command...")
                     icon: "image://theme/icon-m-wizard"
                     pluginId: "kdeconnect_remotecommands"
                     onClicked: openPage("../pages/RemoteCommandsPage.qml")
@@ -204,14 +204,14 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("Encryption info")
+                text: i18n("Encryption info")
                 onClicked: pageStack.push(
                                Qt.resolvedUrl("EncryptionInfoPage.qml"),
                                { device: _device })
             }
 
             MenuItem {
-                text: qsTr("Plugins")
+                text: i18n("Plugins")
                 onClicked: pageStack.push(
                                Qt.resolvedUrl("DevicePluginsPage.qml"),
                                { device: _device })
@@ -219,13 +219,13 @@ Page {
 
             MenuItem {
                 visible: _device && _device.isTrusted
-                text: qsTr("Unpair")
+                text: i18n("Unpair")
                 onClicked: _device.unpair()
             }
 
             MenuItem {
                 visible: connected
-                text: qsTr("Send ping")
+                text: i18n("Send ping")
                 onClicked: _device.pluginCall("ping", "sendPing")
             }
         }

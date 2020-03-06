@@ -52,9 +52,9 @@ void AppDaemon::askPairingConfirmation(Device *device)
 
     // notification->setAppName(QCoreApplication::applicationName());
     // notification->setSummary(device->name());
-    // notification->setBody(tr("Pending pairing request ..."));
+    // notification->setBody(i18n("Pending pairing request ..."));
     // notification->setPreviewSummary(device->name());
-    // notification->setPreviewBody(tr("Pairing request"));
+    // notification->setPreviewBody(i18n("Pairing request"));
     // notification->setExpireTimeout(PairingHandler::pairingTimeoutMsec() * 0.75);
     // notification->setRemoteActions(
     //             { UI::openDevicePageDbusAction(device->id()) });

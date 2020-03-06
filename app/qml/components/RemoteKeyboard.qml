@@ -20,7 +20,7 @@ import Sailfish.Silica 1.0
 import SailfishConnect.Api 0.7
 
 IconListItem {
-    title: qsTr("Keyboard")
+    title: i18n("Keyboard")
     source: "image://theme/icon-m-keyboard"
     visible: _device && _device.loadedPlugins.indexOf(
                  "SailfishConnect::RemoteKeyboardPlugin") >= 0

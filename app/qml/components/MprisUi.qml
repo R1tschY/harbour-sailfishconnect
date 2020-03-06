@@ -33,7 +33,7 @@ Column {
         height: contentHeight
 
         header: SectionHeader {
-            text: qsTr("Multimedia Controls")
+            text: i18n("Multimedia Controls")
             id: header
         }
 
@@ -91,7 +91,7 @@ Column {
 
                     Label {
                         id: songLabel
-                        text: song ? song : ("<" + qsTr("Nothing playing") + ">")
+                        text: song ? song : ("<" + i18n("Nothing playing") + ">")
                         color: Theme.highlightColor
                         truncationMode: TruncationMode.Fade
                         textFormat: Text.PlainText
@@ -193,7 +193,7 @@ Column {
         visible: mprisView.count === 0
         opacity: visible ? 1.0 : 0
 
-        text: qsTr("No remote players")
+        text: i18n("No remote players")
         wrapMode: Text.Wrap
         horizontalAlignment: Text.AlignHCenter
         font {

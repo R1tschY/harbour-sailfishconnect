@@ -21,6 +21,7 @@
 #include <QDir>
 #include <QFile>
 #include <QLoggingCategory>
+#include <KLocalizedString>
 
 #include "filehelper.h"
 
@@ -59,7 +60,7 @@ void DownloadJob::doStart()
                     << "Cannot create destination folder for file download"
                     << destination.filePath();
             setError(2);
-            setErrorText(tr("Cannot create destination folder"));
+            setErrorText(i18n("Cannot create destination folder"));
             return emitResult();
         }
 
@@ -74,12 +75,12 @@ void DownloadJob::doStart()
     if (!file->open(QIODevice::WriteOnly | QIODevice::Unbuffered)) {
         setError(2);
         setErrorText(
-            tr("Could not open file for writing: %1").arg(file->error()));
+            i18n("Could not open file for writing: %1").arg(file->error()));
         return emitResult();
     }
     setDestination(std::move(file));
 
-    emit description(this, tr("Receiving"));
+    emit description(this, i18n("Receiving"));
     CopyJob::doStart();
 }
 

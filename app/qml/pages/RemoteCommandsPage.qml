@@ -33,7 +33,7 @@ Page {
         anchors.fill: parent
 
         header: PageHeader {
-            title: qsTr("Run command")
+            title: i18n("Run command")
         }
 
         model: RemoteCommandsModel {
@@ -83,7 +83,7 @@ Page {
             id: placeholder
             enabled: view.count === 0
             flickable: view
-            text: qsTr("No commands defined on other device")
+            text: i18n("No commands defined on other device")
         }
 
         VerticalScrollDecorator { flickable: view }

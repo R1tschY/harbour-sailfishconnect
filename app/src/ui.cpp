@@ -26,6 +26,7 @@
 #include <QQmlContext>
 #include <QQuickView>
 #include <QSettings>
+#include <KLocalizedContext>
 
 #include <sailfishapp.h>
 // #include <notification.h>
@@ -79,6 +80,7 @@ void UI::showMainWindow()
     }
 
     m_view = SailfishApp::createView();
+    m_view->rootContext()->setContextObject(new KLocalizedContext(m_view));
     m_daemon->setQmlEngine(m_view->engine());
     // AlbumArtProvider::registerImageProvider(m_view->engine());
 

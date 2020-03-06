@@ -1,0 +1,160 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Weng Xuetian <wengxt@gmail.com>, 2015.
+# Xuetian Weng <wengxt@gmail.cm>, 2015.
+# Guo Yunhe <guoyunhebrave@gmail.com>, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeorg\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2020-03-02 03:19+0100\n"
+"PO-Revision-Date: 2020-01-20 21:47\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: kdeorg\n"
+"X-Crowdin-Language: zh-CN\n"
+"X-Crowdin-File: /kf5-trunk/messages/kdenetwork/kdeconnect-core.pot\n"
+
+#: backends/bluetooth/bluetoothpairinghandler.cpp:71
+#: backends/lan/lanpairinghandler.cpp:67
+#, kde-format
+msgid "Canceled by other peer"
+msgstr "被其他对等点取消"
+
+#: backends/bluetooth/bluetoothpairinghandler.cpp:80
+#: backends/lan/lanpairinghandler.cpp:76
+#, kde-format
+msgid "%1: Already paired"
+msgstr "%1：已配对"
+
+#: backends/bluetooth/bluetoothpairinghandler.cpp:83
+#, kde-format
+msgid "%1: Pairing already requested for this device"
+msgstr "%1: 对此设备已请求配对"
+
+#: backends/bluetooth/bluetoothpairinghandler.cpp:139
+#: backends/lan/lanpairinghandler.cpp:120
+#, kde-format
+msgid "Timed out"
+msgstr "超时"
+
+#: backends/lan/compositeuploadjob.cpp:95
+#, kde-format
+msgid "Couldn't find an available port"
+msgstr "无法找到可用端口"
+
+#: backends/lan/compositeuploadjob.cpp:134
+#, kde-format
+msgid "Failed to send packet to %1"
+msgstr "发送数据包给 %1 失败"
+
+#: backends/lan/compositeuploadjob.cpp:288
+#, kde-format
+msgid "Sent 1 file"
+msgid_plural "Sent %1 files"
+msgstr[0] "发送了 %1 个文件"
+
+#: backends/lan/compositeuploadjob.cpp:289
+#: backends/lan/compositeuploadjob.cpp:304
+#, kde-format
+msgid "Sending to %1"
+msgstr "正在发送给 %1"
+
+#: backends/lan/compositeuploadjob.cpp:300 compositefiletransferjob.cpp:155
+#, kde-format
+msgid "Progress"
+msgstr "处理"
+
+#: backends/lan/compositeuploadjob.cpp:301
+#, kde-format
+msgid "Sending file %1 of %2"
+msgstr "发送 %2 个文件中的 %1"
+
+#: backends/lan/compositeuploadjob.cpp:305 compositefiletransferjob.cpp:160
+#, kde-format
+msgid "File"
+msgstr "文件"
+
+#: backends/lan/landevicelink.cpp:160 backends/lan/landevicelink.cpp:174
+#, kde-format
+msgid ""
+"This device cannot be paired because it is running an old version of KDE "
+"Connect."
+msgstr "无法配对此设备，因为它运行旧版本的 KDE Connect。"
+
+#: compositefiletransferjob.cpp:156
+#, kde-format
+msgid "Receiving file %1 of %2"
+msgstr "正在接收 %2 个文件中的 %1 个"
+
+#: compositefiletransferjob.cpp:159
+#, kde-format
+msgid "Receiving file from %2"
+msgid_plural "Receiving %1 files from %2"
+msgstr[0] "正在从 %2 接收 %1 个文件"
+
+#: device.cpp:225
+#, kde-format
+msgid "Already paired"
+msgstr "已经配对"
+
+#: device.cpp:230
+#, kde-format
+msgid "Device not reachable"
+msgstr "设备不可达"
+
+#: device.cpp:549
+#, kde-format
+msgid "SHA1 fingerprint of your device certificate is: %1\n"
+msgstr "您的设备证书的 SHA1 指纹是：%1\n"
+
+#: device.cpp:557
+#, kde-format
+msgid "SHA1 fingerprint of remote device certificate is: %1\n"
+msgstr "远程设备证书的 SHA1 指纹是：%1\n"
+
+#: filetransferjob.cpp:65
+#, kde-format
+msgid "Filename already present"
+msgstr "文件名已存在"
+
+#: filetransferjob.cpp:111
+#, kde-format
+msgid "Received incomplete file: %1"
+msgstr "收到不完整的文件：%1"
+
+#: filetransferjob.cpp:129
+#, kde-format
+msgid "Received incomplete file from: %1"
+msgstr "收到不完整的文件自：%1"
+
+#: kdeconnectconfig.cpp:76
+#, kde-format
+msgid "KDE Connect failed to start"
+msgstr "KDE Connect 启动失败"
+
+#: kdeconnectconfig.cpp:77
+#, kde-format
+msgid ""
+"Could not find support for RSA in your QCA installation. If your "
+"distribution provides separate packets for QCA-ossl and QCA-gnupg, make sure "
+"you have them installed and try again."
+msgstr ""
+"你目前安装的 QCA 中没有 RSA 支持。如果你的发行版提供 QCA-ossl 和 QCA-gnupg 之"
+"类的分包，请确保你已经正确地安装它们，然后重试。"
+
+#: kdeconnectconfig.cpp:283
+#, kde-format
+msgid "Could not store private key file: %1"
+msgstr "无法保存私钥文件：%1"
+
+#: kdeconnectconfig.cpp:328
+#, kde-format
+msgid "Could not store certificate file: %1"
+msgstr "无法保存证书文件：%1"

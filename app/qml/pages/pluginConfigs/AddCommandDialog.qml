@@ -34,11 +34,11 @@ Dialog {
     // https://bugreports.qt.io/browse/QTBUG-16289
     property var _predefined: [
         {
-            "name": qsTr("Reboot"),
+            "name": i18n("Reboot"),
             "command": "dsmetool --reboot"
         },
         {
-            "name": qsTr("Lock device"),
+            "name": i18n("Lock device"),
             "command": ("dbus-send --system --type=method_call \\\n" +
                "    --dest=org.nemomobile.devicelock /devicelock \\\n" +
                "    org.nemomobile.lipstick.devicelock.setState int32:1")
@@ -68,21 +68,21 @@ Dialog {
             TextField {
                 id: nameField
                 width: parent.width
-                placeholderText: qsTr("Name of command")
-                label: qsTr("Name")
+                placeholderText: i18n("Name of command")
+                label: i18n("Name")
                 focus: true
             }
 
             TextArea {
                 id: commandField
                 width: parent.width
-                placeholderText: qsTr("Shell command to execute")
-                label: qsTr("Command")
+                placeholderText: i18n("Shell command to execute")
+                label: i18n("Command")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
             }
 
             SectionHeader {
-                text: qsTr("Pre-defined commands")
+                text: i18n("Predefined commands")
                 visible: predefinedView.count > 0
             }
 

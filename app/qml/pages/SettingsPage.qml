@@ -37,14 +37,14 @@ Page {
             spacing: Theme.paddingLarge
 
             PageHeader {
-                title: qsTr("Settings")
+                title: i18n("Settings")
             }
 
             TextSwitch {
                 id: runInBackground
-                text: qsTr("Run as service")
+                text: i18n("Run as service")
                 description:
-                    qsTr("Application starts at system start and runs in " +
+                    i18n("Application starts at system start and runs in " +
                          "background.")
                 checked: ui.runInBackground
                 onClicked: ui.runInBackground = !checked

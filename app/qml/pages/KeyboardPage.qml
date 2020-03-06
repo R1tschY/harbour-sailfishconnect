@@ -51,12 +51,12 @@ Page {
         anchors.fill: parent
 
         PageHeader {
-            title: qsTr("Keyboard")
+            title: i18n("Keyboard")
         }
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("Settings")
+                text: i18n("Settings")
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("KeyboardChangeLayoutPage.qml"))
                 }

@@ -17,13 +17,14 @@
 
 #include "copyjob.h"
 
+#include <algorithm>
 #include <QIODevice>
 #include <QLoggingCategory>
 #include <QTimer>
 #include <QFile>
 #include <QSslSocket>
 #include <QNetworkReply>
-#include <algorithm>
+#include <KLocalizedString>
 
 namespace SailfishConnect {
 
@@ -94,12 +95,12 @@ void CopyJob::doStart()
 
     if (!m_source->isOpen() || !m_source->isReadable()) {
         setError(2);
-        setErrorText(tr("Input stream is not readable."));
+        setErrorText(i18n("Input stream is not readable."));
         return emitResult();
     }
     if (!m_destination->isOpen() || !m_destination->isWritable()) {
         setError(2);
-        setErrorText(tr("Output stream is not writable."));
+        setErrorText(i18n("Output stream is not writable."));
         return emitResult();
     }
     if (!m_source->isSequential()) {
@@ -150,7 +151,7 @@ void CopyJob::poll()
         if (bytes == -1) {
             // read error
             setError(2);
-            setErrorText(tr("Read error: %1").arg(m_source->errorString()));
+            setErrorText(i18n("Read error: %1").arg(m_source->errorString()));
             return emitResult();
         }
         m_bufferSize += bytes;
@@ -165,7 +166,7 @@ void CopyJob::poll()
             // write error
             setError(2);
             setErrorText(
-                tr("Write error: %1").arg(m_destination->errorString()));
+                i18n("Write error: %1").arg(m_destination->errorString()));
             return emitResult();
         }
         std::move(m_buffer.begin() + bytes, m_buffer.begin() + m_bufferSize,
@@ -222,18 +223,18 @@ void CopyJob::finish()
 
     if (m_bufferSize != 0) {
         setError(2);
-        setErrorText(tr("Early end of output stream"));
+        setErrorText(i18n("Early end of output stream"));
     }
 
     if (m_size > 0 && m_writtenBytes > m_size) {
         setError(2);
-        setErrorText(tr("Read more bytes of input stream than "
-                        "expected."));
+        setErrorText(i18n("Read more bytes of input stream than "
+                          "expected."));
     }
 
     if (m_size > 0 && m_writtenBytes < m_size) {
         setError(2);
-        setErrorText(tr("Early end of input stream"));
+        setErrorText(i18n("Early end of input stream"));
     }
 
     close();

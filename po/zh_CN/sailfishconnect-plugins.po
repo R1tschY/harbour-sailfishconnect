@@ -1,0 +1,69 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-06 21:33+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: plugins/sf_share/copyjob.cpp:98
+#, kde-format
+msgid "Input stream is not readable."
+msgstr "输入流不可读取"
+
+#: plugins/sf_share/copyjob.cpp:103
+#, kde-format
+msgid "Output stream is not writable."
+msgstr "输出流不可读取"
+
+#: plugins/sf_share/copyjob.cpp:154
+#, kde-format
+msgid "Read error: %1"
+msgstr "读取错误:%1"
+
+#: plugins/sf_share/copyjob.cpp:169
+#, kde-format
+msgid "Write error: %1"
+msgstr "写入错误：%1"
+
+#: plugins/sf_share/copyjob.cpp:226
+#, kde-format
+msgid "Early end of output stream"
+msgstr "输入流提前结束"
+
+#: plugins/sf_share/copyjob.cpp:231
+#, kde-format
+msgid "Read more bytes of input stream than expected."
+msgstr "读取比预期更多的输入流字节"
+
+#: plugins/sf_share/copyjob.cpp:237
+#, kde-format
+msgid "Early end of input stream"
+msgstr "输入流提前结束"
+
+#: plugins/sf_share/downloadjob.cpp:63
+#, kde-format
+msgid "Cannot create destination folder"
+msgstr "无法创建目标文件夹"
+
+#: plugins/sf_share/downloadjob.cpp:78
+#, fuzzy, kde-format
+msgid "Could not open file for writing: %1"
+msgstr "无法打开要写入的文件:% 1"
+
+#: plugins/sf_share/downloadjob.cpp:83
+#, kde-format
+msgid "Receiving"
+msgstr "移除中"

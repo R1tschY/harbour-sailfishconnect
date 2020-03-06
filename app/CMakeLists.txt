@@ -1,4 +1,4 @@
-set(OUTPUT_NAME harbour-sailfishconnect)
+add_definitions(-DTRANSLATION_DOMAIN=\"sailfishconnect-app\")
 
 # Qt
 find_package(Qt5 COMPONENTS Core Network Qml Sql Gui Quick DBus REQUIRED)
@@ -54,7 +54,7 @@ add_executable(sailfishconnectapp
 
 set_target_properties(sailfishconnectapp
   PROPERTIES
-  OUTPUT_NAME ${OUTPUT_NAME}
+  OUTPUT_NAME ${PACKAGE_NAME}
 )
 
 target_include_directories(sailfishconnectapp 
@@ -66,6 +66,8 @@ target_link_libraries(sailfishconnectapp
   Qt5::Quick
   Qt5::DBus
   Qt5::Sql
+  KF5::CoreAddons
+  KF5::I18n
   ${SAILFISH_LDFLAGS}
 
   kdeconnectcore
@@ -79,21 +81,21 @@ install(TARGETS sailfishconnectapp
     RUNTIME DESTINATION bin
 )
 install(DIRECTORY qml
-    DESTINATION share/${OUTPUT_NAME}
+    DESTINATION share/${PACKAGE_NAME}
 )
 install(DIRECTORY translations
-    DESTINATION share/${OUTPUT_NAME}
+    DESTINATION share/${PACKAGE_NAME}
     FILES_MATCHING PATTERN "*.qm"
 )
-install(FILES ${OUTPUT_NAME}.desktop
+install(FILES ${PACKAGE_NAME}.desktop
     DESTINATION share/applications
 )
-install(FILES icons/86x86/${OUTPUT_NAME}.png
+install(FILES icons/86x86/${PACKAGE_NAME}.png
     DESTINATION share/icons/hicolor/86x86/apps
 )
-install(FILES icons/108x108/${OUTPUT_NAME}.png
+install(FILES icons/108x108/${PACKAGE_NAME}.png
     DESTINATION share/icons/hicolor/108x108/apps
 )
-install(FILES icons/128x128/${OUTPUT_NAME}.png
+install(FILES icons/128x128/${PACKAGE_NAME}.png
     DESTINATION share/icons/hicolor/128x128/apps
 )

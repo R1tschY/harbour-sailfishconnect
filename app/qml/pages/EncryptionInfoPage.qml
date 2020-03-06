@@ -57,7 +57,7 @@ Page {
 
             PageHeader {
                 id: header
-                title: qsTr("Encryption info")
+                title: i18n("Encryption info")
             }
 
             Label {

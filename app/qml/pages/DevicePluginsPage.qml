@@ -55,7 +55,7 @@ Page {
 
         anchors.fill: parent
         header: PageHeader {
-            title: qsTr("Select Plugins")
+            title: i18n("Select Plugins")
         }
 
         delegate: ListItem {
@@ -72,7 +72,7 @@ Page {
                 text: pluginName
                 icon.source: _pluginIcons[pluginId] || ""
                 description: pluginDescription 
-                    + (hasConfig ? "<br><i>%1</i>".arg(qsTr("Open configuration throught context menu")) : "")
+                    + (hasConfig ? "<br><i>%1</i>".arg(i18n("Open configuration throught context menu")) : "")
                 onCheckedChanged: pluginEnabled = checked
                 onPressAndHold: openMenu()
 
@@ -83,7 +83,7 @@ Page {
                 id: contextMenu
                 ContextMenu {
                     MenuItem {
-                        text: qsTr("Open configuration")
+                        text: i18n("Open configuration")
                         onClicked: pageStack.push(
                             _pluginConfigs[pluginId],
                             { device: device })

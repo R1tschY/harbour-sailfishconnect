@@ -1,0 +1,69 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-06 21:33+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugins/sf_share/copyjob.cpp:98
+#, kde-format
+msgid "Input stream is not readable."
+msgstr "Eingehender Datenstrom ist nicht lesbar."
+
+#: plugins/sf_share/copyjob.cpp:103
+#, kde-format
+msgid "Output stream is not writable."
+msgstr "Ausgehender Datenstrom ist nicht schreibbar."
+
+#: plugins/sf_share/copyjob.cpp:154
+#, kde-format
+msgid "Read error: %1"
+msgstr "Lesefehler: %1"
+
+#: plugins/sf_share/copyjob.cpp:169
+#, kde-format
+msgid "Write error: %1"
+msgstr "Schreibfehler: %1"
+
+#: plugins/sf_share/copyjob.cpp:226
+#, kde-format
+msgid "Early end of output stream"
+msgstr "Frühes Ende des Ausgangestroms"
+
+#: plugins/sf_share/copyjob.cpp:231
+#, kde-format
+msgid "Read more bytes of input stream than expected."
+msgstr "Mehr Bytes von eingehenden Datenstrom gelesen als erwartet."
+
+#: plugins/sf_share/copyjob.cpp:237
+#, kde-format
+msgid "Early end of input stream"
+msgstr "Verfrühtes Ende des eingehenden Datenstroms."
+
+#: plugins/sf_share/downloadjob.cpp:63
+#, kde-format
+msgid "Cannot create destination folder"
+msgstr "Zielordner kann nicht erstellt werden"
+
+#: plugins/sf_share/downloadjob.cpp:78
+#, kde-format
+msgid "Could not open file for writing: %1"
+msgstr "Datei kann nicht zum Schreiben geöffnet werden: %1"
+
+#: plugins/sf_share/downloadjob.cpp:83
+#, kde-format
+msgid "Receiving"
+msgstr "Erhalte"

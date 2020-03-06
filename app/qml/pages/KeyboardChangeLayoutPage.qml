@@ -28,7 +28,7 @@ Page {
             anchors.fill: parent
 
             PageHeader {
-                title: qsTr("Settings")
+                title: i18n("Settings")
             }
 
             Slider {
@@ -37,7 +37,7 @@ Page {
                 maximumValue: 500
                 stepSize: 50
                 value: keyboardLayout.repeatInterval
-                valueText: qsTr("%1ms repeat interval").arg(value)
+                valueText: i18n("%1ms repeat interval").arg(value)
 
                 onValueChanged: {
                     if (keyboardLayout.repeatInterval !== value) keyboardLayout.repeatInterval = value
@@ -45,7 +45,7 @@ Page {
             }
 
             TextSwitch {
-                text: qsTr("Vibration feedback")
+                text: i18n("Vibration feedback")
                 checked: keyboardLayout.feedback
 
                 onCheckedChanged: {
@@ -54,7 +54,7 @@ Page {
             }
 
             ComboBox {
-                label: qsTr("Change layout")
+                label: i18n("Change layout")
                 currentIndex: getLayoutIndex(keyboardLayout.layout)
                 menu: ContextMenu {
                     Repeater {

@@ -51,12 +51,12 @@ Page {
 
     PageHeader {
         id: header
-        title: qsTr("Touchpad")
+        title: i18n("Touchpad")
     }
 
     InfoLabel {
         id: hintLabel
-        text: qsTr(
+        text: i18n(
                   "Move finger on screen\n" +
                   "Tap for click\n" +
                   "Hold shortly for Drag'n'Drop")

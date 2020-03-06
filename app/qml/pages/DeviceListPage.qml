@@ -54,7 +54,7 @@ Page {
             enabled: !startup
                      && trustedDevices.count === 0
                      && nearDevices.count === 0
-            text: qsTr("Install KDE Connect or GSConnect on your " +
+            text: i18n("Install KDE Connect or GSConnect on your " +
                        "computer and connect it to the same WLAN.")
         }
 
@@ -65,13 +65,13 @@ Page {
             spacing: Theme.paddingLarge
 
             PageHeader {
-                title: qsTr("Sailfish Connect")  // TODO: QT5.9: Qt.application.displayName
+                title: i18n("Sailfish Connect")  // TODO: QT5.9: Qt.application.displayName
             }
 
             TextField {
                 id: announcedNameField
                 width: parent.width
-                label: qsTr("Device Name")
+                label: i18n("Device Name")
                 text: kdeconnectService.registered ? daemon.announcedName() : ""
 
                 onActiveFocusChanged: {
@@ -143,9 +143,9 @@ Page {
                         }
 
                         text: (trusted && reachable)
-                              ? qsTr("Connected")
+                              ? i18n("Connected")
                               : (hasPairingRequests
-                                 ? qsTr("Pending pairing request ...") : "")
+                                 ? i18n("Pending pairing request ...") : "")
                         color: listItem.highlighted
                                ? Theme.secondaryHighlightColor
                                : Theme.secondaryColor
@@ -213,7 +213,7 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr("Paired devices")
+                text: i18n("Paired devices")
                 visible: trustedDevices.count > 0
             }
             ColumnView {
@@ -228,7 +228,7 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr("Nearby devices")
+                text: i18n("Nearby devices")
                 visible: nearDevices.count > 0
             }
             ColumnView {
@@ -244,28 +244,28 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("About ...")
+                text: i18n("About ...")
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
 
             MenuItem {
-                text: qsTr("Settings ...")
+                text: i18n("Settings ...")
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
             }
 
             MenuItem {
-                text: qsTr("Transfers ...")
+                text: i18n("Transfers ...")
                 onClicked: pageStack.push(Qt.resolvedUrl("TransfersPage.qml"))
             }
 
             MenuItem {
-                text: qsTr("Quit")
+                text: i18n("Quit")
                 visible: ui.runInBackground
                 onClicked: ui.quit()
             }
 
             MenuItem {
-                text: qsTr("Refresh")
+                text: i18n("Refresh")
                 onClicked: daemon.forceOnNetworkChange()
             }
         }

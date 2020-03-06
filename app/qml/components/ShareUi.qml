@@ -22,7 +22,7 @@ import SailfishConnect.Share 0.3
 import Sailfish.Pickers 1.0
 
 IconListItem {
-    title: qsTr("Share a file")
+    title: i18n("Share a file")
     source: "image://theme/icon-m-share"
     visible: _device && _device.loadedPlugins.indexOf("SailfishConnect::SharePlugin") >= 0
 
@@ -31,7 +31,7 @@ IconListItem {
     Component {
         id: filePickerPage
         ContentPickerPage {
-            title: qsTr("Select file to send")
+            title: i18n("Select file to send")
             onSelectedContentPropertiesChanged: {
                 _device
                     .plugin("SailfishConnect::SharePlugin")

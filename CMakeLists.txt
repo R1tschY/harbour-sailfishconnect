@@ -42,15 +42,22 @@ add_subdirectory(kdeconnect)
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
-find_package(Qt5 REQUIRED COMPONENTS Core DBus Network Gui Sql)
+find_package(Qt5 REQUIRED COMPONENTS Core DBus Network Gui Sql Quick)
 find_package(KF5 REQUIRED COMPONENTS I18n CoreAddons Config)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
+
+set(PACKAGE_NAME harbour-sailfishconnect)
 
 add_subdirectory(app)
 add_subdirectory(pluginscommon)
 add_subdirectory(plugins)
 #add_subdirectory(tests)
+
+
+# I18N
+set(LOCALE_INSTALL_DIR share/${PACKAGE_NAME}/locale)
+KI18N_INSTALL(${CMAKE_CURRENT_SOURCE_DIR}/po)
 
 # Install libraries
 install(

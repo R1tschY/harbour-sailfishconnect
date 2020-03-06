@@ -111,6 +111,7 @@ desktop-file-install --delete-original       \
 %defattr(-,root,root,-)
 %{_bindir}
 %{_datadir}/%{name}/qml
+%{_datadir}/%{name}/locale
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 # >> files

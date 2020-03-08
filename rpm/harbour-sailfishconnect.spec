@@ -48,40 +48,47 @@ SailfishOS client for KDE-Connect
 
 VENV=$HOME/.venv-conan-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
+if [ "$TARGET_CPU" == "i486" ]
+then  
+  GENERATOR=Unix Makefiles
+else
+  GENERATOR=Ninja
+fi
 
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then
-pip3 install --no-warn-script-location --user virtualenv
+  pip3 install --no-warn-script-location --user virtualenv
 fi
 
 # create virtualenv and install conan
 if [ ! -f "$VENV/bin/conan" ] ; then
-~/.local/bin/virtualenv --python=python3 "$VENV"
-source "$VENV/bin/activate"
-pip install conan
+  ~/.local/bin/virtualenv --python=python3 "$VENV"
+  source "$VENV/bin/activate"
+  pip install conan
 else
-source "$VENV/bin/activate"
+  source "$VENV/bin/activate"
 fi
 
 # speed up conan remote add
 if ! grep -sq sailfishos ~/.conan/remotes.json ; then
-conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
+  conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
 fi
 
 export SAILFISHCONNECT_PACKAGE_VERSION="%{version}-%{release}"
 if [ ! -d rpmbuilddir ]; then
-mkdir -p rpmbuilddir
+  mkdir -p rpmbuilddir
 fi
 cd rpmbuilddir
 conan install .. --profile=../dev/profiles/%{_target_cpu}
+
 cmake \
--DCMAKE_BUILD_TYPE=Debug \
--DBUILD_SHARED_LIBS=OFF \
--DCMAKE_INSTALL_PREFIX=/usr \
--DCMAKE_VERBOSE_MAKEFILE=ON \
--DSAILFISHOS=ON \
--G Ninja \
-..
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_VERBOSE_MAKEFILE=ON \
+  -DSAILFISHOS=ON \
+  -G "$GENERATOR" \
+  ..
 cd ..
 cmake --build rpmbuilddir -- %{?_smp_mflags}
 

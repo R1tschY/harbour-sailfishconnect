@@ -34,11 +34,12 @@ add_static_plugins_lib(
     Share
     Telepathy
     Telephony
+    #MprisRemote
 )
 
 # plugin clients
-#generate_plugin_client(
-#  sailfishconnect_PLUGIN_CLIENTS ${PROJECT_SOURCE_DIR}/plugins/clipboard/clipboardplugin.h clipboardpluginclient)
+generate_plugin_client(
+  sailfishconnect_PLUGIN_CLIENTS ${PROJECT_SOURCE_DIR}/plugins/sf_mprisremote/mprisremoteplugin.h mprisremotepluginclient)
 
 # exe
 set(CONFIG_SOURCE src/sailfishconnect-config.cpp)

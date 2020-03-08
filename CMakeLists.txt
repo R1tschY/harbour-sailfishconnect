@@ -36,7 +36,7 @@ endif()
 add_definitions(-DSAILFISHOS)
 
 # KDE Connect
-add_subdirectory(kdeconnect)
+add_subdirectory(kdeconnect-kde)
 
 # Sailfish Connect
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)

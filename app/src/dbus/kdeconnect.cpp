@@ -27,6 +27,7 @@ DeviceApi::DeviceApi(const QString& deviceId, QObject* parent)
 : DeviceDbusInterface(deviceId, parent)
 {
     connect(this, &DeviceApi::pluginsChanged, this, [this] { 
+        qCCritical(logger) << this << "changed plugins";
         m_loadedPluginsLoaded = false; 
         Q_EMIT pluginsChangedProxy();
     });
@@ -36,13 +37,16 @@ QStringList DeviceApi::loadedPlugins() {
     if (!m_loadedPluginsLoaded) {
         m_loadedPlugins = DeviceDbusInterface::loadedPlugins();
         m_loadedPluginsLoaded = true;
+        qCCritical(logger) << this << "loaded plugins" << m_loadedPlugins;
+    } else {
+        qCCritical(logger) << this  << "loaded plugins (cached)" << m_loadedPlugins;
     }
 
     return m_loadedPlugins;
 }
 
 bool DeviceApi::isPluginLoaded(const QString& pluginId) {
-    return loadedPlugins_().contains(pluginId);
+    return loadedPlugins().contains(pluginId);
 }
 
 void checkForDbusError(const QDBusPendingCall& async) {

@@ -82,7 +82,7 @@ public:
 
 class DeviceApi : public DeviceDbusInterface {
     Q_OBJECT
-    Q_PROPERTY(QStringList loadedPlugins_ READ loadedPlugins_ NOTIFY pluginsChangedProxy)
+    Q_PROPERTY(QStringList loadedPlugins READ loadedPlugins NOTIFY pluginsChangedProxy)
 public:
     explicit DeviceApi(const QString& deviceId, QObject* parent = nullptr);
 
@@ -106,7 +106,7 @@ public:
         return DeviceDbusInterface::encryptionInfo();
     }
 
-    QStringList loadedPlugins_();
+    QStringList loadedPlugins();
 
     Q_SCRIPTABLE bool isPluginLoaded(const QString& pluginId);
 

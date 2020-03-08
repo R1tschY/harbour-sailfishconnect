@@ -50,9 +50,9 @@ VENV=$HOME/.venv-conan-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
 if [ "$TARGET_CPU" == "i486" ]
 then  
-  GENERATOR=Unix Makefiles
+  GENERATOR="Unix Makefiles"
 else
-  GENERATOR=Ninja
+  GENERATOR="Ninja"
 fi
 
 # install virtualenv

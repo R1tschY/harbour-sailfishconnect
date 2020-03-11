@@ -522,7 +522,8 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
 //            << "timeout=" << timeout;
 
     // skip our own notifications
-    if (hints.value(QStringLiteral("x-sailfishconnect-hide"), false).toBool())
+    if (hints.value(QStringLiteral("x-nemo-owner")).toString()
+            == QStringLiteral("harbour-sailfishconnect"))
         return;
 
     // qCDebug(logger) << "Notification hints:" << hints << "Actions:" << actions;

@@ -44,7 +44,7 @@ static Q_LOGGING_CATEGORY(logger, "SailfishConnect.SendNotifications")
 const char* NOTIFY_SIGNATURE = "susssasa{sv}i";
 
 
-void becomeMonitor(DBusConnection* conn, const char* match) {
+QString becomeMonitor(DBusConnection* conn, const char* match) {
     // message
     DBusMessage* msg = dbus_message_new_method_call(
         DBUS_SERVICE_DBUS,
@@ -52,22 +52,32 @@ void becomeMonitor(DBusConnection* conn, const char* match) {
         DBUS_INTERFACE_MONITORING,
         "BecomeMonitor");
     Q_ASSERT(msg != nullptr);
+    bool success;
 
     // arguments
     const char* matches[] = {match};
     const char** matches_ = matches;
     dbus_uint32_t flags = 0;
-    Q_ASSERT(dbus_message_append_args(
+
+    success = dbus_message_append_args(
                 msg,
                 DBUS_TYPE_ARRAY, DBUS_TYPE_STRING, &matches_, 1,
                 DBUS_TYPE_UINT32, &flags,
-                DBUS_TYPE_INVALID));
+                DBUS_TYPE_INVALID);
+    if (!success) {
+        return QStringLiteral("Failed to call dbus_message_append_args");
+    }
 
     // send
     // TODO: wait and check for error: dbus_connection_send_with_reply_and_block
-    Q_ASSERT(dbus_connection_send(conn, msg, nullptr));
+    success = dbus_connection_send(conn, msg, nullptr);
+    if (!success) {
+        return QStringLiteral("Failed to call dbus_connection_send");
+    }
 
     dbus_message_unref(msg);
+
+    return QString();
 }
 
 extern "C" DBusHandlerResult handleMessageFromC(
@@ -116,10 +126,17 @@ void NotificationsListenerThread::run()
     dbus_connection_set_exit_on_disconnect(connection, false);
     dbus_connection_add_filter(connection, handleMessageFromC, this, nullptr);
 
-    becomeMonitor(
+    QString error = becomeMonitor(
                 connection,
                 "interface='org.freedesktop.Notifications',"
                 "member='Notify'");
+
+    if (!error.isEmpty()) {
+        qCWarning(logger).noquote()
+                << "Failed to become a DBus monitor."
+                << " No notifictions will be send."
+                << " Error:" << error;
+    }
 
     // wake up every minute to see if we are still connected
     while (dbus_connection_read_write_dispatch(connection, 60 * 1000))

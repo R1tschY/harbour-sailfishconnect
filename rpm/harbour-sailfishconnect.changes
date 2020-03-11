@@ -4,7 +4,7 @@
 * Wed Mar 11 2020 Richard Liebscher <r1tschy@posteo.de> 0.5.1-1
 - Allow newer TLS versions (#38). Fixes broken GSConnect support for distributions 
   using GLib >= 2.64.
-- Fix notifications not send from sendnotifications plugin.
+- Fixed monitoring of notifications in release build.
 
 * Sat Jan 04 2020 Richard Liebscher <r1tschy@posteo.de> 0.5-1
 - Added Contacts plugin.

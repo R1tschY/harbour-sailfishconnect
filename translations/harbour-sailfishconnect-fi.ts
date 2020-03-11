@@ -289,11 +289,11 @@
     <name>SailfishConnect::ContactsPluginFactory</name>
     <message>
         <source>Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Yhteystiedot</translation>
     </message>
     <message>
         <source>Share contacts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jaa yhteystiedot.</translation>
     </message>
 </context>
 <context>
@@ -445,11 +445,11 @@
     </message>
     <message>
         <source>Application starts at system start and runs in background.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sovellus käynnistyy järjestelmän käynnistyessä ja suoritetaan taustalla.</translation>
     </message>
     <message>
         <source>Run as background service</source>
-        <translation type="unfinished"></translation>
+        <translation>Suorita taustapalveluna.</translation>
     </message>
 </context>
 <context>

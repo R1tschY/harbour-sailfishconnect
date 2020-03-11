@@ -82,7 +82,7 @@
     </message>
     <message>
         <source>About ...</source>
-        <translation>关于 ...</translation>
+        <translation>关于 </translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -102,7 +102,7 @@
     </message>
     <message>
         <source>Transfers ...</source>
-        <translation>传输…</translation>
+        <translation>传输</translation>
     </message>
     <message>
         <source>Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.</source>

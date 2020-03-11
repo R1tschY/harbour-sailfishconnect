@@ -444,7 +444,6 @@ void LanLinkProvider::configureSslSocket(QSslSocket* socket, const QString& devi
     // Configure for ssl
     QSslConfiguration sslConfig;
     sslConfig.setCiphers(socketCiphers);
-    sslConfig.setProtocol(QSsl::TlsV1_0);
 
     socket->setSslConfiguration(sslConfig);
     socket->setLocalCertificate(m_config->certificate());

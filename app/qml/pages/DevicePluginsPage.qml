@@ -40,7 +40,8 @@ Page {
     }
 
     readonly property var _pluginConfigs: {
-        "kdeconnect_runcommand": Qt.resolvedUrl("pluginConfigs/RunCommandsPage.qml")
+        "kdeconnect_runcommand": Qt.resolvedUrl("pluginConfigs/RunCommandsConfigPage.qml"),
+        "sailfishconnect_share": Qt.resolvedUrl("pluginConfigs/ShareConfigPage.qml"),
     }
 
     allowedOrientations: Orientation.All

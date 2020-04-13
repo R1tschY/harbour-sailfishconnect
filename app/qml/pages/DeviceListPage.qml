@@ -86,7 +86,7 @@ Page {
                     }
                 }
 
-                EnterKey.onClicked: page.focus = true
+                EnterKey.onClicked: announcedNameField.focus = false
                 EnterKey.iconSource: "image://theme/icon-m-enter-close"
             }
 

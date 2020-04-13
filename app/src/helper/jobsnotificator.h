@@ -1,7 +1,7 @@
 #ifndef JOBSNOTIFICATOR_H
 #define JOBSNOTIFICATOR_H
 
-#include <sailfishconnect/io/jobmanager.h>
+#include "../io/jobmanager.h"
 #include <QObject>
 #include <QHash>
 

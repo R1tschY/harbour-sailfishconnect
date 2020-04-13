@@ -4,9 +4,8 @@
 #include <KJobTrackerInterface>
 #include <QLoggingCategory>
 
-#include <sailfishconnect/helper/cpphelper.h>
-#include <sailfishconnect/daemon.h>
-#include <sailfishconnect/device.h>
+#include <core/daemon.h>
+#include <core/device.h>
 #include <notification.h>
 
 namespace SailfishConnect {
@@ -17,7 +16,8 @@ JobsNotificator::JobsNotificator(JobManager *jobManager)
     connect(m_jobManager, &JobManager::jobAdded,
             this, &JobsNotificator::addJob);
 
-    for (auto* job : asConst(m_jobManager->jobs())) {
+    const auto jobs = m_jobManager->jobs();
+    for (auto* job : jobs) {
         addJob(job);
     }
 }

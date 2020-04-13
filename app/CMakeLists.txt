@@ -8,7 +8,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # libsailfishapp
 include(FindPkgConfig)
-pkg_search_module(SAILFISH sailfishapp REQUIRED)
+pkg_search_module(SailfishApp sailfishapp REQUIRED IMPORTED_TARGET)
+pkg_search_module(KeepAlive keepalive REQUIRED IMPORTED_TARGET)
+pkg_search_module(NemoNotifications nemonotifications-qt5 REQUIRED IMPORTED_TARGET)
 
 # plugins
 include(Plugins.cmake)
@@ -58,10 +60,6 @@ set_target_properties(sailfishconnectapp
   OUTPUT_NAME ${PACKAGE_NAME}
 )
 
-target_include_directories(sailfishconnectapp 
-  PRIVATE ${SAILFISH_INCLUDE_DIRS}
-)
-
 target_link_libraries(sailfishconnectapp
   Qt5::Core
   Qt5::Quick
@@ -69,7 +67,9 @@ target_link_libraries(sailfishconnectapp
   Qt5::Sql
   KF5::CoreAddons
   KF5::I18n
-  ${SAILFISH_LDFLAGS}
+  PkgConfig::SailfishApp
+  PkgConfig::KeepAlive
+  PkgConfig::NemoNotifications
 
   kdeconnectcore
   kdeconnectinterfaces

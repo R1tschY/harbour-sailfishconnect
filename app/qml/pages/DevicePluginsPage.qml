@@ -36,6 +36,7 @@ Page {
         "sailfishconnect_telepathy": "image://theme/icon-m-sms",
         "sailfishconnect_sendnotifications": "image://theme/icon-m-notifications",
         "sailfishconnect_mprisremote": "image://theme/icon-m-media",
+        "sailfishconnect_remotekeyboard": "image://theme/icon-m-keyboard"
     }
 
     readonly property var _pluginConfigs: {

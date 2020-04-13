@@ -4,6 +4,7 @@ kdeconnect_add_plugin(
     SOURCES contactsplugin.cpp)
 
 target_link_libraries(sailfishconnect_contacts
+PRIVATE
     kdeconnectcore
     sailfishconnectpluginscommon
     KF5::I18n

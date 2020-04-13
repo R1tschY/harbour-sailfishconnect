@@ -64,8 +64,6 @@
 #include "dbus/kdeconnect.h"
 #include "dbus/servicewatcher.h"
 
-#include <QtPlugin>
-
 Q_IMPORT_PLUGIN(opensslPlugin)
 
 namespace SailfishConnect {

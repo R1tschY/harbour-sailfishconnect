@@ -18,7 +18,6 @@
 #pragma once
 
 #include <QObject>
-#include <QtPlugin>
 #include <QMap>
 #include <QSet>
 #include <QList>

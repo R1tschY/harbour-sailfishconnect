@@ -4,6 +4,9 @@
 *.swp
 *.spec.*
 
+# Logs
+*.log
+
 # Qt Creator
 *.user*
 *.autosave
@@ -29,8 +32,8 @@ __pycache__
 # RPM
 *.list
 /rpm/*.spec.*
+/rpmbuilddir
+/RPMS
 
 # Build dirs
 /build*
-/rpmbuilddir
-/RPMS

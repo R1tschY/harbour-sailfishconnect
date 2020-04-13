@@ -4,6 +4,7 @@ kdeconnect_add_plugin(
     SOURCES telephonyplugin.cpp ofono.cpp)
 
 target_link_libraries(sailfishconnect_telephony
+PRIVATE
     kdeconnectcore
     sailfishconnectpluginscommon
     KF5::I18n

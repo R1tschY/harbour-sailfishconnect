@@ -9,6 +9,11 @@ add_library(sailfishconnectpluginscommon
   ${sailfishconnectpluginscommon_SOURCES})
 
 target_link_libraries(sailfishconnectpluginscommon
+PUBLIC
   Qt5::Core
+  Qt5::Network
   Qt5::Sql
+  KF5::CoreAddons
+PRIVATE
+  KF5::I18n
 )

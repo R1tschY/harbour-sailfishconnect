@@ -28,8 +28,8 @@
 
 #include <core/daemon.h>
 
-#include "downloadjob.h"
-#include "filehelper.h"
+#include <downloadjob.h>
+#include <filehelper.h>
 
 using namespace SailfishConnect;
 

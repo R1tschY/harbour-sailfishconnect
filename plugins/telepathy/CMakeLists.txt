@@ -4,6 +4,7 @@ kdeconnect_add_plugin(
     SOURCES telepathyplugin.cpp)
 
 target_link_libraries(sailfishconnect_telepathy
+PRIVATE
     kdeconnectcore
     KF5::I18n
     Qt5::DBus

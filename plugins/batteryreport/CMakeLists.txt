@@ -7,6 +7,7 @@ find_package(PkgConfig QUIET REQUIRED)
 pkg_check_modules(ContextkitStatefs REQUIRED contextkit-statefs)
 
 target_link_libraries(sailfishconnect_batteryreport
+PRIVATE
     kdeconnectcore
     ${ContextkitStatefs_LIBRARIES}
     KF5::I18n

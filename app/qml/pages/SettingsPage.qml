@@ -42,7 +42,7 @@ Page {
 
             TextSwitch {
                 id: runInBackground
-                text: i18n("Run as service")
+                text: i18n("Run as background service")
                 description:
                     i18n("Application starts at system start and runs in " +
                          "background.")

@@ -76,6 +76,17 @@ void AppDaemon::askPairingConfirmation(Device *device)
 void AppDaemon::reportError(const QString& title, const QString& description)
 {
     qCCritical(logger) << title << description;
+    // notification_.setAppName(PRETTY_PACKAGE_NAME);
+    // notification_.setCategory("device");
+
+    // connect(
+    //     &m_backgroundActivity, &BackgroundActivity::running,
+    //     this, &AppDaemon::onWakeUp);
+    // m_backgroundActivity.setWakeupFrequency(BackgroundActivity::ThirtySeconds);
+
+    // onDeviceVisibilityChanged();
+    // connect(this, &Daemon::deviceVisibilityChanged,
+    //         this, &AppDaemon::onDeviceVisibilityChanged);
 }
 
 void AppDaemon::quit() {
@@ -134,7 +145,29 @@ void AppDaemon::setQmlEngine(QQmlEngine* qmlEngine)
     }
 }
 
-AppDaemon* AppDaemon::instance()
+void AppDaemon::onDeviceVisibilityChanged()
+{
+    QStringList connectedDevices = devices(true, true);
+    qCDebug(logger)
+        << "Device changed, got"
+        << connectedDevices.size() << "connected devices";
+    m_backgroundActivity.setState(
+        connectedDevices.size()
+        ? BackgroundActivity::Waiting : BackgroundActivity::Stopped);
+}
+
+void AppDaemon::onWakeUp()
+{
+//    qCDebug(logger)
+//        << QDateTime::currentDateTime().toString() << "Received wakeup, got"
+//        << m_connectedDevices.size() << "connected devices";
+
+    // immediately to go sleep, hope that is sufficient to keep connections
+    // alive
+    m_backgroundActivity.wait();
+}
+
+AppDaemon *AppDaemon::instance()
 {
     return static_cast<AppDaemon*>(Daemon::instance());
 }

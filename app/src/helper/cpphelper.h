@@ -24,6 +24,12 @@
 namespace SailfishConnect {
 
 template<typename T>
+constexpr const T& asConst(const T& t) noexcept
+{
+    return t;
+}
+
+template<typename T>
 constexpr typename std::add_const<T>::type& asConst(T& t) noexcept
 {
     return t;

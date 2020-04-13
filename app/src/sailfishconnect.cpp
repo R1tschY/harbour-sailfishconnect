@@ -63,6 +63,12 @@
 #include "js/qmlregister.h"
 #include "dbus/kdeconnect.h"
 #include "dbus/servicewatcher.h"
+#include "dbus/ofono.h"
+#include "helper/jobsnotificator.h"
+
+namespace SailfishConnect {
+
+static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
 
 Q_IMPORT_PLUGIN(opensslPlugin)
 
@@ -242,6 +248,8 @@ int main(int argc, char *argv[])
     ui.showMainWindow();
     if (!options.daemonMode)
         ui.showMainWindow();
+
+    JobsNotificator jobNotificator(Daemon::instance()->jobManager());
 
     return app->exec();
 }

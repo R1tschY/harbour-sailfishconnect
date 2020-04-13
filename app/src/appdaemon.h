@@ -22,6 +22,8 @@
 
 //#include <notification.h>
 #include <QEventLoopLocker>
+#include <QSet>
+#include <backgroundactivity.h>
 
 class QQmlEngine;
 class QQmlImageProviderBase;
@@ -59,10 +61,15 @@ public:
 private:
     QEventLoopLocker m_eventLoopLock;
     
+    BackgroundActivity m_backgroundActivity;
     //Notification notification_;
 
     QQmlEngine* m_qmlEngine = nullptr;
     JobManager* m_jobmanager = nullptr;
+    ContactsManager* m_contacts = nullptr;
+
+    void onDeviceVisibilityChanged();
+    void onWakeUp();
 };
 
 } // namespace SailfishConnect

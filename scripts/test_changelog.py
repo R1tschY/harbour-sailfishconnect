@@ -21,8 +21,8 @@ from textwrap import dedent
 import datetime
 
 
-def apply_inplace(text, fn, args):
-    change = fn(changelog=text, args=args)
+def apply_inplace(text, fn, *args, **kwargs):
+    change = fn(changelog=text, args=args, **kwargs)
     if change:
         return text[:change.start] + change.replacement + text[change.end:]
     else:
@@ -46,8 +46,7 @@ def test_release():
         * Sat Mar 02 2000 the author <mail@example.org> 0.1-1
     """)
 
-    date = format_datetime(datetime.datetime.now())
     assert dedent("""
-        * {} the author <mail@example.org> 0.1-1
-    """.format(date)) == apply_inplace(changelog, release, [])
+        * Fri Jan 03 2020 the author <mail@example.org> 0.1-1
+    """) == apply_inplace(changelog, release, date=datetime.datetime(2020, 1, 3))
 

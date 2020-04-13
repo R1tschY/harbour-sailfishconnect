@@ -1,6 +1,19 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Sat Jan 04 2020 Richard Liebscher <r1tschy@posteo.de> 0.5-1
+- Added Contacts plugin.
+- Resolve Phonenumbers to contact names in telephony plugin.
+- Starts now at system start as systemd user service when in background mode
+- Fixed GSConnect not showing notifications without a icon
+- Added translation for Italian (thanks to ghostofasmile)
+
+* Mon Sep 09 2019 Richard Liebscher <r1tschy@posteo.de> 0.4.1-1
+- Fix bug of app quiting after file transfer of any kind when screen is off
+- Added translation for French and one missing translatable string (thanks to the translators)
+- Fix file upload to GSConnect
+- Wake up app regularly to keep TCP connections alive (#27)
+
 * Sun Aug 18 2019 Richard Liebscher <r1tschy@posteo.de> 0.4-1
 - Added keyboard plugin (thanks to derFogel)
 - Added album art to media player

@@ -27,10 +27,14 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Test)
 BuildRequires:  pkgconfig(contextkit-statefs)
 BuildRequires:  pkgconfig(nemonotifications-qt5)
+BuildRequires:  pkgconfig(keepalive)
 BuildRequires:  cmake
 BuildRequires:  ninja
 BuildRequires:  gettext
 BuildRequires:  python3-devel
+%if "%(grep 'VERSION_ID' /etc/os-release | cut -d= -f2)" == "3.2.1.20"
+BuildRequires:  python3-pip
+%endif
 BuildRequires:  desktop-file-utils
 
 %description
@@ -55,6 +59,9 @@ else
   GENERATOR="Ninja"
 fi
 
+# create virtualenv and install conan
+if [ ! -f "$VENV/bin/conan" ] ; then
+
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then
   pip3 install --no-warn-script-location --user virtualenv
@@ -71,6 +78,7 @@ fi
 
 # speed up conan remote add
 if ! grep -sq sailfishos ~/.conan/remotes.json ; then
+  conan remote remove conan-center
   conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
 fi
 

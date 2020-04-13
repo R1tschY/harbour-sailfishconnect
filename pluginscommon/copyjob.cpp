@@ -46,11 +46,6 @@ CopyJob::CopyJob(const QString& deviceId,
     connect(&m_timer, &QTimer::timeout, this, [this]{
         auto btw = bytesToWrite();
         setProcessedAmount(KJob::Bytes, m_writtenBytes - btw);
-        qCDebug(logger)
-                << time(nullptr)
-                << m_source->bytesAvailable()
-                << m_bufferSize
-                << btw;
 
         if (m_destination->isSequential()) {
             poll();
@@ -118,7 +113,7 @@ void CopyJob::doStart()
     connect(m_source.data(), &QIODevice::readChannelFinished,
             this, &CopyJob::pollAtSourceClose);
     connect(m_destination.data(), &QIODevice::aboutToClose,
-            this, &CopyJob::pollAtDestinationClose);
+            this, &CopyJob::finish);
 
     // FIXME: QNetworkReply generates unknown read error
     if (m_source->isSequential()
@@ -129,6 +124,10 @@ void CopyJob::doStart()
     if (m_destination->isSequential()) {
         connect(m_destination.data(), &QIODevice::bytesWritten,
                 this, &CopyJob::poll);
+    }
+    if (m_sslSocket) {
+        connect(m_sslSocket, &QAbstractSocket::disconnected,
+                this, &CopyJob::finish);
     }
 
     poll();
@@ -189,11 +188,15 @@ void CopyJob::poll()
     }
 
     if (m_sourceEof
-            && m_bufferSize == 0
             && m_source->bytesAvailable() == 0
+            && m_bufferSize == 0
             && btw == 0) {
-//        qCDebug(logger) << "EOF";
-        finish();
+        qCDebug(logger) << "EOF";
+        if (m_sslSocket) {
+            m_sslSocket->disconnectFromHost();
+        } else {
+            finish();
+        }
     }
 }
 
@@ -208,31 +211,28 @@ void CopyJob::pollAtSourceClose()
     poll();
 }
 
-void CopyJob::pollAtDestinationClose()
-{
-    if (!m_finished) {
-//        qCDebug(logger) << "Detected destination closing";
-        finish();
-    }
-}
-
 void CopyJob::finish()
 {
+    if (m_finished)
+        return;
+
     m_finished = true;
     m_timer.stop();
+
+    setProcessedAmount(KJob::Bytes, m_writtenBytes);
 
     if (m_bufferSize != 0) {
         setError(2);
         setErrorText(i18n("Early end of output stream"));
     }
 
-    if (m_size > 0 && m_writtenBytes > m_size) {
+    if (m_size >= 0 && m_writtenBytes > m_size) {
         setError(2);
         setErrorText(i18n("Read more bytes of input stream than "
                           "expected."));
     }
 
-    if (m_size > 0 && m_writtenBytes < m_size) {
+    if (m_size >= 0 && m_writtenBytes < m_size) {
         setError(2);
         setErrorText(i18n("Early end of input stream"));
     }

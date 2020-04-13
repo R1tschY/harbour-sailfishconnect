@@ -52,6 +52,17 @@ JobInfo::JobInfo(KJob *job, QObject *parent)
             this, SLOT(onTotalAmount(KJob*, KJob::Unit, qulonglong)));
 }
 
+double JobInfo::progress() const
+{
+    if (!hasProgress())
+        return -1.0;
+
+    if (m_totalBytes == 0)
+        return 1.0;
+
+    return double(m_processedBytes) / m_totalBytes;
+}
+
 void JobInfo::cancel()
 {
     if (m_impl) {

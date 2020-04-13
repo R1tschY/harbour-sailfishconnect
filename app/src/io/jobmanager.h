@@ -34,9 +34,9 @@ class JobInfo : public QObject {
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(QUrl target READ target NOTIFY targetChanged)
     Q_PROPERTY(QString deviceId READ deviceId CONSTANT)
-    Q_PROPERTY(qulonglong totalBytes
+    Q_PROPERTY(qint64 totalBytes
                READ totalBytes NOTIFY totalBytesChanged)
-    Q_PROPERTY(qulonglong processedBytes
+    Q_PROPERTY(qint64 processedBytes
                READ processedBytes NOTIFY processedBytesChanged)
     Q_PROPERTY(QString state READ state NOTIFY stateChanged)
     Q_PROPERTY(QString errorString READ errorString NOTIFY stateChanged)
@@ -47,6 +47,9 @@ public:
     qint64 totalBytes() const { return m_totalBytes; }
     qint64 processedBytes() const { return m_processedBytes; }
     QString deviceId() const { return m_deviceId; }
+
+    bool hasProgress() const { return m_totalBytes >= 0; }
+    double progress() const;
 
     QString title() const { return m_title; }
     QUrl target() const { return m_target; }
@@ -72,8 +75,8 @@ private:
     QUrl m_target;
 
     QString m_errorString;
-    qulonglong m_totalBytes;
-    qulonglong m_processedBytes;
+    qint64 m_totalBytes = -1;
+    qint64 m_processedBytes = 0;
 
     QString m_title;
     QPair<QString, QString> m_field1;

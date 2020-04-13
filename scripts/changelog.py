@@ -29,7 +29,7 @@ CHANGELOG_FILE = (
     Path(__file__).parent.parent / "rpm" / "harbour-sailfishconnect.changes"
 )
 HEADER_RE = re.compile(
-    r"^\* (?P<date>\w+ \w+ \d+ \d+) (?P<author>[^<]+) <(?P<email>[^>]+)> (?P<version>[\w.~]+)-(?P<release>\d+)",
+    r"^\*\s+(?P<date>\w+\s+\w+\s+\d+\s+\d+)\s+(?P<author>[^<]+)\s+<(?P<email>[^>]+)>\s+(?P<version>[\w.~]+)-(?P<release>\d+)",
     re.M,
 )
 
@@ -94,7 +94,7 @@ def find_first_header(changelog: str) -> ChangelogHeader:
 
 def format_datetime(datetime):
     locale.setlocale(locale.LC_ALL, "C")
-    return datetime.strftime("%a %b %e %Y")
+    return datetime.strftime("%a %b %d %Y")
 
 
 def apply_commandfn(fn, args):
@@ -110,12 +110,12 @@ def apply_commandfn(fn, args):
             fp.write(changelog[change.end:])
 
 
-def release(changelog: str, args) -> Change:
+def release(changelog: str, args, date=None) -> Change:
     header = find_first_header(changelog)
     return Change(
         start=header.date_loc[0],
         end=header.date_loc[1],
-        replacement=format_datetime(datetime.datetime.now())
+        replacement=format_datetime(date or datetime.datetime.now())
     )
 
 
@@ -124,7 +124,7 @@ COMMANDS = {"release": release}
 
 def main():
     argparser = argparse.ArgumentParser(description="Edit changelog")
-    argparser.add_argument("command", help="One of " + ", ".join(COMMANDS.keys()))
+    argparser.add_argument("command", choices=COMMANDS.keys(), help="One of " + ", ".join(COMMANDS.keys()))
     argparser.add_argument("args", nargs=argparse.REMAINDER)
     args = argparser.parse_args()
 

@@ -29,6 +29,7 @@
 //#include <systeminfo.h>
 //#include <helper/cpphelper.h>
 #include <device.h>
+#include <kdeconnectconfig.h>
 #include "sailfishconnect-config.h"
 #include "ui.h"
 #include "io/jobmanager.h"
@@ -44,6 +45,13 @@ AppDaemon::AppDaemon(QObject *parent)
 {
     // notification_.setAppName(PRETTY_PACKAGE_NAME);
     // notification_.setCategory("device");
+    auto& config = KdeConnectConfig::instance();
+    if (!config.isNameSet()) {
+        config.setName(defaultName());
+    }
+    if (!config.isDeviceTypeSet()) {
+        config.setDeviceType(deviceType());
+    }
 }
 
 void AppDaemon::askPairingConfirmation(Device *device)
@@ -82,7 +90,7 @@ KJobTrackerInterface* AppDaemon::jobTracker() {
     return m_jobmanager;
 }
 
-QString AppDaemon::defaultName() const {
+QString AppDaemon::defaultName() {
     const QString hwReleaseFile = QStringLiteral("/etc/hw-release");
     // QSettings will crash if the file does not exist or can be created, like in this case by us in /etc.
     // E.g. in the SFOS SDK Emulator there is no such file, so check before to protect against the crash.
@@ -97,7 +105,7 @@ QString AppDaemon::defaultName() const {
     return QString::fromUtf8(qgetenv("USER")) % '@' % QHostInfo::localHostName();
 }
 
-QString AppDaemon::deviceType() const {
+QString AppDaemon::deviceType() {
     return QStringLiteral("phone");
 }
 

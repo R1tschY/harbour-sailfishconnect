@@ -24,10 +24,10 @@
 #include <QSettings>
 #include <QHostInfo>
 #include <QTimer>
+#include <KLocalizedString>
+#include <notification.h>
 
 #include <backends/pairinghandler.h>
-//#include <systeminfo.h>
-//#include <helper/cpphelper.h>
 #include <device.h>
 #include <kdeconnectconfig.h>
 #include "sailfishconnect-config.h"
@@ -40,11 +40,9 @@ namespace SailfishConnect {
 static Q_LOGGING_CATEGORY(logger, "sailfishconnect.ui")
 
 AppDaemon::AppDaemon(QObject *parent)
-: Daemon(parent)
-, m_jobmanager(new JobManager(this))
+    : Daemon(parent)
+    , m_jobmanager(new JobManager(this))
 {
-    // notification_.setAppName(PRETTY_PACKAGE_NAME);
-    // notification_.setCategory("device");
     auto& config = KdeConnectConfig::instance();
     if (!config.isNameSet()) {
         config.setName(defaultName());
@@ -52,49 +50,75 @@ AppDaemon::AppDaemon(QObject *parent)
     if (!config.isDeviceTypeSet()) {
         config.setDeviceType(deviceType());
     }
+
+    connect(
+        &m_backgroundActivity, &BackgroundActivity::running,
+        this, &AppDaemon::onWakeUp);
+    m_backgroundActivity.setWakeupFrequency(BackgroundActivity::ThirtySeconds);
+
+    onDeviceVisibilityChanged();
+    connect(this, &Daemon::deviceVisibilityChanged,
+            this, &AppDaemon::onDeviceVisibilityChanged);
 }
 
 void AppDaemon::askPairingConfirmation(Device *device)
 {    
-    // Notification *notification = new Notification(this);
+    Notification *notification = new Notification(this);
 
-    // notification->setAppName(QCoreApplication::applicationName());
-    // notification->setSummary(device->name());
-    // notification->setBody(i18n("Pending pairing request ..."));
-    // notification->setPreviewSummary(device->name());
-    // notification->setPreviewBody(i18n("Pairing request"));
-    // notification->setExpireTimeout(PairingHandler::pairingTimeoutMsec() * 0.75);
-    // notification->setRemoteActions(
-    //             { UI::openDevicePageDbusAction(device->id()) });
+    notification->setAppName(QCoreApplication::applicationName());
+    notification->setSummary(device->name());
+    notification->setBody(i18n("Pending pairing request ..."));
+    notification->setPreviewSummary(device->name());
+    notification->setPreviewBody(i18n("Pairing request"));
+    notification->setExpireTimeout(PairingHandler::pairingTimeoutMsec() * 0.75);
+    notification->setRemoteActions(
+                { UI::openDevicePageDbusAction(device->id()) });
 
-    // connect(notification, &Notification::closed,
-    //         [=](uint reason) { notification->deleteLater(); });
+    connect(notification, &Notification::closed,
+            [=](uint reason) { notification->deleteLater(); });
 
-    // notification->publish();
+    notification->publish();
+    // TODO: remove/update notification when device is paired/unpaired
 }
 
 void AppDaemon::reportError(const QString& title, const QString& description)
 {
-    qCCritical(logger) << title << description;
-    // notification_.setAppName(PRETTY_PACKAGE_NAME);
-    // notification_.setCategory("device");
+    qCCritical(logger) << "Error to report:" << title << description;
 
-    // connect(
-    //     &m_backgroundActivity, &BackgroundActivity::running,
-    //     this, &AppDaemon::onWakeUp);
-    // m_backgroundActivity.setWakeupFrequency(BackgroundActivity::ThirtySeconds);
+    Notification *notification = new Notification(this);
 
-    // onDeviceVisibilityChanged();
-    // connect(this, &Daemon::deviceVisibilityChanged,
-    //         this, &AppDaemon::onDeviceVisibilityChanged);
+    notification->setAppName(QCoreApplication::applicationName());
+    notification->setSummary(PRETTY_PACKAGE_NAME);
+    notification->setBody(description);
+    notification->setPreviewSummary(PRETTY_PACKAGE_NAME);
+    notification->setPreviewBody(description);
+
+    connect(notification, &Notification::closed,
+            [=](uint reason) { notification->deleteLater(); });
+
+    notification->publish();
 }
 
 void AppDaemon::quit() {
-
+    QCoreApplication::quit();
 }
 
-void AppDaemon::sendSimpleNotification(const QString&, const QString&, const QString&, const QString&) {
+void AppDaemon::sendSimpleNotification(const QString &eventId, const QString &title, const QString &text, const QString &iconName) {
+    qCInfo(logger) << "Notification:" << eventId << title << text;
+    Notification *notification = new Notification(this);
 
+    notification->setAppName(QCoreApplication::applicationName());
+    notification->setSummary(title);
+    notification->setBody(text);
+    notification->setPreviewSummary(title);
+    notification->setPreviewBody(text);
+    if (eventId == QStringLiteral("pingReceived")) {
+        notification->setIcon("image://theme/icon-lock-information");
+    }
+    connect(notification, &Notification::closed,
+            [=](uint reason) { notification->deleteLater(); });
+
+    notification->publish();
 }
 
 KJobTrackerInterface* AppDaemon::jobTracker() {
@@ -158,9 +182,7 @@ void AppDaemon::onDeviceVisibilityChanged()
 
 void AppDaemon::onWakeUp()
 {
-//    qCDebug(logger)
-//        << QDateTime::currentDateTime().toString() << "Received wakeup, got"
-//        << m_connectedDevices.size() << "connected devices";
+   qCDebug(logger) << "Received wakeup";
 
     // immediately to go sleep, hope that is sufficient to keep connections
     // alive

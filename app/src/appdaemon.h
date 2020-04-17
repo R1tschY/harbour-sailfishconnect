@@ -20,7 +20,6 @@
 
 #include <daemon.h>
 
-//#include <notification.h>
 #include <QEventLoopLocker>
 #include <QSet>
 #include <backgroundactivity.h>
@@ -62,7 +61,6 @@ private:
     QEventLoopLocker m_eventLoopLock;
     
     BackgroundActivity m_backgroundActivity;
-    //Notification notification_;
 
     QQmlEngine* m_qmlEngine = nullptr;
     JobManager* m_jobmanager = nullptr;

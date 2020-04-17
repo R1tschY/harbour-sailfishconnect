@@ -15,57 +15,59 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// #ifndef SAILFISHCONNECT_JOBSMODEL_H
-// #define SAILFISHCONNECT_JOBSMODEL_H
+#ifndef SAILFISHCONNECT_JOBSMODEL_H
+#define SAILFISHCONNECT_JOBSMODEL_H
 
-// #include <QAbstractListModel>
-// #include <sailfishconnect/io/jobmanager.h>
+#include <QAbstractListModel>
 
-// namespace SailfishConnect {
+namespace SailfishConnect {
 
-// class JobsModel : public QAbstractListModel
-// {
-//     Q_OBJECT
+class JobManager;
+class JobInfo;
 
-// public:
-//     enum ExtraRoles {
-//         TitleRole = Qt::UserRole,
-//         TargetRole,
-//         ProcessedBytesRole,
-//         TotalBytesRole,
-//         StateRole,
-//         ErrorRole,
-//         DeviceIdRole,
-//     };
+class JobsModel : public QAbstractListModel
+{
+    Q_OBJECT
 
-//     explicit JobsModel(QObject *parent = nullptr);
+public:
+    enum ExtraRoles {
+        TitleRole = Qt::UserRole,
+        TargetRole,
+        ProcessedBytesRole,
+        TotalBytesRole,
+        StateRole,
+        ErrorRole,
+        DeviceIdRole,
+    };
 
-//     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    explicit JobsModel(QObject *parent = nullptr);
 
-//     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
-//     bool setData(const QModelIndex &index, const QVariant &value,
-//                  int role = Qt::EditRole) override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-//     Qt::ItemFlags flags(const QModelIndex& index) const override;
+    bool setData(const QModelIndex &index, const QVariant &value,
+                 int role = Qt::EditRole) override;
 
-//     QHash<int, QByteArray> roleNames() const;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
 
-// private:
-//     QList<JobInfo*> m_jobs;
-//     JobManager* m_jobManager = nullptr;
+    QHash<int, QByteArray> roleNames() const;
 
-//     void setModel(JobManager* jobMgr);
+private:
+    QList<JobInfo*> m_jobs;
+    JobManager* m_jobManager = nullptr;
 
-//     void addJob(JobInfo* job);
-//     void connectJob(JobInfo* job);
-//     void jobChanged(JobInfo *job, int role);
-//     void jobChanged(JobInfo *job, const QVector<int>& roles);
+    void setModel(JobManager* jobMgr);
 
-//     JobInfo* rowToJob(const QModelIndex& row) const;
-//     int jobToRow(JobInfo* job) const;
-// };
+    void addJob(JobInfo* job);
+    void connectJob(JobInfo* job);
+    void jobChanged(JobInfo *job, int role);
+    void jobChanged(JobInfo *job, const QVector<int>& roles);
 
-// } // namespace SailfishConnect
+    JobInfo* rowToJob(const QModelIndex& row) const;
+    int jobToRow(JobInfo* job) const;
+};
 
-// #endif // SAILFISHCONNECT_JOBSMODEL_H
+} // namespace SailfishConnect
+
+#endif // SAILFISHCONNECT_JOBSMODEL_H

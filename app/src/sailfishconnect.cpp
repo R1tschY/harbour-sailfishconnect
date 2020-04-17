@@ -57,7 +57,7 @@
 #include "models/sortfiltermodel.h"
 #include "models/devicepluginsmodel.h"
 // #include "models/mprisplayersmodel.h"
-// #include "models/jobsmodel.h"
+#include "models/jobsmodel.h"
 
 #include "ui.h"
 #include "js/qmlregister.h"
@@ -113,7 +113,6 @@ void initI18n() {
 
     qCDebug(logger) << "availableApplicationTranslations" << KLocalizedString::availableApplicationTranslations();  
     qCDebug(logger) << "languages" << KLocalizedString::languages();
-    qCDebug(logger) << i18n("Alternative KDE Connect client for Sailfish OS");
 }
 
 void registerQmlTypes() {
@@ -135,8 +134,8 @@ void registerQmlTypes() {
                 "SailfishConnect.UI", 0, 3, "SortFilterModel");
     qmlRegisterType<DevicePluginsModel>(
                 "SailfishConnect.UI", 0, 3, "DevicePluginsModel");
-    // qmlRegisterType<JobsModel>(
-    //             "SailfishConnect.UI", 0, 3, "JobsModel");
+    qmlRegisterType<JobsModel>(
+                "SailfishConnect.UI", 0, 3, "JobsModel");
     // qmlRegisterType<MprisPlayersModel>(
     //             "SailfishConnect.UI", 0, 3, "MprisPlayersModel");
 

@@ -29,6 +29,7 @@ Page {
         "kdeconnect_remotecontrol": "image://theme/icon-m-gesture",
         "kdeconnect_remotecommands": "image://theme/icon-m-wizard",
         "kdeconnect_runcommand": "image://theme/icon-m-wizard",
+        "kdeconnect_remotesystemvolume": "image://theme/icon-m-speaker",
         "sailfishconnect_batteryreport": "image://theme/icon-m-battery",
         "sailfishconnect_clipboard": "image://theme/icon-m-clipboard",
         "sailfishconnect_contacts": "image://theme/icon-m-contact",

@@ -62,6 +62,20 @@ public:
     }
 };
 
+class RemoteSystemVolumeApi : public RemoteSystemVolumeDbusInterface {
+    Q_OBJECT
+public:
+    using RemoteSystemVolumeDbusInterface::RemoteSystemVolumeDbusInterface;
+
+    Q_SCRIPTABLE void sendMuted(const QString &name, bool muted) {
+        checkForDbusError(RemoteSystemVolumeDbusInterface::sendMuted(name, muted));
+    }
+
+    Q_SCRIPTABLE void sendVolume(const QString &name, int volume) {
+        checkForDbusError(RemoteSystemVolumeDbusInterface::sendVolume(name, volume));
+    }
+};
+
 class PluginConfigApi : public KdeConnectPluginConfig {
     Q_OBJECT
 public:
@@ -122,6 +136,10 @@ public:
 
     Q_SCRIPTABLE RemoteCommandsApi* getRemoteCommands() {
         return new RemoteCommandsApi(id());
+    }
+
+    Q_SCRIPTABLE RemoteSystemVolumeApi* getRemoteSystemVolume() {
+        return new RemoteSystemVolumeApi(id());
     }
 
     Q_SCRIPTABLE PluginConfigApi* getPluginConfig(const QString& pluginId) {

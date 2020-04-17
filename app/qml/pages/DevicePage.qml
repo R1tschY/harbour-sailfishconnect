@@ -187,6 +187,13 @@ Page {
                     pluginId: "kdeconnect_remotecommands"
                     onClicked: openPage("../pages/RemoteCommandsPage.qml")
                 }
+                PluginAction {
+                    device: _device
+                    title: i18n("Change volume...")
+                    icon: "image://theme/icon-m-speaker"
+                    pluginId: "kdeconnect_remotesystemvolume"
+                    onClicked: openPage("../pages/RemoteVolumePage.qml")
+                }
                 
                 /*ShareUi { id: shareUi }
                 RemoteKeyboard { id: remoteKeyboard}

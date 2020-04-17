@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <KJobTrackerInterface>
 #include <QLoggingCategory>
+#include <KLocalizedString>
 
 #include <core/daemon.h>
 #include <core/device.h>
@@ -42,15 +43,16 @@ void JobsNotificator::jobChanged(JobInfo *job)
         notification->setHintValue("x-nemo-progress", job->progress());
 
         if (isUpload) {
-            notification->setBody(tr("Uploading ..."));
+            notification->setBody(i18n("Uploading ..."));
         } else {
-            notification->setBody(tr("Downloading ..."));
+            notification->setBody(i18n("Downloading ..."));
         }
     } else {
         QString fileName = job->target().fileName();
         quint32 id = notification->replacesId();
         notification->deleteLater();
 
+        // recreate to get rid of the progress bar
         notification = new Notification(this);
         m_jobs[job] = notification;
         notification->setAppName(QCoreApplication::applicationName());
@@ -58,18 +60,27 @@ void JobsNotificator::jobChanged(JobInfo *job)
         notification->setReplacesId(id);
 
         if (job->state() == QStringLiteral("finished")) {
-            if (isUpload) {
-                notification->setBody(tr("Upload succedded"));
+            if (job->errorString().isEmpty()) {
+                if (isUpload) {
+                    notification->setBody(i18n("Upload succedded"));
+                } else {
+                    notification->setBody(i18n("Download succedded"));
+                }
             } else {
-                notification->setBody(tr("Download succedded"));
+                if (isUpload) {
+                    notification->setBody(i18n("Upload failed"));
+                } else {
+                    notification->setBody(i18n("Download failed"));
+                }
             }
+
             notification->setPreviewSummary(notification->body());
             notification->setPreviewBody(fileName);
         } else if (job->state() == QStringLiteral("canceled")) {
             if (isUpload) {
-                notification->setBody(tr("Upload canceled"));
+                notification->setBody(i18n("Upload canceled"));
             } else {
-                notification->setBody(tr("Download canceled"));
+                notification->setBody(i18n("Download canceled"));
             }
         } else {
             return;
@@ -88,9 +99,9 @@ void JobsNotificator::addJob(JobInfo *job)
     Notification* notification = new Notification(this);
     notification->setAppName(QCoreApplication::applicationName());
     notification->setSummary(fileName);
-    notification->setBody(tr("Pending upload ..."));
+    notification->setBody(i18n("Pending upload ..."));
     if (!isUpload) {
-        notification->setPreviewSummary(tr("Download from %1").arg(deviceName));
+        notification->setPreviewSummary(i18n("Download from %1").arg(deviceName));
         notification->setPreviewBody(fileName);
     }
     notification->setHintValue("x-nemo-progress", job->progress());

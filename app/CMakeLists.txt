@@ -23,7 +23,7 @@ add_static_plugins_lib(
     RemoteCommands
     RunCommand
 #    Battery
-#    RemoteSystemVolume
+    RemoteSystemVolume
 #    Presenter
 )
 add_static_plugins_lib(
@@ -31,12 +31,14 @@ add_static_plugins_lib(
   PREFIX sailfishconnect
   PLUGINS
     BatteryReport
-    Clipboard
     Contacts
+    Clipboard
+    MprisRemote
+    RemoteKeyboard
+    SendNotifications
     Share
     Telepathy
     Telephony
-    #MprisRemote
 )
 
 # plugin clients

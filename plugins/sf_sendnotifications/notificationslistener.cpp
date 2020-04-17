@@ -26,12 +26,13 @@
 #include <QBuffer>
 #include <QQuickImageProvider>
 #include <QFile>
+#include <QDBusArgument>
 
-#include <sailfishconnect/device.h>
-#include <sailfishconnect/kdeconnectplugin.h>
-#include <sailfishconnect/helper/cpphelper.h>
-#include <sailfishconnect/kdeconnectpluginconfig.h>
-#include <appdaemon.h>
+#include <core/device.h>
+#include <core/qtcompat_p.h>
+#include <core/kdeconnectplugin.h>
+#include <core/kdeconnectpluginconfig.h>
+#include <core/daemon.h>
 
 #include "notificationslistener.h"
 #include "sendnotificationsplugin.h"
@@ -81,10 +82,10 @@ QString becomeMonitor(DBusConnection* conn, const char* match) {
 extern "C" DBusHandlerResult handleMessageFromC(
         DBusConnection *connection, DBusMessage *message, void *user_data
 ) {
-    try {
+    __try {
         auto* self = static_cast<NotificationsListenerThread*>(user_data);
         self->handleMessage(message);
-    } catch (...) {
+    } __catch (...) {
         Q_ASSERT_X(false,
                    "NotificationsListenerThread::handleMessage",
                    "Catched exception");
@@ -302,7 +303,7 @@ NotificationsListener::NotificationsListener(KdeConnectPlugin* aPlugin)
     loadApplications();
 
     connect(
-        m_plugin->config(), &SailfishConnectPluginConfig::configChanged,
+        m_plugin->config(), &KdeConnectPluginConfig::configChanged,
         this, &NotificationsListener::loadApplications);
     connect(m_thread, &NotificationsListenerThread::Notify,
             this, &NotificationsListener::onNotify);
@@ -454,7 +455,7 @@ QSharedPointer<QIODevice> NotificationsListener::iconForIconName(
         QString scheme = url.scheme();
         if (scheme == QLatin1String("file")) {
             result = pathToPng(url.path());
-#ifdef SAILFISHOS
+#if false && SAILFISHOS
         } else if (scheme == QLatin1String("image")) {
             auto* imageProvider = static_cast<QQuickImageProvider*>(
                     AppDaemon::instance()->imageProvider(url.host()));
@@ -559,7 +560,7 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
         m_applications.insert(app.name, app);
         // update config:
         QVariantList list;
-        for (const auto& a : asConst(m_applications))
+        for (const auto& a : qAsConst(m_applications))
             list << QVariant::fromValue<NotifyingApplication>(a);
         config->setList(QStringLiteral("applications"), list);
         //qCDebug(logger) << "Added new application to config:" << app;

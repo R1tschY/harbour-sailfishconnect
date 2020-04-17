@@ -24,8 +24,6 @@
 #include <QDebug>
 #include <QDataStream>
 
-namespace SailfishConnect {
-
 QDataStream& operator<<(QDataStream& out, const NotifyingApplication& app)
 {
     out << app.name << app.icon << app.active << app.blacklistExpression.pattern();
@@ -51,5 +49,3 @@ QDebug operator<<(QDebug dbg, const NotifyingApplication& a) {
                   << " }";
     return dbg.space();
 }
-
-} // namespace SailfishConnect

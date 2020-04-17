@@ -7,4 +7,5 @@ target_link_libraries(sailfishconnect_remotekeyboard
 PRIVATE
     kdeconnectcore
     KF5::I18n
+    Qt5::Feedback
 )

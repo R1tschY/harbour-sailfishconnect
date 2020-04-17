@@ -42,7 +42,7 @@ add_subdirectory(kdeconnect-kde)
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
-find_package(Qt5 REQUIRED COMPONENTS Core DBus Network Gui Sql Quick)
+find_package(Qt5 REQUIRED COMPONENTS Core DBus Network Gui Sql Quick Feedback)
 find_package(KF5 REQUIRED COMPONENTS I18n CoreAddons Config)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)

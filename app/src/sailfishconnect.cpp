@@ -244,7 +244,8 @@ int main(int argc, char *argv[])
     if (!options.daemonMode)
         ui.showMainWindow();
 
-    //JobsNotificator jobNotificator(Daemon::instance()->jobManager());
+    JobsNotificator jobNotificator(
+        qobject_cast<JobManager*>(Daemon::instance()->jobTracker()));
 
     return app->exec();
 }

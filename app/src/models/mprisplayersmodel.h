@@ -15,73 +15,72 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// #ifndef SAILFISHCONNECT_MPRISPLAYERSMODEL_H
-// #define SAILFISHCONNECT_MPRISPLAYERSMODEL_H
+#ifndef SAILFISHCONNECT_MPRISPLAYERSMODEL_H
+#define SAILFISHCONNECT_MPRISPLAYERSMODEL_H
 
-// #include <QAbstractListModel>
+#include <QAbstractListModel>
 
-// class Device;
+class Device;
+class MprisRemotePlugin;
 
-// namespace SailfishConnect {
+namespace SailfishConnect {
 
-// class MprisRemotePlugin;
+class MprisPlayersModel : public QAbstractListModel
+{
+    Q_OBJECT
 
-// class MprisPlayersModel : public QAbstractListModel
-// {
-//     Q_OBJECT
+    Q_PROPERTY(QString deviceId READ deviceId WRITE setDeviceId)
 
-//     Q_PROPERTY(QString deviceId READ deviceId WRITE setDeviceId)
+public:
+    explicit MprisPlayersModel(QObject *parent = nullptr);
 
-// public:
-//     explicit MprisPlayersModel(QObject *parent = nullptr);
+    enum ExtraRoles {
+        Player = Qt::UserRole,
+        PlayerNameRole,
+        IsPlayingRole,
+        CurrentSongRole,
+        TitleRole,
+        ArtistRole,
+        AlbumRole,
+        AlbumArtUrlRole,
+        VolumeRole,
+        LengthRole,
+        PositionRole,
+        PlayAllowedRole,
+        PauseAllowedRole,
+        GoNextAllowedRole,
+        GoPreviousAllowedRole,
+        SeekAllowedRole,
+        SetVolumeAllowedRole,
+    };
 
-//     enum ExtraRoles {
-//         Player = Qt::UserRole,
-//         PlayerNameRole,
-//         IsPlayingRole,
-//         CurrentSongRole,
-//         TitleRole,
-//         ArtistRole,
-//         AlbumRole,
-//         AlbumArtUrlRole,
-//         VolumeRole,
-//         LengthRole,
-//         PositionRole,
-//         PlayAllowedRole,
-//         PauseAllowedRole,
-//         GoNextAllowedRole,
-//         GoPreviousAllowedRole,
-//         SeekAllowedRole,
-//         SetVolumeAllowedRole,
-//     };
+    // Basic functionality:
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
-//     // Basic functionality:
-//     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-//     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QHash<int, QByteArray> roleNames() const override;
 
-//     QHash<int, QByteArray> roleNames() const override;
+    QString deviceId() const { return m_deviceId; }
+    void setDeviceId(const QString& value);
 
-//     QString deviceId() const { return m_deviceId; }
-//     void setDeviceId(const QString& value);
+private:
+    QStringList m_players;
+    MprisRemotePlugin* m_plugin = nullptr;
+    QString m_deviceId;
+    Device* m_device = nullptr;
 
-// private:
-//     QStringList m_players;
-//     MprisRemotePlugin* m_plugin = nullptr;
-//     QString m_deviceId;
-//     Device* m_device = nullptr;
+    void playerAdded(const QString& name);
+    void playerRemoved(const QString& name);
+    void playerUpdated();
+    void pluginDestroyed();
+    void devicePluginsChanged();
 
-//     void playerAdded(const QString& name);
-//     void playerRemoved(const QString& name);
-//     void playerUpdated();
-//     void pluginDestroyed();
-//     void devicePluginsChanged();
+    void setPlugin(MprisRemotePlugin* plugin);
 
-//     void setPlugin(MprisRemotePlugin* plugin);
+    void connectPlayer(const QString& name);
+};
 
-//     void connectPlayer(const QString& name);
-// };
+} // namespace SailfishConnect
 
-// } // namespace SailfishConnect
-
-// #endif // SAILFISHCONNECT_MPRISPLAYERSMODEL_H
+#endif // SAILFISHCONNECT_MPRISPLAYERSMODEL_H

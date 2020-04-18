@@ -21,6 +21,8 @@ import SailfishConnect.UI 0.3
 import SailfishConnect.Api 0.7
 
 Column {
+    property QtObject device
+
     width: parent.width
     visible: device && device.isPluginLoaded("sailfishconnect_mprisremote")
 

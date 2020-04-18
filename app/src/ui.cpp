@@ -27,13 +27,12 @@
 #include <QQuickView>
 #include <QSettings>
 #include <KLocalizedContext>
-
+#include <notification.h>
 #include <sailfishapp.h>
-// #include <notification.h>
 
 #include "appdaemon.h"
 #include "dbus/kdeconnect.h"
-// #include "plugins/mprisremote/albumartcache.h"
+#include "../../plugins/sf_mprisremote/albumartcache.h"
 #include "sailfishconnect-config.h"
 
 namespace SailfishConnect {
@@ -82,7 +81,7 @@ void UI::showMainWindow()
     m_view = SailfishApp::createView();
     m_view->rootContext()->setContextObject(new KLocalizedContext(m_view));
     m_daemon->setQmlEngine(m_view->engine());
-    // AlbumArtProvider::registerImageProvider(m_view->engine());
+    AlbumArtProvider::registerImageProvider(m_view->engine());
 
     m_view->installEventFilter(this);
 
@@ -210,11 +209,10 @@ void UI::setRunInBackground(bool value)
 
 QVariant UI::openDevicePageDbusAction(const QString &deviceId)
 {
-    // return Notification::remoteAction(
-    //         QStringLiteral("default"), QString("default"),
-    //         DBUS_SERVICE_NAME, UI::DBUS_PATH, UI::DBUS_INTERFACE_NAME,
-    //         QStringLiteral("openDevicePage"), { deviceId });
-    return QVariant();
+    return Notification::remoteAction(
+            QStringLiteral("default"), QString("default"),
+            DBUS_SERVICE_NAME, UI::DBUS_PATH, UI::DBUS_INTERFACE_NAME,
+            QStringLiteral("openDevicePage"), { deviceId });
 }
 
 bool UI::eventFilter(QObject* watched, QEvent* event)

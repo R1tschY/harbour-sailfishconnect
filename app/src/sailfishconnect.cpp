@@ -50,13 +50,10 @@
 #include <remotecommandsmodel.h>
 #include <remotesinksmodel.h>
 
-
-//#include "plugins/mprisremote/mprisremoteplugin.h"
-//#include "plugins/touchpad/touchpadplugin.h"
 #include "models/devicelistmodel.h"
 #include "models/sortfiltermodel.h"
 #include "models/devicepluginsmodel.h"
-// #include "models/mprisplayersmodel.h"
+#include "models/mprisplayersmodel.h"
 #include "models/jobsmodel.h"
 
 #include "ui.h"
@@ -136,8 +133,8 @@ void registerQmlTypes() {
                 "SailfishConnect.UI", 0, 3, "DevicePluginsModel");
     qmlRegisterType<JobsModel>(
                 "SailfishConnect.UI", 0, 3, "JobsModel");
-    // qmlRegisterType<MprisPlayersModel>(
-    //             "SailfishConnect.UI", 0, 3, "MprisPlayersModel");
+    qmlRegisterType<MprisPlayersModel>(
+                "SailfishConnect.UI", 0, 3, "MprisPlayersModel");
 
     QString uncreatableError =
         QStringLiteral("Instances are only creatable from C++.");

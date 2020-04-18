@@ -132,16 +132,16 @@ Page {
                 xdgOpenNotification.previewSummary = i18n("Failed to open file")
                 if (xdgOpen.normalExit) {
                     var errorMessage = {
-                        // Error in command line syntax.
+                        //: Error in command line syntax.
                         1: i18n("Internal error"),
 
-                        // One of the files passed on the command line did not exist.
+                        //: One of the files passed on the command line did not exist.
                         2: i18n("File does not exit"),
 
-                        // A required tool could not be found.
+                        //: A required tool could not be found.
                         3: i18n("No program found to open file"),
 
-                        // The action failed.
+                        //: The action failed.
                         4: i18n("xdg-open failed"),
                     }
 

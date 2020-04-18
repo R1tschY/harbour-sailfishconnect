@@ -17,9 +17,8 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-//import SailfishConnect.UI 0.3
+import Sailfish.Pickers 1.0
 import SailfishConnect.Api 0.7
-//import SailfishConnect.Mpris 0.3
 import "../components"
 
 
@@ -221,7 +220,10 @@ Page {
                     onClicked: openPage("RemoteVolumePage.qml")
                 }
 
-                MprisUi { id: mprisUi }
+                MprisUi { 
+                    id: mprisUi
+                    device: _device
+                }
             }
 
             ViewPlaceholder {

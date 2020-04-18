@@ -65,10 +65,11 @@ Page {
             }
 
             Label {
-                width: parent.width
-                wrap: Text.WordWrap
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.WordWrap
                 color: Theme.secondaryColor
-                textFormat: Text.StyledText
+                textFormat: Text.RichText
+                x: Theme.horizontalPageMargin
                 text: i18n("&percnt;1 in the path will be replaced with the specific device name.")
             }
         }

@@ -52,7 +52,7 @@
         "Description[zh_TW]": "廣播此電腦的通知，這樣可以顯示在其他裝置上。",
         "EnabledByDefault": false,
         "Icon": "preferences-desktop-notification",
-        "Id": "kdeconnect_sendnotifications",
+        "Id": "sailfishconnect_sendnotifications",
         "License": "GPL",
         "Name": "Send notifications",
         "Name[ar]": "أرسل إخطارات",

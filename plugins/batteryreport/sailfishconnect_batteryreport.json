@@ -10,7 +10,7 @@
         "Description": "Share battery charge state",
         "EnabledByDefault": true,
         "Icon": "preferences-system-power-management",
-        "Id": "sailfishconnect_battery",
+        "Id": "sailfishconnect_batteryreport",
         "License": "GPL",
         "Name": "Battery report",
         "ServiceTypes": [

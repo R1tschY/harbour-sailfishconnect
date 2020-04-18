@@ -168,10 +168,36 @@ Page {
                 }
                 PluginAction {
                     device: _device
+                    title: i18n("Share a file")
+                    icon: "image://theme/icon-m-share"
+                    pluginId: "sailfishconnect_share"
+                    onClicked: pageStack.push(filePickerPage)
+
+                    Component {
+                        id: filePickerPage
+                        ContentPickerPage {
+                            title: i18n("Select file to send")
+                            onSelectedContentPropertiesChanged: {
+                                _device
+                                    .plugin("SailfishConnect::SharePlugin")
+                                    .share(selectedContentProperties.url)
+                            }
+                        }
+                    }
+                }
+                PluginAction {
+                    device: _device
                     title: i18n("Open touchpad")
                     icon: "image://theme/icon-m-gesture"  
                     pluginId: "kdeconnect_remotecontrol"
-                    onClicked: openPage("../pages/TouchpadPage.qml")
+                    onClicked: openPage("TouchpadPage.qml")
+                }
+                PluginAction {
+                    device: _device
+                    title: i18n("Open keyboard")
+                    icon: "image://theme/icon-m-keyboard"
+                    pluginId: "sailfishconnect_remotekeyboard"
+                    onClicked: openPage("KeyboardPage.qml")
                 }
                 PluginAction {
                     device: _device
@@ -182,23 +208,20 @@ Page {
                 }
                 PluginAction {
                     device: _device
-                    title: i18n("Run command...")
+                    title: i18n("Run command")
                     icon: "image://theme/icon-m-wizard"
                     pluginId: "kdeconnect_remotecommands"
-                    onClicked: openPage("../pages/RemoteCommandsPage.qml")
+                    onClicked: openPage("RemoteCommandsPage.qml")
                 }
                 PluginAction {
                     device: _device
-                    title: i18n("Change volume...")
+                    title: i18n("Change volume")
                     icon: "image://theme/icon-m-speaker"
                     pluginId: "kdeconnect_remotesystemvolume"
-                    onClicked: openPage("../pages/RemoteVolumePage.qml")
+                    onClicked: openPage("RemoteVolumePage.qml")
                 }
-                
-                /*ShareUi { id: shareUi }
-                RemoteKeyboard { id: remoteKeyboard}
 
-                MprisUi { id: mprisUi }*/
+                MprisUi { id: mprisUi }
             }
 
             ViewPlaceholder {

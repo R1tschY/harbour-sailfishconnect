@@ -23,7 +23,7 @@ import SailfishConnect.Api 0.7
 Page {
     id: page
 
-    property var device
+    property QtObject device
 
     allowedOrientations: Orientation.All
 

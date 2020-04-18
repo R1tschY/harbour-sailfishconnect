@@ -20,7 +20,7 @@ import Sailfish.Silica 1.0
 
 IconListItem {
     id: item
-    property var device
+    property QtObject device
     property string pluginId
     property alias icon: item.source
 

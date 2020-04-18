@@ -43,8 +43,8 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    property var device
-    property var plugin: device.getRemoteControl()
+    property QtObject device
+    property QtObject plugin: device.getRemoteControl()
     property int lastX: 0xDEAD
     property int lastY: 0xDEAD
     property bool moved: false

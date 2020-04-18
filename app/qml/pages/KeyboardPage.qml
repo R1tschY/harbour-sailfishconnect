@@ -22,8 +22,8 @@ import "../components"
 Page {
     id: page
     allowedOrientations: Orientation.All
-    property var device
-    property var plugin: device.plugin("SailfishConnect::RemoteKeyboardPlugin")
+    property QtObject device
+    property QtObject plugin: device.plugin("SailfishConnect::RemoteKeyboardPlugin")
     property QtObject modifiers: QtObject {
         property int shift: 0
         property int ctrl: 0

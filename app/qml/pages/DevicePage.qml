@@ -28,7 +28,7 @@ Page {
     allowedOrientations: Orientation.All
 
     property string deviceId
-    property var _device: daemon.getDevice(deviceId)
+    property QtObject _device: daemon.getDevice(deviceId)
 
     property bool connected: _device && _device.isTrusted && _device.isReachable
 

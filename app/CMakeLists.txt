@@ -60,6 +60,7 @@ add_executable(sailfishconnectapp
 set_target_properties(sailfishconnectapp
   PROPERTIES
   OUTPUT_NAME ${PACKAGE_NAME}
+  ENABLE_EXPORTS ON  # Needed by booster, useful for backtraces
 )
 
 target_link_libraries(sailfishconnectapp
@@ -78,6 +79,11 @@ target_link_libraries(sailfishconnectapp
   kdeconnectplugins
   sailfishconnectplugins
 )
+
+# Tell Qt Creator where the application executable(s) would be located on the
+# device.
+file(WRITE "${CMAKE_BINARY_DIR}/QtCreatorDeployment.txt"
+    "${CMAKE_INSTALL_PREFIX}\n${CMAKE_BINARY_DIR}/${PACKAGE_NAME}:bin\n")
 
 # Install
 install(TARGETS sailfishconnectapp

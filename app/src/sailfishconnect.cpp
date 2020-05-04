@@ -62,7 +62,7 @@
 #include "dbus/servicewatcher.h"
 #include "helper/jobsnotificator.h"
 
-
+// load QCA openssl plugin
 Q_IMPORT_PLUGIN(opensslPlugin)
 
 namespace SailfishConnect {

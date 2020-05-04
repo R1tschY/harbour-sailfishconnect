@@ -75,7 +75,9 @@ void DownloadJob::doStart()
     if (!file->open(QIODevice::WriteOnly | QIODevice::Unbuffered)) {
         setError(2);
         setErrorText(
-            i18n("Could not open file for writing: %1").arg(file->error()));
+            i18n("Could not open file `%1`: %2")
+                .arg(m_destination)
+                .arg(file->errorString()));
         return emitResult();
     }
     setDestination(std::move(file));

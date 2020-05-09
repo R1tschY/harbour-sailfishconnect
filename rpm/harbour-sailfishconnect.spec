@@ -25,7 +25,7 @@ BuildRequires:  pkgconfig(Qt5Sql)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Test)
-BuildRequires:  pkgconfig(contextkit-statefs)
+BuildRequires:  pkgconfig(Qt5Feedback)
 BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  pkgconfig(keepalive)
 BuildRequires:  cmake
@@ -58,9 +58,6 @@ then
 else
   GENERATOR="Ninja"
 fi
-
-# create virtualenv and install conan
-if [ ! -f "$VENV/bin/conan" ] ; then
 
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then

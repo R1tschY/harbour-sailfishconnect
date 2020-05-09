@@ -1,0 +1,20 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/com/nokia/mce/signal">
+    <interface name="com.nokia.mce.signal">
+        <signal name="battery_level_ind">
+            <arg name="battery_level" type="i"/>
+        </signal>
+        <signal name="battery_state_ind">
+            <arg name="battery_state" type="s"/>
+        </signal>
+        <signal name="battery_status_ind">
+            <arg name="battery_status" type="s"/>
+        </signal>
+        <signal name="charger_state_ind">
+            <arg name="charger_state" type="s"/>
+        </signal>
+        <signal name="charger_type_ind">
+            <arg name="charger_type" type="s"/>
+        </signal>
+    </interface>
+</node>

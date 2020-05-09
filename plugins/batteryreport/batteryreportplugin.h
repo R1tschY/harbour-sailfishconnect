@@ -19,11 +19,13 @@
 #define BATTERYPLUGIN_H
 
 #include <QObject>
+#include <QFileSystemWatcher>
 #include <QTimer>
 
 #include <core/kdeconnectplugin.h>
 
-class ContextProperty;
+
+class MceBatteryInfo;
 
 class BatteryReportPlugin : public KdeConnectPlugin
 {
@@ -40,18 +42,14 @@ public:
     void connected() override;
 
 private:
-    ContextProperty* chargePercentage_;
-    ContextProperty* isCharging_;
-    ContextProperty* lowBattery_;
-    QVariantMap m_state;
-    QTimer debounceTimer_;
+    MceBatteryInfo* m_batteryInfo;
 
     void sendStatus();
     void setCheckedStatus(
             const QString& name,
             const QVariant& value,
             int min,
-            int max);    
+            int max);
 };
 
 #endif // BATTERYPLUGIN_H

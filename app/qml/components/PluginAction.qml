@@ -28,8 +28,7 @@ IconListItem {
 
     function openPage(pagePath) {
         pageStack.push(
-            Qt.resolvedUrl(pagePath),
-            { device: _device })
+            pagePath, { device: _device })
     }
 
     function pluginCall(functionName) {

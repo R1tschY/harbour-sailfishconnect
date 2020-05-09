@@ -189,14 +189,14 @@ Page {
                     title: i18n("Open touchpad")
                     icon: "image://theme/icon-m-gesture"  
                     pluginId: "kdeconnect_remotecontrol"
-                    onClicked: openPage("TouchpadPage.qml")
+                    onClicked: openPage(Qt.resolvedUrl("TouchpadPage.qml"))
                 }
                 PluginAction {
                     device: _device
                     title: i18n("Open keyboard")
                     icon: "image://theme/icon-m-keyboard"
                     pluginId: "sailfishconnect_remotekeyboard"
-                    onClicked: openPage("KeyboardPage.qml")
+                    onClicked: openPage(Qt.resolvedUrl("KeyboardPage.qml"))
                 }
                 PluginAction {
                     device: _device
@@ -210,14 +210,14 @@ Page {
                     title: i18n("Run command")
                     icon: "image://theme/icon-m-wizard"
                     pluginId: "kdeconnect_remotecommands"
-                    onClicked: openPage("RemoteCommandsPage.qml")
+                    onClicked: openPage(Qt.resolvedUrl("RemoteCommandsPage.qml"))
                 }
                 PluginAction {
                     device: _device
                     title: i18n("Change volume")
                     icon: "image://theme/icon-m-speaker"
                     pluginId: "kdeconnect_remotesystemvolume"
-                    onClicked: openPage("RemoteVolumePage.qml")
+                    onClicked: openPage(Qt.resolvedUrl("RemoteVolumePage.qml"))
                 }
 
                 MprisUi { 

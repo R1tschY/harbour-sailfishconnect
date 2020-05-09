@@ -16,6 +16,7 @@
  */
 
 #include "keyboardlayoutprovider.h"
+
 #include <QFile>
 #include <QDir>
 #include <QStandardPaths>
@@ -23,29 +24,32 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QDebug>
-#include <QtFeedback/QFeedbackEffect>
+#include <QFeedbackEffect>
 #include <QRegularExpression>
 #include <QLoggingCategory>
+#include <QStringBuilder>
 
 static Q_LOGGING_CATEGORY(logger, "SailfishConnect.KeyboardLayoutProvider")
+
+static QString MALIIT_LAYOUT_DIR = QStringLiteral("/usr/share/maliit/plugins/com/jolla/layouts/");
 
 KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent)
     : QObject(parent)
 {
     m_settings.beginGroup(QStringLiteral("RemoteKeyboard"));
-    m_layout = m_settings.value("layout", "en").toString();
-    m_repeatInterval = m_settings.value("repeatInterval", 200).toInt();
-    m_feedback = m_settings.value("keyboardFeedback", true).toBool();
+    m_layout = m_settings.value(QStringLiteral("layout"), QStringLiteral("en")).toString();
+    m_repeatInterval = m_settings.value(QStringLiteral("repeatInterval"), 200).toInt();
+    m_feedback = m_settings.value(QStringLiteral("keyboardFeedback"), true).toBool();
     m_settings.endGroup();
 
     QJsonArray row1;
-    for (QString key : {"esc", "F1", "F2", "F3", "F4", "F5", "F6"}) {
+    for (const QString& key : {"esc", "F1", "F2", "F3", "F4", "F5", "F6"}) {
         QJsonObject keyObject;
-        keyObject["caption"] = key;
-        if (key.startsWith("F")) {
+        keyObject.insert(QStringLiteral("caption"), key);
+        if (key.startsWith('F')) {
             int num = key.at(1).toLatin1() - '0';
-            QString name = "F" + QString::number(num + 6);
-            keyObject["captionShifted"] = name;
+            QString name = 'F' % QString::number(num + 6);
+            keyObject.insert(QStringLiteral("captionShifted"), name);
         }
         row1.append(keyObject);
     }
@@ -63,8 +67,7 @@ QString KeyboardLayoutProvider::layout() const
 void KeyboardLayoutProvider::setLayout(const QString &layout)
 {
     // seems to be the only way to get the files stored
-    QFile layoutFile("/usr/share/maliit/plugins/com/jolla/layouts/" + layout
-                     + ".qml");
+    QFile layoutFile(MALIIT_LAYOUT_DIR % layout % ".qml");
     if (!layoutFile.open(QIODevice::ReadOnly)) {
         qCDebug(logger) << "Unknown layout: " << layout;
         return;
@@ -74,9 +77,7 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
     QRegularExpression captionShifted("captionShifted: \"([\\S])\"");
     QRegularExpression symView("symView: \"([\\S]+)\"");
     QRegularExpression symView2("symView2: \"([\\S]+)\"");
-    QByteArray line;
-    line = layoutFile.readLine();
-    QByteArray keySequence;
+    QByteArray line = layoutFile.readLine();
     QJsonArray keys;
     QJsonArray row;
 
@@ -86,14 +87,13 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
         } else if (line.contains("KeyboardRow {")) {
             row = QJsonArray();
         } else if (line.contains("Key")) {
-            keySequence.clear();
-            keySequence.append(line);
-            while (!line.contains("}")) {
+            QByteArray keySequence = line;
+            while (!line.contains('}')) {
                 line = layoutFile.readLine();
                 keySequence.append(line);
             }
-            while (keySequence.contains("\n")) {
-                keySequence.replace("\n", " ");
+            while (keySequence.contains('\n')) {
+                keySequence.replace('\n', ' ');
             }
 
             // remove backslash
@@ -142,7 +142,7 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
     layoutFile.close();
 
     m_settings.beginGroup(QStringLiteral("RemoteKeyboard"));
-    m_settings.setValue("layout", layout);
+    m_settings.setValue(QStringLiteral("layout"), layout);
     m_settings.endGroup();
 
     m_row2 = keys[0].toArray().toVariantList();
@@ -150,7 +150,7 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
     m_row4 = keys[2].toArray().toVariantList();
 
     QJsonArray row5;
-    for (QString key : {"?123", "ctrl", ",", " ", ".", "alt", "enter"}) {
+    for (const QString& key : {"?123", "ctrl", ",", " ", ".", "alt", "enter"}) {
         QJsonObject keyObject;
         keyObject["caption"] = key;
         if (key == ".") {
@@ -212,7 +212,7 @@ void KeyboardLayoutProvider::setRepeatInterval(const int &interval)
     m_repeatInterval = interval;
 
     m_settings.beginGroup(QStringLiteral("RemoteKeyboard"));
-    m_settings.setValue("repeatInterval", interval);
+    m_settings.setValue(QStringLiteral("repeatInterval"), interval);
     m_settings.endGroup();
 
     emit settingsChanged();
@@ -228,7 +228,7 @@ void KeyboardLayoutProvider::setFeedback(const bool &feedback)
     m_feedback = feedback;
 
     m_settings.beginGroup(QStringLiteral("RemoteKeyboard"));
-    m_settings.setValue("keyboardFeedback", feedback);
+    m_settings.setValue(QStringLiteral("keyboardFeedback"), feedback);
     m_settings.endGroup();
 
     emit settingsChanged();
@@ -246,19 +246,19 @@ void KeyboardLayoutProvider::releaseFeedback()
 
 void KeyboardLayoutProvider::loadNames()
 {
-    QDir confDir("/usr/share/maliit/plugins/com/jolla/layouts/");
+    QDir confDir(MALIIT_LAYOUT_DIR);
     QHash<QString, QString> longNames;
 
     // load configs first to get names
     for (const QString &conf : confDir.entryList()) {
-        if (conf.endsWith(".conf")) {
-            QSettings settings("/usr/share/maliit/plugins/com/jolla/layouts/"
-                              + conf, QSettings::NativeFormat);
+        if (conf.endsWith(QStringLiteral(".conf"))) {
+            QSettings settings(MALIIT_LAYOUT_DIR % conf, QSettings::NativeFormat);
             settings.setIniCodec("UTF-8");
 
             for (const QString &group : settings.childGroups()) {
                  settings.beginGroup(group);
-                 longNames[group] = settings.value("name").toByteArray();
+                 longNames[group] = settings.value(
+                     QStringLiteral("name")).toByteArray();
                  settings.endGroup();
             }
         }
@@ -266,15 +266,17 @@ void KeyboardLayoutProvider::loadNames()
 
     // then load layouts
     for (const QString &layout : confDir.entryList()) {
-        if (layout.endsWith(".qml") && !layout.contains("_")) {
+        if (layout.endsWith(QStringLiteral(".qml")) && !layout.contains('_')) {
             // hi, kn, mr and te are currentently not working
-            if (layout.contains("hi") || layout.contains("kn") ||
-                    layout.contains("mr") || layout.contains("te") ||
-                    layout.contains("emoji")) continue;
+            if (layout.contains(QStringLiteral("hi")) || layout.contains(QStringLiteral("kn")) ||
+                    layout.contains(QStringLiteral("mr")) || layout.contains(QStringLiteral("te")) ||
+                    layout.contains(QStringLiteral("emoji"))) {
+                continue;
+            }
 
             QJsonObject language;
-            language["short"] = layout.left(layout.indexOf("."));
-            language["long"] = longNames[layout];
+            language.insert("short", layout.left(layout.indexOf('.')));
+            language.insert("long", longNames[layout]);
             m_layouts.append(language);
         }
     }

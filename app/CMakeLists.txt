@@ -68,6 +68,7 @@ target_link_libraries(sailfishconnectapp
   Qt5::Quick
   Qt5::DBus
   Qt5::Sql
+  Qt5::Feedback
   KF5::CoreAddons
   KF5::I18n
   PkgConfig::SailfishApp

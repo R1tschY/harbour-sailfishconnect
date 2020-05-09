@@ -16,6 +16,7 @@
  */
 
 #include "remotekeyboardplugin.h"
+
 #include <QHash>
 #include <KPluginFactory>
 #include <core/device.h>
@@ -74,7 +75,7 @@ bool RemoteKeyboardPlugin::receivePacket(const NetworkPacket &np)
 void RemoteKeyboardPlugin::sendKeyPress(const QString &key,
     bool shift, bool ctrl, bool alt) const
 {
-    NetworkPacket np("kdeconnect.mousepad.request", {
+    NetworkPacket np(QStringLiteral("kdeconnect.mousepad.request"), {
         {QStringLiteral("key"), key},
         {QStringLiteral("specialKey"), specialKeysMap.value(key, 0)},
         {QStringLiteral("shift"), shift},

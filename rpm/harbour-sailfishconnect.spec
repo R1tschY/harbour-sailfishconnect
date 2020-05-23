@@ -32,7 +32,8 @@ BuildRequires:  cmake
 BuildRequires:  ninja
 BuildRequires:  gettext
 BuildRequires:  python3-devel
-%if "%(grep 'VERSION_ID' /etc/os-release | cut -d= -f2)" == "3.2.1.20"
+%if "%(grep 'VERSION_ID' /etc/os-release | cut -d= -f2)" != "3.1.0.12"
+BuildRequires:  python3-setuptools
 BuildRequires:  python3-pip
 %endif
 BuildRequires:  desktop-file-utils
@@ -44,11 +45,8 @@ SailfishOS client for KDE-Connect
 %prep
 %setup -q -n %{name}-%{version}
 
-# >> setup
-# << setup
 
 %build
-# >> build pre
 
 VENV=$HOME/.venv-conan-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
@@ -61,7 +59,7 @@ fi
 
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then
-  pip3 install --no-warn-script-location --user virtualenv
+  python3 -m pip install --no-warn-script-location --user virtualenv
 fi
 
 # create virtualenv and install conan
@@ -91,6 +89,7 @@ cmake \
   -DBUILD_SHARED_LIBS=OFF \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_VERBOSE_MAKEFILE=ON \
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   -DSAILFISHOS=ON \
   -G "$GENERATOR" \
   ..
@@ -98,22 +97,16 @@ cd ..
 cmake --build rpmbuilddir -- %{?_smp_mflags}
 
 
-# << build pre
-
-
-
-# >> build post
-# << build post
-
 %install
-rm -rf %{buildroot}
-# >> install pre
-DESTDIR=%{buildroot} cmake --build rpmbuilddir --target install
-mkdir -p %{_bindir}
-# << install pre
+#%%define _unpackaged_files_terminate_build 0
 
-# >> install post
-# << install post
+rm -rf %{buildroot}
+DESTDIR=%{buildroot} cmake --build rpmbuilddir --target install
+rm -rf \
+  %{buildroot}%{_datadir}/knotifications5/kdeconnect.notifyrc \
+  %{buildroot}%{_datadir}/kservicetypes5/kdeconnect_plugin.desktop \
+  %{buildroot}%{_datadir}/%{name}/lib/*.a
+mkdir -p %{_bindir}
 
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
@@ -126,5 +119,3 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}/locale
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-# >> files
-# << files

@@ -60,7 +60,7 @@ public:
     QString title() const { return m_title; }
     QString artist() const { return m_artist; }
     QString album() const { return m_album; }
-    QUrl albumArtUrl() const { return m_albumArtUrl; }
+    QUrl albumArtUrl() const { return m_localAlbumArt; }
     QString remoteAlbumArtUrl() const { return m_remoteAlbumArtUrl; }
     int volume() const { return m_volume; }
     qlonglong length() const { return m_length; }
@@ -109,7 +109,7 @@ private:
     QString m_title;
     QString m_artist;
     QString m_album;
-    QUrl m_albumArtUrl;
+    QUrl m_localAlbumArt;
     QString m_remoteAlbumArtUrl;
 
     /**
@@ -156,7 +156,7 @@ private:
 
     void requestPlayerList();
     void requestPlayerStatus(const QString& player);
-    bool askForAlbumArt(const QString &url, const QString& playerName);
+    void askForAlbumArt(const QString &url, const QString& playerName);
 };
 
 #endif

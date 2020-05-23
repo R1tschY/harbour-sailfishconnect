@@ -110,10 +110,18 @@ void MprisPlayer::receivePacket(const NetworkPacket &np, AlbumArtCache *cache)
     m_seekAllowed =
             np.get<bool>(QStringLiteral("canSeek"), m_seekAllowed);
 
-    QString albumArtUrl = np.get<QString>(QStringLiteral("albumArtUrl"));
-    if (!albumArtUrl.isEmpty()) {
-        m_remoteAlbumArtUrl = albumArtUrl;
-        m_albumArtUrl = cache->imageUrl(m_remoteAlbumArtUrl);
+    QString remoteAlbumArtUrl = np.get<QString>(QStringLiteral("albumArtUrl"));
+    if (!remoteAlbumArtUrl.isEmpty()) {
+        QUrl albumArtUrl = remoteAlbumArtUrl;
+        // workaround https://community.spotify.com/t5/Desktop-Linux/MPRIS-cover-art-url-file-not-found/m-p/4929877
+        if (albumArtUrl.host() == QStringLiteral("open.spotify.com")) {
+            albumArtUrl.setHost(QStringLiteral("i.scdn.co"));
+            m_remoteAlbumArtUrl = albumArtUrl.toString();
+        } else {
+            m_remoteAlbumArtUrl = remoteAlbumArtUrl;
+        }
+
+        m_localAlbumArt = cache->imageUrl(albumArtUrl);
     }
 
     if (np.has(QStringLiteral("pos")) && !isSpotify()) {
@@ -178,6 +186,10 @@ MprisRemotePlugin::MprisRemotePlugin(QObject* parent, const QVariantList& args)
     , m_cache(new AlbumArtCache(device()->id(), config(), this))
 {
     requestPlayerList();
+
+    connect(
+        m_cache, &AlbumArtCache::requestAlbumArt,
+        this, &MprisRemotePlugin::askForAlbumArt);
 }
 
 bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
@@ -195,15 +207,9 @@ bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
         MprisPlayer* player = m_players.value(
                     np.get<QString>(QStringLiteral("player")), nullptr);
         if (player) {
-            auto albumArtUrl = np.get<QString>(QStringLiteral("albumArtUrl"));
-            auto* fetchJob = m_supportAlbumArtPayload
-                    ? m_cache->startFetching(albumArtUrl)
-                    : nullptr;
-
-            player->receivePacket(np, m_cache);
-            if (fetchJob) {
-                // can send request only after url was set
-                askForAlbumArt(albumArtUrl, player->name());
+            player->receivePacket(np, m_supportAlbumArtPayload ? m_cache: nullptr);
+            if (m_supportAlbumArtPayload) {
+                m_cache->startFetching(player->remoteAlbumArtUrl(), player->name());
             }
         }
     }
@@ -238,18 +244,18 @@ bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
     return true;
 }
 
-bool MprisRemotePlugin::askForAlbumArt(
+void MprisRemotePlugin::askForAlbumArt(
         const QString& url, const QString& playerName)
 {
     if (!m_supportAlbumArtPayload || url.isEmpty())
-        return false;
+        return;
 
     MprisPlayer* plyr = player(playerName);
     if (plyr == nullptr)
-        return false;
+        return;
 
     if (plyr->remoteAlbumArtUrl() != url)
-        return false;
+        return;
 
     NetworkPacket np{
         PACKET_TYPE_MPRIS_REQUEST,
@@ -259,7 +265,6 @@ bool MprisRemotePlugin::askForAlbumArt(
         }
     };
     sendPacket(np);
-    return true;
 }
 
 void MprisRemotePlugin::sendCommand(

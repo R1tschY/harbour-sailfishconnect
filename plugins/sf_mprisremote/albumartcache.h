@@ -70,7 +70,7 @@ public:
 
     void init();
 
-    DownloadAlbumArtJob* startFetching(const QUrl& url);
+    DownloadAlbumArtJob* startFetching(const QString& url, const QString& playerName);
     void endFetching(
             const QUrl& url, const QSharedPointer<QIODevice>& payload);
 
@@ -98,6 +98,7 @@ public:
     QUrl imageUrl(const QUrl& url) const;
 
 signals:
+    void requestAlbumArt(const QString& url, const QString& playerName);
 
 public slots:
 

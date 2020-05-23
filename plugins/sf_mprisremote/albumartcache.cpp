@@ -119,14 +119,16 @@ QUrl AlbumArtCache::imageUrl(const QUrl &url) const
                     m_deviceId, cacheFileNameFor(url)));
 }
 
-DownloadAlbumArtJob *AlbumArtCache::startFetching(const QUrl &url)
+DownloadAlbumArtJob *AlbumArtCache::startFetching(const QString& originalUrl, const QString& playerName)
 {
-    if (url.isEmpty())
+    if (originalUrl.isEmpty())
         return nullptr;
+
+    QUrl url = originalUrl;
 
     QString hash = hashFor(url);
     if (m_diskCache.contains(hash) || m_fetching.contains(hash)) {
-        qCDebug(logger) << url << "already cached";
+        qCDebug(logger) << originalUrl << "already cached";
         return nullptr;
     }
 
@@ -137,13 +139,15 @@ DownloadAlbumArtJob *AlbumArtCache::startFetching(const QUrl &url)
             this, &AlbumArtCache::fetchFinished);
 
     if (!url.isLocalFile()) {
+        // only request urls starting with file://. HTTP requests can we do on our own.
         auto network = Daemon::instance()->networkAccessManager();
         job->gotData(QSharedPointer<QIODevice>(
             network->get(QNetworkRequest(url))));
-        return nullptr;  // to not start request to other side
     } else {
-        return job;
+        emit requestAlbumArt(originalUrl, playerName);
     }
+
+    return job;
 }
 
 void AlbumArtCache::endFetching(

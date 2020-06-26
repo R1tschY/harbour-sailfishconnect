@@ -60,7 +60,6 @@ add_executable(sailfishconnectapp
 set_target_properties(sailfishconnectapp
   PROPERTIES
   OUTPUT_NAME ${PACKAGE_NAME}
-  ENABLE_EXPORTS ON  # Needed by booster, useful for backtraces
 )
 
 target_link_libraries(sailfishconnectapp
@@ -79,6 +78,9 @@ target_link_libraries(sailfishconnectapp
   kdeconnectinterfaces
   kdeconnectplugins
   sailfishconnectplugins
+
+  # Needed by booster, useful for backtraces
+  -pie
 )
 
 # Tell Qt Creator where the application executable(s) would be located on the

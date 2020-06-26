@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.0)
 cmake_policy(SET CMP0071 NEW)
 project(SailfishConnect VERSION 0.6 LANGUAGES C CXX)
 
@@ -47,7 +47,14 @@ find_package(KF5 REQUIRED COMPONENTS I18n CoreAddons Config)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 
+# Options
 set(PACKAGE_NAME harbour-sailfishconnect)
+
+# Needed by booster, useful for backtraces
+set(CMAKE_ENABLE_EXPORTS ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN hidden)
 
 add_subdirectory(app)
 add_subdirectory(pluginscommon)

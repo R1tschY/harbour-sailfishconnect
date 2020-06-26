@@ -50,8 +50,9 @@ Telephony | :heavy_check_mark: | :telephone_receiver: Share call status (incomin
 RemoteKeyboard | :heavy_check_mark: | :keyboard: Create keyboard input from your phone.
 Contacts | :heavy_check_mark: | :busts_in_silhouette: Share contacts with your computer.
 SendNotifications | :construction: | Share notifications of your phone.
+RunCommand | :heavy_check_mark: | Run user-defined commands on your computer.
+RemoteSystemVolume | :heavy_check_mark: | :sound: Control system volume of your computer.
 Telepathy | :construction: | :speech_balloon: Send SMS messages and read SMS history from your computer.
-RunCommand | :o: | Run user-defined commands on your computer.
 Sftp | :o: | :open_file_folder: Provide access to local files from your computer.
 FindMyPhone | :o: | :vibration_mode: Make finding your phone easier.
 SystemVolume | :o: | :sound: Share control of system volume.
@@ -93,6 +94,4 @@ MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control wit
 
 ## Credits
 
-Sailfish Connect uses an own fork of the core library of the
-[KDE Connect desktop client](https://cgit.kde.org/kdeconnect-kde.git/).
-It was ported to use only Qt.
+Sailfish Connect uses libraries of the [KDE Connect desktop client](https://invent.kde.org/network/kdeconnect-kde).

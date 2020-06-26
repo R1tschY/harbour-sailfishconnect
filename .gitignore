@@ -15,6 +15,7 @@
 .vscode
 .buildconfig
 .mypy_cache
+compile_commands.json
 
 # Conan
 conan.lock

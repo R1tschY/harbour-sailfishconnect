@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-X-Nemo-Application-Type=generic # TODO: silica-qt5 (Link with rdynamic)
+X-Nemo-Application-Type=silica-qt5
 X-Nemo-Single-Instance=yes
 Icon=harbour-sailfishconnect
 Exec=harbour-sailfishconnect

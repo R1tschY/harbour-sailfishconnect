@@ -23,6 +23,13 @@ set(CMAKE_BUILD_WITH_INSTALL_RPATH OFF)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH OFF)
 set(CMAKE_INSTALL_RPATH "${LIB_INSTALL_DIR}")
 
+# Compile position independent code and export whats needed
+# Needed by booster
+set(CMAKE_ENABLE_EXPORTS ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN hidden)
+
 # AUTOMOC
 set(CMAKE_AUTOMOC_DEPEND_FILTERS
   "K_PLUGIN_CLASS_WITH_JSON" "[\n][ \t]*K_PLUGIN_CLASS_WITH_JSON[ \t]*\\(\\w+,[ \t]*\"([^\"]+)\""
@@ -49,12 +56,6 @@ include(KDECMakeSettings)
 
 # Options
 set(PACKAGE_NAME harbour-sailfishconnect)
-
-# Needed by booster, useful for backtraces
-set(CMAKE_ENABLE_EXPORTS ON)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN hidden)
 
 add_subdirectory(app)
 add_subdirectory(pluginscommon)

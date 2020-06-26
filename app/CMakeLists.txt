@@ -79,7 +79,7 @@ target_link_libraries(sailfishconnectapp
   kdeconnectplugins
   sailfishconnectplugins
 
-  # Needed by booster, useful for backtraces
+  # Needed by booster
   -pie
 )
 

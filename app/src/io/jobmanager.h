@@ -86,7 +86,6 @@ private:
     void setTarget(const QUrl& value);
 
 private slots:
-    void onResult();
     void onFinished();
     void onDescription(
             KJob *job,

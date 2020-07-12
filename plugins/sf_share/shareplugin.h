@@ -19,10 +19,13 @@
 
 #include <core/kdeconnectplugin.h>
 
+class KJob;
 
 class SharePlugin : public KdeConnectPlugin
 {
     Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.kde.kdeconnect.device.share")
+
 public:
     using KdeConnectPlugin::KdeConnectPlugin;
 
@@ -31,11 +34,17 @@ public:
     void connected() override { }
     bool receivePacket(const NetworkPacket &np) override;
     
-    Q_SCRIPTABLE void share(const QUrl &url);
+    Q_SCRIPTABLE void shareUrl(const QString& url) { shareUrl(QUrl(url), false); }
+    Q_SCRIPTABLE void shareUrls(const QStringList& urls);
+    Q_SCRIPTABLE void shareText(const QString& text);
+    Q_SCRIPTABLE void openFile(const QString& file) { shareUrl(QUrl(file), true); }
+
+    QString dbusPath() const override;
 
 signals:
-    void received(const QUrl& url);
+    void shareReceived(const QUrl& url);
 
 private:
-    void finishedFileTransfer();
+    void finished(KJob* job, qint64 modified, bool open);
+    void shareUrl(const QUrl& url, bool open);
 };

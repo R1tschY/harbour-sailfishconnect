@@ -45,7 +45,6 @@ JobInfo::JobInfo(KJob *job, QObject *parent)
 
     connect(job, &KJob::description, this, &JobInfo::onDescription);
     connect(job, &KJob::finished, this, &JobInfo::onFinished);
-    connect(job, &KJob::result, this, &JobInfo::onResult);
     connect(job, SIGNAL(processedAmount(KJob*, KJob::Unit, qulonglong)),
             this, SLOT(onProcessedAmount(KJob*, KJob::Unit, qulonglong)));
     connect(job, SIGNAL(totalAmount(KJob*, KJob::Unit, qulonglong)),
@@ -145,14 +144,11 @@ void JobInfo::onFinished()
         m_state = QStringLiteral("finished");
     }
 
-    emit stateChanged();
-}
-
-void JobInfo::onResult()
-{
     if (m_impl->error()) {
         m_errorString = m_impl->errorText();
     }
+
+    emit stateChanged();
 }
 
 JobManager::JobManager(QObject *parent)

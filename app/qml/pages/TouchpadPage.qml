@@ -36,7 +36,7 @@
 
 import QtQuick 2.6
 import Sailfish.Silica 1.0
-import SailfishConnect.Api 0.7
+import SailfishConnect.Api 0.6
 
 Page {
     id: page
@@ -44,7 +44,7 @@ Page {
     allowedOrientations: Orientation.All
 
     property QtObject device
-    property QtObject plugin: device.getRemoteControl()
+    property QtObject plugin: device.getRemoteControlApi()
     property int lastX: 0xDEAD
     property int lastY: 0xDEAD
     property bool moved: false

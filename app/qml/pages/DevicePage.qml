@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Sailfish.Pickers 1.0
-import SailfishConnect.Api 0.7
+import SailfishConnect.Api 0.6
 import "../components"
 
 
@@ -172,14 +172,15 @@ Page {
                     pluginId: "sailfishconnect_share"
                     onClicked: pageStack.push(filePickerPage)
 
+                    // TODO: multiple choise
                     Component {
                         id: filePickerPage
                         ContentPickerPage {
                             title: i18n("Select file to send")
                             onSelectedContentPropertiesChanged: {
                                 _device
-                                    .plugin("SailfishConnect::SharePlugin")
-                                    .share(selectedContentProperties.url)
+                                    .getShareApi()
+                                    .shareUrl(selectedContentProperties.url)
                             }
                         }
                     }

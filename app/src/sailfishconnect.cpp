@@ -140,26 +140,30 @@ void registerQmlTypes() {
         QStringLiteral("Instances are only creatable from C++.");
         
     qmlRegisterUncreatableType<DaemonApi>(
-                "SailfishConnect.Api", 0, 7, "DaemonApi", uncreatableError);
+                "SailfishConnect.Api", 0, 6, "DaemonApi", uncreatableError);
 
     qRegisterMetaType<DeviceApi*>("DeviceApi*");
     qmlRegisterUncreatableType<DeviceApi>(
-                "SailfishConnect.Api", 0, 7, "DeviceApi", uncreatableError);
+                "SailfishConnect.Api", 0, 6, "DeviceApi", uncreatableError);
 
     qRegisterMetaType<RemoteControlApi*>("RemoteControlApi*");
     qmlRegisterUncreatableType<RemoteControlApi>(
-                "SailfishConnect.Api", 0, 7, "RemoteControlApi", uncreatableError);
+                "SailfishConnect.Api", 0, 6, "RemoteControlApi", uncreatableError);
 
     qRegisterMetaType<RemoteCommandsApi*>("RemoteCommandsApi*");
     qmlRegisterUncreatableType<RemoteCommandsApi>(
-                "SailfishConnect.Api", 0, 7, "RemoteCommandsApi", uncreatableError);
+                "SailfishConnect.Api", 0, 6, "RemoteCommandsApi", uncreatableError);
+
+    qRegisterMetaType<RemoteCommandsApi*>("ShareApi*");
+    qmlRegisterUncreatableType<RemoteCommandsApi>(
+                "SailfishConnect.Api", 0, 6, "ShareApi", uncreatableError);
 
     qRegisterMetaType<PluginConfigApi*>("PluginConfigApi*");
     qmlRegisterUncreatableType<PluginConfigApi>(
-                "SailfishConnect.Api", 0, 7, "PluginConfigApi", uncreatableError);
+                "SailfishConnect.Api", 0, 6, "PluginConfigApi", uncreatableError);
 
     qmlRegisterType<DBusServiceWatcher>(
-                "SailfishConnect.Api", 0, 7, "DBusServiceWatcher");
+                "SailfishConnect.Api", 0, 6, "DBusServiceWatcher");
 
     QmlJs::registerTypes();
 }

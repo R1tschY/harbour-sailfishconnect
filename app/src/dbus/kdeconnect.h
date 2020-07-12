@@ -76,6 +76,31 @@ public:
     }
 };
 
+class ShareApi : public ShareDbusInterface {
+    Q_OBJECT
+public:
+    using ShareDbusInterface::ShareDbusInterface;
+
+    Q_SCRIPTABLE void openFile(const QString& file)
+    {
+        checkForDbusError(ShareDbusInterface::openFile(file));
+    }
+
+    Q_SCRIPTABLE void shareText(const QString& text)
+    {
+        checkForDbusError(ShareDbusInterface::shareText(text));
+    }
+
+    Q_SCRIPTABLE void shareUrl(const QString& url)
+    {
+        checkForDbusError(ShareDbusInterface::shareUrl(url));
+    }
+
+    Q_SCRIPTABLE void shareUrls(const QStringList& urls) {
+        checkForDbusError(ShareDbusInterface::shareUrls(urls));
+    }
+};
+
 class PluginConfigApi : public KdeConnectPluginConfig {
     Q_OBJECT
 public:
@@ -130,16 +155,20 @@ public:
 
     // plugins
 
-    Q_SCRIPTABLE RemoteControlApi* getRemoteControl() {
+    Q_SCRIPTABLE RemoteControlApi* getRemoteControlApi() {
         return new RemoteControlApi(id());
     }
 
-    Q_SCRIPTABLE RemoteCommandsApi* getRemoteCommands() {
+    Q_SCRIPTABLE RemoteCommandsApi* getRemoteCommandsApi() {
         return new RemoteCommandsApi(id());
     }
 
-    Q_SCRIPTABLE RemoteSystemVolumeApi* getRemoteSystemVolume() {
+    Q_SCRIPTABLE RemoteSystemVolumeApi* getRemoteSystemVolumeApi() {
         return new RemoteSystemVolumeApi(id());
+    }
+
+    Q_SCRIPTABLE ShareApi* getShareApi() {
+        return new ShareApi(id());
     }
 
     Q_SCRIPTABLE PluginConfigApi* getPluginConfig(const QString& pluginId) {

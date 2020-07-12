@@ -52,20 +52,20 @@ QString DownloadJob::destination() const
 
 void DownloadJob::doStart()
 {
-    if (QFileInfo::exists(m_destination)) {
-        auto destination = nonexistingFile(m_destination);
+    QFileInfo destination(m_destination);
 
-        if (!destination.dir().mkpath(QStringLiteral("."))) {
-            qCWarning(logger)
-                    << "Cannot create destination folder for file download"
-                    << destination.filePath();
-            setError(2);
-            setErrorText(i18n("Cannot create destination folder"));
-            return emitResult();
-        }
+    if (!destination.dir().mkpath(QStringLiteral("."))) {
+        qCWarning(logger)
+                << "Cannot create destination folder for file download"
+                << destination.filePath();
+        setError(2);
+        setErrorText(i18n("Cannot create destination folder"));
+        return emitResult();
+    }
 
+    if (destination.exists()) {
+        destination = nonexistingFile(destination);
         m_destination = destination.filePath();
-
         qCInfo(logger)
                 << "Changed to non-existing destination" << m_destination;
     }

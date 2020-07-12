@@ -84,7 +84,6 @@ void CopyJob::setSource(const QSharedPointer<QIODevice> &source)
 
 void CopyJob::doStart()
 {
-    qCDebug(logger) << "CopyJob::doStart";
     Q_ASSERT(!m_source.isNull());
     Q_ASSERT(!m_destination.isNull());
 
@@ -223,7 +222,8 @@ void CopyJob::finish()
 
     if (m_bufferSize != 0) {
         setError(2);
-        setErrorText(i18n("Early end of output stream"));
+        setErrorText(i18n("Early end of output stream: %1")
+            .arg(m_destination->errorString()));
     }
 
     if (m_size >= 0 && m_writtenBytes > m_size) {
@@ -234,7 +234,8 @@ void CopyJob::finish()
 
     if (m_size >= 0 && m_writtenBytes < m_size) {
         setError(2);
-        setErrorText(i18n("Early end of input stream"));
+        setErrorText(i18n("Early end of input stream: %1")
+            .arg(m_source->errorString()));
     }
 
     close();

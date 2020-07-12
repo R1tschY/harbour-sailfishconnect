@@ -17,7 +17,7 @@
 
 import QtQuick 2.6
 import Sailfish.Silica 1.0
-import SailfishConnect.Api 0.7
+import SailfishConnect.Api 0.6
 import org.kde.kdeconnect 1.0
 
 Page {

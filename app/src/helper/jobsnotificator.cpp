@@ -68,9 +68,13 @@ void JobsNotificator::jobChanged(JobInfo *job)
                 }
             } else {
                 if (isUpload) {
-                    notification->setBody(i18n("Upload failed"));
+                    notification->setSummary(i18n("Upload failed"));
+                    notification->setBody(
+                        i18n("Upload failed: %1").arg(job->errorString()));
                 } else {
-                    notification->setBody(i18n("Download failed"));
+                    notification->setSummary(i18n("Download failed"));
+                    notification->setBody(
+                        i18n("Download failed: %1").arg(job->errorString()));
                 }
             }
 
@@ -105,7 +109,7 @@ void JobsNotificator::addJob(JobInfo *job)
         notification->setPreviewBody(fileName);
     }
     notification->setHintValue("x-nemo-progress", job->progress());
-//    notification->setRemoteActions(
+//    TODO: notification->setRemoteActions(
 //        { UI::openDevicePageDbusAction(device->id()) });
 
     notification->publish();

@@ -23,11 +23,12 @@
 
 namespace SailfishConnect {
 
-QFileInfo nonexistingFile(const QString& path) {
-    QFileInfo result(path);
+// TODO: Use KFileUtils::suggestName
+QFileInfo nonexistingFile(const QFileInfo& path) {
+    QFileInfo result = path;
     const QString prefix = result.baseName();
     QString suffix = result.completeSuffix();
-    if (path.contains(QChar('.'))) {
+    if (path.fileName().contains(QChar('.'))) {
         suffix.insert(0, QChar('.'));
     }
 

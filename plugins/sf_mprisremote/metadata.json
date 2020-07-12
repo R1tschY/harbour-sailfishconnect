@@ -1,5 +1,0 @@
-{
-    "Id": "SailfishConnect::MprisRemotePlugin",
-    "IncomingCapabilities": ["kdeconnect.mpris"],
-    "OutcomingCapabilities": ["kdeconnect.mpris.request"]
-}

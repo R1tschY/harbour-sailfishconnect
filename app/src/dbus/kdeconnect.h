@@ -175,6 +175,8 @@ public:
         return new PluginConfigApi(id(), pluginId);
     }
 
+    Q_SCRIPTABLE void pluginCall(const QString& plugin, const QString& method);
+
 Q_SIGNALS:
     void pluginsChangedProxy();
 

@@ -48,7 +48,7 @@ void ClipboardPlugin::pushClipboard()
 
 QString ClipboardPlugin::dbusPath() const
 {
-    return QStringLiteral("/modules/kdeconnect/devices/%1/clipboard")
+    return QStringLiteral("/modules/kdeconnect/devices/%1/sailfishconnect_clipboard")
         .arg(device()->id());
 }
 

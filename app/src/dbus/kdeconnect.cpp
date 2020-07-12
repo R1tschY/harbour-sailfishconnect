@@ -63,4 +63,14 @@ void checkForDbusError(const QDBusPendingCall& async) {
         });
 }
 
+void DeviceApi::pluginCall(const QString& plugin, const QString& method)
+{
+    QDBusMessage msg = QDBusMessage::createMethodCall(
+        QStringLiteral("org.kde.kdeconnect"), 
+        QStringLiteral("/modules/kdeconnect/devices/") % id() % QChar('/') % plugin, 
+        QStringLiteral("org.kde.kdeconnect.device.") + plugin, 
+        method);
+    checkForDbusError(QDBusConnection::sessionBus().asyncCall(msg));
+}
+
 } // namespace SailfishConnect

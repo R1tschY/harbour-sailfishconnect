@@ -27,7 +27,8 @@ class QClipboard;
 class ClipboardPlugin : public KdeConnectPlugin
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "de.richardliebscher.sailfishconnect.device.clipboard")
+    Q_CLASSINFO("D-Bus Interface", 
+        "org.kde.kdeconnect.device.sailfishconnect_clipboard")
 
 public:
     ClipboardPlugin(QObject* parent, const QVariantList& args);

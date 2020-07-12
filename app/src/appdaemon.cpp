@@ -43,14 +43,6 @@ AppDaemon::AppDaemon(QObject *parent)
     : Daemon(parent)
     , m_jobmanager(new JobManager(this))
 {
-    auto& config = KdeConnectConfig::instance();
-    if (!config.isNameSet()) {
-        config.setName(defaultName());
-    }
-    if (!config.isDeviceTypeSet()) {
-        config.setDeviceType(deviceType());
-    }
-
     connect(
         &m_backgroundActivity, &BackgroundActivity::running,
         this, &AppDaemon::onWakeUp);

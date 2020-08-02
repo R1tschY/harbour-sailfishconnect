@@ -103,8 +103,9 @@ cmake --build rpmbuilddir -- %{?_smp_mflags}
 rm -rf %{buildroot}
 DESTDIR=%{buildroot} cmake --build rpmbuilddir --target install
 rm -rf \
-  %{buildroot}%{_datadir}/knotifications5/kdeconnect.notifyrc \
-  %{buildroot}%{_datadir}/kservicetypes5/kdeconnect_plugin.desktop \
+  %{buildroot}%{_datadir}/knotifications5 \
+  %{buildroot}%{_datadir}/kservicetypes5 \
+  %{buildroot}%{_datadir}/qlogging-categories5 \
   %{buildroot}%{_datadir}/%{name}/lib/*.a
 mkdir -p %{_bindir}
 

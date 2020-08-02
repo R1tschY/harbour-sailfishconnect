@@ -117,25 +117,6 @@ KJobTrackerInterface* AppDaemon::jobTracker() {
     return m_jobmanager;
 }
 
-QString AppDaemon::defaultName() {
-    const QString hwReleaseFile = QStringLiteral("/etc/hw-release");
-    // QSettings will crash if the file does not exist or can be created, like in this case by us in /etc.
-    // E.g. in the SFOS SDK Emulator there is no such file, so check before to protect against the crash.
-    if (QFile::exists(hwReleaseFile)) {
-        QSettings hwRelease(hwReleaseFile, QSettings::IniFormat);
-        auto hwName = hwRelease.value(QStringLiteral("NAME")).toString();
-        if (!hwName.isEmpty()) {
-            return hwName;
-        }
-    }
-        
-    return QString::fromUtf8(qgetenv("USER")) % '@' % QHostInfo::localHostName();
-}
-
-QString AppDaemon::deviceType() {
-    return QStringLiteral("phone");
-}
-
 QQmlImageProviderBase* AppDaemon::imageProvider(const QString& providerId) const
 {
     if (!m_qmlEngine)

@@ -47,9 +47,6 @@ public:
     void sendSimpleNotification(const QString&, const QString&, const QString&, const QString&) override;
     KJobTrackerInterface* jobTracker() override;
 
-    static QString defaultName();
-    static QString deviceType();
-
     QQmlImageProviderBase* imageProvider(const QString& providerId) const;
 
     QQmlEngine* qmlEngine() const { return m_qmlEngine; }

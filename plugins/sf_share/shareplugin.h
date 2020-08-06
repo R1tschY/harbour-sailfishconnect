@@ -42,7 +42,7 @@ public:
     QString dbusPath() const override;
 
 signals:
-    void shareReceived(const QUrl& url);
+    void shareReceived(const QString& url);
 
 private:
     void finished(KJob* job, qint64 modified, bool open);

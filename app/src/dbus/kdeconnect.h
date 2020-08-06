@@ -202,6 +202,10 @@ public:
     {
         return new DeviceApi(id);
     }
+
+    Q_SCRIPTABLE void forceOnNetworkChange() {
+        checkForDbusError(DaemonDbusInterface::forceOnNetworkChange());
+    }
 };
 
 } // namespace SailfishConnect

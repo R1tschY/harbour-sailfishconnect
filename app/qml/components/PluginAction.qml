@@ -24,7 +24,15 @@ IconListItem {
     property string pluginId
     property alias icon: item.source
 
-    visible: device && device.isPluginLoaded(pluginId)
+    property bool _pluginLoaded: device.isPluginLoaded(pluginId)
+
+    visible: device && _pluginLoaded
+
+    Connections {
+        target: device
+        onLoadedPluginsChanged:
+            item._pluginLoaded = device.isPluginLoaded(pluginId)
+    }
 
     function openPage(pagePath) {
         pageStack.push(

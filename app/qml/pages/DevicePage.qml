@@ -37,9 +37,17 @@ Page {
         anchors.fill: parent
         contentHeight: deviceColumn.height + Theme.paddingLarge
 
+        onStateChanged: {
+            console.log(state)
+        }
+
+        Component.onCompleted: {
+            console.log(state)
+        }
+
         states: [
             State {
-                name: "non-reachable"
+                name: "notReachable"
                 when: !_device.isReachable
 
                 PropertyChanges {
@@ -75,7 +83,7 @@ Page {
                 }
             },
             State {
-                name: "non-trusted"
+                name: "notTrusted"
                 when: !_device.isTrusted
 
                 PropertyChanges {
@@ -134,7 +142,7 @@ Page {
                 height: Theme.itemSizeSmall
                 width: parent.width - Theme.paddingLarge * 2
                 x: Theme.horizontalPageMargin
-                visible: deviceView.state === "non-trusted"
+                visible: deviceView.state === "notTrusted"
 
                 Label {
                     color: Theme.highlightColor

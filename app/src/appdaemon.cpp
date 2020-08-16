@@ -51,6 +51,8 @@ AppDaemon::AppDaemon(QObject *parent)
     onDeviceVisibilityChanged();
     connect(this, &Daemon::deviceVisibilityChanged,
             this, &AppDaemon::onDeviceVisibilityChanged);
+    connect(this, &Daemon::deviceAdded,
+            this, &AppDaemon::onDeviceAdded);
 }
 
 void AppDaemon::askPairingConfirmation(Device *device)
@@ -62,7 +64,7 @@ void AppDaemon::askPairingConfirmation(Device *device)
     notification->setBody(i18n("Pending pairing request ..."));
     notification->setPreviewSummary(device->name());
     notification->setPreviewBody(i18n("Pairing request"));
-    notification->setExpireTimeout(PairingHandler::pairingTimeoutMsec() * 0.75);
+    notification->setExpireTimeout(PairingHandler::pairingTimeoutMsec());
     notification->setRemoteActions(
                 { UI::openDevicePageDbusAction(device->id()) });
 
@@ -77,9 +79,7 @@ void AppDaemon::reportError(const QString& title, const QString& description)
 {
     qCCritical(logger) << "Error to report:" << title << description;
 
-    Notification *notification = new Notification(this);
-
-    notification->setAppName(QCoreApplication::applicationName());
+    Notification *notification = createNotification();
     notification->setSummary(PRETTY_PACKAGE_NAME);
     notification->setBody(description);
     notification->setPreviewSummary(PRETTY_PACKAGE_NAME);
@@ -97,9 +97,8 @@ void AppDaemon::quit() {
 
 void AppDaemon::sendSimpleNotification(const QString &eventId, const QString &title, const QString &text, const QString &iconName) {
     qCInfo(logger) << "Notification:" << eventId << title << text;
-    Notification *notification = new Notification(this);
 
-    notification->setAppName(QCoreApplication::applicationName());
+    Notification *notification = createNotification();
     notification->setSummary(title);
     notification->setBody(text);
     notification->setPreviewSummary(title);
@@ -107,9 +106,6 @@ void AppDaemon::sendSimpleNotification(const QString &eventId, const QString &ti
     if (eventId == QStringLiteral("pingReceived")) {
         notification->setIcon("image://theme/icon-lock-information");
     }
-    connect(notification, &Notification::closed,
-            [=](uint reason) { notification->deleteLater(); });
-
     notification->publish();
 }
 
@@ -157,9 +153,39 @@ void AppDaemon::onWakeUp()
 {
    qCDebug(logger) << "Received wakeup";
 
-    // immediately to go sleep, hope that is sufficient to keep connections
+    // immediately go to sleep, hope that is sufficient to keep connections
     // alive
-    m_backgroundActivity.wait();
+   m_backgroundActivity.wait();
+}
+
+void AppDaemon::onDeviceAdded(const QString &deviceId)
+{
+    auto device = this->getDevice(deviceId);
+    connect(device, &Device::pairingError, this,
+            [this, deviceId](const QString& err) {
+        onPairingError(deviceId, err);
+    });
+}
+
+void AppDaemon::onPairingError(const QString &deviceId, const QString &error)
+{
+    auto device = this->getDevice(deviceId);
+    if (device == nullptr)
+        return;
+
+    Notification *notification = createNotification();
+    notification->setPreviewSummary(device->name());
+    notification->setPreviewBody(i18n("Failed to pair. %1").arg(error));
+    notification->publish();
+}
+
+Notification *AppDaemon::createNotification()
+{
+    Notification *notification = new Notification(this);
+    notification->setAppName(QCoreApplication::applicationName());
+    connect(notification, &Notification::closed,
+            [=](uint) { notification->deleteLater(); });
+    return notification;
 }
 
 AppDaemon *AppDaemon::instance()

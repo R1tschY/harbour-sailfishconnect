@@ -27,6 +27,7 @@
 class QQmlEngine;
 class QQmlImageProviderBase;
 class Device;
+class Notification;
 
 namespace SailfishConnect {
 
@@ -65,6 +66,10 @@ private:
 
     void onDeviceVisibilityChanged();
     void onWakeUp();
+    void onDeviceAdded(const QString& deviceId);
+    void onPairingError(const QString& deviceId, const QString& error);
+
+    Notification* createNotification();
 };
 
 } // namespace SailfishConnect

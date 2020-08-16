@@ -144,7 +144,7 @@ Page {
 
                         text: (trusted && reachable)
                               ? i18n("Connected")
-                              : (hasPairingRequests
+                              : (hasPairingRequests || waitsForPairing
                                  ? i18n("Pending pairing request ...") : "")
                         color: listItem.highlighted
                                ? Theme.secondaryHighlightColor

@@ -100,6 +100,8 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
         return device->isReachable();
     case HasPairingRequestsRole:
         return device->hasPairingRequests();
+    case WaitsForPairingRole:
+        return device->waitsForPairing();
     }
 
     return QVariant();
@@ -114,6 +116,7 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
     roles.insert(TrustedRole, "trusted");
     roles.insert(ReachableRole, "reachable");
     roles.insert(HasPairingRequestsRole, "hasPairingRequests");
+    roles.insert(WaitsForPairingRole, "waitsForPairing");
     return roles;
 }
 
@@ -186,6 +189,9 @@ void DeviceListModel::connectDevice(Device *device)
     });
     connect(device, &Device::hasPairingRequestsChanged, this, [=]{
         deviceDataChanged(device, {HasPairingRequestsRole});
+    });
+    connect(device, &Device::waitsForPairingChanged, this, [=]{
+        deviceDataChanged(device, {WaitsForPairingRole});
     });
     connect(device, &Device::destroyed, this, [=]{
         //qCCritical(logger) << "device destroyed with id" << device->id();

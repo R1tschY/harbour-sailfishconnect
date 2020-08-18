@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import SailfishConnect.Api 0.6
-
+import "../components"
 
 Page {
     id: page
@@ -26,24 +26,6 @@ Page {
     property QtObject device
 
     allowedOrientations: Orientation.All
-
-    function prettifyEncryptionInfo(encInfo) {
-        var re = /\w\w(:\w\w)+/g
-
-        function replacer(match) {
-            var parts = match.split(":")
-            var result = ""
-            for (var i = 0; i < parts.length; i += 5) {
-                result += "  " + parts[i + 0] + ":" + parts[i + 1] + ":"
-                        + parts[i + 2] + ":" + parts[i + 3] + ":" + parts[i + 4]
-                        + "\n"
-            }
-
-            return "<br><pre>" + result + "</pre><br>"
-        }
-
-        return encInfo.replace(re, replacer)
-    }
 
     SilicaFlickable {
         anchors.fill: parent
@@ -60,14 +42,11 @@ Page {
                 title: i18n("Encryption info")
             }
 
-            Label {
+            EncryptionInfo {
                 x: Theme.horizontalPageMargin
                 width: page.width - 2 * Theme.horizontalPageMargin
 
-                text: device ? prettifyEncryptionInfo(device.encryptionInfo()) : ""
-                color: Theme.highlightColor
-                wrapMode: Text.Wrap
-                textFormat: Text.StyledText
+                encryptionInfo: device ? device.encryptionInfo() : ""
             }
         }
 

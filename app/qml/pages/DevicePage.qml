@@ -126,6 +126,16 @@ Page {
                         onClicked: _device.rejectPairing()
                     }
                 }
+
+                Item {
+                    height: Theme.paddingLarge
+                    width: parent.width
+                }
+
+                EncryptionInfo {
+                    width: parent.width
+                    encryptionInfo: _device ? _device.encryptionInfo() : ""
+                }
             }
 
             Column {
@@ -153,6 +163,16 @@ Page {
                         _device.requestPair()
                     }
                 }
+
+                Item {
+                    height: Theme.paddingLarge
+                    width: parent.width
+                }
+
+                EncryptionInfo {
+                    width: parent.width
+                    encryptionInfo: _device ? _device.encryptionInfo() : ""
+                }
             }
 
             Column {
@@ -172,7 +192,7 @@ Page {
                     pluginId: "sailfishconnect_share"
                     onClicked: pageStack.push(filePickerPage)
 
-                    // TODO: multiple choise
+                    // TODO: multiselect
                     Component {
                         id: filePickerPage
                         ContentPickerPage {

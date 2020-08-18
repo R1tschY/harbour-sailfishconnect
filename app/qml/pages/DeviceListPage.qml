@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Nemo.Notifications 1.0
-import SailfishConnect.UI 0.3
+import SailfishConnect.UI 0.6
 import SailfishConnect.Api 0.6
 
 Page {
@@ -300,7 +300,8 @@ Page {
         pageStack.pop(page, PageStackAction.Immediate)
         pageStack.push(
             Qt.resolvedUrl("DevicePage.qml"),
-            { deviceId: deviceId })
+            { deviceId: deviceId },
+            PageStackAction.Immediate)
     }
 }
 

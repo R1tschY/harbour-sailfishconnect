@@ -54,6 +54,7 @@
 #include "models/sortfiltermodel.h"
 #include "models/devicepluginsmodel.h"
 #include "models/mprisplayersmodel.h"
+#include "models/stringlistmodel.h"
 
 #include "ui.h"
 #include "js/qmlregister.h"
@@ -125,13 +126,15 @@ void registerQmlTypes() {
 
     // TODO: register in plugin factories when possible
     qmlRegisterType<DeviceListModel>(
-                "SailfishConnect.UI", 0, 3, "DeviceListModel");
+                "SailfishConnect.UI", 0, 6, "DeviceListModel");
     qmlRegisterType<SortFilterModel>(
-                "SailfishConnect.UI", 0, 3, "SortFilterModel");
+                "SailfishConnect.UI", 0, 6, "SortFilterModel");
     qmlRegisterType<DevicePluginsModel>(
-                "SailfishConnect.UI", 0, 3, "DevicePluginsModel");
+                "SailfishConnect.UI", 0, 6, "DevicePluginsModel");
     qmlRegisterType<MprisPlayersModel>(
-                "SailfishConnect.UI", 0, 3, "MprisPlayersModel");
+                "SailfishConnect.UI", 0, 6, "MprisPlayersModel");
+    qmlRegisterType<StringListModel>(
+                "SailfishConnect.UI", 0, 6, "StringListModel");
 
     QString uncreatableError =
         QStringLiteral("Instances are only creatable from C++.");

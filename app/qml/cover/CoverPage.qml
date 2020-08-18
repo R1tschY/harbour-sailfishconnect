@@ -17,7 +17,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import SailfishConnect.UI 0.3
+import SailfishConnect.UI 0.6
 
 CoverBackground {
     id: cover

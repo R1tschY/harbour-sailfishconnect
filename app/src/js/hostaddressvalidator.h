@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Richard Liebscher <richard.liebscher@gmail.com>.
+ * Copyright 2020 Richard Liebscher <richard.liebscher@gmail.com>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,23 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qmlregister.h"
+#pragma once
 
-#include "url.h"
-#include "humanize.h"
-#include "process.h"
-#include "path.h"
-#include "hostaddressvalidator.h"
+#include <QValidator>
 
 namespace QmlJs {
 
-void registerTypes()
+class HostAddressValidator : public QValidator
 {
-    Url::registerType();
-    Humanize::registerType();
-    Process::registerType();
-    Path::registerType();
-    HostAddressValidator::registerType();
-}
+    Q_OBJECT
+public:
+    explicit HostAddressValidator(QObject *parent = nullptr);
+
+    static void registerType();
+
+    State validate(QString &input, int &pos) const override;
+};
 
 } // namespace QmlJs

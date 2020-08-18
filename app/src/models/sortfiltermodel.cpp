@@ -51,7 +51,7 @@ bool SortFilterModel::filterAcceptsRow(
     }
 
     if (!m_complete || !m_filterValue.isValid())
-        return false;
+        return true;
 
     Q_ASSERT(filterKeyColumn() >= 0); // TODO: -1 not supported
     QModelIndex sourceIndex = sourceModel()->index(
@@ -135,6 +135,8 @@ void SortFilterModel::setFilterValue(const QVariant &filterValue)
         return;
 
     m_filterValue = filterValue;
+    if (m_filterModeIndex == 0)
+        m_filterModeIndex = 1;
 
     invalidateFilter();
 }

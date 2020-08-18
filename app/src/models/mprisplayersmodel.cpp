@@ -45,7 +45,7 @@ int MprisPlayersModel::rowCount(const QModelIndex &parent) const
 
 QVariant MprisPlayersModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() >= m_players.size())
+    if (index.row() < 0 || index.row() >= m_players.size())
         return QVariant();
 
     auto player = m_plugin->player(m_players[index.row()]);

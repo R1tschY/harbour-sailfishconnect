@@ -46,7 +46,7 @@ public:
         IdRole,
     };
 
-    explicit DevicePluginsModel(QObject *parent = 0);
+    explicit DevicePluginsModel(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 

@@ -41,7 +41,7 @@ public:
         WaitsForPairingRole
     };
 
-    explicit DeviceListModel(QObject *parent = 0);
+    explicit DeviceListModel(QObject *parent = nullptr);
     ~DeviceListModel();
 
     // Basic functionality:

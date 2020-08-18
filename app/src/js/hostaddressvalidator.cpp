@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Richard Liebscher <richard.liebscher@gmail.com>.
+ * Copyright 2020 Richard Liebscher <richard.liebscher@gmail.com>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,23 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qmlregister.h"
-
-#include "url.h"
-#include "humanize.h"
-#include "process.h"
-#include "path.h"
 #include "hostaddressvalidator.h"
+
+#include <QQmlEngine>
+#include <QtQml>
 
 namespace QmlJs {
 
-void registerTypes()
+HostAddressValidator::HostAddressValidator(QObject* parent)
+    : QValidator(parent)
 {
-    Url::registerType();
-    Humanize::registerType();
-    Process::registerType();
-    Path::registerType();
-    HostAddressValidator::registerType();
+}
+
+void HostAddressValidator::registerType()
+{
+    qmlRegisterType<HostAddressValidator>("SailfishConnect.Qml", 0, 6, "HostAddressValidator");
+}
+
+QValidator::State HostAddressValidator::validate(QString& input, int& pos) const
+{
+    QHostAddress address(input);
+    return address.isNull() ? QValidator::Intermediate : QValidator::Acceptable;
 }
 
 } // namespace QmlJs

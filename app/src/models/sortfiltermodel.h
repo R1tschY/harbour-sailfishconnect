@@ -68,12 +68,24 @@ public:
     bool sortAscending() const;
     void setSortAscending(bool sortAscending);
 
+    Q_SCRIPTABLE bool removeRow(int row) {
+        return QSortFilterProxyModel::removeRow(row);
+    }
+
+    Q_SCRIPTABLE bool removeRows(int row, int count){
+        return QSortFilterProxyModel::removeRows(row, count, QModelIndex());
+    }
+
+    bool removeRows(int row, int count, const QModelIndex &parent) override {
+        return QSortFilterProxyModel::removeRows(row, count, parent);
+    }
+
 protected:
     bool filterAcceptsRow(
             int source_row, const QModelIndex& source_parent) const override;
 
 private:
-    int m_filterModeIndex = 1;
+    int m_filterModeIndex = 0;
     QVariant m_filterValue;
     QString m_filterRole;
     QString m_sortRole;

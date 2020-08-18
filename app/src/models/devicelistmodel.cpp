@@ -80,10 +80,7 @@ int DeviceListModel::rowCount(const QModelIndex &parent) const
 
 QVariant DeviceListModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
-        return QVariant();
-
-    if (index.row() >= m_devices.length())
+    if (index.row() < 0 || index.row() >= m_devices.length())
         return QVariant();
 
     auto& device = m_devices[index.row()];

@@ -17,7 +17,6 @@
 
 #include <dbusinterfaces.h>
 #include <core/kdeconnectpluginconfig.h>
-#include <QJSValue>
 
 class KdeConnectPluginConfig;
 

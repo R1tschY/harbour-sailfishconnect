@@ -141,7 +141,7 @@ Page {
                         onClicked: {
                             var dialog = pageStack.push(
                                 Qt.resolvedUrl("AddCommandDialog.qml"),
-                                {"key": key, "name": name, "command": command})
+                                { "key": key, "name": name, "command": command })
                             dialog.accepted.connect(function() {
                                 commandsModel.editCommand(
                                     dialog.key, dialog.name.trim(), dialog.command.trim())

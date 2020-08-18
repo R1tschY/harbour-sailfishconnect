@@ -50,7 +50,7 @@ int DevicePluginsModel::rowCount(const QModelIndex& parent) const
 
 QVariant DevicePluginsModel::data(const QModelIndex& index, int role) const
 {
-    if (!index.isValid() || index.row() >= m_plugins.length())
+    if (index.row() < 0 || index.row() >= m_plugins.length())
         return QVariant();
 
     auto& metadata = m_plugins[index.row()];

@@ -37,14 +37,6 @@ Page {
         anchors.fill: parent
         contentHeight: deviceColumn.height + Theme.paddingLarge
 
-        onStateChanged: {
-            console.log(state)
-        }
-
-        Component.onCompleted: {
-            console.log(state)
-        }
-
         states: [
             State {
                 name: "notReachable"

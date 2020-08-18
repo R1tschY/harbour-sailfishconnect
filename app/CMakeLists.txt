@@ -52,8 +52,10 @@ configure_file(
     @ONLY
 )
 file(GLOB_RECURSE sailfishconnectapp_SOURCES "*.cpp")
+FILE(GLOB_RECURSE sailfishconnectapp_QML_SOURCES "qml/*.qml")
 add_executable(sailfishconnectapp 
   ${sailfishconnectapp_SOURCES}
+  ${sailfishconnectapp_QML_SOURCES}
   ${sailfishconnect_PLUGIN_CLIENTS}
   ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_SOURCE})
 

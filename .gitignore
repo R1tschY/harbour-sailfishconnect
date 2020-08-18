@@ -33,7 +33,7 @@ __pycache__
 # RPM
 *.list
 /rpm/*.spec.*
-/rpmbuilddir
+/rpmbuilddir*
 /RPMS
 
 # Build dirs

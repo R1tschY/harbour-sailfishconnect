@@ -15,7 +15,8 @@ Group:      Qt/Qt
 License:    LICENSE
 URL:        https://github.com/R1tschY/harbour-sailfishconnect
 Source0:    %{name}-%{version}.tar.bz2
-Source100:  harbour-sailfishconnect.yaml
+Source1:    CMakeLists.txt
+Source2:    %{_target_cpu}.profile
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(openssl) >= 1.0.1
@@ -50,12 +51,28 @@ SailfishOS client for KDE-Connect
 
 VENV=$HOME/.venv-conan-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
-if [ "$TARGET_CPU" == "i486" ]
-then  
+export SAILFISHCONNECT_PACKAGE_VERSION="%{version}-%{release}"
+
+SOURCE_DIR=`realpath %{_sourcedir}/..`
+
+if [ "$TARGET_CPU" == "i486" ] || [ "$SAILFISH_SDK_FRONTEND" == "qtcreator" ] ; then  
   GENERATOR="Unix Makefiles"
 else
   GENERATOR="Ninja"
 fi
+
+if [ "$SAILFISH_SDK_FRONTEND" == "qtcreator" ] ; then  
+  CMAKE_BUILD_TYPE="Debug"
+else
+  CMAKE_BUILD_TYPE="RelWithDebInfo"
+fi
+
+if [ -f "CMakeLists.txt" ] ; then
+  BUILD_DIR="rpmbuilddir-%{_target_cpu}"
+else 
+  BUILD_DIR="."
+fi
+export CONAN_USER_HOME=`realpath "$BUILD_DIR"`
 
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then
@@ -72,36 +89,37 @@ else
 fi
 
 # speed up conan remote add
-if ! grep -sq sailfishos ~/.conan/remotes.json ; then
+if ! grep -sq sailfishos "$CONAN_USER_HOME/.conan/remotes.json" ; then
   conan remote remove conan-center
   conan remote add -f sailfishos https://api.bintray.com/conan/r1tschy/sailfishos
 fi
 
-export SAILFISHCONNECT_PACKAGE_VERSION="%{version}-%{release}"
-if [ ! -d rpmbuilddir ]; then
-  mkdir -p rpmbuilddir
-fi
-cd rpmbuilddir
-conan install .. --profile=../dev/profiles/%{_target_cpu}
+mkdir -p "$BUILD_DIR"
 
-cmake \
-  -DCMAKE_BUILD_TYPE=Debug \
+(cd "$BUILD_DIR" && conan install "$SOURCE_DIR" --profile="$SOURCE_DIR/dev/profiles/%{_target_cpu}")
+
+(cd "$BUILD_DIR" && cmake \
+  -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \
   -DBUILD_SHARED_LIBS=OFF \
   -DCMAKE_INSTALL_PREFIX=/usr \
-  -DCMAKE_VERBOSE_MAKEFILE=ON \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+  -DCONAN_DISABLE_CHECK_COMPILER=ON \
   -DSAILFISHOS=ON \
   -G "$GENERATOR" \
-  ..
-cd ..
-cmake --build rpmbuilddir -- %{?_smp_mflags}
+  "$SOURCE_DIR")
+
+cmake --build "$BUILD_DIR" -- %{?_smp_mflags}
 
 
 %install
-#%%define _unpackaged_files_terminate_build 0
+if [ -f "CMakeLists.txt" ] ; then
+  BUILD_DIR="rpmbuilddir-%{_target_cpu}"
+else 
+  BUILD_DIR="."
+fi
 
 rm -rf %{buildroot}
-DESTDIR=%{buildroot} cmake --build rpmbuilddir --target install
+DESTDIR=%{buildroot} cmake --build "$BUILD_DIR" --target install
 rm -rf \
   %{buildroot}%{_datadir}/knotifications5 \
   %{buildroot}%{_datadir}/kservicetypes5 \

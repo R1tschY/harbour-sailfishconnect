@@ -18,6 +18,7 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
 import SailfishConnect.Api 0.6
+import SailfishConnect.UI 0.6
 import org.kde.kdeconnect 1.0
 
 Page {
@@ -26,7 +27,7 @@ Page {
     allowedOrientations: Orientation.All
 
     property QtObject device
-    property QtObject plugin: device.getRemoteSinks()
+    property QtObject plugin: device.getRemoteSystemVolumeApi()
 
     SilicaListView {
         id: view
@@ -37,8 +38,11 @@ Page {
             title: i18n("Change volume")
         }
 
-        model: RemoteSinksModel {
-            deviceId: device.id()
+        model: SortFilterModel {
+            sortRole: "name"
+            sourceModel: RemoteSinksModel {
+                deviceId: device.id()
+            }
         }
 
         delegate: BackgroundItem {

@@ -80,7 +80,11 @@ void JobInfo::onDescription(
     m_title = title;
     m_field1 = field1;
     m_field2 = field2;
-    getTarget();
+
+    if (title != m_title) {
+        m_title = title;
+        emit titleChanged();
+    }
 }
 
 void JobInfo::onTotalAmount(KJob *job, KJob::Unit unit, qulonglong amount)
@@ -90,6 +94,9 @@ void JobInfo::onTotalAmount(KJob *job, KJob::Unit unit, qulonglong amount)
     if (unit == KJob::Bytes) {
         m_totalBytes = amount;
         emit totalBytesChanged();
+    } else if (unit == KJob::Files) {
+        m_totalFiles = amount;
+        emit totalFilesChanged();
     }
 }
 
@@ -100,14 +107,15 @@ void JobInfo::onProcessedAmount(KJob *job, KJob::Unit unit, qulonglong amount)
     if (unit == KJob::Bytes) {
         m_processedBytes = amount;
         emit processedBytesChanged();
+    } else if (unit == KJob::Files) {
+        m_processedFiles = amount;
+        emit processedFilesChanged();
     }
 }
 
 void JobInfo::getTarget()
 {
     if (!m_impl) return;
-
-    // TODO: use interface
 
     // auto* downloadJob = qobject_cast<CompositeFileTransferJob*>(m_impl);
     // if (downloadJob) {

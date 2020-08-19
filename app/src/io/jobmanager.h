@@ -38,6 +38,10 @@ class JobInfo : public QObject {
                READ totalBytes NOTIFY totalBytesChanged)
     Q_PROPERTY(qint64 processedBytes
                READ processedBytes NOTIFY processedBytesChanged)
+    Q_PROPERTY(qint64 totalFiles
+               READ totalFiles NOTIFY totalFilesChanged)
+    Q_PROPERTY(qint64 processedFiles
+               READ processedFiles NOTIFY processedFilesChanged)
     Q_PROPERTY(QString state READ state NOTIFY stateChanged)
     Q_PROPERTY(QString errorString READ errorString NOTIFY stateChanged)
 
@@ -46,6 +50,10 @@ public:
 
     qint64 totalBytes() const { return m_totalBytes; }
     qint64 processedBytes() const { return m_processedBytes; }
+
+    qint64 totalFiles() const { return m_totalFiles; }
+    qint64 processedFiles() const { return m_processedFiles; }
+
     QString deviceId() const { return m_deviceId; }
 
     bool hasProgress() const { return m_totalBytes >= 0; }
@@ -65,6 +73,8 @@ signals:
     void targetChanged();
     void totalBytesChanged();
     void processedBytesChanged();
+    void totalFilesChanged();
+    void processedFilesChanged();
     void stateChanged();
 
 private:
@@ -77,6 +87,8 @@ private:
     QString m_errorString;
     qint64 m_totalBytes = -1;
     qint64 m_processedBytes = 0;
+    qint64 m_totalFiles = -1;
+    qint64 m_processedFiles = 0;
 
     QString m_title;
     QPair<QString, QString> m_field1;

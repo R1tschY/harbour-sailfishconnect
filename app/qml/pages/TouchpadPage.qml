@@ -48,18 +48,45 @@ Page {
     property int lastX: 0xDEAD
     property int lastY: 0xDEAD
     property bool moved: false
+    property bool holding: false
 
     PageHeader {
         id: header
         title: i18n("Touchpad")
     }
 
+    state: "normal"
+    states: [
+        State {
+            name: "holding"
+            when: holding
+            PropertyChanges {
+                target: hintLabel
+                text: i18n("Holding ...")
+            }
+        },
+        State {
+            name: "moving"
+            when: moved
+            PropertyChanges {
+                target: hintLabel
+                text: i18n("Moving ...")
+            }
+        },
+        State {
+            name: "normal"
+            PropertyChanges {
+                target: hintLabel
+                text: i18n(
+                          "Move finger on screen\n" +
+                          "Tap for click\n" +
+                          "Hold shortly for Drag'n'Drop")
+            }
+        }
+    ]
+
     InfoLabel {
         id: hintLabel
-        text: i18n(
-                  "Move finger on screen\n" +
-                  "Tap for click\n" +
-                  "Hold shortly for Drag'n'Drop")
         anchors.verticalCenter: touchpad.verticalCenter
     }
 
@@ -95,22 +122,38 @@ Page {
         }
 
         onClicked: {
-            if (!moved && plugin !== null) {
-                plugin.sendCommand("singleclick", true)
+            console.log("onClicked")
+            if (plugin !== null) {
+                if (!holding) {
+                    plugin.sendCommand("singleclick", true)
+                } else {
+                    plugin.sendCommand("singlerelease", true)
+                    holding = false
+                }
             }
+            holding = false
             moved = false
         }
 
         onDoubleClicked: {
-            if (!moved && plugin !== null) {
-                plugin.sendCommand("doubleclick", true)
+            console.log("onDoubleClicked")
+            if (plugin !== null) {
+                if (!holding) {
+                    plugin.sendCommand("doubleclick", true)
+                } else {
+                    plugin.sendCommand("singlerelease", true)
+                    holding = false
+                }
             }
+            holding = false
             moved = false
         }
 
         onPressAndHold: {
-            if (!moved && plugin !== null) {
+            console.log("onPressAndHold")
+            if (plugin !== null) {
                 plugin.sendCommand("singlehold", true)
+                holding = true
             }
             moved = false
         }

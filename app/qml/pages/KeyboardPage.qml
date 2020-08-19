@@ -23,13 +23,42 @@ Page {
     id: page
     allowedOrientations: Orientation.All
     property QtObject device
-    property QtObject plugin: device.plugin("SailfishConnect::RemoteKeyboardPlugin")
+    property QtObject plugin: device.getRemoteKeyboardApi()
     property QtObject modifiers: QtObject {
+        // Three state modifier: None, One Key, Permanent
         property int shift: 0
         property int ctrl: 0
         property int alt: 0
     }
-    property bool chars: false
+    property bool chars: false  // special chars view
+
+    property var _specialKeysMap: {
+        "backspace": 1,
+        "tab": 2,
+        "left": 4,
+        "up": 5,
+        "right": 6,
+        "down": 7,
+        "pgup": 8,
+        "pgdn": 9,
+        "home": 10,
+        "end": 11,
+        "enter": 12,
+        "del": 13,
+        "esc": 14,
+        "F1": 21,
+        "F2": 22,
+        "F3": 23,
+        "F4": 24,
+        "F5": 25,
+        "F6": 26,
+        "F7": 27,
+        "F8": 28,
+        "F9": 29,
+        "F10": 30,
+        "F11": 31,
+        "F12": 32
+    }
 
     function displayCorrectChar(data) {
         if (page.chars && typeof data["symView"] !== "undefined") {
@@ -44,6 +73,28 @@ Page {
                 return data["captionShifted"]
             }
             return data["caption"]
+        }
+    }
+
+    function sendKey(label) {
+        var key = _specialKeysMap[label] || 0
+        if (key !== 0) {
+            label = ""
+        }
+
+        if (page.chars) {
+            plugin.sendKeyPress(label, key, false, modifiers.ctrl, modifiers.alt)
+        } else {
+            plugin.sendKeyPress(label, key, modifiers.shift, modifiers.ctrl, modifiers.alt)
+            if (modifiers.shift === 1) {
+                modifiers.shift = 0
+            }
+        }
+        if (modifiers.ctrl === 1) {
+            modifiers.ctrl = 0
+        }
+        if (modifiers.alt === 1) {
+            modifiers.alt = 0
         }
     }
 
@@ -75,22 +126,7 @@ Page {
                         height: page.height / 7
                         label: displayCorrectChar(modelData)
 
-                        onClicked: {
-                            if (page.chars) {
-                                plugin.sendKeyPress(label, false, modifiers.ctrl, modifiers.alt)
-                            } else {
-                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
-                                if (modifiers.shift === 1) {
-                                    modifiers.shift = 0
-                                }
-                            }
-                            if (modifiers.ctrl === 1) {
-                                modifiers.ctrl = 0
-                            }
-                            if (modifiers.alt === 1) {
-                                modifiers.alt = 0
-                            }
-                        }
+                        onClicked: page.sendKey(label)
                     }
                 }
             }
@@ -104,22 +140,7 @@ Page {
                         height: page.height / 7
                         label: displayCorrectChar(modelData)
 
-                        onClicked: {
-                            if (page.chars) {
-                                plugin.sendKeyPress(label, false, modifiers.ctrl, modifiers.alt)
-                            } else {
-                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
-                                if (modifiers.shift === 1) {
-                                    modifiers.shift = 0
-                                }
-                            }
-                            if (modifiers.ctrl === 1) {
-                                modifiers.ctrl = 0
-                            }
-                            if (modifiers.alt === 1) {
-                                modifiers.alt = 0
-                            }
-                        }
+                        onClicked: page.sendKey(label)
                     }
                 }
             }
@@ -133,22 +154,7 @@ Page {
                         height: page.height / 7
                         label: displayCorrectChar(modelData)
 
-                        onClicked: {
-                            if (page.chars) {
-                                plugin.sendKeyPress(label, false, modifiers.ctrl, modifiers.alt)
-                            } else {
-                                plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
-                                if (modifiers.shift === 1) {
-                                    modifiers.shift = 0
-                                }
-                            }
-                            if (modifiers.ctrl === 1) {
-                                modifiers.ctrl = 0
-                            }
-                            if (modifiers.alt === 1) {
-                                modifiers.alt = 0
-                            }
-                        }
+                        onClicked: page.sendKey(label)
                     }
                 }
             }
@@ -200,26 +206,12 @@ Page {
                             if (modelData["caption"] === "shift") {
                                 modifiers.shift = (modifiers.shift + 1) % 3
                                 if (page.chars && modifiers.shift === 1) modifiers.shift = 2
-                                return
                             } else if (modelData["caption"] === "backspace") {
-                                plugin.sendKeyPress("backspace")
-                            } else if (modelData["symView"] === "up") {
-                                plugin.sendKeyPress("up", false, modifiers.ctrl, modifiers.alt)
+                                plugin.sendKeyPress("", page._specialKeysMap["backspace"], false, modifiers.ctrl, modifiers.alt)
+                            } else if (chars && modelData["symView"] === "up") {
+                                plugin.sendKeyPress("", page._specialKeysMap["up"], false, modifiers.ctrl, modifiers.alt)
                             } else {
-                                if (page.chars) {
-                                    plugin.sendKeyPress(label, false, modifiers.ctrl, modifiers.alt)
-                                } else {
-                                    plugin.sendKeyPress(label, modifiers.shift, modifiers.ctrl, modifiers.alt)
-                                    if (modifiers.shift === 1) {
-                                        modifiers.shift = 0
-                                    }
-                                }
-                                if (modifiers.ctrl === 1) {
-                                    modifiers.ctrl = 0
-                                }
-                                if (modifiers.alt === 1) {
-                                    modifiers.alt = 0
-                                }
+                                page.sendKey(label)
                             }
                         }
                     }
@@ -262,13 +254,15 @@ Page {
                             } else if (label === "ctrl") {
                                 modifiers.ctrl = (modifiers.ctrl + 1) % 3
                             } else if (label === "enter") {
-                                plugin.sendKeyPress("enter", modifiers.shift, modifiers.ctrl, modifiers.alt)
-                            } else if (modelData["symView"] === "left") {
-                                plugin.sendKeyPress("left", false, modifiers.ctrl, modifiers.alt)
-                            } else if (modelData["symView"] === "down") {
-                                plugin.sendKeyPress("down", false, modifiers.ctrl, modifiers.alt)
-                            } else if (modelData["symView"] === "right") {
-                                plugin.sendKeyPress("right", false, modifiers.ctrl, modifiers.alt)
+                                plugin.sendKeyPress("", page._specialKeysMap["enter"], modifiers.shift, modifiers.ctrl, modifiers.alt)
+                            } else if (chars && modelData["symView"] === "left") {
+                                plugin.sendKeyPress("", page._specialKeysMap["left"], false, modifiers.ctrl, modifiers.alt)
+                            } else if (chars && modelData["symView"] === "down") {
+                                plugin.sendKeyPress("", page._specialKeysMap["down"], false, modifiers.ctrl, modifiers.alt)
+                            } else if (chars && modelData["symView"] === "right") {
+                                plugin.sendKeyPress("", page._specialKeysMap["right"], false, modifiers.ctrl, modifiers.alt)
+                            } else {
+                                page.sendKey(label)
                             }
                         }
                     }

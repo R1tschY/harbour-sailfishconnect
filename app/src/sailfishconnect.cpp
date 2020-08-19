@@ -61,6 +61,7 @@
 #include "dbus/kdeconnect.h"
 #include "dbus/servicewatcher.h"
 #include "helper/jobsnotificator.h"
+#include "helper/keyboardlayoutprovider.h"
 
 // load QCA openssl plugin
 Q_IMPORT_PLUGIN(opensslPlugin)
@@ -135,6 +136,8 @@ void registerQmlTypes() {
                 "SailfishConnect.UI", 0, 6, "MprisPlayersModel");
     qmlRegisterType<StringListModel>(
                 "SailfishConnect.UI", 0, 6, "StringListModel");
+    qmlRegisterType<KeyboardLayoutProvider>(
+                "SailfishConnect.UI", 0, 6, "KeyboardLayoutProvider");
 
     QString uncreatableError =
         QStringLiteral("Instances are only creatable from C++.");
@@ -150,9 +153,17 @@ void registerQmlTypes() {
     qmlRegisterUncreatableType<RemoteControlApi>(
                 "SailfishConnect.Api", 0, 6, "RemoteControlApi", uncreatableError);
 
+    qRegisterMetaType<RemoteKeyboardApi*>("RemoteKeyboardApi*");
+    qmlRegisterUncreatableType<RemoteKeyboardApi>(
+                "SailfishConnect.Api", 0, 6, "RemoteKeyboardApi", uncreatableError);
+
     qRegisterMetaType<RemoteCommandsApi*>("RemoteCommandsApi*");
     qmlRegisterUncreatableType<RemoteCommandsApi>(
                 "SailfishConnect.Api", 0, 6, "RemoteCommandsApi", uncreatableError);
+
+    qRegisterMetaType<RemoteSystemVolumeApi*>("RemoteSystemVolumeApi*");
+    qmlRegisterUncreatableType<RemoteSystemVolumeApi>(
+                "SailfishConnect.Api", 0, 6, "RemoteSystemVolumeApi", uncreatableError);
 
     qRegisterMetaType<RemoteCommandsApi*>("ShareApi*");
     qmlRegisterUncreatableType<RemoteCommandsApi>(

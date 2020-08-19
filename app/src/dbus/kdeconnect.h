@@ -51,6 +51,20 @@ public:
     }
 };
 
+class RemoteKeyboardApi : public RemoteKeyboardDbusInterface {
+    Q_OBJECT
+public:
+    using RemoteKeyboardDbusInterface::RemoteKeyboardDbusInterface;
+
+    Q_SCRIPTABLE void sendKeyPress(
+            const QString& key, int specialKey = 0, bool shift = false, bool ctrl = false,
+            bool alt = false, bool sendAck = true)
+    {
+        return checkForDbusError(
+            RemoteKeyboardDbusInterface::sendKeyPress(key, specialKey, shift, ctrl, alt, sendAck));
+    }
+};
+
 class RemoteCommandsApi : public RemoteCommandsDbusInterface {
     Q_OBJECT
 public:
@@ -164,6 +178,10 @@ public:
 
     Q_SCRIPTABLE RemoteSystemVolumeApi* getRemoteSystemVolumeApi() {
         return new RemoteSystemVolumeApi(id());
+    }
+
+    Q_SCRIPTABLE RemoteKeyboardApi* getRemoteKeyboardApi() {
+        return new RemoteKeyboardApi(id());
     }
 
     Q_SCRIPTABLE ShareApi* getShareApi() {

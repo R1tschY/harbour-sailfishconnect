@@ -236,12 +236,16 @@ void KeyboardLayoutProvider::setFeedback(const bool &feedback)
 
 void KeyboardLayoutProvider::pressFeedback()
 {
+#ifndef BUILD_FOR_HARBOUR
     QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::PressStrong);
+#endif
 }
 
 void KeyboardLayoutProvider::releaseFeedback()
 {
+#ifndef BUILD_FOR_HARBOUR
     QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::ReleaseStrong);
+#endif
 }
 
 void KeyboardLayoutProvider::loadNames()

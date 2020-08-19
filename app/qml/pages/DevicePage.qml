@@ -216,7 +216,7 @@ Page {
                     device: _device
                     title: i18n("Open keyboard")
                     icon: "image://theme/icon-m-keyboard"
-                    pluginId: "sailfishconnect_remotekeyboard"
+                    pluginId: "kdeconnect_remotekeyboard"
                     onClicked: openPage(Qt.resolvedUrl("KeyboardPage.qml"))
                 }
                 PluginAction {

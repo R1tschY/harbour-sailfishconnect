@@ -22,7 +22,7 @@ add_static_plugins_lib(
     RemoteControl
     RemoteCommands
     RunCommand
-#    Battery
+    RemoteKeyboard
     RemoteSystemVolume
 #    Presenter
 )
@@ -34,7 +34,6 @@ add_static_plugins_lib(
     Contacts
     Clipboard
     MprisRemote
-    RemoteKeyboard
     SendNotifications
     Share
     Telepathy

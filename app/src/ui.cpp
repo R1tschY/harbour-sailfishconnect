@@ -34,6 +34,7 @@
 #include "dbus/kdeconnect.h"
 #include "../../plugins/sf_mprisremote/albumartcache.h"
 #include "sailfishconnect-config.h"
+#include "helper/keyboardlayoutprovider.h"
 
 namespace SailfishConnect {
 
@@ -53,6 +54,7 @@ UI::UI(bool daemonMode, QObject *parent)
     , m_daemon(new AppDaemon())
     , m_daemonApi(new DaemonApi(this))
     , m_daemonMode(daemonMode)
+    , m_keyboardLayoutProvider(new KeyboardLayoutProvider(this))
 {
     m_settings.beginGroup(QStringLiteral("UI"));
 
@@ -91,7 +93,7 @@ void UI::showMainWindow()
     // view
     m_view->rootContext()->setContextProperty("daemon", m_daemonApi);
     m_view->rootContext()->setContextProperty("ui", this);
-    // m_view->rootContext()->setContextProperty("keyboardLayout", m_keyboardLayoutProvider);
+    m_view->rootContext()->setContextProperty("keyboardLayout", m_keyboardLayoutProvider);
     m_view->setSource(SailfishApp::pathToMainQml());
     m_view->showFullScreen();
 }

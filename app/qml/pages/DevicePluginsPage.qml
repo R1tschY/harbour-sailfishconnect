@@ -27,6 +27,7 @@ Page {
     readonly property var _pluginIcons: {
         "kdeconnect_ping": "image://theme/icon-m-accept",
         "kdeconnect_remotecontrol": "image://theme/icon-m-gesture",
+        "kdeconnect_remotekeyboard": "image://theme/icon-m-keyboard",
         "kdeconnect_remotecommands": "image://theme/icon-m-wizard",
         "kdeconnect_runcommand": "image://theme/icon-m-wizard",
         "kdeconnect_remotesystemvolume": "image://theme/icon-m-speaker",
@@ -36,8 +37,7 @@ Page {
         "sailfishconnect_share": "image://theme/icon-m-share",
         "sailfishconnect_telepathy": "image://theme/icon-m-sms",
         "sailfishconnect_sendnotifications": "image://theme/icon-m-notifications",
-        "sailfishconnect_mprisremote": "image://theme/icon-m-media",
-        "sailfishconnect_remotekeyboard": "image://theme/icon-m-keyboard"
+        "sailfishconnect_mprisremote": "image://theme/icon-m-media"
     }
 
     readonly property var _pluginConfigs: {

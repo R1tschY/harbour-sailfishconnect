@@ -92,7 +92,7 @@ bool SharePlugin::receivePacket(const NetworkPacket& np)
         qint64 dateModified = np.get<qint64>(
             QStringLiteral("lastModified"), QDateTime::currentMSecsSinceEpoch());
         const bool open = np.get<bool>(QStringLiteral("open"), false);
-        qDebug(logger) << "Start receiving file" << filename << dateModified << open;
+        qCDebug(logger) << "Start receiving file" << filename << dateModified << open;
 
         KJob* job = new DownloadJob(
             device()->id(), np.payload(), incomingPath() % "/" % filename, np.payloadSize(), this);
@@ -102,7 +102,7 @@ bool SharePlugin::receivePacket(const NetworkPacket& np)
         job->start();
     } else if (np.has(QStringLiteral("text"))) {
         QString text = np.get<QString>(QStringLiteral("text"));
-        qDebug(logger) << "Received Text" << text;
+        qCDebug(logger) << "Received Text" << text;
 
         QTemporaryFile tmpFile;
         tmpFile.setFileTemplate(QStringLiteral("kdeconnect-XXXXXX.txt"));
@@ -123,9 +123,9 @@ bool SharePlugin::receivePacket(const NetworkPacket& np)
         QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
     } else if (np.has(QStringLiteral("url"))) {
         QUrl url = QUrl::fromEncoded(np.get<QByteArray>(QStringLiteral("url")));
-        qDebug(logger) << "Received URL" << url;
+        qCDebug(logger) << "Received URL" << url;
         QDesktopServices::openUrl(url);
-        Q_EMIT shareReceived(url);
+        Q_EMIT shareReceived(url.toString());
     } else {
         qCWarning(logger) << "Empty share received";
     }

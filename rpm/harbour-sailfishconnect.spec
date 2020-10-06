@@ -30,13 +30,11 @@ BuildRequires:  pkgconfig(Qt5Feedback)
 BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  pkgconfig(keepalive)
 BuildRequires:  cmake
+BuildRequires:  pkgconfig(python3)
 BuildRequires:  ninja
 BuildRequires:  gettext
-BuildRequires:  python3-devel
-%if "%(grep 'VERSION_ID' /etc/os-release | cut -d= -f2)" != "3.1.0.12"
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-pip
-%endif
 BuildRequires:  desktop-file-utils
 
 %description

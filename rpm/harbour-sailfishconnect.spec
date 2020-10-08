@@ -50,7 +50,7 @@ VENV=$HOME/.venv-conan-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
 export SAILFISHCONNECT_PACKAGE_VERSION="%{version}-%{release}"
 
-SOURCE_DIR=`realpath %{_sourcedir}/..`
+SOURCE_DIR=`readlink -f %{_sourcedir}/..`
 
 if [ "$TARGET_CPU" == "i486" ] || [ "$SAILFISH_SDK_FRONTEND" == "qtcreator" ] ; then  
   GENERATOR="Unix Makefiles"
@@ -69,7 +69,7 @@ if [ -f "CMakeLists.txt" ] ; then
 else 
   BUILD_DIR="."
 fi
-export CONAN_USER_HOME=`realpath "$BUILD_DIR"`
+export CONAN_USER_HOME=`readlink -f "$BUILD_DIR"`
 
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then

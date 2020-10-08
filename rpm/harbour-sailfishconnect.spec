@@ -33,10 +33,7 @@ BuildRequires:  cmake
 BuildRequires:  ninja
 BuildRequires:  gettext
 BuildRequires:  python3-devel
-%if "%(grep 'VERSION_ID' /etc/os-release | cut -d= -f2)" != "3.1.0.12"
-BuildRequires:  python3-setuptools
-BuildRequires:  python3-pip
-%endif
+BuildRequires:  python3-base
 BuildRequires:  desktop-file-utils
 
 %description

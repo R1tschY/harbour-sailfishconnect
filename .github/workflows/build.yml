@@ -1,0 +1,36 @@
+name: SailfishConnect build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  RELEASE: 3.3.0.14
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Prepare
+      run: mkdir output
+
+    - name: Build armv7hl
+      run: docker run --rm --privileged -v $PWD:/share coderus/sailfishos-platform-sdk:$RELEASE /bin/bash -c "
+            mkdir -p build ;
+            cd build ;
+            cp -r /share/* . ;
+            mb2 -t SailfishOS-$RELEASE-armv7hl build ;
+            sudo cp -r RPMS/*.rpm /share/output"
+
+    - name: Upload build result
+      uses: actions/upload-artifact@v2
+      with:
+        name: screencast-rpms
+        path: output

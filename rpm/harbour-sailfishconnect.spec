@@ -34,6 +34,8 @@ BuildRequires:  ninja
 BuildRequires:  gettext
 BuildRequires:  python3-devel
 BuildRequires:  python3-base
+BuildRequires:  python3-setuptools
+BuildRequires:  python3-pip
 BuildRequires:  desktop-file-utils
 
 %description
@@ -46,7 +48,7 @@ SailfishOS client for KDE-Connect
 
 %build
 
-VENV=$HOME/.venv-conan-%{_target_cpu}
+VENV=.venv-conan-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
 export SAILFISHCONNECT_PACKAGE_VERSION="%{version}-%{release}"
 

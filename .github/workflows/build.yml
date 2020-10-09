@@ -28,6 +28,9 @@ jobs:
     - name: Check style
       run: python3 scripts/bad-style.py bad-style.xml
 
+    - name: Prepare
+      run: chmod rw+a -R .
+
     - name: Build armv7hl
       run: docker run --rm --privileged -v $PWD:/home/nemo/project coderus/sailfishos-platform-sdk:$RELEASE /bin/bash -c "
             cd /home/nemo/project && mb2 -X -t SailfishOS-$RELEASE-armv7hl build -d -j 2"
@@ -38,6 +41,6 @@ jobs:
         name: sailfishconnect-rpms
         path: RPMS
 
-    - name: Check
-      run: docker run --rm --privileged -v $PWD:/home/nemo/project coderus/sailfishos-platform-sdk:$RELEASE /bin/bash -c "
-            cd /home/nemo/project && mb2 -X -t SailfishOS-3.1.0.12-armv7hl make check"
+    # - name: Check
+    #   run: docker run --rm --privileged -v $PWD:/home/nemo/project coderus/sailfishos-platform-sdk:$RELEASE /bin/bash -c "
+    #         cd /home/nemo/project && mb2 -X -t SailfishOS-3.1.0.12-armv7hl make check"

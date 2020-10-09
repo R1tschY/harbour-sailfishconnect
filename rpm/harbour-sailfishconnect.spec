@@ -124,7 +124,7 @@ rm -rf \
   %{buildroot}%{_datadir}/kservicetypes5 \
   %{buildroot}%{_datadir}/qlogging-categories5 \
   %{buildroot}%{_datadir}/%{name}/lib/*.a
-mkdir -p %{_bindir}
+mkdir -p %{buildroot}%{_bindir}
 
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \

@@ -29,7 +29,7 @@ jobs:
       run: python3 scripts/bad-style.py bad-style.xml
 
     - name: Prepare
-      run: chmod rw+a -R .
+      run: chmod -R a+rw .
 
     - name: Build armv7hl
       run: docker run --rm --privileged -v $PWD:/home/nemo/project coderus/sailfishos-platform-sdk:$RELEASE /bin/bash -c "

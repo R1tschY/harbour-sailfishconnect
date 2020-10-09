@@ -1,6 +1,16 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+
+* Fri Oct 09 2020 Richard Liebscher <r1tschy@posteo.de> 0.6-0
+- Direct use of KDE Connect desktop client as backend instead of own fork
+- Add IPs of custom devices to be searched for (#35)
+- Added remote commands/run command plugins
+- Added remote system volume plugin
+- Replaced transactions page with transaction notifications
+- Fixed remote keyboard for special characters like comma, space, fullstop (#34)
+- Migrated battery plugin to use MCE DBus interface instead of statefs
+
 * Sat Jan 04 2020 Richard Liebscher <r1tschy@posteo.de> 0.5-1
 - Added Contacts plugin.
 - Resolve Phonenumbers to contact names in telephony plugin.

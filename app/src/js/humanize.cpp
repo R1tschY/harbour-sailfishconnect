@@ -37,11 +37,11 @@ QString Humanize::bytes(qint64 bytes)
 
 void Humanize::registerType()
 {
-    // qmlRegisterSingletonType<Humanize>(
-    //             "SailfishConnect.Qml", 0, 3, "Humanize",
-    //             [](QQmlEngine*, QJSEngine*) -> QObject* {
-    //     return new Humanize();
-    // });
+    qmlRegisterSingletonType<Humanize>(
+                "SailfishConnect.Qml", 0, 3, "Humanize",
+                [](QQmlEngine*, QJSEngine*) -> QObject* {
+        return new Humanize();
+    });
 }
 
 } // namespace QmlJs

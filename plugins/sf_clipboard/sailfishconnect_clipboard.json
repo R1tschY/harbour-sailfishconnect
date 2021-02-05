@@ -7,7 +7,7 @@
                 "Name[x-test]": "xxRichard Liebscherxx"
             }
         ],
-        "Id": "sf_clipboard",
+        "Id": "sailfishconnect_clipboard",
         "License": "GPLv3",
         "EnabledByDefault": true,
         "Icon": "klipper",

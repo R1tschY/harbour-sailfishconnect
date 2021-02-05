@@ -28,19 +28,26 @@ jobs:
     - name: Check style
       run: python3 scripts/bad-style.py bad-style.xml
 
-    - name: Prepare
-      run: chmod -R a+rw .
+    - name: Build armv7hl RPMS
+      uses: R1tschY/sailfish-sdk-action@v1
+      with:
+        arch: 'armv7hl'
+        release: '3.3.0.16'
+        fix-version: false
+        enable-debug: true
+        #check: true
 
-    - name: Build armv7hl
-      run: docker run --rm --privileged -v $PWD:/home/nemo/project coderus/sailfishos-platform-sdk:$RELEASE /bin/bash -c "
-            cd /home/nemo/project && mb2 -X -t SailfishOS-$RELEASE-armv7hl build -d -j 2"
+    - name: Build i486 RPMS
+      uses: R1tschY/sailfish-sdk-action@v1
+      with:
+        arch: 'i486'
+        release: '3.3.0.16'
+        fix-version: false
+        enable-debug: true
+        #check: true
 
     - name: Upload build result
       uses: actions/upload-artifact@v2
       with:
         name: sailfishconnect-rpms
         path: RPMS
-
-    # - name: Check
-    #   run: docker run --rm --privileged -v $PWD:/home/nemo/project coderus/sailfishos-platform-sdk:$RELEASE /bin/bash -c "
-    #         cd /home/nemo/project && mb2 -X -t SailfishOS-3.1.0.12-armv7hl make check"

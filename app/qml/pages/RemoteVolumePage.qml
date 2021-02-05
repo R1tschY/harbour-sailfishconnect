@@ -95,7 +95,7 @@ Page {
                         maximumValue: maxVolume
                         value: volume
 
-                        onReleased: {
+                        onValueChanged: {
                             volume = value
                         }
                     }

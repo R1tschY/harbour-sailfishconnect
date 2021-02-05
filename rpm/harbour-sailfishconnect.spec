@@ -9,7 +9,7 @@ Name:       harbour-sailfishconnect
 # << macros
 
 Summary:    SailfishOS client for KDE-Connect
-Version:    0.6
+Version:    0.6.0
 Release:    0.1
 Group:      Qt/Qt
 License:    LICENSE

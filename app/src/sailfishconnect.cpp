@@ -194,7 +194,7 @@ struct Options {
 Options parseCommandLine(const QCoreApplication &app) {
     QCommandLineParser parser;
     parser.setApplicationDescription(
-        QStringLiteral("Alternative KDE-Connect client for Sailfish OS"));
+        QStringLiteral("KDE-Connect client for Sailfish OS"));
     parser.addHelpOption();
     parser.addVersionOption();
 

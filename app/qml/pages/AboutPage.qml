@@ -63,7 +63,7 @@ Page {
             }
 
             Label {
-                text: i18n("Alternative KDE Connect client for Sailfish OS")
+                text: i18n("KDE Connect client for Sailfish OS")
 
                 wrapMode: Text.Wrap
                 x: Theme.horizontalPageMargin

@@ -86,11 +86,7 @@ Page {
             when: !touchpad.pressed
             PropertyChanges {
                 target: hintLabel
-                text: i18n(
-                          "Move finger on screen\n" +
-                          "Tap for click\n" +
-                          "Hold shortly for Drag'n'Drop\n" + 
-                          "Scroll on right side")
+                text: i18n("Move finger on screen\nTap for click\nHold shortly for Drag'n'Drop\nScroll on right side")
             }
         }
     ]

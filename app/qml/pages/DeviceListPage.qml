@@ -54,8 +54,7 @@ Page {
             enabled: !startup
                      && trustedDevices.count === 0
                      && nearDevices.count === 0
-            text: i18n("Install KDE Connect or GSConnect on your " +
-                       "computer and connect it to the same WLAN.")
+            text: i18n("Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.")
         }
 
         Column {

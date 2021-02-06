@@ -3,9 +3,6 @@
 SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
 cd "${SCRIPT_DIR}/.."
 
-SDK=`dev/get-sdk-install-folder`
-REMOTE_ROOT="${PWD/#$HOME//home/mersdk/share}"
-
 TRANSLATIONS="de es fi fr it pl ru sv zh_CN"
 KDECONNECT_DOMAINS="kdeconnect-core kdeconnect-plugins"
 SAILFISHCONNECT_DOMAINS="sailfishconnect-app sailfishconnect-plugins"
@@ -50,6 +47,7 @@ do
 done
 
 # Get translations from KDE i18n project
+exit 1
 echo "-- Pull translations from l10n-kf5 project"
 for translation in $TRANSLATIONS
 do

@@ -43,15 +43,14 @@ Page {
                 id: runInBackground
                 text: i18n("Run as background service")
                 description:
-                    i18n("Application starts at system start and runs in " +
-                         "background.")
+                    i18n("Application starts at system start and runs in background.")
                 checked: ui.runInBackground
                 onClicked: ui.runInBackground = !checked
                 automaticCheck: false
             }
 
             SectionHeader {
-                text: i18n("Custom devices")
+                text: i18n("Devices from IP address")
             }
             ColumnView {
                 id: customDevicesView
@@ -112,7 +111,7 @@ Page {
                 visible: customDevicesView.count === 0
                 opacity: visible ? 1.0 : 0
 
-                text: i18n("No custom devices")
+                text: i18n("No devices defined")
                 horizontalAlignment: Text.AlignHCenter
                 font {
                     pixelSize: Theme.fontSizeMedium
@@ -126,7 +125,7 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: i18n("Add custom device")
+                text: i18n("Add device from IP address")
                 onClicked: {
                     var dialog = pageStack.push(Qt.resolvedUrl("AddCustomDeviceDialog.qml"))
                     dialog.accepted.connect(function() {

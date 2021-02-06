@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 00:22+0100\n"
+"POT-Creation-Date: 2021-02-07 00:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,7 +34,7 @@ msgid "No remote players"
 msgstr "Aucun lecteur distant"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:31
-#: app/qml/pages/SettingsPage.qml:39 app/qml/pages/KeyboardPage.qml:110
+#: app/qml/pages/KeyboardPage.qml:110 app/qml/pages/SettingsPage.qml:39
 #, fuzzy, kde-format
 msgid "Settings"
 msgstr "Paramètres"
@@ -110,13 +110,13 @@ msgid "Edit commands"
 msgstr ""
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:141
-#: app/qml/pages/SettingsPage.qml:77
+#: app/qml/pages/SettingsPage.qml:76
 #, kde-format
 msgid "Edit"
 msgstr ""
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:154
-#: app/qml/pages/SettingsPage.qml:89
+#: app/qml/pages/SettingsPage.qml:88
 #, kde-format
 msgid "Remove"
 msgstr ""
@@ -129,31 +129,6 @@ msgstr ""
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
 #, kde-format
 msgid "No commands defined"
-msgstr ""
-
-#: app/qml/pages/SettingsPage.qml:44
-#, kde-format
-msgid "Run as background service"
-msgstr ""
-
-#: app/qml/pages/SettingsPage.qml:46
-#, kde-format
-msgid "Application starts at system start and runs in "
-msgstr ""
-
-#: app/qml/pages/SettingsPage.qml:54
-#, kde-format
-msgid "Custom devices"
-msgstr ""
-
-#: app/qml/pages/SettingsPage.qml:115
-#, kde-format
-msgid "No custom devices"
-msgstr ""
-
-#: app/qml/pages/SettingsPage.qml:129
-#, kde-format
-msgid "Add custom device"
 msgstr ""
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:46
@@ -286,11 +261,6 @@ msgstr ""
 msgid "Open configuration"
 msgstr ""
 
-#: app/qml/pages/RemoteVolumePage.qml:110
-#, kde-format
-msgid "No sinks exist on other device"
-msgstr ""
-
 #: app/qml/pages/AboutPage.qml:39
 #, kde-format
 msgid "About"
@@ -320,6 +290,11 @@ msgstr "Code source sur Github"
 #, kde-format
 msgid "Licence"
 msgstr "Licence"
+
+#: app/qml/pages/RemoteVolumePage.qml:110
+#, kde-format
+msgid "No sinks exist on other device"
+msgstr ""
 
 #: app/qml/pages/DeviceListPage.qml:57
 #, fuzzy, kde-format
@@ -407,6 +382,31 @@ msgid ""
 "Tap for click\n"
 "Hold shortly for Drag'n'Drop\n"
 "Scroll on right side"
+msgstr ""
+
+#: app/qml/pages/SettingsPage.qml:44
+#, kde-format
+msgid "Run as background service"
+msgstr ""
+
+#: app/qml/pages/SettingsPage.qml:46
+#, kde-format
+msgid "Application starts at system start and runs in background."
+msgstr ""
+
+#: app/qml/pages/SettingsPage.qml:53
+#, kde-format
+msgid "Devices from IP address"
+msgstr ""
+
+#: app/qml/pages/SettingsPage.qml:114
+#, kde-format
+msgid "No devices defined"
+msgstr ""
+
+#: app/qml/pages/SettingsPage.qml:128
+#, kde-format
+msgid "Add device from IP address"
 msgstr ""
 
 #: app/src/helper/jobsnotificator.cpp:90

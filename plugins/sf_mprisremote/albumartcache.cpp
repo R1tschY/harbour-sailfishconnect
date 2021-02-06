@@ -159,7 +159,7 @@ DownloadAlbumArtJob *AlbumArtCache::startFetching(const QString& originalUrl, co
 }
 
 void AlbumArtCache::endFetching(
-        const QUrl &url, const QSharedPointer<QIODevice>& payload)
+        const QUrl &url, const QSharedPointer<QIODevice>& payload, qint64 payloadSize)
 {
     DownloadAlbumArtJob* job = m_fetching.value(hashFor(url));
     if (job == nullptr) {
@@ -167,7 +167,7 @@ void AlbumArtCache::endFetching(
         return;
     }
 
-    job->gotData(payload);
+    job->gotData(payload, payloadSize);
 }
 
 void AlbumArtCache::fetchFinished(
@@ -323,7 +323,7 @@ DownloadAlbumArtJob::DownloadAlbumArtJob(
     , m_filePath(filePath)
 { }
 
-bool DownloadAlbumArtJob::gotData(const QSharedPointer<QIODevice>& payload)
+bool DownloadAlbumArtJob::gotData(const QSharedPointer<QIODevice>& payload, qint64 payloadSize)
 {
     if (isFetching()) {
         qCDebug(logger) << "Already downloading" << m_url;
@@ -347,7 +347,7 @@ bool DownloadAlbumArtJob::gotData(const QSharedPointer<QIODevice>& payload)
     }
 
     // TODO: support cancelation, copy from DownloadJob
-    m_fileTransfer = new CopyJob(QString(), payload, file, -1, this);
+    m_fileTransfer = new CopyJob(QString(), payload, file, payloadSize, this);
     connect(m_fileTransfer, &KJob::result,
             this, &DownloadAlbumArtJob::fetchFinished);
     m_fileTransfer->start();

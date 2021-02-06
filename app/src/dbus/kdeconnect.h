@@ -49,6 +49,10 @@ public:
     Q_SCRIPTABLE void sendCommand(const QString &name, bool val) {
         checkForDbusError(RemoteControlDbusInterface::sendCommand(name, val));
     }
+
+    Q_SCRIPTABLE void scroll(int x, int y) {
+        checkForDbusError(RemoteControlDbusInterface::scroll(x, y));
+    }
 };
 
 class RemoteKeyboardApi : public RemoteKeyboardDbusInterface {

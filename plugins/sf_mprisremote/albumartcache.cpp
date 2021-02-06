@@ -104,13 +104,21 @@ QString AlbumArtCache::hashFor(const QUrl &url)
 QString AlbumArtCache::cacheFileFor(const QUrl& url) const
 {
     auto fileExt = QFileInfo(url.fileName()).suffix();
-    return m_cacheDir.path() % QChar('/') % hashFor(url) % QChar('.') % fileExt;
+    if (fileExt.isEmpty()) {
+        return m_cacheDir.path() % QChar('/') % hashFor(url);
+    } else {
+        return m_cacheDir.path() % QChar('/') % hashFor(url) % QChar('.') % fileExt;
+    }
 }
 
 QString AlbumArtCache::cacheFileNameFor(const QUrl &url) const
 {
     auto fileExt = QFileInfo(url.fileName()).suffix();
-    return hashFor(url) % QChar('.') % fileExt;
+    if (fileExt.isEmpty()) {
+        return hashFor(url);
+    } else {
+        return hashFor(url) % QChar('.') % fileExt;
+    }
 }
 
 QUrl AlbumArtCache::imageUrl(const QUrl &url) const

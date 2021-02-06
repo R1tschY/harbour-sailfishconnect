@@ -21,11 +21,13 @@
 
 #include <QGuiApplication>
 #include <QClipboard>
+#include <QDateTime>
 #include <core/networkpacket.h>
 
 K_PLUGIN_CLASS_WITH_JSON(ClipboardPlugin, "sailfishconnect_clipboard.json")
 
-static QString packetType = QStringLiteral("kdeconnect.clipboard");
+static QString PACKET_TYPE_CLIPBOARD = QStringLiteral("kdeconnect.clipboard");
+static QString PACKET_TYPE_CLIPBOARD_CONNECT = QStringLiteral("kdeconnect.clipboard.connect");
 
 ClipboardPlugin::ClipboardPlugin(QObject* parent, const QVariantList& args)
     : KdeConnectPlugin(parent, args)
@@ -35,14 +37,30 @@ ClipboardPlugin::ClipboardPlugin(QObject* parent, const QVariantList& args)
 bool ClipboardPlugin::receivePacket(const NetworkPacket &np)
 {
     QString content = np.get<QString>(QStringLiteral("content"));
-    m_clipboard->setText(content);
+    if (np.type() == PACKET_TYPE_CLIPBOARD) {
+        m_currentContent = content;
+        m_updateTimestamp = QDateTime::currentDateTime().toMSecsSinceEpoch();
+        m_clipboard->setText(content);
+    } else if (np.type() == PACKET_TYPE_CLIPBOARD_CONNECT) {
+        qint64 timestamp = np.get<qint64>(QStringLiteral("timestamp"));
+        if (timestamp > m_updateTimestamp) {
+            m_currentContent = content;
+            m_updateTimestamp = timestamp;
+            m_clipboard->setText(content);
+        }
+    }
+
     return true;
 }
 
 void ClipboardPlugin::pushClipboard()
 {
-    QString clipboardText = m_clipboard->text();
-    NetworkPacket np(packetType, {{"content", clipboardText}});
+    m_updateTimestamp = QDateTime::currentDateTime().toMSecsSinceEpoch();
+    m_currentContent = m_clipboard->text();
+
+    NetworkPacket np(PACKET_TYPE_CLIPBOARD, {
+        {QStringLiteral("content"), m_currentContent},
+    });
     sendPacket(np);
 }
 

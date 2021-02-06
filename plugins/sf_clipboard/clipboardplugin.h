@@ -41,6 +41,8 @@ public:
 
 private:
     QClipboard* m_clipboard;
+    QString m_currentContent;
+    qint64 m_updateTimestamp = 0;
 };
 
 #endif // CLIPBOARDPLUGIN_H

@@ -36,7 +36,7 @@ class DownloadAlbumArtJob : public QObject
 public:
     DownloadAlbumArtJob(const QUrl& url, const QString& filePath, QObject* parent = nullptr);
 
-    bool gotData(const QSharedPointer<QIODevice> &payload);
+    bool gotData(const QSharedPointer<QIODevice> &payload, qint64 payloadSize);
 
     QUrl url() const { return m_url; }
     QString hash() const { return m_hash; }
@@ -72,7 +72,7 @@ public:
 
     DownloadAlbumArtJob* startFetching(const QString& url, const QString& playerName);
     void endFetching(
-            const QUrl& url, const QSharedPointer<QIODevice>& payload);
+            const QUrl& url, const QSharedPointer<QIODevice>& payload, qint64 payloadSize);
 
     DownloadAlbumArtJob* getFetchingJob(const QString& hash);
 

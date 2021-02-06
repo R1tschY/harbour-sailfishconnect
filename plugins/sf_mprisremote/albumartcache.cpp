@@ -149,8 +149,7 @@ DownloadAlbumArtJob *AlbumArtCache::startFetching(const QString& originalUrl, co
     if (!url.isLocalFile()) {
         // only request urls starting with file://. HTTP requests can we do on our own.
         auto network = Daemon::instance()->networkAccessManager();
-        job->gotData(QSharedPointer<QIODevice>(
-            network->get(QNetworkRequest(url))));
+        job->gotData(QSharedPointer<QIODevice>(network->get(QNetworkRequest(url))), -1);
     } else {
         emit requestAlbumArt(originalUrl, playerName);
     }
@@ -384,7 +383,7 @@ void DownloadAlbumArtJob::fetchFinished(KJob* fileTransfer)
                     // TODO: set QNetworkRequest::BackgroundRequestAttribute
                     m_fileTransfer = nullptr;
                     gotData(QSharedPointer<QIODevice>(
-                        network->get(QNetworkRequest(location))));
+                        network->get(QNetworkRequest(location))), -1);
                     return;
                 }
 

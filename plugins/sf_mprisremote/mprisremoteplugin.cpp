@@ -195,7 +195,7 @@ MprisRemotePlugin::MprisRemotePlugin(QObject* parent, const QVariantList& args)
 bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
 {
     if (np.get<bool>("transferringAlbumArt", false)) {
-        m_cache->endFetching(np.get<QString>("albumArtUrl"), np.payload());
+        m_cache->endFetching(np.get<QString>("albumArtUrl"), np.payload(), np.payloadSize());
         return true;
     }
 

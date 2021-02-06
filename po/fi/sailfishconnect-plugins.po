@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 00:18+0100\n"
+"POT-Creation-Date: 2021-02-07 00:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,32 +28,52 @@ msgstr ""
 msgid "%1 does not exist"
 msgstr ""
 
-#~ msgid "Input stream is not readable."
-#~ msgstr "Syötetty tieto ei ole luettavissa."
+#: pluginscommon/downloadjob.cpp:62
+#, kde-format
+msgid "Cannot create destination folder"
+msgstr "Kohdekansiota ei voitu luoda."
 
-#~ msgid "Output stream is not writable."
-#~ msgstr "Lähetetty tieto ei ole kirjoitettavissa."
+#: pluginscommon/downloadjob.cpp:78
+#, fuzzy, kde-format
+msgid "Could not open file `%1`: %2"
+msgstr "Tiedostoa ei voitu avata kirjoittamista varten: %1"
 
-#~ msgid "Read error: %1"
-#~ msgstr "Lukuvirhe: %1"
+#: pluginscommon/downloadjob.cpp:85
+#, kde-format
+msgid "Receiving"
+msgstr "Vastaanottaa"
 
-#~ msgid "Write error: %1"
-#~ msgstr "Kirjoitusvirhe: %1"
+#: pluginscommon/copyjob.cpp:92
+#, kde-format
+msgid "Input stream is not readable."
+msgstr "Syötetty tieto ei ole luettavissa."
 
-#~ msgid "Early end of output stream"
-#~ msgstr "Lähetetyn tiedon aikainen katkaisu."
+#: pluginscommon/copyjob.cpp:97
+#, kde-format
+msgid "Output stream is not writable."
+msgstr "Lähetetty tieto ei ole kirjoitettavissa."
 
-#~ msgid "Read more bytes of input stream than expected."
-#~ msgstr "Lue enemmän bittejä syötetystä tiedosta kuin odotettu."
+#: pluginscommon/copyjob.cpp:152
+#, kde-format
+msgid "Read error: %1"
+msgstr "Lukuvirhe: %1"
 
-#~ msgid "Early end of input stream"
-#~ msgstr "Syötetyn tiedon aikainen katkaisu."
+#: pluginscommon/copyjob.cpp:168
+#, kde-format
+msgid "Write error: %1"
+msgstr "Kirjoitusvirhe: %1"
 
-#~ msgid "Cannot create destination folder"
-#~ msgstr "Kohdekansiota ei voitu luoda."
+#: pluginscommon/copyjob.cpp:227
+#, fuzzy, kde-format
+msgid "Early end of output stream: %1"
+msgstr "Lähetetyn tiedon aikainen katkaisu."
 
-#~ msgid "Could not open file for writing: %1"
-#~ msgstr "Tiedostoa ei voitu avata kirjoittamista varten: %1"
+#: pluginscommon/copyjob.cpp:233
+#, kde-format
+msgid "Read more bytes of input stream than expected."
+msgstr "Lue enemmän bittejä syötetystä tiedosta kuin odotettu."
 
-#~ msgid "Receiving"
-#~ msgstr "Vastaanottaa"
+#: pluginscommon/copyjob.cpp:239
+#, fuzzy, kde-format
+msgid "Early end of input stream: %1"
+msgstr "Syötetyn tiedon aikainen katkaisu."

@@ -24,7 +24,7 @@ podir=po
 
 echo "-- Create templates"
 mkdir -p $potdir
-$XGETTEXT `find plugins/ -name '*.cpp'` -o $potdir/sailfishconnect-plugins.pot
+$XGETTEXT `find plugins/ pluginscommon/ -name '*.cpp'` -o $potdir/sailfishconnect-plugins.pot
 $XGETTEXT `find app/ -name '*.cpp' -o -name '*.qml'` -o $potdir/sailfishconnect-app.pot
 
 echo "-- Merge translations"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 00:18+0100\n"
+"POT-Creation-Date: 2021-02-07 00:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,32 +30,52 @@ msgstr ""
 msgid "%1 does not exist"
 msgstr ""
 
-#~ msgid "Input stream is not readable."
-#~ msgstr "Входной поток недоступен для чтения."
+#: pluginscommon/downloadjob.cpp:62
+#, kde-format
+msgid "Cannot create destination folder"
+msgstr "Невозможно создать каталог назначения"
 
-#~ msgid "Output stream is not writable."
-#~ msgstr "Выходной поток недоступен для записи"
+#: pluginscommon/downloadjob.cpp:78
+#, fuzzy, kde-format
+msgid "Could not open file `%1`: %2"
+msgstr "Невозможно открыть файл на запись: %1"
 
-#~ msgid "Read error: %1"
-#~ msgstr "Ошибка чтения: %1"
+#: pluginscommon/downloadjob.cpp:85
+#, kde-format
+msgid "Receiving"
+msgstr "Получение"
 
-#~ msgid "Write error: %1"
-#~ msgstr "Ошибка записи: %1"
+#: pluginscommon/copyjob.cpp:92
+#, kde-format
+msgid "Input stream is not readable."
+msgstr "Входной поток недоступен для чтения."
 
-#~ msgid "Early end of output stream"
-#~ msgstr "Поток данных на выход прерван"
+#: pluginscommon/copyjob.cpp:97
+#, kde-format
+msgid "Output stream is not writable."
+msgstr "Выходной поток недоступен для записи"
 
-#~ msgid "Read more bytes of input stream than expected."
-#~ msgstr "Получено больше байтов из входного потока, чем ожидалось."
+#: pluginscommon/copyjob.cpp:152
+#, kde-format
+msgid "Read error: %1"
+msgstr "Ошибка чтения: %1"
 
-#~ msgid "Early end of input stream"
-#~ msgstr "Поток данных на вход прерван"
+#: pluginscommon/copyjob.cpp:168
+#, kde-format
+msgid "Write error: %1"
+msgstr "Ошибка записи: %1"
 
-#~ msgid "Cannot create destination folder"
-#~ msgstr "Невозможно создать каталог назначения"
+#: pluginscommon/copyjob.cpp:227
+#, fuzzy, kde-format
+msgid "Early end of output stream: %1"
+msgstr "Поток данных на выход прерван"
 
-#~ msgid "Could not open file for writing: %1"
-#~ msgstr "Невозможно открыть файл на запись: %1"
+#: pluginscommon/copyjob.cpp:233
+#, kde-format
+msgid "Read more bytes of input stream than expected."
+msgstr "Получено больше байтов из входного потока, чем ожидалось."
 
-#~ msgid "Receiving"
-#~ msgstr "Получение"
+#: pluginscommon/copyjob.cpp:239
+#, fuzzy, kde-format
+msgid "Early end of input stream: %1"
+msgstr "Поток данных на вход прерван"

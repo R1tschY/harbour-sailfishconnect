@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 00:18+0100\n"
+"POT-Creation-Date: 2021-02-07 00:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,32 +28,52 @@ msgstr ""
 msgid "%1 does not exist"
 msgstr ""
 
-#~ msgid "Input stream is not readable."
-#~ msgstr "Eingehender Datenstrom ist nicht lesbar."
+#: pluginscommon/downloadjob.cpp:62
+#, kde-format
+msgid "Cannot create destination folder"
+msgstr "Zielordner kann nicht erstellt werden"
 
-#~ msgid "Output stream is not writable."
-#~ msgstr "Ausgehender Datenstrom ist nicht schreibbar."
+#: pluginscommon/downloadjob.cpp:78
+#, fuzzy, kde-format
+msgid "Could not open file `%1`: %2"
+msgstr "Datei kann nicht zum Schreiben geöffnet werden: %1"
 
-#~ msgid "Read error: %1"
-#~ msgstr "Lesefehler: %1"
+#: pluginscommon/downloadjob.cpp:85
+#, kde-format
+msgid "Receiving"
+msgstr "Erhalte"
 
-#~ msgid "Write error: %1"
-#~ msgstr "Schreibfehler: %1"
+#: pluginscommon/copyjob.cpp:92
+#, kde-format
+msgid "Input stream is not readable."
+msgstr "Eingehender Datenstrom ist nicht lesbar."
 
-#~ msgid "Early end of output stream"
-#~ msgstr "Frühes Ende des Ausgangestroms"
+#: pluginscommon/copyjob.cpp:97
+#, kde-format
+msgid "Output stream is not writable."
+msgstr "Ausgehender Datenstrom ist nicht schreibbar."
 
-#~ msgid "Read more bytes of input stream than expected."
-#~ msgstr "Mehr Bytes von eingehenden Datenstrom gelesen als erwartet."
+#: pluginscommon/copyjob.cpp:152
+#, kde-format
+msgid "Read error: %1"
+msgstr "Lesefehler: %1"
 
-#~ msgid "Early end of input stream"
-#~ msgstr "Verfrühtes Ende des eingehenden Datenstroms."
+#: pluginscommon/copyjob.cpp:168
+#, kde-format
+msgid "Write error: %1"
+msgstr "Schreibfehler: %1"
 
-#~ msgid "Cannot create destination folder"
-#~ msgstr "Zielordner kann nicht erstellt werden"
+#: pluginscommon/copyjob.cpp:227
+#, fuzzy, kde-format
+msgid "Early end of output stream: %1"
+msgstr "Frühes Ende des Ausgangestroms"
 
-#~ msgid "Could not open file for writing: %1"
-#~ msgstr "Datei kann nicht zum Schreiben geöffnet werden: %1"
+#: pluginscommon/copyjob.cpp:233
+#, kde-format
+msgid "Read more bytes of input stream than expected."
+msgstr "Mehr Bytes von eingehenden Datenstrom gelesen als erwartet."
 
-#~ msgid "Receiving"
-#~ msgstr "Erhalte"
+#: pluginscommon/copyjob.cpp:239
+#, fuzzy, kde-format
+msgid "Early end of input stream: %1"
+msgstr "Verfrühtes Ende des eingehenden Datenstroms."

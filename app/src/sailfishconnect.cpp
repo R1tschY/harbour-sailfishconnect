@@ -223,6 +223,7 @@ int main(int argc, char *argv[])
     puts(" _\\ \\/ _ `/ / / _/ (_-</ _ \\/ /__/ _ \\/ _ \\/ _ \\/ -_) __/ __/");
     puts("/___/\\_,_/_/_/_//_/___/_//_/\\___/\\___/_//_/_//_/\\__/\\__/\\__/");
     puts(QStringLiteral(" --- Version %1").arg(PACKAGE_VERSION).toUtf8().constData());
+    fflush(stdout);
 
     // Logging
     qInstallMessageHandler(myMessageOutput);

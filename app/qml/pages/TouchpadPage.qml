@@ -47,15 +47,15 @@ Page {
     property QtObject plugin: device.getRemoteControlApi()
     property int lastX: 0xDEAD
     property int lastY: 0xDEAD
-    property bool moved: false
     property bool holding: false
+    property bool wasMoved: false
+    property bool scrolling: false
 
     PageHeader {
         id: header
         title: i18n("Touchpad")
     }
 
-    state: "normal"
     states: [
         State {
             name: "holding"
@@ -66,8 +66,16 @@ Page {
             }
         },
         State {
+            name: "scrolling"
+            when: scrolling && touchpad.pressed
+            PropertyChanges {
+                target: hintLabel
+                text: i18n("Scrolling ...")
+            }
+        },
+        State {
             name: "moving"
-            when: moved
+            when: wasMoved && touchpad.pressed
             PropertyChanges {
                 target: hintLabel
                 text: i18n("Moving ...")
@@ -75,19 +83,34 @@ Page {
         },
         State {
             name: "normal"
+            when: !touchpad.pressed
             PropertyChanges {
                 target: hintLabel
                 text: i18n(
                           "Move finger on screen\n" +
                           "Tap for click\n" +
-                          "Hold shortly for Drag'n'Drop")
+                          "Hold shortly for Drag'n'Drop\n" + 
+                          "Scroll on right side")
             }
         }
     ]
+    state: "normal"
 
     InfoLabel {
         id: hintLabel
         anchors.verticalCenter: touchpad.verticalCenter
+    }
+
+    Rectangle {
+        anchors {
+            top: touchpad.top
+            bottom: touchpad.bottom
+            right: page.right
+        }
+
+        width: Theme.itemSizeSmall
+        color: Theme.highlightBackgroundColor
+        opacity: 0.1
     }
 
     MouseArea {
@@ -105,13 +128,22 @@ Page {
         preventStealing: true
         acceptedButtons: Qt.AllButtons  // FIXME: is ignored
 
+        onPressed: {
+            wasMoved = false
+            scrolling = ((touchpad.x + touchpad.width - mouse.x) < Theme.itemSizeSmall)
+        }
+
         onPositionChanged: {
             if (pressed) {
-                moved = true
                 if (lastX !== 0xDEAD && plugin !== null) {
-                    plugin.moveCursor(Qt.point(mouse.x - lastX, mouse.y - lastY))
+                    if (scrolling) {
+                        plugin.scroll(mouse.x - lastX, mouse.y - lastY)
+                    } else {
+                        plugin.moveCursor(Qt.point(mouse.x - lastX, mouse.y - lastY))
+                    }
                 }
-
+                
+                wasMoved = true
                 lastX = mouse.x
                 lastY = mouse.y
             }
@@ -119,11 +151,11 @@ Page {
 
         onReleased: {
             lastX = lastY = 0xDEAD
+            scrolling = false
         }
 
         onClicked: {
-            console.log("onClicked")
-            if (plugin !== null) {
+            if (!wasMoved && plugin !== null) {
                 if (!holding) {
                     plugin.sendCommand("singleclick", true)
                 } else {
@@ -131,13 +163,10 @@ Page {
                     holding = false
                 }
             }
-            holding = false
-            moved = false
         }
 
         onDoubleClicked: {
-            console.log("onDoubleClicked")
-            if (plugin !== null) {
+            if (!wasMoved && plugin !== null) {
                 if (!holding) {
                     plugin.sendCommand("doubleclick", true)
                 } else {
@@ -145,17 +174,13 @@ Page {
                     holding = false
                 }
             }
-            holding = false
-            moved = false
         }
 
         onPressAndHold: {
-            console.log("onPressAndHold")
-            if (plugin !== null) {
+            if (!wasMoved && plugin !== null) {
                 plugin.sendCommand("singlehold", true)
                 holding = true
             }
-            moved = false
         }
 
         onWheel: {
@@ -189,7 +214,7 @@ Page {
         }
 
         Button {
-           onClicked: plugin.sendCommand("middleclick", true)
+           onClicked: scrolling = !scrolling //plugin.sendCommand("middleclick", true)
            preferredWidth: Theme.buttonWidthExtraSmall
            width: parent.btnWidth
         }

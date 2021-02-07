@@ -18,10 +18,12 @@
 #include "jobmanager.h"
 
 #include <QLoggingCategory>
+#include <KLocalizedString>
 
 #include "../helper/cpphelper.h"
 #include <compositefiletransferjob.h>
 #include <backends/lan/compositeuploadjob.h>
+#include <downloadjob.h>
 
 
 namespace SailfishConnect {
@@ -117,23 +119,25 @@ void JobInfo::getTarget()
 {
     if (!m_impl) return;
 
-    // auto* downloadJob = qobject_cast<CompositeFileTransferJob*>(m_impl);
-    // if (downloadJob) {
-    //     QUrl url;
-    //     url.setScheme("local");
-    //     url.setPath(downloadJob->destination().toLocalFile());
-    //     setTarget(url);
-    //     return;
-    // }
+    auto* downloadJob = qobject_cast<DownloadJob*>(m_impl);
+    if (downloadJob) {
+        QUrl url;
+        url.setScheme(QStringLiteral("local"));
+        url.setPath(downloadJob->destination());
+        setTarget(url);
+        m_deviceId = downloadJob->deviceId();
+        return;
+    }
 
-    // auto* uploadJob = qobject_cast<CompositeUploadJob*>(m_impl);
-    // if (uploadJob) {
-    //     QUrl url;
-    //     url.setScheme("remote");
-    //     url.setPath(uploadJob->fileName());
-    //     setTarget(url);
-    //     return;
-    // }
+    auto* uploadJob = qobject_cast<CompositeUploadJob*>(m_impl);
+    if (uploadJob) {
+        QUrl url;
+        url.setScheme(QStringLiteral("remote"));
+        url.setPath(QString());
+        setTarget(url);
+        m_deviceId = uploadJob->deviceId();
+        return;
+    }
 }
 
 void JobInfo::setTarget(const QUrl& value)
@@ -152,14 +156,21 @@ void JobInfo::onFinished()
         m_state = QStringLiteral("finished");
     }
 
-    if (m_impl->error()) {
-        m_errorString = m_impl->errorText();
+    if (m_impl->error() != KJob::NoError) {
+        qCDebug(logger)<< "Error" << m_impl->error() <<  m_impl->errorText() <<  m_impl->errorString();
+        QString errorString = m_impl->errorText();
+        if (errorString.isEmpty()) {
+            m_errorString = i18n("Error %1").arg(int(m_impl->error()));
+        } else {
+            m_errorString = errorString;
+        }
     }
 
     emit stateChanged();
 }
 
 JobManager::JobManager(QObject *parent)
+    : KJobTrackerInterface(parent)
 {
 
 }

@@ -17,7 +17,7 @@
 
 #include "jobsnotificator.h"
 
-#include <QCoreApplication>
+#include <QGuiApplication>
 #include <KJobTrackerInterface>
 #include <QLoggingCategory>
 #include <KLocalizedString>
@@ -25,6 +25,10 @@
 #include <core/daemon.h>
 #include <core/device.h>
 #include <notification.h>
+#include "../ui.h"
+
+
+static Q_LOGGING_CATEGORY(logger, "SailfishConnect.JobsNotificator")
 
 namespace SailfishConnect {
 
@@ -46,7 +50,10 @@ void JobsNotificator::connectJob(JobInfo *job)
 
     connect(job, &JobInfo::processedBytesChanged, this, callback);
     connect(job, &JobInfo::totalBytesChanged, this, callback);
+    connect(job, &JobInfo::processedFilesChanged, this, callback);
+    connect(job, &JobInfo::totalFilesChanged, this, callback);
     connect(job, &JobInfo::stateChanged, this, callback);
+    connect(job, &JobInfo::titleChanged, this, callback);
 }
 
 void JobsNotificator::jobChanged(JobInfo *job)
@@ -59,53 +66,60 @@ void JobsNotificator::jobChanged(JobInfo *job)
     if (job->state() == QStringLiteral("running")) {
         notification->setHintValue("x-nemo-progress", job->progress());
 
-        if (isUpload) {
-            notification->setBody(i18n("Uploading ..."));
-        } else {
-            notification->setBody(i18n("Downloading ..."));
+        if (job->totalFiles() > 1) {
+            notification->setBody(job->title());
+            notification->setItemCount(job->totalFiles());
         }
     } else {
-        QString fileName = job->target().fileName();
         quint32 id = notification->replacesId();
         notification->deleteLater();
 
         // recreate to get rid of the progress bar
+        Device* device = Daemon::instance()->getDevice(job->deviceId());
+        QString fileName = job->target().fileName();
+
         notification = new Notification(this);
         m_jobs[job] = notification;
-        notification->setAppName(QCoreApplication::applicationName());
-        notification->setSummary(fileName);
+        notification->setBody(fileName);
         notification->setReplacesId(id);
+
+        QString body;
+        if (job->totalFiles() > 1) {
+            body = job->title();
+            notification->setItemCount(job->totalFiles());
+        } else {
+            body = device ? i18n("%1 from %2").arg(fileName, device->name()) : fileName;
+        }
 
         if (job->state() == QStringLiteral("finished")) {
             if (job->errorString().isEmpty()) {
                 if (isUpload) {
-                    notification->setBody(i18n("Upload succedded"));
+                    notification->setSummary(i18n("Upload succedded"));
                 } else {
-                    notification->setBody(i18n("Download succedded"));
+                    notification->setSummary(i18n("Download succedded"));
                 }
             } else {
                 if (isUpload) {
                     notification->setSummary(i18n("Upload failed"));
-                    notification->setBody(
-                        i18n("Upload failed: %1").arg(job->errorString()));
                 } else {
                     notification->setSummary(i18n("Download failed"));
-                    notification->setBody(
-                        i18n("Download failed: %1").arg(job->errorString()));
                 }
+                body = job->errorString();
             }
 
-            notification->setPreviewSummary(notification->body());
-            notification->setPreviewBody(fileName);
+            notification->setPreviewBody(body);
+            notification->setPreviewSummary(notification->summary());
         } else if (job->state() == QStringLiteral("canceled")) {
             if (isUpload) {
-                notification->setBody(i18n("Upload canceled"));
+                notification->setSummary(i18n("Upload aborted"));
             } else {
-                notification->setBody(i18n("Download canceled"));
+                notification->setSummary(i18n("Download aborted"));
             }
         } else {
             return;
         }
+
+        notification->setBody(body);
     }
     notification->publish();
 }
@@ -115,19 +129,24 @@ void JobsNotificator::addJob(JobInfo *job)
     bool isUpload = job->target().scheme() == QStringLiteral("remote");
     QString fileName = job->target().fileName();
     Device* device = Daemon::instance()->getDevice(job->deviceId());
-    QString deviceName = device ? device->name() : QStringLiteral("?");
+    QString body = device ? i18n("%1 from %2").arg(fileName, device->name()) : fileName;
 
     Notification* notification = new Notification(this);
-    notification->setAppName(QCoreApplication::applicationName());
-    notification->setSummary(fileName);
-    notification->setBody(i18n("Pending upload ..."));
-    if (!isUpload) {
-        notification->setPreviewSummary(i18n("Download from %1").arg(deviceName));
+    notification->setBody(body);
+    notification->setItemCount(job->processedFiles());
+    if (isUpload) {
+        notification->setSummary(i18n("Uploading ..."));
+    } else {
+        QString summary = i18n("Downloading ...");
+        notification->setPreviewSummary(summary);
         notification->setPreviewBody(fileName);
+        notification->setSummary(summary);
     }
     notification->setHintValue("x-nemo-progress", job->progress());
-//    TODO: notification->setRemoteActions(
-//        { UI::openDevicePageDbusAction(device->id()) });
+    if (device) {
+        notification->setRemoteActions(
+            { UI::openDevicePageDbusAction(device->id()) });
+    }
 
     notification->publish();
 

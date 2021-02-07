@@ -79,6 +79,7 @@ target_link_libraries(sailfishconnectapp
   kdeconnectinterfaces
   kdeconnectplugins
   sailfishconnectplugins
+  sailfishconnectpluginscommon
 
   # Needed by booster
   -pie

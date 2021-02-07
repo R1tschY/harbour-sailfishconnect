@@ -183,6 +183,7 @@ std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
 {
     std::unique_ptr<QGuiApplication> app(SailfishApp::application(argc, argv));
     app->setApplicationVersion(PACKAGE_VERSION);
+    app->setApplicationDisplayName(i18n("Sailfish Connect"));
     app->setQuitLockEnabled(false);
     return app;
 }

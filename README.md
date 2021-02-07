@@ -13,9 +13,7 @@
 
 # Sailfish Connect
 
-An alternative Sailfish OS client for [KDE Connect](https://community.kde.org/KDEConnect)
-
-
+Sailfish OS client for [KDE Connect](https://community.kde.org/KDEConnect)
 
 ## Screenshots
 
@@ -88,9 +86,7 @@ MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control wit
 
 * RemoteKeyboard: Special keys (except modifiers) are interpreted as text by GSConnect
 * LAN: A connection through USB-Ethernet and develeper mode is not possible.
-* LAN: Sometimes link gets destroyed right after first connection
-   * Symptom: No connection to other device after app start, but connection is possible.
-   * Workaround: Do a refresh from Sailfish Connect or KDE Connect.
+
 
 ## Credits
 

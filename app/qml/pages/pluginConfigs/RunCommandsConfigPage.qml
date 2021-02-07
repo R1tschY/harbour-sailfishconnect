@@ -26,7 +26,7 @@ Page {
     allowedOrientations: Orientation.All
 
     property QtObject device
-    property QtObject config: device.getPluginConfig("kdeconnect_runcommands")
+    property QtObject config: device.getPluginConfig("kdeconnect_runcommand")
 
     /// https://stackoverflow.com/a/2117523/1188453
     function uuidv4() {

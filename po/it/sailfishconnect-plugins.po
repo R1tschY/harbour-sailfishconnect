@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 00:50+0100\n"
+"POT-Creation-Date: 2021-02-07 21:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: plugins/sf_share/shareplugin.cpp:143
-#, kde-format
-msgid "Could not share file"
-msgstr ""
 
 #: plugins/sf_share/shareplugin.cpp:143
 #, kde-format
@@ -38,10 +33,20 @@ msgstr "Impossibile creare cartella di destinazione"
 msgid "Could not open file `%1`: %2"
 msgstr "Impossibile aprire file in scrittura: %1"
 
-#: pluginscommon/downloadjob.cpp:85
+#: plugins/sf_share/shareplugin.cpp:143
 #, kde-format
-msgid "Receiving"
-msgstr "In ricezione"
+msgid "Could not share file"
+msgstr ""
+
+#: pluginscommon/copyjob.cpp:237
+#, fuzzy, kde-format
+msgid "Early end of input stream: %1"
+msgstr "Contenuto in arrivo chiuso anticipatamente"
+
+#: pluginscommon/copyjob.cpp:225
+#, fuzzy, kde-format
+msgid "Early end of output stream: %1"
+msgstr "Contenuto in uscisa chiuso anticipatamente"
 
 #: pluginscommon/copyjob.cpp:92
 #, kde-format
@@ -58,22 +63,17 @@ msgstr "Contenuto in uscita non scrivibile."
 msgid "Read error: %1"
 msgstr "Errore lettura: %1"
 
-#: pluginscommon/copyjob.cpp:168
-#, kde-format
-msgid "Write error: %1"
-msgstr "Errore scrittura: %1"
-
-#: pluginscommon/copyjob.cpp:227
-#, fuzzy, kde-format
-msgid "Early end of output stream: %1"
-msgstr "Contenuto in uscisa chiuso anticipatamente"
-
-#: pluginscommon/copyjob.cpp:233
+#: pluginscommon/copyjob.cpp:231
 #, kde-format
 msgid "Read more bytes of input stream than expected."
 msgstr "Contenuto in arrivo contiene più byte di quelli previsti."
 
-#: pluginscommon/copyjob.cpp:239
-#, fuzzy, kde-format
-msgid "Early end of input stream: %1"
-msgstr "Contenuto in arrivo chiuso anticipatamente"
+#: pluginscommon/downloadjob.cpp:85
+#, kde-format
+msgid "Receiving"
+msgstr "In ricezione"
+
+#: pluginscommon/copyjob.cpp:167
+#, kde-format
+msgid "Write error: %1"
+msgstr "Errore scrittura: %1"

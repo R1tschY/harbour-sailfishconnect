@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 00:50+0100\n"
+"POT-Creation-Date: 2021-02-07 21:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,247 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: app/qml/components/MprisUi.qml:36
+#: app/src/helper/jobsnotificator.cpp:91 app/src/helper/jobsnotificator.cpp:132
 #, kde-format
-msgid "Multimedia Controls"
-msgstr "Controles multimedia"
-
-#: app/qml/components/MprisUi.qml:94
-#, kde-format
-msgid "Nothing playing"
-msgstr "Nada reprodiciendo"
-
-#: app/qml/components/MprisUi.qml:196
-#, kde-format
-msgid "No remote players"
-msgstr "No hay reproductores remotos"
-
-#: app/qml/pages/KeyboardChangeLayoutPage.qml:31
-#: app/qml/pages/KeyboardPage.qml:110 app/qml/pages/SettingsPage.qml:39
-#, fuzzy, kde-format
-msgid "Settings"
-msgstr "Ajustes"
+msgid "%1 from %2"
+msgstr ""
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:40
 #, kde-format
 msgid "%1ms repeat interval"
 msgstr "%1ms intervalo de repetición"
 
-#: app/qml/pages/KeyboardChangeLayoutPage.qml:48
-#, kde-format
-msgid "Vibration feedback"
-msgstr "Vibración haptico"
-
-#: app/qml/pages/KeyboardChangeLayoutPage.qml:57
-#, kde-format
-msgid "Change layout"
-msgstr "Cambia el diseño"
-
-#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:37
-#, kde-format
-msgid "Reboot"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:41
-#, kde-format
-msgid "Lock device"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:71
-#, kde-format
-msgid "Name of command"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:72
-#, kde-format
-msgid "Name"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
-#, kde-format
-msgid "Shell command to execute"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:80
-#, kde-format
-msgid "Command"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:85
-#, kde-format
-msgid "Predefined commands"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/ShareConfigPage.qml:42
-#, kde-format
-msgid "Edit share configuration"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/ShareConfigPage.qml:48
-#, fuzzy, kde-format
-msgid "Folder to save files"
-msgstr "A fallado al abrir el archivo"
-
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:73
 #, kde-format
 msgid "&percnt;1 in the path will be replaced with the specific device name."
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:114
-#, kde-format
-msgid "Edit commands"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:141
-#: app/qml/pages/SettingsPage.qml:76
-#, kde-format
-msgid "Edit"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:154
-#: app/qml/pages/SettingsPage.qml:88
-#, kde-format
-msgid "Remove"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:163
-#, kde-format
-msgid "Add new command"
-msgstr ""
-
-#: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
-#, kde-format
-msgid "No commands defined"
-msgstr ""
-
-#: app/qml/pages/AddCustomDeviceDialog.qml:46
-#, kde-format
-msgid "IPv4 or IPv6 address of device"
-msgstr ""
-
-#: app/qml/pages/AddCustomDeviceDialog.qml:47
-#, kde-format
-msgid "IP address"
-msgstr ""
-
-#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:260
-#, fuzzy, kde-format
-msgid "Encryption info"
-msgstr "Detalles de encriptación"
-
-#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:231
-#, kde-format
-msgid "Run command"
-msgstr ""
-
-#: app/qml/pages/RemoteCommandsPage.qml:88
-#, kde-format
-msgid "No commands defined on other device"
-msgstr ""
-
-#: app/qml/pages/DevicePage.qml:47
-#, kde-format
-msgid "Device is not reachable"
-msgstr "Dispositivo no accesible"
-
-#: app/qml/pages/DevicePage.qml:74
-#, kde-format
-msgid "Waiting for accepted pairing ..."
-msgstr "Esperando emparejamiento aceptado ..."
-
-#: app/qml/pages/DevicePage.qml:108
-#, kde-format
-msgid "This device wants to pair with your device."
-msgstr "Este dispositivo quiere vincularse al dispositivo."
-
-#: app/qml/pages/DevicePage.qml:120
-#, kde-format
-msgid "Accept"
-msgstr "Aceptar"
-
-#: app/qml/pages/DevicePage.qml:125
-#, kde-format
-msgid "Reject"
-msgstr "Rechazar"
-
-#: app/qml/pages/DevicePage.qml:151
-#, kde-format
-msgid "Do you want to connect to this device?"
-msgstr "Quieres conectarte a este dispositivo?"
-
-#: app/qml/pages/DevicePage.qml:161
-#, kde-format
-msgid "Connect"
-msgstr "Conectar"
-
-#: app/qml/pages/DevicePage.qml:186
-#, kde-format
-msgid "Actions"
-msgstr "Acciones"
-
-#: app/qml/pages/DevicePage.qml:190
-#, kde-format
-msgid "Share a file"
-msgstr "Compartir un archivo"
-
-#: app/qml/pages/DevicePage.qml:199
-#, kde-format
-msgid "Select file to send"
-msgstr "Seleccionar archivo para enviar"
-
-#: app/qml/pages/DevicePage.qml:210
-#, fuzzy, kde-format
-msgid "Open touchpad"
-msgstr "Mando táctil"
-
-#: app/qml/pages/DevicePage.qml:217
-#, fuzzy, kde-format
-msgid "Open keyboard"
-msgstr "Teclado"
-
-#: app/qml/pages/DevicePage.qml:224
-#, kde-format
-msgid "Upload clipboard text"
-msgstr "Subir texto del portapapeles"
-
-#: app/qml/pages/DevicePage.qml:238 app/qml/pages/RemoteVolumePage.qml:38
-#, fuzzy, kde-format
-msgid "Change volume"
-msgstr "Cambia el diseño"
-
-#: app/qml/pages/DevicePage.qml:267
-#, kde-format
-msgid "Plugins"
-msgstr "Enchufes"
-
-#: app/qml/pages/DevicePage.qml:275
-#, kde-format
-msgid "Unpair"
-msgstr "Desvincular"
-
-#: app/qml/pages/DevicePage.qml:281
-#, kde-format
-msgid "Send ping"
-msgstr "Enviar una verificación"
-
-#: app/qml/pages/KeyboardPage.qml:105
-#, fuzzy, kde-format
-msgid "Keyboard"
-msgstr "Teclado"
-
-#: app/qml/pages/DevicePluginsPage.qml:61
-#, kde-format
-msgid "Select Plugins"
-msgstr "Elegir enchufes"
-
-#: app/qml/pages/DevicePluginsPage.qml:78
-#, kde-format
-msgid "Open configuration throught context menu"
-msgstr ""
-
-#: app/qml/pages/DevicePluginsPage.qml:89
-#, kde-format
-msgid "Open configuration"
 msgstr ""
 
 #: app/qml/pages/AboutPage.qml:39
@@ -266,34 +38,157 @@ msgstr ""
 msgid "About"
 msgstr "Acerca de"
 
-#: app/qml/pages/AboutPage.qml:66
-#, fuzzy, kde-format
-msgid "KDE Connect client for Sailfish OS"
-msgstr "Un cliente no oficial de KDE Connect para Sailfish SO"
-
-#: app/qml/pages/AboutPage.qml:77
+#: app/qml/pages/DeviceListPage.qml:246
 #, kde-format
-msgid "Links"
-msgstr "Enlaces"
+msgid "About ..."
+msgstr "Acerca de"
+
+#: app/qml/pages/DevicePage.qml:120
+#, kde-format
+msgid "Accept"
+msgstr "Aceptar"
+
+#: app/qml/pages/DevicePage.qml:186
+#, kde-format
+msgid "Actions"
+msgstr "Acciones"
+
+#: app/qml/pages/SettingsPage.qml:128
+#, kde-format
+msgid "Add device from IP address"
+msgstr ""
+
+#: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:163
+#, kde-format
+msgid "Add new command"
+msgstr ""
+
+#: app/qml/pages/SettingsPage.qml:46
+#, fuzzy, kde-format
+msgid "Application starts at system start and runs in background."
+msgstr ""
+"La aplicación comienza en el inicio del sistema y se ejecuta en segundo "
+"plano."
 
 #: app/qml/pages/AboutPage.qml:87
 #, kde-format
 msgid "Bug reports on Github"
 msgstr "Bicho"
 
-#: app/qml/pages/AboutPage.qml:96
+#: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format
-msgid "Source code on Github"
-msgstr "Fuente"
+msgid "Change layout"
+msgstr "Cambia el diseño"
 
-#: app/qml/pages/AboutPage.qml:104
-#, kde-format
-msgid "Licence"
-msgstr "Licencia:"
+#: app/qml/pages/DevicePage.qml:238 app/qml/pages/RemoteVolumePage.qml:38
+#, fuzzy, kde-format
+msgid "Change volume"
+msgstr "Cambia el diseño"
 
-#: app/qml/pages/RemoteVolumePage.qml:110
+#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:80
 #, kde-format
-msgid "No sinks exist on other device"
+msgid "Command"
+msgstr ""
+
+#: app/qml/pages/DevicePage.qml:161
+#, kde-format
+msgid "Connect"
+msgstr "Conectar"
+
+#: app/qml/pages/DeviceListPage.qml:145
+#, kde-format
+msgid "Connected"
+msgstr "Conectado"
+
+#: app/qml/pages/DeviceListPage.qml:73
+#, kde-format
+msgid "Device Name"
+msgstr "Nombre de dispositivo"
+
+#: app/qml/pages/DevicePage.qml:47
+#, kde-format
+msgid "Device is not reachable"
+msgstr "Dispositivo no accesible"
+
+#: app/qml/pages/SettingsPage.qml:53
+#, kde-format
+msgid "Devices from IP address"
+msgstr ""
+
+#: app/qml/pages/DevicePage.qml:151
+#, kde-format
+msgid "Do you want to connect to this device?"
+msgstr "Quieres conectarte a este dispositivo?"
+
+#: app/src/helper/jobsnotificator.cpp:116
+#, kde-format
+msgid "Download aborted"
+msgstr ""
+
+#: app/src/helper/jobsnotificator.cpp:105
+#, fuzzy, kde-format
+msgid "Download failed"
+msgstr "xdg-open a fallado!"
+
+#: app/src/helper/jobsnotificator.cpp:99
+#, kde-format
+msgid "Download succedded"
+msgstr ""
+
+#: app/src/helper/jobsnotificator.cpp:140
+#, fuzzy, kde-format
+msgid "Downloading ..."
+msgstr "Ajustes"
+
+#: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:141
+#: app/qml/pages/SettingsPage.qml:76
+#, kde-format
+msgid "Edit"
+msgstr ""
+
+#: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:114
+#, kde-format
+msgid "Edit commands"
+msgstr ""
+
+#: app/qml/pages/pluginConfigs/ShareConfigPage.qml:42
+#, kde-format
+msgid "Edit share configuration"
+msgstr ""
+
+#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:260
+#, fuzzy, kde-format
+msgid "Encryption info"
+msgstr "Detalles de encriptación"
+
+#: app/src/io/jobmanager.cpp:163
+#, kde-format
+msgid "Error %1"
+msgstr ""
+
+#: app/src/appdaemon.cpp:178
+#, fuzzy, kde-format
+msgid "Failed to pair. %1"
+msgstr "A fallado al abrir el archivo"
+
+#: app/qml/pages/pluginConfigs/ShareConfigPage.qml:48
+#, fuzzy, kde-format
+msgid "Folder to save files"
+msgstr "A fallado al abrir el archivo"
+
+#: app/qml/pages/TouchpadPage.qml:65
+#, fuzzy, kde-format
+msgid "Holding ..."
+msgstr "Ajustes"
+
+#: app/qml/pages/AddCustomDeviceDialog.qml:47
+#, kde-format
+msgid "IP address"
+msgstr ""
+
+#: app/qml/pages/AddCustomDeviceDialog.qml:46
+#, kde-format
+msgid "IPv4 or IPv6 address of device"
 msgstr ""
 
 #: app/qml/pages/DeviceListPage.qml:57
@@ -305,75 +200,30 @@ msgstr ""
 "Instalar KDEConnect o GSConnect en la computadora y conéctarlo a la misma "
 "red WLAN."
 
-#: app/qml/pages/DeviceListPage.qml:67
-#, kde-format
-msgid "Sailfish Connect"
-msgstr "Sailfish Connect"
-
-#: app/qml/pages/DeviceListPage.qml:73
-#, kde-format
-msgid "Device Name"
-msgstr "Nombre de dispositivo"
-
-#: app/qml/pages/DeviceListPage.qml:145
-#, kde-format
-msgid "Connected"
-msgstr "Conectado"
-
-#: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
+#: app/qml/pages/AboutPage.qml:66
 #, fuzzy, kde-format
-msgid "Pending pairing request ..."
-msgstr "Solicicitud  de vinculación pendientes ..."
+msgid "KDE Connect client for Sailfish OS"
+msgstr "Un cliente no oficial de KDE Connect para Sailfish SO"
 
-#: app/qml/pages/DeviceListPage.qml:215
-#, kde-format
-msgid "Paired devices"
-msgstr "dispositivos vinculados"
-
-#: app/qml/pages/DeviceListPage.qml:230
-#, kde-format
-msgid "Nearby devices"
-msgstr "Dispositivos cercanos"
-
-#: app/qml/pages/DeviceListPage.qml:246
-#, kde-format
-msgid "About ..."
-msgstr "Acerca de"
-
-#: app/qml/pages/DeviceListPage.qml:251
-#, kde-format
-msgid "Settings ..."
-msgstr "Ajustes"
-
-#: app/qml/pages/DeviceListPage.qml:256
-#, kde-format
-msgid "Quit"
-msgstr "Salir"
-
-#: app/qml/pages/DeviceListPage.qml:262
-#, kde-format
-msgid "Refresh"
-msgstr "Actualizar"
-
-#: app/qml/pages/TouchpadPage.qml:56
+#: app/qml/pages/KeyboardPage.qml:105
 #, fuzzy, kde-format
-msgid "Touchpad"
-msgstr "Mando táctil"
+msgid "Keyboard"
+msgstr "Teclado"
 
-#: app/qml/pages/TouchpadPage.qml:65
-#, fuzzy, kde-format
-msgid "Holding ..."
-msgstr "Ajustes"
+#: app/qml/pages/AboutPage.qml:104
+#, kde-format
+msgid "Licence"
+msgstr "Licencia:"
 
-#: app/qml/pages/TouchpadPage.qml:73
-#, fuzzy, kde-format
-msgid "Scrolling ..."
-msgstr "Ajustes"
+#: app/qml/pages/AboutPage.qml:77
+#, kde-format
+msgid "Links"
+msgstr "Enlaces"
 
-#: app/qml/pages/TouchpadPage.qml:81
-#, fuzzy, kde-format
-msgid "Moving ..."
-msgstr "Ajustes"
+#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:41
+#, kde-format
+msgid "Lock device"
+msgstr ""
 
 #: app/qml/pages/TouchpadPage.qml:89
 #, kde-format
@@ -384,21 +234,39 @@ msgid ""
 "Scroll on right side"
 msgstr ""
 
-#: app/qml/pages/SettingsPage.qml:44
+#: app/qml/pages/TouchpadPage.qml:81
 #, fuzzy, kde-format
-msgid "Run as background service"
-msgstr "Ejecutar como servicio"
+msgid "Moving ..."
+msgstr "Ajustes"
 
-#: app/qml/pages/SettingsPage.qml:46
-#, fuzzy, kde-format
-msgid "Application starts at system start and runs in background."
-msgstr ""
-"La aplicación comienza en el inicio del sistema y se ejecuta en segundo "
-"plano."
-
-#: app/qml/pages/SettingsPage.qml:53
+#: app/qml/components/MprisUi.qml:36
 #, kde-format
-msgid "Devices from IP address"
+msgid "Multimedia Controls"
+msgstr "Controles multimedia"
+
+#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:72
+#, kde-format
+msgid "Name"
+msgstr ""
+
+#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:71
+#, kde-format
+msgid "Name of command"
+msgstr ""
+
+#: app/qml/pages/DeviceListPage.qml:230
+#, kde-format
+msgid "Nearby devices"
+msgstr "Dispositivos cercanos"
+
+#: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
+#, kde-format
+msgid "No commands defined"
+msgstr ""
+
+#: app/qml/pages/RemoteCommandsPage.qml:88
+#, kde-format
+msgid "No commands defined on other device"
 msgstr ""
 
 #: app/qml/pages/SettingsPage.qml:114
@@ -406,109 +274,238 @@ msgstr ""
 msgid "No devices defined"
 msgstr ""
 
-#: app/qml/pages/SettingsPage.qml:128
+#: app/qml/components/MprisUi.qml:196
 #, kde-format
-msgid "Add device from IP address"
+msgid "No remote players"
+msgstr "No hay reproductores remotos"
+
+#: app/qml/pages/RemoteVolumePage.qml:110
+#, kde-format
+msgid "No sinks exist on other device"
 msgstr ""
 
-#: app/src/helper/jobsnotificator.cpp:90
+#: app/qml/components/MprisUi.qml:94
 #, kde-format
-msgid "Upload succedded from %1"
+msgid "Nothing playing"
+msgstr "Nada reprodiciendo"
+
+#: app/qml/pages/DevicePluginsPage.qml:89
+#, kde-format
+msgid "Open configuration"
 msgstr ""
 
-#: app/src/helper/jobsnotificator.cpp:92
+#: app/qml/pages/DevicePluginsPage.qml:78
 #, kde-format
-msgid "Download succedded from %1"
+msgid "Open configuration throught context menu"
 msgstr ""
 
-#: app/src/helper/jobsnotificator.cpp:97
-#, kde-format
-msgid "Upload failed from %1: %2"
-msgstr ""
+#: app/qml/pages/DevicePage.qml:217
+#, fuzzy, kde-format
+msgid "Open keyboard"
+msgstr "Teclado"
 
-#: app/src/helper/jobsnotificator.cpp:100
-#, kde-format
-msgid "Download failed from %1: %2"
-msgstr ""
+#: app/qml/pages/DevicePage.qml:210
+#, fuzzy, kde-format
+msgid "Open touchpad"
+msgstr "Mando táctil"
 
-#: app/src/helper/jobsnotificator.cpp:108
+#: app/qml/pages/DeviceListPage.qml:215
 #, kde-format
-msgid "Upload canceled from %1"
-msgstr ""
-
-#: app/src/helper/jobsnotificator.cpp:110
-#, kde-format
-msgid "Download canceled from %1"
-msgstr ""
-
-#: app/src/helper/jobsnotificator.cpp:132
-#, kde-format
-msgid "Uploading from %1 ..."
-msgstr ""
-
-#: app/src/helper/jobsnotificator.cpp:135
-#, kde-format
-msgid "Downloading from %1"
-msgstr ""
-
-#: app/src/helper/jobsnotificator.cpp:136
-#, kde-format
-msgid "Downloading from %1 ..."
-msgstr ""
-
-#: app/src/io/jobmanager.cpp:162
-#, kde-format
-msgid "Error %1"
-msgstr ""
+msgid "Paired devices"
+msgstr "dispositivos vinculados"
 
 #: app/src/appdaemon.cpp:66
 #, fuzzy, kde-format
 msgid "Pairing request"
 msgstr "Solicicitud  de vinculación pendientes ..."
 
-#: app/src/appdaemon.cpp:178
+#: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
 #, fuzzy, kde-format
-msgid "Failed to pair. %1"
-msgstr "A fallado al abrir el archivo"
+msgid "Pending pairing request ..."
+msgstr "Solicicitud  de vinculación pendientes ..."
 
-#~ msgid "Failed"
-#~ msgstr "A fallado"
+#: app/qml/pages/DevicePage.qml:267
+#, kde-format
+msgid "Plugins"
+msgstr "Enchufes"
 
-#~ msgid "of"
-#~ msgstr "de"
+#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:85
+#, kde-format
+msgid "Predefined commands"
+msgstr ""
 
-#~ msgid "Completed"
-#~ msgstr "Completado"
+#: app/qml/pages/DeviceListPage.qml:256
+#, kde-format
+msgid "Quit"
+msgstr "Salir"
 
-#~ msgid "Canceled"
-#~ msgstr "Cancelado"
+#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:37
+#, kde-format
+msgid "Reboot"
+msgstr ""
 
-#~ msgid "Internal error"
-#~ msgstr "Error interno"
+#: app/qml/pages/DeviceListPage.qml:262
+#, kde-format
+msgid "Refresh"
+msgstr "Actualizar"
 
-#~ msgid "File does not exit"
-#~ msgstr "El archivo no existe"
+#: app/qml/pages/DevicePage.qml:125
+#, kde-format
+msgid "Reject"
+msgstr "Rechazar"
 
-#~ msgid "No program found to open file"
-#~ msgstr "No se encontro ningún programa para abrir el archivo."
+#: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:154
+#: app/qml/pages/SettingsPage.qml:88
+#, kde-format
+msgid "Remove"
+msgstr ""
 
-#~ msgid "xdg-open failed"
-#~ msgstr "xdg-open a fallado!"
+#: app/qml/pages/SettingsPage.qml:44
+#, fuzzy, kde-format
+msgid "Run as background service"
+msgstr "Ejecutar como servicio"
 
-#~ msgid "xdg-open crashed"
-#~ msgstr "xdg-open estrellado!"
+#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:231
+#, kde-format
+msgid "Run command"
+msgstr ""
 
-#~ msgid "Transfers"
-#~ msgstr "Transferencias"
+#: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:186
+#, kde-format
+msgid "Sailfish Connect"
+msgstr "Sailfish Connect"
+
+#: app/qml/pages/TouchpadPage.qml:73
+#, fuzzy, kde-format
+msgid "Scrolling ..."
+msgstr "Ajustes"
+
+#: app/qml/pages/DevicePluginsPage.qml:61
+#, kde-format
+msgid "Select Plugins"
+msgstr "Elegir enchufes"
+
+#: app/qml/pages/DevicePage.qml:199
+#, kde-format
+msgid "Select file to send"
+msgstr "Seleccionar archivo para enviar"
+
+#: app/qml/pages/DevicePage.qml:281
+#, kde-format
+msgid "Send ping"
+msgstr "Enviar una verificación"
+
+#: app/qml/pages/KeyboardChangeLayoutPage.qml:31
+#: app/qml/pages/KeyboardPage.qml:110 app/qml/pages/SettingsPage.qml:39
+#, fuzzy, kde-format
+msgid "Settings"
+msgstr "Ajustes"
+
+#: app/qml/pages/DeviceListPage.qml:251
+#, kde-format
+msgid "Settings ..."
+msgstr "Ajustes"
+
+#: app/qml/pages/DevicePage.qml:190
+#, kde-format
+msgid "Share a file"
+msgstr "Compartir un archivo"
+
+#: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
+#, kde-format
+msgid "Shell command to execute"
+msgstr ""
+
+#: app/qml/pages/AboutPage.qml:96
+#, kde-format
+msgid "Source code on Github"
+msgstr "Fuente"
+
+#: app/qml/pages/DevicePage.qml:108
+#, kde-format
+msgid "This device wants to pair with your device."
+msgstr "Este dispositivo quiere vincularse al dispositivo."
+
+#: app/qml/pages/TouchpadPage.qml:56
+#, fuzzy, kde-format
+msgid "Touchpad"
+msgstr "Mando táctil"
+
+#: app/qml/pages/DevicePage.qml:275
+#, kde-format
+msgid "Unpair"
+msgstr "Desvincular"
+
+#: app/src/helper/jobsnotificator.cpp:114
+#, fuzzy, kde-format
+msgid "Upload aborted"
+msgstr "Subir texto del portapapeles"
+
+#: app/qml/pages/DevicePage.qml:224
+#, kde-format
+msgid "Upload clipboard text"
+msgstr "Subir texto del portapapeles"
+
+#: app/src/helper/jobsnotificator.cpp:103
+#, kde-format
+msgid "Upload failed"
+msgstr ""
+
+#: app/src/helper/jobsnotificator.cpp:97
+#, kde-format
+msgid "Upload succedded"
+msgstr ""
+
+#: app/src/helper/jobsnotificator.cpp:138
+#, fuzzy, kde-format
+msgid "Uploading ..."
+msgstr "Ajustes"
+
+#: app/qml/pages/KeyboardChangeLayoutPage.qml:48
+#, kde-format
+msgid "Vibration feedback"
+msgstr "Vibración haptico"
+
+#: app/qml/pages/DevicePage.qml:74
+#, kde-format
+msgid "Waiting for accepted pairing ..."
+msgstr "Esperando emparejamiento aceptado ..."
 
 #~ msgid "Cancel"
 #~ msgstr "Cancelar"
 
+#~ msgid "Canceled"
+#~ msgstr "Cancelado"
+
+#~ msgid "Completed"
+#~ msgstr "Completado"
+
+#~ msgid "Failed"
+#~ msgstr "A fallado"
+
+#~ msgid "File does not exit"
+#~ msgstr "El archivo no existe"
+
+#~ msgid "Internal error"
+#~ msgstr "Error interno"
+
+#~ msgid "No program found to open file"
+#~ msgstr "No se encontro ningún programa para abrir el archivo."
+
 #~ msgid "Open"
 #~ msgstr "Abrir"
+
+#~ msgid "Transfers"
+#~ msgstr "Transferencias"
+
+#~ msgid "Transfers ..."
+#~ msgstr "Tranferencias"
 
 #~ msgid "Yet no downloads or uploads"
 #~ msgstr "Todavía no hay descargas o subidas"
 
-#~ msgid "Transfers ..."
-#~ msgstr "Tranferencias"
+#~ msgid "of"
+#~ msgstr "de"
+
+#~ msgid "xdg-open crashed"
+#~ msgstr "xdg-open estrellado!"

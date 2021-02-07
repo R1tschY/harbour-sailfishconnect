@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 00:50+0100\n"
+"POT-Creation-Date: 2021-02-07 21:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 19.04.3\n"
-
-#: plugins/sf_share/shareplugin.cpp:143
-#, kde-format
-msgid "Could not share file"
-msgstr ""
 
 #: plugins/sf_share/shareplugin.cpp:143
 #, kde-format
@@ -40,10 +35,20 @@ msgstr "Невозможно создать каталог назначения"
 msgid "Could not open file `%1`: %2"
 msgstr "Невозможно открыть файл на запись: %1"
 
-#: pluginscommon/downloadjob.cpp:85
+#: plugins/sf_share/shareplugin.cpp:143
 #, kde-format
-msgid "Receiving"
-msgstr "Получение"
+msgid "Could not share file"
+msgstr ""
+
+#: pluginscommon/copyjob.cpp:237
+#, fuzzy, kde-format
+msgid "Early end of input stream: %1"
+msgstr "Поток данных на вход прерван"
+
+#: pluginscommon/copyjob.cpp:225
+#, fuzzy, kde-format
+msgid "Early end of output stream: %1"
+msgstr "Поток данных на выход прерван"
 
 #: pluginscommon/copyjob.cpp:92
 #, kde-format
@@ -60,22 +65,17 @@ msgstr "Выходной поток недоступен для записи"
 msgid "Read error: %1"
 msgstr "Ошибка чтения: %1"
 
-#: pluginscommon/copyjob.cpp:168
-#, kde-format
-msgid "Write error: %1"
-msgstr "Ошибка записи: %1"
-
-#: pluginscommon/copyjob.cpp:227
-#, fuzzy, kde-format
-msgid "Early end of output stream: %1"
-msgstr "Поток данных на выход прерван"
-
-#: pluginscommon/copyjob.cpp:233
+#: pluginscommon/copyjob.cpp:231
 #, kde-format
 msgid "Read more bytes of input stream than expected."
 msgstr "Получено больше байтов из входного потока, чем ожидалось."
 
-#: pluginscommon/copyjob.cpp:239
-#, fuzzy, kde-format
-msgid "Early end of input stream: %1"
-msgstr "Поток данных на вход прерван"
+#: pluginscommon/downloadjob.cpp:85
+#, kde-format
+msgid "Receiving"
+msgstr "Получение"
+
+#: pluginscommon/copyjob.cpp:167
+#, kde-format
+msgid "Write error: %1"
+msgstr "Ошибка записи: %1"

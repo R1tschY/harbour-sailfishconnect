@@ -7,13 +7,13 @@ TRANSLATIONS="de es fi fr it pl ru sv zh_CN"
 KDECONNECT_DOMAINS="kdeconnect-core kdeconnect-plugins"
 SAILFISHCONNECT_DOMAINS="sailfishconnect-app sailfishconnect-plugins"
 
-EXTOPTS="--c++ --kde \
+EXTOPTS="--c++ --kde --sort-output \
     --from-code=UTF-8 \
     -c i18n \
     -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3 \
     -kki18n:1 -kki18nc:1c,2 -kki18np:1,2 -kki18ncp:1c,2,3 \
     -kI18N_NOOP:1 -kI18NC_NOOP:1c,2"
-EXTOPTS="--c++ --kde \
+EXTOPTS="--c++ --kde --sort-output \
     --from-code=UTF-8 \
     -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3 \
     -kki18n:1 -kki18nc:1c,2 -kki18np:1,2 -kki18ncp:1c,2,3 \
@@ -24,8 +24,8 @@ podir=po
 
 echo "-- Create templates"
 mkdir -p $potdir
-$XGETTEXT `find plugins/ pluginscommon/ -name '*.cpp'` -o $potdir/sailfishconnect-plugins.pot
-$XGETTEXT `find app/ -name '*.cpp' -o -name '*.qml'` -o $potdir/sailfishconnect-app.pot
+find plugins/ pluginscommon/ -name '*.cpp' | xargs $XGETTEXT -o $potdir/sailfishconnect-plugins.pot
+find app/ -name '*.cpp' -o -name '*.qml' | xargs $XGETTEXT -o $potdir/sailfishconnect-app.pot
 
 echo "-- Merge translations"
 for translation in $TRANSLATIONS
@@ -37,7 +37,7 @@ do
         then
             echo "Merge $translation for $domain"
             mkdir -p "$podir/$translation"
-            msgmerge -q --lang=$translation -o "$dest.new" "$dest" "$potdir/$domain.pot"
+            msgmerge --sort-output -q --lang=$translation -o "$dest.new" "$dest" "$potdir/$domain.pot"
             mv "$dest.new" "$dest"
         else
             echo "Create $translation for $domain"

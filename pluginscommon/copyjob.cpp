@@ -186,10 +186,10 @@ void CopyJob::poll()
         QMetaObject::invokeMethod(this, "poll", Qt::QueuedConnection);
     }
 
-    if (m_sourceEof
-            && m_source->bytesAvailable() == 0
+    if (m_source->bytesAvailable() == 0
             && m_bufferSize == 0
-            && btw == 0) {
+            && btw == 0
+            && (m_sourceEof || m_size == m_writtenBytes)) {
         qCDebug(logger) << "EOF";
         if (m_sslSocket) {
             m_sslSocket->disconnectFromHost();
@@ -204,7 +204,7 @@ void CopyJob::pollAtSourceClose()
     if (m_finished)
         return;
 
-//    qCDebug(logger) << "Detected source closing";
+    qCDebug(logger) << "Detected source closing";
 
     m_sourceEof = true;
     poll();
@@ -238,12 +238,12 @@ void CopyJob::finish()
             .arg(m_source->errorString()));
     }
 
-    close();
+    qCDebug(logger) << "Finished file transfer:"
+        << "error:" << errorText()
+        << "written:" << m_writtenBytes;
 
-    qCDebug(logger) << "Finished file transfer" << errorText();
-
-    // success
     emitResult();
+    close();
 }
 
 qint64 CopyJob::bytesToWrite() const

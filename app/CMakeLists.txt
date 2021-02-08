@@ -97,10 +97,6 @@ install(TARGETS sailfishconnectapp
 install(DIRECTORY qml
     DESTINATION share/${PACKAGE_NAME}
 )
-install(DIRECTORY translations
-    DESTINATION share/${PACKAGE_NAME}
-    FILES_MATCHING PATTERN "*.qm"
-)
 install(FILES ${PACKAGE_NAME}.desktop
     DESTINATION share/applications
 )

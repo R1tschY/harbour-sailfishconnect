@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+TRANSLATIONS=`find po/ -maxdepth 1 ! -name templates | cut -d/ -f2 | xargs echo`
+KDECONNECT_DOMAINS="kdeconnect-core kdeconnect-plugins"
+
+potdir=po/templates
+podir=po
+
+for translation in $TRANSLATIONS
+do
+    for domain in $KDECONNECT_DOMAINS
+    do
+        mkdir -p "$podir/$translation"
+        echo "Download $translation for $domain"
+        curl -sS --fail \
+            -A "Mozilla/5.0 (X11; Ubuntu) Gecko/20100101 Firefox/73.0" \
+            "https://websvn.kde.org/*checkout*/trunk/l10n-kf5/$translation/messages/kdeconnect-kde/$domain.po" \
+            -o "$podir/$translation/$domain.po" || true
+    done
+done

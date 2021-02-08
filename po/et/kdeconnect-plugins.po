@@ -1,56 +1,51 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Sebastien Renard <renard@kde.org>, 2014, 2015.
-# Maxime Corteel <mcorteel@gmail.com>, 2017.
-# Simon Depiets <sdepiets@gmail.com>, 2018, 2019.
-# Xavier Besnard <xavier.besnard@neuf.fr>, 2020.
 #
+# Marek Laane <qiilaq69@gmail.com>, 2016, 2019, 2020.
+# Mihkel Tõnnov <mihhkel@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-02-03 03:11+0100\n"
-"PO-Revision-Date: 2020-07-25 19:04+0200\n"
-"Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
-"Language-Team: French <kde-i18n-doc@kde.org>\n"
-"Language: fr\n"
+"PO-Revision-Date: 2020-10-11 01:31+0200\n"
+"Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
+"Language-Team: Estonian <>\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 20.04.3\n"
-"X-Environment: kde\n"
-"X-Accelerator-Marker: &\n"
-"X-Text-Markup: kde4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 20.08.1\n"
 
 #: battery/batteryplugin.cpp:129
 #, kde-format
 msgctxt "device name: low battery"
 msgid "%1: Low Battery"
-msgstr "%1 : batterie faible"
+msgstr "%1: aku on peaaegu tühi"
 
 #: battery/batteryplugin.cpp:129
 #, kde-format
 msgid "Battery at %1%"
-msgstr "Batterie à %1 %"
+msgstr "Aku täidetus on %1%"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: findthisdevice/findthisdevice_config.ui:17
 #, kde-format
 msgid "Discovery Utilities"
-msgstr "Utilitaires de découverte"
+msgstr "Avastamisvahendid"
 
 #. i18n: ectx: property (text), widget (QLabel)
 #: findthisdevice/findthisdevice_config.ui:25
 #, kde-format
 msgid "Sound to play:"
-msgstr "Lire un fichier son :"
+msgstr "Esitatav heli:"
 
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, soundFileRequester)
 #: findthisdevice/findthisdevice_config.ui:39
 #, kde-format
 msgid "Select the sound to play"
-msgstr "Sélectionnez le son à lire"
+msgstr "Vali esitatav heli"
 
 #: mousepad/waylandremoteinput.cpp:46 sftp/sftpplugin-win.cpp:71
 #, kde-format
@@ -60,152 +55,152 @@ msgstr "KDE Connect"
 #: mousepad/waylandremoteinput.cpp:46
 #, kde-format
 msgid "Use your phone as a touchpad and keyboard"
-msgstr "Utilisez votre téléphone comme un pavé tactile et un clavier"
+msgstr "Telefoni kasutamine puutepadja ja klaviatuurina"
 
 #: notifications/notification.cpp:118
 #, kde-format
 msgid "Reply"
-msgstr "Répondre"
+msgstr "Vasta"
 
 #: notifications/sendreplydialog.cpp:28
 #, kde-format
 msgid "Send"
-msgstr "Envoyer"
+msgstr "Saada"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, SendReplyDialog)
 #: notifications/sendreplydialog.ui:14
 #, kde-format
 msgid "Dialog"
-msgstr "Dialogue"
+msgstr "Dialoog"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, PauseMusicConfigUi)
 #: pausemusic/pausemusic_config.ui:17
 #, kde-format
 msgid "Pause music plugin"
-msgstr "Module de mise en pause de la musique"
+msgstr "Muusika peatamise plugin"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: pausemusic/pausemusic_config.ui:32
 #, kde-format
 msgid "Condition"
-msgstr "Condition"
+msgstr "Tingimus"
 
 #. i18n: ectx: property (text), widget (QRadioButton, rad_ringing)
 #: pausemusic/pausemusic_config.ui:38
 #, kde-format
 msgid "Pause as soon as phone rings"
-msgstr "Mettre en pause dès que le téléphone sonne"
+msgstr "Peatamine kohe telefoni helimisel"
 
 #. i18n: ectx: property (text), widget (QRadioButton, rad_talking)
 #: pausemusic/pausemusic_config.ui:45
 #, kde-format
 msgid "Pause only while talking"
-msgstr "Mettre en pause seulement en parlant"
+msgstr "Peatamine alles kõnelemise ajal"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: pausemusic/pausemusic_config.ui:61
 #, kde-format
 msgid "Actions"
-msgstr "Actions"
+msgstr "Toimingud"
 
 #. i18n: ectx: property (text), widget (QCheckBox, check_pause)
 #: pausemusic/pausemusic_config.ui:67
 #, kde-format
 msgid "Pause media players"
-msgstr "Lecteurs vidéo"
+msgstr "Meediamängijate peatamine"
 
 #. i18n: ectx: property (text), widget (QCheckBox, check_mute)
 #: pausemusic/pausemusic_config.ui:74
 #, kde-format
 msgid "Mute system sound"
-msgstr "Couper/Rétablir le son"
+msgstr "Süsteemne heli tummaks"
 
 #. i18n: ectx: property (text), widget (QCheckBox, check_resume)
 #: pausemusic/pausemusic_config.ui:81
 #, kde-format
 msgid "Automatically resume media when call has finished"
-msgstr "Reprendre automatiquement le média quand l'appel a terminé"
+msgstr "Meedia automaatne taastamine kõne lõpetamisel"
 
 #: ping/pingplugin.cpp:35
 #, kde-format
 msgid "Ping!"
-msgstr "Ping !"
+msgstr "Ping!"
 
 #: runcommand/runcommand_config.cpp:38
 #, kde-format
 msgid "Shutdown"
-msgstr "Éteindre"
+msgstr "Seiskamine"
 
 #: runcommand/runcommand_config.cpp:39
 #, kde-format
 msgid "Reboot"
-msgstr "Redémarrer"
+msgstr "Taaskäivitus"
 
 #: runcommand/runcommand_config.cpp:40
 #, kde-format
 msgid "Suspend"
-msgstr "Suspendre"
+msgstr "Passiivseisund"
 
 #: runcommand/runcommand_config.cpp:41
 #, kde-format
 msgid "Maximum Brightness"
-msgstr "Luminosité maximale"
+msgstr "Maksimaalne heledus"
 
 #: runcommand/runcommand_config.cpp:42
 #, kde-format
 msgid "Lock Screen"
-msgstr "Verrouiller l'écran"
+msgstr "Ekraani lukustamine"
 
 #: runcommand/runcommand_config.cpp:43
 #, kde-format
 msgid "Unlock Screen"
-msgstr "Déverrouiller l'écran"
+msgstr "Ekraaniluku eemaldamine"
 
 #: runcommand/runcommand_config.cpp:44
 #, kde-format
 msgid "Close All Vaults"
-msgstr "Fermer tous les coffre-forts"
+msgstr "Kõigi seifide sulgemine"
 
 #: runcommand/runcommand_config.cpp:45
 #, kde-format
 msgid "Forcefully Close All Vaults"
-msgstr "Forcer la fermeture de tous les coffre-forts"
+msgstr "Jõuga kõigi seifide sulgemine"
 
 #: runcommand/runcommand_config.cpp:52
 #, kde-format
 msgid "Sample commands"
-msgstr "Exemples de commandes"
+msgstr "Näidiskäsud"
 
 #: runcommand/runcommand_config.cpp:61
 #: sendnotifications/notifyingapplicationmodel.cpp:194
 #, kde-format
 msgid "Name"
-msgstr "Nom "
+msgstr "Nimi"
 
 #: runcommand/runcommand_config.cpp:61
 #, kde-format
 msgid "Command"
-msgstr "Commande"
+msgstr "Käsk"
 
 #: screensaver-inhibit/screensaverinhibitplugin.cpp:25
 #, kde-format
 msgid "Phone is connected"
-msgstr "Le téléphone est connecté"
+msgstr "Telefon on ühendatud"
 
 #: sendnotifications/notifyingapplicationmodel.cpp:198
 #, kde-format
 msgid "Blacklisted"
-msgstr "Sur liste noire"
+msgstr "Mustas nimekirjas"
 
 #: sendnotifications/notifyingapplicationmodel.cpp:202
 #, kde-format
 msgid "Name of a notifying application."
-msgstr "Nom d'une application fournissant des notifications."
+msgstr "Märguanderakenduse ni8mi."
 
 #: sendnotifications/notifyingapplicationmodel.cpp:204
 #, kde-format
 msgid "Synchronize notifications of an application?"
-msgstr "Synchroniser les notifications d'une application ?"
+msgstr "Kas sünkroonida rakenduse märguanded?"
 
 #: sendnotifications/notifyingapplicationmodel.cpp:206
 #, kde-format
@@ -214,56 +209,52 @@ msgid ""
 "This pattern is applied to the summary and, if selected above, the body of "
 "notifications."
 msgstr ""
-"Expression rationnelle définissant les notifications qui ne doivent pas être "
-"envoyées.\n"
-"Ce schéma est appliqué au résumé et, si l'option est sélectionnée, au corps "
-"de la notification."
+"Regulaaravaldis määramaks, milliseid märguandeid mitte saata.\n"
+"Seda mustrit rakendatakse kokkuvõttele ja kui eespool on valitud, siis ka "
+"märguannete põhitekstile."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: sendnotifications/sendnotifications_config.ui:38
 #, kde-format
 msgid "General"
-msgstr "Général"
+msgstr "Üldine"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, check_persistent)
 #: sendnotifications/sendnotifications_config.ui:44
 #, kde-format
 msgid "Synchronize only notifications with a timeout value of 0?"
-msgstr "Synchroniser uniquement les notifications dont le délai est de 0 ?"
+msgstr "Kas sünkroonida ainult märguanded ajaületuse väärtusega 0?"
 
 #. i18n: ectx: property (text), widget (QCheckBox, check_persistent)
 #: sendnotifications/sendnotifications_config.ui:47
 #, kde-format
 msgid "Persistent notifications only"
-msgstr "Notifications persistantes uniquement"
+msgstr "Ainult püsimärguanded"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, check_body)
 #: sendnotifications/sendnotifications_config.ui:60
 #, kde-format
 msgid ""
 "Append the notification body to the summary when synchronizing notifications?"
-msgstr ""
-"Ajouter le corps de la notification au résumé lors de la synchronisation des "
-"notifications ?"
+msgstr "Kas lisada märguannete sünkroonimisel kokkuvõttele märguande sisu?"
 
 #. i18n: ectx: property (text), widget (QCheckBox, check_body)
 #: sendnotifications/sendnotifications_config.ui:63
 #, kde-format
 msgid "Include body"
-msgstr "Inclure le corps"
+msgstr "Kaasa arvatud sisu"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, check_icons)
 #: sendnotifications/sendnotifications_config.ui:76
 #, kde-format
 msgid "Synchronize icons of notifying applications if possible?"
-msgstr ""
-"Synchroniser l'icône des applications émettrices lorsque c'est possible ?"
+msgstr "Kas sünkroonida võimaluse korral märguanderakenduste ikoonid?"
 
 #. i18n: ectx: property (text), widget (QCheckBox, check_icons)
 #: sendnotifications/sendnotifications_config.ui:79
 #, kde-format
 msgid "Synchronize icons"
-msgstr "Synchroniser les icônes"
+msgstr "Ikoonide sünkroonimine"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, spin_urgency)
 #: sendnotifications/sendnotifications_config.ui:107
@@ -272,158 +263,121 @@ msgid ""
 "<html><head/><body><p>Minimum urgency level of the notifications</p></body></"
 "html>"
 msgstr ""
-"<html><head/><body><p>Niveau d'urgence minimum des notifications</p></body></"
-"html>"
+"<html><head/><body><p>Märguannete minimaalne olulisustase</p></body></html>"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, label)
 #: sendnotifications/sendnotifications_config.ui:123
 #, kde-format
 msgid "Synchronize only notifications with the given urgency level."
-msgstr "Synchroniser uniquement les notifications du niveau d'urgence donné."
+msgstr "Ainult määratud olulisustasemega märguannete sünkroonimine"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: sendnotifications/sendnotifications_config.ui:126
 #, kde-format
 msgid "Minimum urgency level"
-msgstr "Niveau d'urgence minimum"
+msgstr "Minimaalne olulisustase"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: sendnotifications/sendnotifications_config.ui:148
 #, kde-format
 msgid "Applications"
-msgstr "Applications"
+msgstr "Rakendused"
 
 #: sftp/mounter.cpp:171
 #, kde-format
 msgid "Failed to start sshfs"
-msgstr "Impossible de démarrer sshfs"
+msgstr "Sshfs-i käivitamine nurjus"
 
 #: sftp/mounter.cpp:175
 #, kde-format
 msgid "sshfs process crashed"
-msgstr "Le processus sshfs s'est arrêté de façon anormale."
+msgstr "sshfs'i protsessi tabas krahh"
 
 #: sftp/mounter.cpp:179
 #, kde-format
 msgid "Unknown error in sshfs"
-msgstr "Erreur inconnue de sshfs"
+msgstr "Tundmatu tõrge sshfs'is"
 
 #: sftp/mounter.cpp:193
 #, kde-format
 msgid "Error when accessing filesystem. sshfs finished with exit code %0"
-msgstr ""
-"Erreur lors de l'accès au système de fichiers. sshfs a renvoyé le code de "
-"sortie %0"
+msgstr "Tõrge failisüsteemi ligipääsul. sshfs lõpetas väljumiskoodiga %0"
 
 #: sftp/mounter.cpp:202
 #, kde-format
 msgid "Failed to mount filesystem: device not responding"
-msgstr ""
-"Impossible de monter le système de fichiers : le périphérique ne répond pas"
+msgstr "Failisüsteemi ühendamine nurjus: seade ei reageeri"
 
 #: sftp/sftpplugin-win.cpp:71
 #, kde-format
 msgid "Cannot handle SFTP protocol. Apologies for the inconvenience"
-msgstr ""
-"Impossible de prendre en charge le protocole SFTP. Veuillez nous excuser "
-"pour le désagrément"
+msgstr "SFTP protokolli käitlemine nurjus. Andestust ebamugavuste pärast"
 
 #: sftp/sftpplugin.cpp:142
 #, kde-format
 msgid "All files"
-msgstr "Tous les fichiers"
+msgstr "Kõik failid"
 
 #: sftp/sftpplugin.cpp:143
 #, kde-format
 msgid "Camera pictures"
-msgstr "Images de l'appareil photo"
+msgstr "Kaamera pildid"
 
 #: share/share_config.cpp:24
 #, kde-format
 msgid "&percnt;1 in the path will be replaced with the specific device name."
-msgstr "&percnt;1 dans l'emplacement sera remplacé par le nom du périphérique."
+msgstr "&percnt;1 asukohas asendatakse konkreetse seadme nimega."
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ShareConfigUi)
 #: share/share_config.ui:17
 #, kde-format
 msgid "Share plugin settings"
-msgstr "Paramètres du module de partage"
+msgstr "Jagamisplugina seadistused"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: share/share_config.ui:23
 #, kde-format
 msgid "Receiving"
-msgstr "Réception"
+msgstr "Vastuvõtmine"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: share/share_config.ui:31
 #, kde-format
 msgid "Save files in:"
-msgstr "Enregistrer les fichiers dans :"
+msgstr "Failide salvestamise asukoht:"
 
 #: share/shareplugin.cpp:194
 #, kde-format
 msgid "Could not share file"
-msgstr "Impossible de partager le fichier"
+msgstr "Faili jagamine nurjus"
 
 #: share/shareplugin.cpp:194
 #, kde-format
 msgid "%1 does not exist"
-msgstr "%1 n'existe pas."
+msgstr "%1 ei ole olemas"
 
 #: telephony/telephonyplugin.cpp:28
 #, kde-format
 msgid "unknown number"
-msgstr "nombre inconnu"
+msgstr "tundmatu number"
 
 #: telephony/telephonyplugin.cpp:37
 #, kde-format
 msgid "Incoming call from %1"
-msgstr "Appel entrant provenant de %1"
+msgstr "Sisenev kõne kontaktilt %1 "
 
 #: telephony/telephonyplugin.cpp:41
 #, kde-format
 msgid "Missed call from %1"
-msgstr "Appel manqué provenant de %1"
+msgstr "Vastamata kõne kontaktilt %1"
 
 #: telephony/telephonyplugin.cpp:69
 #, kde-format
 msgid "Mute Call"
-msgstr "Couper le son"
+msgstr "Summuta kõne"
 
 #~ msgid "Unknown telephony event: %1"
-#~ msgstr "Évènement de téléphonie inconnu : %1"
+#~ msgstr "Tundmatu telefonisündmus: %1"
 
 #~ msgid "SMS from %1<br>%2"
-#~ msgstr "SMS provenant de %1 : <br>%2"
-
-#, fuzzy
-#~| msgid "Transfer finished"
-#~ msgid "Transfer Failed"
-#~ msgstr "Transfert terminé"
-
-#, fuzzy
-#~| msgid "Transfer finished"
-#~ msgid "Transfer Finished"
-#~ msgstr "Transfert terminé"
-
-#~ msgid "Error"
-#~ msgstr "Erreur"
-
-#~ msgid "sshfs not found in PATH"
-#~ msgstr "Impossible de trouver sshfs dans le PATH"
-
-#~ msgid "Disconnect when idle"
-#~ msgstr "Déconnecter en cas d'inactivité"
-
-#~ msgid "Timeout:"
-#~ msgstr "Délai :"
-
-#~ msgid " min"
-#~ msgstr " min"
-
-#~ msgid "Device %1"
-#~ msgstr "Périphérique %1"
-
-#~ msgid "Open destination folder"
-#~ msgstr "Ouvrir le dossier de destination"
+#~ msgstr "SMS kontaktilt %1<br>%2"

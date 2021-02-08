@@ -3,13 +3,14 @@
 #
 # Alexander Potashev <aspotashev@gmail.com>, 2015, 2017, 2019.
 # Dmitry Serov <dmitri.s93@gmail.com>, 2015.
+# Alexander Yavorsky <kekcuha@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-02-17 03:17+0100\n"
-"PO-Revision-Date: 2019-07-05 00:45+0300\n"
-"Last-Translator: Alexander Potashev <aspotashev@gmail.com>\n"
+"POT-Creation-Date: 2021-02-03 03:11+0100\n"
+"PO-Revision-Date: 2020-03-17 20:31+0300\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -17,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 19.07.70\n"
+"X-Generator: Lokalize 19.12.3\n"
 
-#: battery/batteryplugin.cpp:74
+#: battery/batteryplugin.cpp:129
 #, kde-format
 msgctxt "device name: low battery"
 msgid "%1: Low Battery"
 msgstr "%1: низкий уровень заряда батареи"
 
-#: battery/batteryplugin.cpp:74
+#: battery/batteryplugin.cpp:129
 #, kde-format
 msgid "Battery at %1%"
 msgstr "Заряд батареи %1%"
@@ -34,36 +35,36 @@ msgstr "Заряд батареи %1%"
 #: findthisdevice/findthisdevice_config.ui:17
 #, kde-format
 msgid "Discovery Utilities"
-msgstr ""
+msgstr "Параметры обнаружения"
 
 #. i18n: ectx: property (text), widget (QLabel)
 #: findthisdevice/findthisdevice_config.ui:25
 #, kde-format
 msgid "Sound to play:"
-msgstr ""
+msgstr "Проигрывать звук:"
 
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, soundFileRequester)
 #: findthisdevice/findthisdevice_config.ui:39
 #, kde-format
 msgid "Select the sound to play"
-msgstr ""
+msgstr "Выберите звуковой файл"
 
-#: mousepad/waylandremoteinput.cpp:60 sftp/sftpplugin-win.cpp:87
+#: mousepad/waylandremoteinput.cpp:46 sftp/sftpplugin-win.cpp:71
 #, kde-format
 msgid "KDE Connect"
 msgstr "KDE Connect"
 
-#: mousepad/waylandremoteinput.cpp:60
+#: mousepad/waylandremoteinput.cpp:46
 #, kde-format
 msgid "Use your phone as a touchpad and keyboard"
 msgstr "Использование телефона в качестве сенсорной панели и клавиатуры"
 
-#: notifications/notification.cpp:146
+#: notifications/notification.cpp:118
 #, kde-format
 msgid "Reply"
 msgstr "Ответить"
 
-#: notifications/sendreplydialog.cpp:41
+#: notifications/sendreplydialog.cpp:28
 #, kde-format
 msgid "Send"
 msgstr "Отправить"
@@ -117,78 +118,94 @@ msgstr "Приостанавливать воспроизведение в ме�
 msgid "Mute system sound"
 msgstr "Выключить звук в системе"
 
-#: ping/pingplugin.cpp:50
+#. i18n: ectx: property (text), widget (QCheckBox, check_resume)
+#: pausemusic/pausemusic_config.ui:81
+#, kde-format
+msgid "Automatically resume media when call has finished"
+msgstr ""
+
+#: ping/pingplugin.cpp:35
 #, kde-format
 msgid "Ping!"
 msgstr "Проверка связи!"
 
-#: runcommand/runcommand_config.cpp:45
+#: runcommand/runcommand_config.cpp:38
+#, kde-format
+msgid "Shutdown"
+msgstr ""
+
+#: runcommand/runcommand_config.cpp:39
+#, kde-format
+msgid "Reboot"
+msgstr ""
+
+#: runcommand/runcommand_config.cpp:40
 #, kde-format
 msgid "Suspend"
 msgstr "Ждущий режим"
 
-#: runcommand/runcommand_config.cpp:46
+#: runcommand/runcommand_config.cpp:41
 #, kde-format
 msgid "Maximum Brightness"
 msgstr "Максимальная яркость"
 
-#: runcommand/runcommand_config.cpp:47
+#: runcommand/runcommand_config.cpp:42
 #, kde-format
 msgid "Lock Screen"
 msgstr "Заблокировать экран"
 
-#: runcommand/runcommand_config.cpp:48
+#: runcommand/runcommand_config.cpp:43
 #, kde-format
 msgid "Unlock Screen"
 msgstr "Разблокировать экран"
 
-#: runcommand/runcommand_config.cpp:49
+#: runcommand/runcommand_config.cpp:44
 #, kde-format
 msgid "Close All Vaults"
 msgstr "Закрыть все зашифрованные папки"
 
-#: runcommand/runcommand_config.cpp:50
+#: runcommand/runcommand_config.cpp:45
 #, kde-format
 msgid "Forcefully Close All Vaults"
 msgstr "Принудительно закрыть зашифрованные папки"
 
-#: runcommand/runcommand_config.cpp:57
+#: runcommand/runcommand_config.cpp:52
 #, kde-format
 msgid "Sample commands"
 msgstr "Примеры команд"
 
-#: runcommand/runcommand_config.cpp:66
-#: sendnotifications/notifyingapplicationmodel.cpp:208
+#: runcommand/runcommand_config.cpp:61
+#: sendnotifications/notifyingapplicationmodel.cpp:194
 #, kde-format
 msgid "Name"
 msgstr "Название"
 
-#: runcommand/runcommand_config.cpp:66
+#: runcommand/runcommand_config.cpp:61
 #, kde-format
 msgid "Command"
 msgstr "Команда"
 
-#: screensaver-inhibit/screensaverinhibitplugin.cpp:45
+#: screensaver-inhibit/screensaverinhibitplugin.cpp:25
 #, kde-format
 msgid "Phone is connected"
-msgstr ""
+msgstr "Телефон подключён"
 
-#: sendnotifications/notifyingapplicationmodel.cpp:212
+#: sendnotifications/notifyingapplicationmodel.cpp:198
 #, kde-format
 msgid "Blacklisted"
 msgstr "В чёрном списке"
 
-#: sendnotifications/notifyingapplicationmodel.cpp:216
+#: sendnotifications/notifyingapplicationmodel.cpp:202
 #, kde-format
 msgid "Name of a notifying application."
 msgstr "Имя уведомляющего приложения."
 
-#: sendnotifications/notifyingapplicationmodel.cpp:218
+#: sendnotifications/notifyingapplicationmodel.cpp:204
 #, kde-format
 msgid "Synchronize notifications of an application?"
 msgstr "Синхронизировать уведомления приложения?"
 
-#: sendnotifications/notifyingapplicationmodel.cpp:220
+#: sendnotifications/notifyingapplicationmodel.cpp:206
 #, kde-format
 msgid ""
 "Regular expression defining which notifications should not be sent.\n"
@@ -273,48 +290,49 @@ msgstr "Минимальный уровень важности"
 msgid "Applications"
 msgstr "Приложения"
 
-#: sftp/mounter.cpp:185
+#: sftp/mounter.cpp:171
 #, kde-format
 msgid "Failed to start sshfs"
 msgstr "Не удалось запустить sshfs."
 
-#: sftp/mounter.cpp:189
+#: sftp/mounter.cpp:175
 #, kde-format
 msgid "sshfs process crashed"
-msgstr ""
+msgstr "Процесс sshfs аварийно завершился"
 
-#: sftp/mounter.cpp:193
+#: sftp/mounter.cpp:179
 #, kde-format
 msgid "Unknown error in sshfs"
 msgstr "Неизвестная ошибка в sshfs"
 
-#: sftp/mounter.cpp:207
-#, fuzzy, kde-format
-#| msgid "Error when accessing to filesystem"
+#: sftp/mounter.cpp:193
+#, kde-format
 msgid "Error when accessing filesystem. sshfs finished with exit code %0"
-msgstr "Ошибка при обращении к файловой системе."
+msgstr ""
+"Ошибка при обращении к файловой системе, процесс sshfs завершился с кодом "
+"возврата %0"
 
-#: sftp/mounter.cpp:216
+#: sftp/mounter.cpp:202
 #, kde-format
 msgid "Failed to mount filesystem: device not responding"
 msgstr "Не удалось подключить файловую систему: устройство не отвечает."
 
-#: sftp/sftpplugin-win.cpp:87
+#: sftp/sftpplugin-win.cpp:71
 #, kde-format
 msgid "Cannot handle SFTP protocol. Apologies for the inconvenience"
-msgstr ""
+msgstr "Не удалось подключиться с использованием протокола SFTP."
 
-#: sftp/sftpplugin.cpp:155
+#: sftp/sftpplugin.cpp:142
 #, kde-format
 msgid "All files"
 msgstr "Все файлы"
 
-#: sftp/sftpplugin.cpp:156
+#: sftp/sftpplugin.cpp:143
 #, kde-format
 msgid "Camera pictures"
 msgstr "Фотографии с камеры"
 
-#: share/share_config.cpp:38
+#: share/share_config.cpp:24
 #, kde-format
 msgid "&percnt;1 in the path will be replaced with the specific device name."
 msgstr "&percnt;1 в пути будут заменены на имя устройства."
@@ -337,40 +355,38 @@ msgstr "Приём файлов"
 msgid "Save files in:"
 msgstr "Сохранять файлы в:"
 
-#: share/shareplugin.cpp:209
+#: share/shareplugin.cpp:194
 #, kde-format
 msgid "Could not share file"
-msgstr ""
+msgstr "Не удалось опубликовать файл"
 
-#: share/shareplugin.cpp:209
+#: share/shareplugin.cpp:194
 #, kde-format
 msgid "%1 does not exist"
-msgstr ""
+msgstr "Файл «%1» не существует"
 
-#: telephony/telephonyplugin.cpp:43
+#: telephony/telephonyplugin.cpp:28
 #, kde-format
 msgid "unknown number"
 msgstr "(неизвестный номер)"
 
-#: telephony/telephonyplugin.cpp:55
+#: telephony/telephonyplugin.cpp:37
 #, kde-format
 msgid "Incoming call from %1"
 msgstr "Входящий вызов от %1"
 
-#: telephony/telephonyplugin.cpp:59
+#: telephony/telephonyplugin.cpp:41
 #, kde-format
 msgid "Missed call from %1"
 msgstr "Пропущенный вызов от %1"
 
 #: telephony/telephonyplugin.cpp:69
 #, kde-format
-msgid "Unknown telephony event: %1"
-msgstr "Неизвестное событие телефонии: %1"
-
-#: telephony/telephonyplugin.cpp:90
-#, kde-format
 msgid "Mute Call"
 msgstr "Выключить звук звонка"
+
+#~ msgid "Unknown telephony event: %1"
+#~ msgstr "Неизвестное событие телефонии: %1"
 
 #~ msgid "SMS from %1<br>%2"
 #~ msgstr "SMS от %1<br>%2"

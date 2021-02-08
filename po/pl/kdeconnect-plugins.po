@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2014, 2015, 2016, 2017, 2019.
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2014, 2015, 2016, 2017, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-02-17 03:17+0100\n"
-"PO-Revision-Date: 2019-09-06 09:11+0200\n"
+"POT-Creation-Date: 2021-02-03 03:11+0100\n"
+"PO-Revision-Date: 2020-11-15 10:05+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 19.07.70\n"
+"X-Generator: Lokalize 20.08.1\n"
 
-#: battery/batteryplugin.cpp:74
+#: battery/batteryplugin.cpp:129
 #, kde-format
 msgctxt "device name: low battery"
 msgid "%1: Low Battery"
 msgstr "%1: Słaba bateria"
 
-#: battery/batteryplugin.cpp:74
+#: battery/batteryplugin.cpp:129
 #, kde-format
 msgid "Battery at %1%"
 msgstr "Bateria na %1%"
@@ -47,22 +47,22 @@ msgstr "Dźwięk do odtworzenia:"
 msgid "Select the sound to play"
 msgstr "Wybierz dźwięk do odtworzenia"
 
-#: mousepad/waylandremoteinput.cpp:60 sftp/sftpplugin-win.cpp:87
+#: mousepad/waylandremoteinput.cpp:46 sftp/sftpplugin-win.cpp:71
 #, kde-format
 msgid "KDE Connect"
 msgstr "KDE Connect"
 
-#: mousepad/waylandremoteinput.cpp:60
+#: mousepad/waylandremoteinput.cpp:46
 #, kde-format
 msgid "Use your phone as a touchpad and keyboard"
 msgstr "Używaj swojego telefonu jako gładzika i klawiatury"
 
-#: notifications/notification.cpp:146
+#: notifications/notification.cpp:118
 #, kde-format
 msgid "Reply"
 msgstr "Odpowiedz"
 
-#: notifications/sendreplydialog.cpp:41
+#: notifications/sendreplydialog.cpp:28
 #, kde-format
 msgid "Send"
 msgstr "Wyślij"
@@ -115,78 +115,94 @@ msgstr "Wstrzymaj odtwarzacze multimediów"
 msgid "Mute system sound"
 msgstr "Wycisz dźwięk w systemie"
 
-#: ping/pingplugin.cpp:50
+#. i18n: ectx: property (text), widget (QCheckBox, check_resume)
+#: pausemusic/pausemusic_config.ui:81
+#, kde-format
+msgid "Automatically resume media when call has finished"
+msgstr "Samoczynnie wznów odtwarzacze po ukończeniu rozmowy"
+
+#: ping/pingplugin.cpp:35
 #, kde-format
 msgid "Ping!"
 msgstr "Ping!"
 
-#: runcommand/runcommand_config.cpp:45
+#: runcommand/runcommand_config.cpp:38
+#, kde-format
+msgid "Shutdown"
+msgstr "Wyłącz"
+
+#: runcommand/runcommand_config.cpp:39
+#, kde-format
+msgid "Reboot"
+msgstr "Uruchom ponownie"
+
+#: runcommand/runcommand_config.cpp:40
 #, kde-format
 msgid "Suspend"
 msgstr "Uśpij"
 
-#: runcommand/runcommand_config.cpp:46
+#: runcommand/runcommand_config.cpp:41
 #, kde-format
 msgid "Maximum Brightness"
 msgstr "Największa jasność"
 
-#: runcommand/runcommand_config.cpp:47
+#: runcommand/runcommand_config.cpp:42
 #, kde-format
 msgid "Lock Screen"
 msgstr "Zablokuj ekran"
 
-#: runcommand/runcommand_config.cpp:48
+#: runcommand/runcommand_config.cpp:43
 #, kde-format
 msgid "Unlock Screen"
 msgstr "Odblokuj ekran"
 
-#: runcommand/runcommand_config.cpp:49
+#: runcommand/runcommand_config.cpp:44
 #, kde-format
 msgid "Close All Vaults"
 msgstr "Zamknij wszystkie sejfy"
 
-#: runcommand/runcommand_config.cpp:50
+#: runcommand/runcommand_config.cpp:45
 #, kde-format
 msgid "Forcefully Close All Vaults"
 msgstr "Wymuś zamknięcie wszystkich sejfów"
 
-#: runcommand/runcommand_config.cpp:57
+#: runcommand/runcommand_config.cpp:52
 #, kde-format
 msgid "Sample commands"
 msgstr "Przykładowe polecenia"
 
-#: runcommand/runcommand_config.cpp:66
-#: sendnotifications/notifyingapplicationmodel.cpp:208
+#: runcommand/runcommand_config.cpp:61
+#: sendnotifications/notifyingapplicationmodel.cpp:194
 #, kde-format
 msgid "Name"
 msgstr "Nazwa"
 
-#: runcommand/runcommand_config.cpp:66
+#: runcommand/runcommand_config.cpp:61
 #, kde-format
 msgid "Command"
 msgstr "Polecenie"
 
-#: screensaver-inhibit/screensaverinhibitplugin.cpp:45
+#: screensaver-inhibit/screensaverinhibitplugin.cpp:25
 #, kde-format
 msgid "Phone is connected"
 msgstr "Telefon jest podłączony"
 
-#: sendnotifications/notifyingapplicationmodel.cpp:212
+#: sendnotifications/notifyingapplicationmodel.cpp:198
 #, kde-format
 msgid "Blacklisted"
 msgstr "Zablokowany"
 
-#: sendnotifications/notifyingapplicationmodel.cpp:216
+#: sendnotifications/notifyingapplicationmodel.cpp:202
 #, kde-format
 msgid "Name of a notifying application."
 msgstr "Nazwa aplikacji powiadamiającej."
 
-#: sendnotifications/notifyingapplicationmodel.cpp:218
+#: sendnotifications/notifyingapplicationmodel.cpp:204
 #, kde-format
 msgid "Synchronize notifications of an application?"
 msgstr "Czy synchronizować powiadomienia z aplikacji?"
 
-#: sendnotifications/notifyingapplicationmodel.cpp:220
+#: sendnotifications/notifyingapplicationmodel.cpp:206
 #, kde-format
 msgid ""
 "Regular expression defining which notifications should not be sent.\n"
@@ -270,49 +286,49 @@ msgstr "Najmniejszy poziom ważności"
 msgid "Applications"
 msgstr "Programy"
 
-#: sftp/mounter.cpp:185
+#: sftp/mounter.cpp:171
 #, kde-format
 msgid "Failed to start sshfs"
 msgstr "Nieudane uruchamianie sshfs"
 
-#: sftp/mounter.cpp:189
+#: sftp/mounter.cpp:175
 #, kde-format
 msgid "sshfs process crashed"
 msgstr "sshfs uległ usterce"
 
-#: sftp/mounter.cpp:193
+#: sftp/mounter.cpp:179
 #, kde-format
 msgid "Unknown error in sshfs"
 msgstr "Nieznany błąd w sshfs"
 
-#: sftp/mounter.cpp:207
+#: sftp/mounter.cpp:193
 #, kde-format
 msgid "Error when accessing filesystem. sshfs finished with exit code %0"
 msgstr ""
 "Błąd przy uzyskiwaniu dostępu do systemu plików. sshfs ukończył z kodem "
 "wyjścia %0"
 
-#: sftp/mounter.cpp:216
+#: sftp/mounter.cpp:202
 #, kde-format
 msgid "Failed to mount filesystem: device not responding"
 msgstr "Nieudane podpinanie systemu plików: urządzenie nie odpowiada"
 
-#: sftp/sftpplugin-win.cpp:87
+#: sftp/sftpplugin-win.cpp:71
 #, kde-format
 msgid "Cannot handle SFTP protocol. Apologies for the inconvenience"
 msgstr "Nie można obsłużyć protokołu SFTP. Wybacz niewygodę"
 
-#: sftp/sftpplugin.cpp:155
+#: sftp/sftpplugin.cpp:142
 #, kde-format
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: sftp/sftpplugin.cpp:156
+#: sftp/sftpplugin.cpp:143
 #, kde-format
 msgid "Camera pictures"
 msgstr "Zdjęcia z aparatu"
 
-#: share/share_config.cpp:38
+#: share/share_config.cpp:24
 #, kde-format
 msgid "&percnt;1 in the path will be replaced with the specific device name."
 msgstr "&percnt;1 w ścieżce zostanie zastąpiony daną nazwą urządzenia."
@@ -335,40 +351,38 @@ msgstr "Odbieranie"
 msgid "Save files in:"
 msgstr "Pliki zapisuj w:"
 
-#: share/shareplugin.cpp:209
+#: share/shareplugin.cpp:194
 #, kde-format
 msgid "Could not share file"
 msgstr "Nie można udostępnić pliku"
 
-#: share/shareplugin.cpp:209
+#: share/shareplugin.cpp:194
 #, kde-format
 msgid "%1 does not exist"
 msgstr "%1 nie istnieje"
 
-#: telephony/telephonyplugin.cpp:43
+#: telephony/telephonyplugin.cpp:28
 #, kde-format
 msgid "unknown number"
 msgstr "nieznany numer"
 
-#: telephony/telephonyplugin.cpp:55
+#: telephony/telephonyplugin.cpp:37
 #, kde-format
 msgid "Incoming call from %1"
 msgstr "Przychodząca rozmowa od %1"
 
-#: telephony/telephonyplugin.cpp:59
+#: telephony/telephonyplugin.cpp:41
 #, kde-format
 msgid "Missed call from %1"
 msgstr "Nieodebrane połączenie od %1"
 
 #: telephony/telephonyplugin.cpp:69
 #, kde-format
-msgid "Unknown telephony event: %1"
-msgstr "Nieznane zdarzenie telefoniczne: %1"
-
-#: telephony/telephonyplugin.cpp:90
-#, kde-format
 msgid "Mute Call"
 msgstr "Wycisz rozmowę"
+
+#~ msgid "Unknown telephony event: %1"
+#~ msgstr "Nieznane zdarzenie telefoniczne: %1"
 
 #~ msgid "SMS from %1<br>%2"
 #~ msgstr "SMS od %1<br>%2"

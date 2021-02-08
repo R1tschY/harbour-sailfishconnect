@@ -2,23 +2,27 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# R1tschY <r1tschy@posteo.de>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-07 21:32+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: fi\n"
+"PO-Revision-Date: 2021-02-06 22:45+0000\n"
+"Last-Translator: R1tschY <r1tschy@posteo.de>, 2021\n"
+"Language-Team: Finnish (https://www.transifex.com/r1tschy/teams/89267/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/src/helper/jobsnotificator.cpp:91 app/src/helper/jobsnotificator.cpp:132
+#: app/src/helper/jobsnotificator.cpp:91
+#: app/src/helper/jobsnotificator.cpp:132
 #, kde-format
 msgid "%1 from %2"
 msgstr ""
@@ -79,9 +83,9 @@ msgid "Change layout"
 msgstr "Vaihda näppäimistöasettelua"
 
 #: app/qml/pages/DevicePage.qml:238 app/qml/pages/RemoteVolumePage.qml:38
-#, fuzzy, kde-format
+#, kde-format
 msgid "Change volume"
-msgstr "Vaihda näppäimistöasettelua"
+msgstr ""
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:80
 #, kde-format
@@ -124,9 +128,9 @@ msgid "Download aborted"
 msgstr ""
 
 #: app/src/helper/jobsnotificator.cpp:105
-#, fuzzy, kde-format
+#, kde-format
 msgid "Download failed"
-msgstr "xdg-open epäonnistui"
+msgstr ""
 
 #: app/src/helper/jobsnotificator.cpp:99
 #, kde-format
@@ -134,9 +138,9 @@ msgid "Download succedded"
 msgstr ""
 
 #: app/src/helper/jobsnotificator.cpp:140
-#, fuzzy, kde-format
+#, kde-format
 msgid "Downloading ..."
-msgstr "Asetukset ..."
+msgstr ""
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:141
 #: app/qml/pages/SettingsPage.qml:76
@@ -155,9 +159,9 @@ msgid "Edit share configuration"
 msgstr ""
 
 #: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:260
-#, fuzzy, kde-format
+#, kde-format
 msgid "Encryption info"
-msgstr "Salauksen tiedot"
+msgstr ""
 
 #: app/src/io/jobmanager.cpp:163
 #, kde-format
@@ -165,19 +169,19 @@ msgid "Error %1"
 msgstr ""
 
 #: app/src/appdaemon.cpp:178
-#, fuzzy, kde-format
+#, kde-format
 msgid "Failed to pair. %1"
-msgstr "Tiedoston avaus epäonnistui"
+msgstr ""
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:48
-#, fuzzy, kde-format
+#, kde-format
 msgid "Folder to save files"
-msgstr "Tiedoston avaus epäonnistui"
+msgstr ""
 
 #: app/qml/pages/TouchpadPage.qml:65
-#, fuzzy, kde-format
+#, kde-format
 msgid "Holding ..."
-msgstr "Asetukset ..."
+msgstr ""
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:47
 #, kde-format
@@ -190,23 +194,21 @@ msgid "IPv4 or IPv6 address of device"
 msgstr ""
 
 #: app/qml/pages/DeviceListPage.qml:57
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
-"Install KDE Connect or GSConnect on your computer and connect it to the same "
-"WLAN."
+"Install KDE Connect or GSConnect on your computer and connect it to the same"
+" WLAN."
 msgstr ""
-"Asenna KDE Connect tai GSConnect tietokoneellesi ja yhdistä samaan WLAN "
-"verkkoon."
 
 #: app/qml/pages/AboutPage.qml:66
-#, fuzzy, kde-format
+#, kde-format
 msgid "KDE Connect client for Sailfish OS"
-msgstr "Vaihtoehto KDE Connect ohjelmalle Saifish OS:lle"
+msgstr ""
 
 #: app/qml/pages/KeyboardPage.qml:105
-#, fuzzy, kde-format
+#, kde-format
 msgid "Keyboard"
-msgstr "Näppäimistö"
+msgstr ""
 
 #: app/qml/pages/AboutPage.qml:104
 #, kde-format
@@ -233,9 +235,9 @@ msgid ""
 msgstr ""
 
 #: app/qml/pages/TouchpadPage.qml:81
-#, fuzzy, kde-format
+#, kde-format
 msgid "Moving ..."
-msgstr "Asetukset ..."
+msgstr ""
 
 #: app/qml/components/MprisUi.qml:36
 #, kde-format
@@ -298,14 +300,14 @@ msgid "Open configuration throught context menu"
 msgstr ""
 
 #: app/qml/pages/DevicePage.qml:217
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open keyboard"
-msgstr "Näppäimistö"
+msgstr ""
 
 #: app/qml/pages/DevicePage.qml:210
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open touchpad"
-msgstr "Ohjauslevy"
+msgstr ""
 
 #: app/qml/pages/DeviceListPage.qml:215
 #, kde-format
@@ -313,14 +315,14 @@ msgid "Paired devices"
 msgstr "Pariksi liitetyt laitteet"
 
 #: app/src/appdaemon.cpp:66
-#, fuzzy, kde-format
+#, kde-format
 msgid "Pairing request"
-msgstr "Odotetaan pariliitospyyntöä  ..."
+msgstr ""
 
 #: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
-#, fuzzy, kde-format
+#, kde-format
 msgid "Pending pairing request ..."
-msgstr "Odotetaan pariliitospyyntöä  ..."
+msgstr ""
 
 #: app/qml/pages/DevicePage.qml:267
 #, kde-format
@@ -374,9 +376,9 @@ msgid "Sailfish Connect"
 msgstr "Sailfish Connect"
 
 #: app/qml/pages/TouchpadPage.qml:73
-#, fuzzy, kde-format
+#, kde-format
 msgid "Scrolling ..."
-msgstr "Asetukset ..."
+msgstr ""
 
 #: app/qml/pages/DevicePluginsPage.qml:61
 #, kde-format
@@ -395,9 +397,9 @@ msgstr "Lähetä ping"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:31
 #: app/qml/pages/KeyboardPage.qml:110 app/qml/pages/SettingsPage.qml:39
-#, fuzzy, kde-format
+#, kde-format
 msgid "Settings"
-msgstr "Asetukset"
+msgstr ""
 
 #: app/qml/pages/DeviceListPage.qml:251
 #, kde-format
@@ -425,9 +427,9 @@ msgid "This device wants to pair with your device."
 msgstr "Tämä laite haluaa liittää laitteesi pariksi."
 
 #: app/qml/pages/TouchpadPage.qml:56
-#, fuzzy, kde-format
+#, kde-format
 msgid "Touchpad"
-msgstr "Ohjauslevy"
+msgstr ""
 
 #: app/qml/pages/DevicePage.qml:275
 #, kde-format
@@ -435,9 +437,9 @@ msgid "Unpair"
 msgstr "Poista pariliitos"
 
 #: app/src/helper/jobsnotificator.cpp:114
-#, fuzzy, kde-format
+#, kde-format
 msgid "Upload aborted"
-msgstr "Lähetä leikepöydän teksti"
+msgstr ""
 
 #: app/qml/pages/DevicePage.qml:224
 #, kde-format
@@ -455,9 +457,9 @@ msgid "Upload succedded"
 msgstr ""
 
 #: app/src/helper/jobsnotificator.cpp:138
-#, fuzzy, kde-format
+#, kde-format
 msgid "Uploading ..."
-msgstr "Asetukset ..."
+msgstr ""
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:48
 #, kde-format
@@ -468,42 +470,3 @@ msgstr "Tärinän palaute"
 #, kde-format
 msgid "Waiting for accepted pairing ..."
 msgstr "Odotetaan hyväksyttyä paritusta ..."
-
-#~ msgid "Cancel"
-#~ msgstr "Peruuta"
-
-#~ msgid "Canceled"
-#~ msgstr "Peruttu"
-
-#~ msgid "Completed"
-#~ msgstr "Valmistunut"
-
-#~ msgid "Failed"
-#~ msgstr "Epäonnistui"
-
-#~ msgid "File does not exit"
-#~ msgstr "Tiedostoa ei ole"
-
-#~ msgid "Internal error"
-#~ msgstr "Sisäinen virhe"
-
-#~ msgid "No program found to open file"
-#~ msgstr "Ohjelmaa ei löydy avaamaan tiedostoa"
-
-#~ msgid "Open"
-#~ msgstr "Avaa"
-
-#~ msgid "Transfers"
-#~ msgstr "Siirrot"
-
-#~ msgid "Transfers ..."
-#~ msgstr "Siirrot ..."
-
-#~ msgid "Yet no downloads or uploads"
-#~ msgstr "Ei vielä latauksia tai lähetyksiä"
-
-#~ msgid "of"
-#~ msgstr "/"
-
-#~ msgid "xdg-open crashed"
-#~ msgstr "xdg-open kaatui"

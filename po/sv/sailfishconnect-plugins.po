@@ -2,26 +2,29 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Åke Engelbrektson, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-07 21:32+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: sv\n"
+"PO-Revision-Date: 2021-02-06 22:45+0000\n"
+"Last-Translator: Åke Engelbrektson, 2021\n"
+"Language-Team: Swedish (https://www.transifex.com/r1tschy/teams/89267/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: plugins/sf_share/shareplugin.cpp:143
 #, kde-format
 msgid "%1 does not exist"
-msgstr ""
+msgstr "%1 finns inte"
 
 #: pluginscommon/downloadjob.cpp:62
 #, kde-format
@@ -29,24 +32,24 @@ msgid "Cannot create destination folder"
 msgstr "Kan inte skapa målmapp"
 
 #: pluginscommon/downloadjob.cpp:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Could not open file `%1`: %2"
-msgstr "Kunde inte öppna fil för skrivning: %1"
+msgstr "Kan inte öppna filen \"%1\": %2"
 
 #: plugins/sf_share/shareplugin.cpp:143
 #, kde-format
 msgid "Could not share file"
-msgstr ""
+msgstr "Kunde inte dela filen"
 
 #: pluginscommon/copyjob.cpp:237
-#, fuzzy, kde-format
+#, kde-format
 msgid "Early end of input stream: %1"
-msgstr "Tidigt slut på inmatningsströmmen"
+msgstr "Tidigt slut på inmatningsström: %1"
 
 #: pluginscommon/copyjob.cpp:225
-#, fuzzy, kde-format
+#, kde-format
 msgid "Early end of output stream: %1"
-msgstr "Tidigt slut på utmatningsströmmen"
+msgstr "Tidigt slut på utmatningsström: %1"
 
 #: pluginscommon/copyjob.cpp:92
 #, kde-format

@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
+cd "${SCRIPT_DIR}/.."
+
 TRANSLATIONS=`find po/ -maxdepth 1 ! -name templates | cut -d/ -f2 | xargs echo`
 KDECONNECT_DOMAINS="kdeconnect-core kdeconnect-plugins"
 

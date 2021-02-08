@@ -2,21 +2,24 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# R1tschY <r1tschy@posteo.de>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-07 21:32+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: es\n"
+"PO-Revision-Date: 2021-02-06 22:45+0000\n"
+"Last-Translator: R1tschY <r1tschy@posteo.de>, 2021\n"
+"Language-Team: Spanish (https://www.transifex.com/r1tschy/teams/89267/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: plugins/sf_share/shareplugin.cpp:143
 #, kde-format
@@ -29,9 +32,9 @@ msgid "Cannot create destination folder"
 msgstr "No se puede crear la carpeta de destino"
 
 #: pluginscommon/downloadjob.cpp:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Could not open file `%1`: %2"
-msgstr "No se pudo abrir el archivo para escribirla: "
+msgstr ""
 
 #: plugins/sf_share/shareplugin.cpp:143
 #, kde-format
@@ -39,14 +42,14 @@ msgid "Could not share file"
 msgstr ""
 
 #: pluginscommon/copyjob.cpp:237
-#, fuzzy, kde-format
+#, kde-format
 msgid "Early end of input stream: %1"
-msgstr "Final temprano de secuancia de entrada"
+msgstr ""
 
 #: pluginscommon/copyjob.cpp:225
-#, fuzzy, kde-format
+#, kde-format
 msgid "Early end of output stream: %1"
-msgstr "Final temprano del flujo de salida"
+msgstr ""
 
 #: pluginscommon/copyjob.cpp:92
 #, kde-format

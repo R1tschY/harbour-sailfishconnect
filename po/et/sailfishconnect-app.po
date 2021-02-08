@@ -4,8 +4,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# R1tschY <r1tschy@posteo.de>, 2021
-# Вячеслав Диконов <sdiconov@mail.ru>, 2021
+# Priit Jõerüüt <transifex@joeruut.com>, 2021
 # 
 #, fuzzy
 msgid ""
@@ -14,185 +13,185 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-07 21:32+0100\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
-"Last-Translator: Вячеслав Диконов <sdiconov@mail.ru>, 2021\n"
-"Language-Team: Russian (https://www.transifex.com/r1tschy/teams/89267/ru/)\n"
+"Last-Translator: Priit Jõerüüt <transifex@joeruut.com>, 2021\n"
+"Language-Team: Estonian (https://www.transifex.com/r1tschy/teams/89267/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/src/helper/jobsnotificator.cpp:91
 #: app/src/helper/jobsnotificator.cpp:132
 #, kde-format
 msgid "%1 from %2"
-msgstr ""
+msgstr "%1 / %2"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:40
 #, kde-format
 msgid "%1ms repeat interval"
-msgstr "повтор каждые %1 мс"
+msgstr "Korduse välp %1 ms"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:73
 #, kde-format
 msgid "&percnt;1 in the path will be replaced with the specific device name."
-msgstr "&percnt;1 в пути заменяется на имя конкретного устройства."
+msgstr "Otsiteel asuv &percnt;1 asendatakse seadme nimega."
 
 #: app/qml/pages/AboutPage.qml:39
 #, kde-format
 msgid "About"
-msgstr "О программе"
+msgstr "Rakenduse teave"
 
 #: app/qml/pages/DeviceListPage.qml:246
 #, kde-format
 msgid "About ..."
-msgstr "Об устройстве ..."
+msgstr "Rakenduse teave..."
 
 #: app/qml/pages/DevicePage.qml:120
 #, kde-format
 msgid "Accept"
-msgstr "Принять"
+msgstr "Nõustun"
 
 #: app/qml/pages/DevicePage.qml:186
 #, kde-format
 msgid "Actions"
-msgstr "Действия"
+msgstr "Tegevused"
 
 #: app/qml/pages/SettingsPage.qml:128
 #, kde-format
 msgid "Add device from IP address"
-msgstr "Добавить устройство по IP адресу"
+msgstr "Lisa seade IP-aadressi alusel"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:163
 #, kde-format
 msgid "Add new command"
-msgstr "Новая команда"
+msgstr "Lisa uus käsk"
 
 #: app/qml/pages/SettingsPage.qml:46
 #, kde-format
 msgid "Application starts at system start and runs in background."
-msgstr "Приложение запускается при включении и работает в фоновом режиме"
+msgstr "Rakendus käivitub koos muu süsteemiga ja töötab taustal."
 
 #: app/qml/pages/AboutPage.qml:87
 #, kde-format
 msgid "Bug reports on Github"
-msgstr "Сообщения об ошибках на Github"
+msgstr "Veateated Github'is"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format
 msgid "Change layout"
-msgstr "Сменить раскладку"
+msgstr "Muuda paigutust"
 
 #: app/qml/pages/DevicePage.qml:238 app/qml/pages/RemoteVolumePage.qml:38
 #, kde-format
 msgid "Change volume"
-msgstr "Регулировать громкость"
+msgstr "Muuda heli valjust"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:80
 #, kde-format
 msgid "Command"
-msgstr "Команда"
+msgstr "Käsk"
 
 #: app/qml/pages/DevicePage.qml:161
 #, kde-format
 msgid "Connect"
-msgstr "Подключить"
+msgstr "Ühendan"
 
 #: app/qml/pages/DeviceListPage.qml:145
 #, kde-format
 msgid "Connected"
-msgstr "Подключено"
+msgstr "Ühendatud"
 
 #: app/qml/pages/DeviceListPage.qml:73
 #, kde-format
 msgid "Device Name"
-msgstr "Имя устройства"
+msgstr "Seadme nimi"
 
 #: app/qml/pages/DevicePage.qml:47
 #, kde-format
 msgid "Device is not reachable"
-msgstr "Устройство недоступно"
+msgstr "Seade pole leitav"
 
 #: app/qml/pages/SettingsPage.qml:53
 #, kde-format
 msgid "Devices from IP address"
-msgstr "Устройства по IP адресу"
+msgstr "Seadmed IP-aadressi alusel"
 
 #: app/qml/pages/DevicePage.qml:151
 #, kde-format
 msgid "Do you want to connect to this device?"
-msgstr "Вы хотите подключиться к этому устройству?"
+msgstr "Kas sa soovid luua ühendust selle seadmega?"
 
 #: app/src/helper/jobsnotificator.cpp:116
 #, kde-format
 msgid "Download aborted"
-msgstr ""
+msgstr "Allalaadimine katkes"
 
 #: app/src/helper/jobsnotificator.cpp:105
 #, kde-format
 msgid "Download failed"
-msgstr ""
+msgstr "Allalaadimine ei õnnestunud"
 
 #: app/src/helper/jobsnotificator.cpp:99
 #, kde-format
 msgid "Download succedded"
-msgstr ""
+msgstr "Fail on allalaaditud"
 
 #: app/src/helper/jobsnotificator.cpp:140
 #, kde-format
 msgid "Downloading ..."
-msgstr ""
+msgstr "Laadin alla..."
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:141
 #: app/qml/pages/SettingsPage.qml:76
 #, kde-format
 msgid "Edit"
-msgstr "Редактировать"
+msgstr "Muuda"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:114
 #, kde-format
 msgid "Edit commands"
-msgstr "Редактировать команды"
+msgstr "Muuda käske"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:42
 #, kde-format
 msgid "Edit share configuration"
-msgstr "Редактировать настройки доступа к данным"
+msgstr "Seadista failide jagamist"
 
 #: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:260
 #, kde-format
 msgid "Encryption info"
-msgstr "Режим шифрования"
+msgstr "Krüptimise teave"
 
 #: app/src/io/jobmanager.cpp:163
 #, kde-format
 msgid "Error %1"
-msgstr "Ошибка %1"
+msgstr "Viga %1"
 
 #: app/src/appdaemon.cpp:178
 #, kde-format
 msgid "Failed to pair. %1"
-msgstr "Спаривание не удалось. %1"
+msgstr "Paardumine ei õnnestunud. %1"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:48
 #, kde-format
 msgid "Folder to save files"
-msgstr "Каталог для сохранения файлов"
+msgstr "Kaust failide salvestamiseks"
 
 #: app/qml/pages/TouchpadPage.qml:65
 #, kde-format
 msgid "Holding ..."
-msgstr "Удержание ..."
+msgstr "Hoian..."
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:47
 #, kde-format
 msgid "IP address"
-msgstr "IP адрес"
+msgstr "IP-aadress"
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:46
 #, kde-format
 msgid "IPv4 or IPv6 address of device"
-msgstr "IPv4 или IPv6 адрес устройства"
+msgstr "Seadme IPv4 või IPv6 aaddress"
 
 #: app/qml/pages/DeviceListPage.qml:57
 #, kde-format
@@ -200,33 +199,33 @@ msgid ""
 "Install KDE Connect or GSConnect on your computer and connect it to the same"
 " WLAN."
 msgstr ""
-"Установите на своем компьютере KDE Connect или GSConnect и подключитесь к "
-"одной и той же беспроводной сети."
+"Paigalda oma arvutisse kas KDE Connect või GSConnect ning ühenda seadmes "
+"samasse kohtvõrku."
 
 #: app/qml/pages/AboutPage.qml:66
 #, kde-format
 msgid "KDE Connect client for Sailfish OS"
-msgstr "Клиент KDE Connect для ОС Sailfish"
+msgstr "KDE Connect klient Sailfish OS'i jaoks"
 
 #: app/qml/pages/KeyboardPage.qml:105
 #, kde-format
 msgid "Keyboard"
-msgstr "Клавиатура"
+msgstr "Klaviatuur"
 
 #: app/qml/pages/AboutPage.qml:104
 #, kde-format
 msgid "Licence"
-msgstr "Лицензия"
+msgstr "Litsents"
 
 #: app/qml/pages/AboutPage.qml:77
 #, kde-format
 msgid "Links"
-msgstr "Ссылки"
+msgstr "Viited"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:41
 #, kde-format
 msgid "Lock device"
-msgstr "Заблокировать устройство"
+msgstr "Lukusta seade"
 
 #: app/qml/pages/TouchpadPage.qml:89
 #, kde-format
@@ -236,244 +235,244 @@ msgid ""
 "Hold shortly for Drag'n'Drop\n"
 "Scroll on right side"
 msgstr ""
-"Двигайте пальцем по экрану\n"
-"Ткните, что сделать щелчок\n"
-"Немного подержите для перетаскавания\n"
-"Прокручивайте справа"
+"Liiguta sõrme ekraanil\n"
+"Klõpsimiseks puuduta\n"
+"Lühike puudutus algatab lohistamise\n"
+"Kerimine toimib paremas ääres"
 
 #: app/qml/pages/TouchpadPage.qml:81
 #, kde-format
 msgid "Moving ..."
-msgstr "Перемещение ..."
+msgstr "Tõstan..."
 
 #: app/qml/components/MprisUi.qml:36
 #, kde-format
 msgid "Multimedia Controls"
-msgstr "Управление проигрывателем"
+msgstr "Multimeedia juhtimine"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:72
 #, kde-format
 msgid "Name"
-msgstr "Имя"
+msgstr "Nimi"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:71
 #, kde-format
 msgid "Name of command"
-msgstr "Имя команды"
+msgstr "Käsu nimi"
 
 #: app/qml/pages/DeviceListPage.qml:230
 #, kde-format
 msgid "Nearby devices"
-msgstr "Устройства поблизости"
+msgstr "Läheduses asuvad seadmed"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
 #, kde-format
 msgid "No commands defined"
-msgstr "Команды не определены"
+msgstr "Sa pole kirjeldanud ühtegi käsku"
 
 #: app/qml/pages/RemoteCommandsPage.qml:88
 #, kde-format
 msgid "No commands defined on other device"
-msgstr "На другом устройстве не заданы команды"
+msgstr "Teises seadmes ei ole ühtegi käsku seadistatud"
 
 #: app/qml/pages/SettingsPage.qml:114
 #, kde-format
 msgid "No devices defined"
-msgstr "Нет известных устройств"
+msgstr "Sa pole seadmeid kirjeldanud"
 
 #: app/qml/components/MprisUi.qml:196
 #, kde-format
 msgid "No remote players"
-msgstr "Нет удаленных проигрывателей"
+msgstr "Paardunud seadmes ei leidu meediamängijat"
 
 #: app/qml/pages/RemoteVolumePage.qml:110
 #, kde-format
 msgid "No sinks exist on other device"
-msgstr "Нет приема на другом устройстве"
+msgstr "Teises seadmes ei leidu juhitavaid heliliideseid"
 
 #: app/qml/components/MprisUi.qml:94
 #, kde-format
 msgid "Nothing playing"
-msgstr "Ничто не воспроизводится"
+msgstr "Paardunud seadmes ei ole esitamisel meediat"
 
 #: app/qml/pages/DevicePluginsPage.qml:89
 #, kde-format
 msgid "Open configuration"
-msgstr "Открыть настройки"
+msgstr "Ava seadistused"
 
 #: app/qml/pages/DevicePluginsPage.qml:78
 #, kde-format
 msgid "Open configuration throught context menu"
-msgstr "Открыть настройки через контекстное меню"
+msgstr "Ava seadistused kontekstimenüüst"
 
 #: app/qml/pages/DevicePage.qml:217
 #, kde-format
 msgid "Open keyboard"
-msgstr "Показать клавиатуру"
+msgstr "Ava klaviatuur"
 
 #: app/qml/pages/DevicePage.qml:210
 #, kde-format
 msgid "Open touchpad"
-msgstr "Показать тачпад"
+msgstr "Ava puuteplaat"
 
 #: app/qml/pages/DeviceListPage.qml:215
 #, kde-format
 msgid "Paired devices"
-msgstr "Связанные устройства"
+msgstr "Paardunud seadmed"
 
 #: app/src/appdaemon.cpp:66
 #, kde-format
 msgid "Pairing request"
-msgstr "Запрос на спаривание"
+msgstr "Paardumispäring"
 
 #: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
-msgstr "Ожидается запрос на спаривание ..."
+msgstr "Ootel olev paardumipäring"
 
 #: app/qml/pages/DevicePage.qml:267
 #, kde-format
 msgid "Plugins"
-msgstr "Модули"
+msgstr "Moodulid"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:85
 #, kde-format
 msgid "Predefined commands"
-msgstr "Ранее определенные команды"
+msgstr "Eelseadistatud käsud"
 
 #: app/qml/pages/DeviceListPage.qml:256
 #, kde-format
 msgid "Quit"
-msgstr "Выход"
+msgstr "Välju"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:37
 #, kde-format
 msgid "Reboot"
-msgstr "Перезагрузить"
+msgstr "Taaskäivita"
 
 #: app/qml/pages/DeviceListPage.qml:262
 #, kde-format
 msgid "Refresh"
-msgstr "Обновить"
+msgstr "Värskenda"
 
 #: app/qml/pages/DevicePage.qml:125
 #, kde-format
 msgid "Reject"
-msgstr "Отклонить"
+msgstr "Keeldun"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:154
 #: app/qml/pages/SettingsPage.qml:88
 #, kde-format
 msgid "Remove"
-msgstr "Удалить"
+msgstr "Eemalda"
 
 #: app/qml/pages/SettingsPage.qml:44
 #, kde-format
 msgid "Run as background service"
-msgstr "Запускать как сервис"
+msgstr "Käivita taustateenusena"
 
 #: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:231
 #, kde-format
 msgid "Run command"
-msgstr "Выполнить команду"
+msgstr "Käivita käsk"
 
 #: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:186
 #, kde-format
 msgid "Sailfish Connect"
-msgstr "Sailfish Коннект"
+msgstr "Sailfish Connect"
 
 #: app/qml/pages/TouchpadPage.qml:73
 #, kde-format
 msgid "Scrolling ..."
-msgstr "Прокрутка ..."
+msgstr "Kerin..."
 
 #: app/qml/pages/DevicePluginsPage.qml:61
 #, kde-format
 msgid "Select Plugins"
-msgstr "Выберите модули"
+msgstr "Vali moodulid"
 
 #: app/qml/pages/DevicePage.qml:199
 #, kde-format
 msgid "Select file to send"
-msgstr "Выберите файл для отправки"
+msgstr "Vali saadetav fail"
 
 #: app/qml/pages/DevicePage.qml:281
 #, kde-format
 msgid "Send ping"
-msgstr "Послать пинг"
+msgstr "Saada ping"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:31
 #: app/qml/pages/KeyboardPage.qml:110 app/qml/pages/SettingsPage.qml:39
 #, kde-format
 msgid "Settings"
-msgstr "Настройка"
+msgstr "Seadistused"
 
 #: app/qml/pages/DeviceListPage.qml:251
 #, kde-format
 msgid "Settings ..."
-msgstr "Настройка ..."
+msgstr "Seadistused..."
 
 #: app/qml/pages/DevicePage.qml:190
 #, kde-format
 msgid "Share a file"
-msgstr "Передать файл"
+msgstr "Jaga faili"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
 #, kde-format
 msgid "Shell command to execute"
-msgstr "Исполняемая команда"
+msgstr "Käivitatav kesta käsk"
 
 #: app/qml/pages/AboutPage.qml:96
 #, kde-format
 msgid "Source code on Github"
-msgstr "Исходный код на Github"
+msgstr "Lähtekood Github'is"
 
 #: app/qml/pages/DevicePage.qml:108
 #, kde-format
 msgid "This device wants to pair with your device."
-msgstr "Это устройство хочет связаться с вашим устройством."
+msgstr "See seade soovib paardumist sinu seadmega"
 
 #: app/qml/pages/TouchpadPage.qml:56
 #, kde-format
 msgid "Touchpad"
-msgstr "Тачпад"
+msgstr "Puuteplaat"
 
 #: app/qml/pages/DevicePage.qml:275
 #, kde-format
 msgid "Unpair"
-msgstr "Отвязать"
+msgstr "Eemalda paardumine"
 
 #: app/src/helper/jobsnotificator.cpp:114
 #, kde-format
 msgid "Upload aborted"
-msgstr ""
+msgstr "Üleslaadimine katkes"
 
 #: app/qml/pages/DevicePage.qml:224
 #, kde-format
 msgid "Upload clipboard text"
-msgstr "Загрузить текст из буфера обмена"
+msgstr "Laadi üles lõikepuhvri tekst"
 
 #: app/src/helper/jobsnotificator.cpp:103
 #, kde-format
 msgid "Upload failed"
-msgstr ""
+msgstr "Üleslaadimine ei õnnestunud"
 
 #: app/src/helper/jobsnotificator.cpp:97
 #, kde-format
 msgid "Upload succedded"
-msgstr ""
+msgstr "Fail on üleslaaditud"
 
 #: app/src/helper/jobsnotificator.cpp:138
 #, kde-format
 msgid "Uploading ..."
-msgstr ""
+msgstr "Laadin üles..."
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:48
 #, kde-format
 msgid "Vibration feedback"
-msgstr "Виброотклик"
+msgstr "Tagasiside värinana"
 
 #: app/qml/pages/DevicePage.qml:74
 #, kde-format
 msgid "Waiting for accepted pairing ..."
-msgstr "Ожидание подтверждения спаривания ..."
+msgstr "Ootan nõustumist paardumisega"

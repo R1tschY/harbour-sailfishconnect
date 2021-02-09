@@ -135,5 +135,6 @@ desktop-file-install --delete-original       \
 %{_bindir}
 %{_datadir}/%{name}/qml
 %{_datadir}/%{name}/locale
+%{_datadir}/%{name}/harbour-sailfishconnect.service
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png

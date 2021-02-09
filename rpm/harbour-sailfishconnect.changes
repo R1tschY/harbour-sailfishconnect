@@ -2,7 +2,7 @@
 # - Summary of changes
 
 
-* Fri Oct 09 2020 Richard Liebscher <r1tschy@posteo.de> 0.6-0
+* Tue Feb 09 2021 Richard Liebscher <r1tschy@posteo.de> 0.6.0-1
 - Direct use of KDE Connect desktop client as backend instead of own fork
 - Add IPs of custom devices to be searched for (#35)
 - Added command plugins
@@ -12,6 +12,11 @@
 - Migrated battery plugin to use MCE DBus interface instead of statefs
 - Fixed album art for Spotify
 - Added Estonian translation (thanks to Priit Jõerüüt)
+
+* Wed Mar 11 2020 Richard Liebscher <r1tschy@posteo.de> 0.5.1-1
+- Allow newer TLS versions (#38). Fixes broken GSConnect support for distributions 
+  using GLib >= 2.64.
+- Fixed monitoring of notifications in release build.
 
 * Sat Jan 04 2020 Richard Liebscher <r1tschy@posteo.de> 0.5-1
 - Added Contacts plugin.

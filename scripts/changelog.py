@@ -98,13 +98,13 @@ def format_datetime(datetime):
 
 
 def apply_commandfn(fn, args):
-    with CHANGELOG_FILE.open("r") as fp:
+    with CHANGELOG_FILE.open("r", encoding="utf-8") as fp:
         changelog = fp.read()
 
     change = fn(changelog=changelog, args=args)
 
     if change:
-        with CHANGELOG_FILE.open("w") as fp:
+        with CHANGELOG_FILE.open("w", encoding="utf-8") as fp:
             fp.write(changelog[:change.start])
             fp.write(change.replacement)
             fp.write(changelog[change.end:])

@@ -5,6 +5,8 @@
 # 
 # Translators:
 # R1tschY <r1tschy@posteo.de>, 2021
+# Atlochowski <hucul@o2.pl>, 2021
+# Jacek Jagosz <jacek.jagosz@outlook.com>, 2021
 # 
 #, fuzzy
 msgid ""
@@ -13,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-07 21:32+0100\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
-"Last-Translator: R1tschY <r1tschy@posteo.de>, 2021\n"
+"Last-Translator: Jacek Jagosz <jacek.jagosz@outlook.com>, 2021\n"
 "Language-Team: Polish (https://www.transifex.com/r1tschy/teams/89267/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +27,7 @@ msgstr ""
 #: app/src/helper/jobsnotificator.cpp:132
 #, kde-format
 msgid "%1 from %2"
-msgstr ""
+msgstr "%1 z %2"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:40
 #, kde-format
@@ -35,7 +37,7 @@ msgstr "%1ms interwał powtarzania"
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:73
 #, kde-format
 msgid "&percnt;1 in the path will be replaced with the specific device name."
-msgstr ""
+msgstr "&percnt;1 w ścieżce będzie zamieniony na konkretną nazwę urządzenia."
 
 #: app/qml/pages/AboutPage.qml:39
 #, kde-format
@@ -60,17 +62,17 @@ msgstr "Akcje"
 #: app/qml/pages/SettingsPage.qml:128
 #, kde-format
 msgid "Add device from IP address"
-msgstr ""
+msgstr "Dodaj urządzenie z adresów IP"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:163
 #, kde-format
 msgid "Add new command"
-msgstr ""
+msgstr "Dodaj nowe polecenie"
 
 #: app/qml/pages/SettingsPage.qml:46
 #, kde-format
 msgid "Application starts at system start and runs in background."
-msgstr ""
+msgstr "Aplikacja uruchamia się przy starcie systemu i działa w tle."
 
 #: app/qml/pages/AboutPage.qml:87
 #, kde-format
@@ -85,12 +87,12 @@ msgstr "Zmień rozmieszczenie"
 #: app/qml/pages/DevicePage.qml:238 app/qml/pages/RemoteVolumePage.qml:38
 #, kde-format
 msgid "Change volume"
-msgstr ""
+msgstr "Zmień głośność"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:80
 #, kde-format
 msgid "Command"
-msgstr ""
+msgstr "Polecenie"
 
 #: app/qml/pages/DevicePage.qml:161
 #, kde-format
@@ -115,7 +117,7 @@ msgstr "Urządzenie jest nieosiągalne"
 #: app/qml/pages/SettingsPage.qml:53
 #, kde-format
 msgid "Devices from IP address"
-msgstr ""
+msgstr "Urządzenia z adresów IP"
 
 #: app/qml/pages/DevicePage.qml:151
 #, kde-format
@@ -125,73 +127,73 @@ msgstr "Czy chcesz połączyć się z tym urządzeniem?"
 #: app/src/helper/jobsnotificator.cpp:116
 #, kde-format
 msgid "Download aborted"
-msgstr ""
+msgstr "Pobieranie anulowane"
 
 #: app/src/helper/jobsnotificator.cpp:105
 #, kde-format
 msgid "Download failed"
-msgstr ""
+msgstr "Błąd pobierania"
 
 #: app/src/helper/jobsnotificator.cpp:99
 #, kde-format
 msgid "Download succedded"
-msgstr ""
+msgstr "Pobieranie zakończone sukcesem"
 
 #: app/src/helper/jobsnotificator.cpp:140
 #, kde-format
 msgid "Downloading ..."
-msgstr ""
+msgstr "Pobieranie..."
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:141
 #: app/qml/pages/SettingsPage.qml:76
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "Edytuj"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:114
 #, kde-format
 msgid "Edit commands"
-msgstr ""
+msgstr "Edytuj polecenie"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:42
 #, kde-format
 msgid "Edit share configuration"
-msgstr ""
+msgstr "Edytuj współdzieloną konfigurację"
 
 #: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:260
 #, kde-format
 msgid "Encryption info"
-msgstr ""
+msgstr "Informacje o szyfrowaniu"
 
 #: app/src/io/jobmanager.cpp:163
 #, kde-format
 msgid "Error %1"
-msgstr ""
+msgstr "Błąd %1"
 
 #: app/src/appdaemon.cpp:178
 #, kde-format
 msgid "Failed to pair. %1"
-msgstr ""
+msgstr "Nie udało się sparować. %1"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:48
 #, kde-format
 msgid "Folder to save files"
-msgstr ""
+msgstr "Katalog do zapisywania plików"
 
 #: app/qml/pages/TouchpadPage.qml:65
 #, kde-format
 msgid "Holding ..."
-msgstr ""
+msgstr "Przytrzymywanie ..."
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:47
 #, kde-format
 msgid "IP address"
-msgstr ""
+msgstr "Adres IP"
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:46
 #, kde-format
 msgid "IPv4 or IPv6 address of device"
-msgstr ""
+msgstr "Adresy urządzeń IPv4 i IPv6"
 
 #: app/qml/pages/DeviceListPage.qml:57
 #, kde-format
@@ -199,16 +201,18 @@ msgid ""
 "Install KDE Connect or GSConnect on your computer and connect it to the same"
 " WLAN."
 msgstr ""
+"Zainstaluj KDE Connect lub GSConnect na twoim komputerze i podłącz go do tej"
+" samej sieci WLAN."
 
 #: app/qml/pages/AboutPage.qml:66
 #, kde-format
 msgid "KDE Connect client for Sailfish OS"
-msgstr ""
+msgstr "Klien KDE Connect dla SailfishOS"
 
 #: app/qml/pages/KeyboardPage.qml:105
 #, kde-format
 msgid "Keyboard"
-msgstr ""
+msgstr "Klawiatura"
 
 #: app/qml/pages/AboutPage.qml:104
 #, kde-format
@@ -223,7 +227,7 @@ msgstr "Odnośniki"
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:41
 #, kde-format
 msgid "Lock device"
-msgstr ""
+msgstr "Blokada urządzenia"
 
 #: app/qml/pages/TouchpadPage.qml:89
 #, kde-format
@@ -233,11 +237,15 @@ msgid ""
 "Hold shortly for Drag'n'Drop\n"
 "Scroll on right side"
 msgstr ""
+"Poruszaj palcem po ekranie\n"
+"Dotknij by kliknąć\n"
+"Krótko przytrzymaj by przeciągnąć i upuścić\n"
+"Przewijaj po prawej stronie"
 
 #: app/qml/pages/TouchpadPage.qml:81
 #, kde-format
 msgid "Moving ..."
-msgstr ""
+msgstr "Przenoszenie..."
 
 #: app/qml/components/MprisUi.qml:36
 #, kde-format
@@ -247,12 +255,12 @@ msgstr "Sterowanie multimediami"
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:72
 #, kde-format
 msgid "Name"
-msgstr ""
+msgstr "Nazwa"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:71
 #, kde-format
 msgid "Name of command"
-msgstr ""
+msgstr "Nazwa polecenia"
 
 #: app/qml/pages/DeviceListPage.qml:230
 #, kde-format
@@ -262,17 +270,17 @@ msgstr "Urządzenia w pobliżu"
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
 #, kde-format
 msgid "No commands defined"
-msgstr ""
+msgstr "Brak zdefiniowanych poleceń"
 
 #: app/qml/pages/RemoteCommandsPage.qml:88
 #, kde-format
 msgid "No commands defined on other device"
-msgstr ""
+msgstr "Brak zdefiniowanych poleceń na innych urządzeniach"
 
 #: app/qml/pages/SettingsPage.qml:114
 #, kde-format
 msgid "No devices defined"
-msgstr ""
+msgstr "Brak zdefiniowanych urządzeń"
 
 #: app/qml/components/MprisUi.qml:196
 #, kde-format
@@ -282,7 +290,7 @@ msgstr "Brak zdalnych odtwarzaczy"
 #: app/qml/pages/RemoteVolumePage.qml:110
 #, kde-format
 msgid "No sinks exist on other device"
-msgstr ""
+msgstr "Brak istniejących odbiorników na innym urządzeniu"
 
 #: app/qml/components/MprisUi.qml:94
 #, kde-format
@@ -292,22 +300,22 @@ msgstr "Nic nie jest odtwarzane"
 #: app/qml/pages/DevicePluginsPage.qml:89
 #, kde-format
 msgid "Open configuration"
-msgstr ""
+msgstr "Otwórz konfigurację"
 
 #: app/qml/pages/DevicePluginsPage.qml:78
 #, kde-format
 msgid "Open configuration throught context menu"
-msgstr ""
+msgstr "Otwórz konfigurację poprzez menu kontekstowe"
 
 #: app/qml/pages/DevicePage.qml:217
 #, kde-format
 msgid "Open keyboard"
-msgstr ""
+msgstr "Otwórz klawiaturę"
 
 #: app/qml/pages/DevicePage.qml:210
 #, kde-format
 msgid "Open touchpad"
-msgstr ""
+msgstr "Otwórz touchpad"
 
 #: app/qml/pages/DeviceListPage.qml:215
 #, kde-format
@@ -317,12 +325,12 @@ msgstr "Sparowane urządzenia"
 #: app/src/appdaemon.cpp:66
 #, kde-format
 msgid "Pairing request"
-msgstr ""
+msgstr "Prośba o parowanie"
 
 #: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
-msgstr ""
+msgstr "Oczekująca prośba o parowanie..."
 
 #: app/qml/pages/DevicePage.qml:267
 #, kde-format
@@ -332,7 +340,7 @@ msgstr "Wtyczki"
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:85
 #, kde-format
 msgid "Predefined commands"
-msgstr ""
+msgstr "Predefiniowane polecenia"
 
 #: app/qml/pages/DeviceListPage.qml:256
 #, kde-format
@@ -342,7 +350,7 @@ msgstr "Wyjdź"
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:37
 #, kde-format
 msgid "Reboot"
-msgstr ""
+msgstr "Uruchom ponownie"
 
 #: app/qml/pages/DeviceListPage.qml:262
 #, kde-format
@@ -358,17 +366,17 @@ msgstr "Odrzuć"
 #: app/qml/pages/SettingsPage.qml:88
 #, kde-format
 msgid "Remove"
-msgstr ""
+msgstr "Usuń"
 
 #: app/qml/pages/SettingsPage.qml:44
 #, kde-format
 msgid "Run as background service"
-msgstr ""
+msgstr "Uruchom jako usługę w tle"
 
 #: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:231
 #, kde-format
 msgid "Run command"
-msgstr ""
+msgstr "Uruchom polecenie"
 
 #: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:186
 #, kde-format
@@ -378,7 +386,7 @@ msgstr "Sailfish Connect"
 #: app/qml/pages/TouchpadPage.qml:73
 #, kde-format
 msgid "Scrolling ..."
-msgstr ""
+msgstr "Przewijanie ..."
 
 #: app/qml/pages/DevicePluginsPage.qml:61
 #, kde-format
@@ -399,7 +407,7 @@ msgstr "Wyślij ping"
 #: app/qml/pages/KeyboardPage.qml:110 app/qml/pages/SettingsPage.qml:39
 #, kde-format
 msgid "Settings"
-msgstr ""
+msgstr "Ustawienia"
 
 #: app/qml/pages/DeviceListPage.qml:251
 #, kde-format
@@ -414,7 +422,7 @@ msgstr "Udostępnij plik"
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
 #, kde-format
 msgid "Shell command to execute"
-msgstr ""
+msgstr "Polecenie powłoki do wywołania"
 
 #: app/qml/pages/AboutPage.qml:96
 #, kde-format
@@ -429,7 +437,7 @@ msgstr "To urządzenie chce dokonać parowania z twoim urządzeniem."
 #: app/qml/pages/TouchpadPage.qml:56
 #, kde-format
 msgid "Touchpad"
-msgstr ""
+msgstr "Touchpad"
 
 #: app/qml/pages/DevicePage.qml:275
 #, kde-format
@@ -439,7 +447,7 @@ msgstr "Rozdziel"
 #: app/src/helper/jobsnotificator.cpp:114
 #, kde-format
 msgid "Upload aborted"
-msgstr ""
+msgstr "Wysyłanie anulowane"
 
 #: app/qml/pages/DevicePage.qml:224
 #, kde-format
@@ -449,17 +457,17 @@ msgstr "Wyślij zawartość schowka"
 #: app/src/helper/jobsnotificator.cpp:103
 #, kde-format
 msgid "Upload failed"
-msgstr ""
+msgstr "Błąd wysyłania"
 
 #: app/src/helper/jobsnotificator.cpp:97
 #, kde-format
 msgid "Upload succedded"
-msgstr ""
+msgstr "Wysyłanie zakończone sukcesem"
 
 #: app/src/helper/jobsnotificator.cpp:138
 #, kde-format
 msgid "Uploading ..."
-msgstr ""
+msgstr "Wysyłanie..."
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:48
 #, kde-format

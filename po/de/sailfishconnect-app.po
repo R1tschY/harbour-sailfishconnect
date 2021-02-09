@@ -314,7 +314,7 @@ msgstr "Tastatur öffnen"
 #: app/qml/pages/DevicePage.qml:210
 #, kde-format
 msgid "Open touchpad"
-msgstr "Öffne Touchpad"
+msgstr "Touchpad öffnen"
 
 #: app/qml/pages/DeviceListPage.qml:215
 #, kde-format
@@ -375,7 +375,7 @@ msgstr "Als Hintergrundservice laufen lassen"
 #: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:231
 #, kde-format
 msgid "Run command"
-msgstr "Führe Befehl aus"
+msgstr "Befehl ausführen"
 
 #: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:186
 #, kde-format
@@ -416,7 +416,7 @@ msgstr "Einstellungen"
 #: app/qml/pages/DevicePage.qml:190
 #, kde-format
 msgid "Share a file"
-msgstr "Teile eine Datei"
+msgstr "Datei senden"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
 #, kde-format
@@ -451,7 +451,7 @@ msgstr "Hochladen abgebrochen"
 #: app/qml/pages/DevicePage.qml:224
 #, kde-format
 msgid "Upload clipboard text"
-msgstr "Sende Text in Zwischenablage"
+msgstr "Text in Zwischenablage senden"
 
 #: app/src/helper/jobsnotificator.cpp:103
 #, kde-format

@@ -2,6 +2,10 @@
 # - Summary of changes
 
 
+
+* Tue Feb 09 2021 R1tschY <r1tschy@posteo.de> 0.7.0-0-0
+- 
+
 * Tue Feb 09 2021 Richard Liebscher <r1tschy@posteo.de> 0.6.0-2
 - Direct use of KDE Connect desktop client as backend instead of own fork
 - Add IPs of custom devices to be searched for (#35)

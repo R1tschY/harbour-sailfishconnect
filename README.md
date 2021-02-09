@@ -49,11 +49,12 @@ RemoteKeyboard | :heavy_check_mark: | :keyboard: Create keyboard input from your
 Contacts | :heavy_check_mark: | :busts_in_silhouette: Share contacts with your computer.
 SendNotifications | :construction: | Share notifications of your phone.
 RunCommand | :heavy_check_mark: | Run user-defined commands on your computer.
+RemoteCommands | :heavy_check_mark: | Let user-defined commands run on your phone.
 RemoteSystemVolume | :heavy_check_mark: | :sound: Control system volume of your computer.
-Telepathy | :construction: | :speech_balloon: Send SMS messages and read SMS history from your computer.
+Telepathy | :o: | :speech_balloon: Send SMS messages and read SMS history from your computer.
 Sftp | :o: | :open_file_folder: Provide access to local files from your computer.
 FindMyPhone | :o: | :vibration_mode: Make finding your phone easier.
-SystemVolume | :o: | :sound: Share control of system volume.
+SystemVolume | :o: | :sound: Share control of system volume of your phone.
 ReceiseNotifications | :o: | Receive notifications of your computer.
 MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control with your computer.
 
@@ -81,12 +82,11 @@ MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control wit
 
 * Translations: https://www.transifex.com/r1tschy/sailfish-connect
 * Code: You are welcome to make pull request in Github :wink:
+* Feedback: Join [#sailfishconnect:matrix.org](https://matrix.to/#/!EJKcWggfiRHMOiaQlz:matrix.org?via=matrix.org)
 
 ## Known Issues
 
-* RemoteKeyboard: Special keys (except modifiers) are interpreted as text by GSConnect
 * LAN: A connection through USB-Ethernet and develeper mode is not possible.
-
 
 ## Credits
 

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 cmake_policy(SET CMP0071 NEW)
-project(SailfishConnect VERSION 0.6.0 LANGUAGES C CXX)
+project(SailfishConnect VERSION 0.7.0 LANGUAGES C CXX)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(TARGETS)

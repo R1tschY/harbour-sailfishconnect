@@ -107,7 +107,7 @@ Page {
             id: placeholder
             enabled: view.count === 0
             flickable: view
-            text: i18n("No sinks exist on other device")
+            text: i18n("No audio sinks exist on other device")
         }
 
         VerticalScrollDecorator { flickable: view }

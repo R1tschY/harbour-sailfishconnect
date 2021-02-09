@@ -137,10 +137,9 @@ void JobsNotificator::addJob(JobInfo *job)
     if (isUpload) {
         notification->setSummary(i18n("Uploading ..."));
     } else {
-        QString summary = i18n("Downloading ...");
-        notification->setPreviewSummary(summary);
-        notification->setPreviewBody(fileName);
-        notification->setSummary(summary);
+        notification->setPreviewSummary(i18n("Download started"));
+        notification->setPreviewBody(body);
+        notification->setSummary(i18n("Downloading ..."));
     }
     notification->setHintValue("x-nemo-progress", job->progress());
     if (device) {

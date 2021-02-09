@@ -104,6 +104,9 @@ install(DIRECTORY translations
 install(FILES ${PACKAGE_NAME}.desktop
     DESTINATION share/applications
 )
+install(FILES ${PACKAGE_NAME}.service
+    DESTINATION share/${PACKAGE_NAME}
+)
 install(FILES icons/86x86/${PACKAGE_NAME}.png
     DESTINATION share/icons/hicolor/86x86/apps
 )

@@ -179,6 +179,57 @@ void registerQmlTypes() {
     QmlJs::registerTypes();
 }
 
+bool copyDirectory(const QString& src, const QString& dst)
+{
+    QDir srcDir(src);
+    if (!srcDir.exists()) {
+        qCCritical(logger) << "Directory" << src << "does not exist";
+        return false;
+    }
+
+    for (const QString dir : srcDir.entryList(
+             QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks)) {
+        QString dst_path = dst % '/' % dir;
+        if (!srcDir.mkpath(dst_path)) {
+            qCCritical(logger) << "Failed to create directory" << dst_path;
+            return false;
+        }
+        if (!copyDirectory(src % '/' % dir, dst_path)) {
+            return false;
+        }
+    }
+
+    for (const QString file : srcDir.entryList(QDir::Files)) {
+        if (!QFile::copy(src  % '/' % file, dst  % '/' % file)) {
+            qCCritical(logger)
+                    << "Failed to copy file" << (src  % '/' % file)
+                    << "to" << (dst  % '/' % file);
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void migrateOldInstallation() {
+    QString configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
+    QString oldConfigPath = configPath
+            % '/' % QStringLiteral("harbour-sailfishconnect")
+            % '/' % QStringLiteral("harbour-sailfishconnect");
+    QString newConfigPath = configPath
+            % '/' % QStringLiteral("harbour-sailfishconnect");
+
+    QString oldCertificatePath = oldConfigPath % '/' % QStringLiteral("certificate.pem");
+    QString newCertificatePath = newConfigPath % '/' % QStringLiteral("certificate.pem");
+
+    if (QFileInfo::exists(oldCertificatePath) && !QFileInfo::exists(newCertificatePath)) {
+        qCDebug(logger) << "Migrate config from" << oldConfigPath << "to" << newConfigPath;
+        if (copyDirectory(oldConfigPath, newConfigPath)) {
+            QDir(oldConfigPath).removeRecursively();
+        }
+    }
+}
+
 std::unique_ptr<QGuiApplication> createApplication(int &argc, char **argv)
 {
     std::unique_ptr<QGuiApplication> app(SailfishApp::application(argc, argv));
@@ -232,6 +283,9 @@ int main(int argc, char *argv[])
 
     // I18n
     initI18n();
+
+    // Migration
+    migrateOldInstallation();
 
     // Application
     auto app = createApplication(argc, argv);

@@ -202,8 +202,8 @@ bool copyDirectory(const QString& src, const QString& dst)
     for (const QString file : srcDir.entryList(QDir::Files)) {
         if (!QFile::copy(src  % '/' % file, dst  % '/' % file)) {
             qCCritical(logger)
-                    << "Failed to copy file" << (src  % '/' % file)
-                    << "to" << (dst  % '/' % file);
+                << "Failed to copy file" << (src  % '/' % file)
+                << "to" << (dst  % '/' % file);
             return false;
         }
     }
@@ -223,7 +223,7 @@ void migrateOldInstallation() {
     QString newCertificatePath = newConfigPath % '/' % QStringLiteral("certificate.pem");
 
     if (QFileInfo::exists(oldCertificatePath) && !QFileInfo::exists(newCertificatePath)) {
-        qCDebug(logger) << "Migrate config from" << oldConfigPath << "to" << newConfigPath;
+        qCInfo(logger) << "Migrate config from" << oldConfigPath << "to" << newConfigPath;
         if (copyDirectory(oldConfigPath, newConfigPath)) {
             QDir(oldConfigPath).removeRecursively();
         }

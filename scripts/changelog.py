@@ -21,17 +21,28 @@ import sys
 import re
 import locale
 import datetime
+import textwrap
+import subprocess
+
 from pathlib import Path
 from collections import namedtuple
 from typing import Match
 
+
 CHANGELOG_FILE = (
     Path(__file__).parent.parent / "rpm" / "harbour-sailfishconnect.changes"
 )
+
 HEADER_RE = re.compile(
     r"^\*\s+(?P<date>\w+\s+\w+\s+\d+\s+\d+)\s+(?P<author>[^<]+)\s+<(?P<email>[^>]+)>\s+(?P<version>[\w.~]+)-(?P<release>\d+)",
     re.M,
 )
+
+def git_user_name():
+    return subprocess.check_output(["git", "config", "user.name"]).strip().decode("utf-8")
+
+def git_user_email():
+    return subprocess.check_output(["git", "config", "user.email"]).strip().decode("utf-8")
 
 
 class ChangelogHeader:
@@ -78,6 +89,10 @@ class ChangelogHeader:
     def release_loc(self):
         return (self.match.start("release"), self.match.end("release"))
 
+    @property
+    def loc(self):
+        return (self.match.start(), self.match.end())
+
 
 class Change(namedtuple("Change", ["start", "end", "replacement"])):
     pass
@@ -97,11 +112,11 @@ def format_datetime(datetime):
     return datetime.strftime("%a %b %d %Y")
 
 
-def apply_commandfn(fn, args):
+def apply_commandfn(fn, cmd_args):
     with CHANGELOG_FILE.open("r", encoding="utf-8") as fp:
         changelog = fp.read()
 
-    change = fn(changelog=changelog, args=args)
+    change = fn(changelog=changelog, cmd_args=cmd_args)
 
     if change:
         with CHANGELOG_FILE.open("w", encoding="utf-8") as fp:
@@ -110,7 +125,7 @@ def apply_commandfn(fn, args):
             fp.write(changelog[change.end:])
 
 
-def release(changelog: str, args, date=None) -> Change:
+def release(changelog: str, cmd_args, date=None) -> Change:
     header = find_first_header(changelog)
     return Change(
         start=header.date_loc[0],
@@ -118,8 +133,33 @@ def release(changelog: str, args, date=None) -> Change:
         replacement=format_datetime(date or datetime.datetime.now())
     )
 
+def prepare(changelog: str, cmd_args, date=None) -> Change:
+    argparser = argparse.ArgumentParser(description="Add entry")
+    argparser.add_argument("version")
+    args = argparser.parse_args(cmd_args)
 
-COMMANDS = {"release": release}
+    date = format_datetime(date or datetime.datetime.now())
+    name = git_user_name()
+    email = git_user_email()
+
+    template = textwrap.dedent(f"""
+        * {date} {name} <{email}> {args.version}-0
+        - 
+
+    """)
+
+    header = find_first_header(changelog)
+    return Change(
+        start=header.loc[0],
+        end=header.loc[0],
+        replacement=template
+    )
+
+
+COMMANDS = {
+    "release": release,
+    "prepare": prepare,
+}
 
 
 def main():

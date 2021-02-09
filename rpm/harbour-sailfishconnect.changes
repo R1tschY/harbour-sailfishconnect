@@ -7,13 +7,13 @@
 - 
 
 * Tue Feb 09 2021 Richard Liebscher <r1tschy@posteo.de> 0.6.0-2
-- Direct use of KDE Connect desktop client as backend instead of own fork
+- Direct use of KDE Connect desktop client as backend instead of own fork (#1)
 - Add IPs of custom devices to be searched for (#35)
 - Added command plugins
 - Added remote system volume plugin
 - Replaced transactions page with transaction notifications
 - Fixed remote keyboard for special characters like comma, space, fullstop (#34)
-- Migrated battery plugin to use MCE DBus interface instead of statefs
+- Migrated battery plugin to use MCE DBus interface instead of statefs (#42, Fixes installation on Sailfish OS 4.0.1)
 - Fixed album art for Spotify
 - Added Estonian translation (thanks to Priit Jõerüüt)
 

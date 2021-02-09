@@ -13,7 +13,7 @@
 
 # Sailfish Connect
 
-Sailfish OS client for [KDE Connect](https://community.kde.org/KDEConnect)
+*[KDE Connect](https://community.kde.org/KDEConnect) for Sailfish OS*
 
 ## Screenshots
 

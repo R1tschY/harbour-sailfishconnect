@@ -94,9 +94,9 @@ void JobsNotificator::jobChanged(JobInfo *job)
         if (job->state() == QStringLiteral("finished")) {
             if (job->errorString().isEmpty()) {
                 if (isUpload) {
-                    notification->setSummary(i18n("Upload succedded"));
+                    notification->setSummary(i18n("Upload succeeded"));
                 } else {
-                    notification->setSummary(i18n("Download succedded"));
+                    notification->setSummary(i18n("Download succeeded"));
                 }
             } else {
                 if (isUpload) {

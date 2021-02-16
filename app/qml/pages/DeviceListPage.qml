@@ -86,7 +86,7 @@ Page {
                 }
 
                 EnterKey.onClicked: announcedNameField.focus = false
-                EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
             }
 
 

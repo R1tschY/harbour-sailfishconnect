@@ -32,6 +32,10 @@ Page {
 
     property bool connected: _device && _device.isTrusted && _device.isReachable
 
+    RemorsePopup {
+        id: remorse
+    }
+
     SilicaFlickable {
         id: deviceView
         anchors.fill: parent
@@ -273,7 +277,14 @@ Page {
             MenuItem {
                 visible: _device && _device.isTrusted
                 text: i18n("Unpair")
-                onClicked: _device.unpair()
+                onClicked: {
+                    //: remorse dialog
+                    remorse.execute(i18n("Unpair"),
+                                    function() {
+                                        _device.unpair();
+                                    },
+                                    5 * 1000);
+                }
             }
 
             MenuItem {

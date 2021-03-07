@@ -107,7 +107,7 @@ void UI::quit()
 void UI::openDevicePage(const QString& deviceId)
 {
     if (m_daemon->getDevice(deviceId) == nullptr) {
-        // TODO: create device
+        // TODO: create dummy device or show a notification
         qCCritical(logger)
             << "while opening device page: device with id"
             << deviceId << "does not exist.";
@@ -121,6 +121,7 @@ void UI::openDevicePage(const QString& deviceId)
 static void handleSystemCtlResult(QProcess* systemCtl, bool enabled) {
     systemCtl->deleteLater();
 
+    // TODO: show a notification on error
     if (systemCtl->exitStatus() != QProcess::NormalExit) {
         qCCritical(logger)
             << "Unable to "
@@ -167,8 +168,7 @@ void UI::raise()
         qCCritical(logger) << "Cannot communicate with daemon";
     }
 
-    QDBusReply<void> reply = daemonInterface.call(
-        QLatin1String("showMainWindow"));
+    QDBusReply<void> reply = daemonInterface.call(QStringLiteral("showMainWindow"));
     if (!reply.isValid()) {
         // TODO: send short notification
         qCCritical(logger)

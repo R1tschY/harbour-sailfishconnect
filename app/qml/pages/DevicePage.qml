@@ -191,7 +191,7 @@ Page {
                 }
                 PluginAction {
                     device: _device
-                    title: i18n("Share a file")
+                    title: i18n("Share files")
                     icon: "image://theme/icon-m-share"
                     pluginId: "sailfishconnect_share"
                     onClicked: pageStack.push(filePickerPage)
@@ -199,12 +199,16 @@ Page {
                     // TODO: multiselect
                     Component {
                         id: filePickerPage
-                        ContentPickerPage {
-                            title: i18n("Select file to send")
-                            onSelectedContentPropertiesChanged: {
+                        MultiContentPickerDialog {
+                            title: i18n("Select files to send")
+                            onAccepted: {
+                                var urls = []
+                                for (var i = 0; i < selectedContent.count; ++i) {
+                                    urls.push(selectedContent.get(i).url)
+                                }
                                 _device
                                     .getShareApi()
-                                    .shareUrl(selectedContentProperties.url)
+                                    .shareUrls(urls)
                             }
                         }
                     }

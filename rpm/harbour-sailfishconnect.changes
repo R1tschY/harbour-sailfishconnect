@@ -1,6 +1,8 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Fri Jun 04 2021 Richard Liebscher <r1tschy@posteo.de> 0.6.1-1
+- Support for aarch64 architecture
 
 * Tue Feb 09 2021 Richard Liebscher <r1tschy@posteo.de> 0.6.0-2
 - Direct use of KDE Connect desktop client as backend instead of own fork

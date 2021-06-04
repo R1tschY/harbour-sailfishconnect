@@ -4,6 +4,6 @@ os_build=Linux
 arch=armv7
 arch_build=armv7
 compiler=gcc
-compiler.version=4.9
+compiler.version=8.3
 compiler.libcxx=libstdc++
 build_type=Release

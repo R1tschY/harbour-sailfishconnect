@@ -92,7 +92,7 @@ fi
 mkdir -p "$BUILD_DIR"
 
 cd "$BUILD_DIR"
-conan install "$SOURCE_DIR" --build --profile="$SOURCE_DIR/dev/profiles/%{_target_cpu}"
+conan install "$SOURCE_DIR" --build=missing --profile="$SOURCE_DIR/dev/profiles/%{_target_cpu}"
 
 cmake \
   -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \

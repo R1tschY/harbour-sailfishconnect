@@ -12,7 +12,7 @@ env:
   RELEASE: 3.3.0.14
 
 jobs:
-  build:
+  build-armv7hl:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: .venv-conan-*
-        key: venv-cache3
+        key: venv-cache4-armv7hl
 
     - name: Check style
       run: python3 scripts/bad-style.py bad-style.xml
@@ -35,7 +35,25 @@ jobs:
         release: '3.3.0.16'
         fix-version: false
         enable-debug: true
-        #check: true
+
+    - name: Upload build result
+      uses: actions/upload-artifact@v2
+      with:
+        name: sailfishconnect-armv7hl
+        path: RPMS
+
+  build-i486:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - uses: actions/cache@v2
+      with:
+        path: .venv-conan-*
+        key: venv-cache4-i486
 
     - name: Build i486 RPMS
       uses: R1tschY/sailfish-sdk-action@v1
@@ -44,10 +62,36 @@ jobs:
         release: '3.3.0.16'
         fix-version: false
         enable-debug: true
-        #check: true
 
     - name: Upload build result
       uses: actions/upload-artifact@v2
       with:
-        name: sailfishconnect-rpms
+        name: sailfishconnect-i486
+        path: RPMS
+
+  build-aarch64:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - uses: actions/cache@v2
+      with:
+        path: .venv-conan-*
+        key: venv-cache4-aarch64
+
+    - name: Build aarch64 RPMS
+      uses: R1tschY/sailfish-sdk-action@v1
+      with:
+        arch: 'aarch64'
+        release: '4.0.1.48'
+        fix-version: false
+        enable-debug: true
+
+    - name: Upload build result
+      uses: actions/upload-artifact@v2
+      with:
+        name: sailfishconnect-aarch64
         path: RPMS

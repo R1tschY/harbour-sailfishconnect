@@ -224,13 +224,13 @@ static QVariant nextVariant(DBusMessageIter* iter) {
         case DBUS_TYPE_INT32:
             return QVariant(value.i32);
         case DBUS_TYPE_INT64:
-            return QVariant(value.i64);
+            return QVariant((qlonglong)value.i64);
         case DBUS_TYPE_UINT16:
             return QVariant(value.u16);
         case DBUS_TYPE_UINT32:
             return QVariant(value.u32);
         case DBUS_TYPE_UINT64:
-            return QVariant(value.u64);
+            return QVariant((qulonglong)value.u64);
         case DBUS_TYPE_BYTE:
             return QVariant(value.byt);
         case DBUS_TYPE_DOUBLE:

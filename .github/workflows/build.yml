@@ -3,10 +3,10 @@ name: SailfishConnect build
 on:
   push:
     branches:
-      - master
+      - '*'
   pull_request:
     branches:
-      - master
+      - '*'
 
 env:
   RELEASE: 3.3.0.14

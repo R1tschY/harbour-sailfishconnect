@@ -25,6 +25,7 @@ conanbuildinfo.cmake
 conaninfo.txt
 conan.lock
 graph_info.json
+.conan
 
 # Python
 __pycache__

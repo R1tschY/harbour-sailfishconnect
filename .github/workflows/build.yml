@@ -25,6 +25,11 @@ jobs:
         path: .venv-conan-*
         key: venv-cache4-armv7hl
 
+    - uses: actions/cache@v2
+      with:
+        path: .conan/data
+        key: conan-cache1-armv7hl
+
     - name: Check style
       run: python3 scripts/bad-style.py bad-style.xml
 
@@ -55,6 +60,11 @@ jobs:
         path: .venv-conan-*
         key: venv-cache4-i486
 
+    - uses: actions/cache@v2
+      with:
+        path: .conan/data
+        key: conan-cache1-i486
+
     - name: Build i486 RPMS
       uses: R1tschY/sailfish-sdk-action@v1
       with:
@@ -81,6 +91,11 @@ jobs:
       with:
         path: .venv-conan-*
         key: venv-cache4-aarch64
+
+    - uses: actions/cache@v2
+      with:
+        path: .conan/data
+        key: conan-cache1-aarch64
 
     - name: Build aarch64 RPMS
       uses: R1tschY/sailfish-sdk-action@v1

@@ -67,7 +67,7 @@ if [ -f "CMakeLists.txt" ] ; then
 else 
   BUILD_DIR="."
 fi
-export CONAN_USER_HOME=`readlink -f "$BUILD_DIR"`
+export CONAN_USER_HOME=`readlink -f .`
 
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then

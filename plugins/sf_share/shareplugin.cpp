@@ -69,7 +69,7 @@ QString SharePlugin::incomingPath() const
 {
     const QString downloadPath = 
         QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-    const QString dir = config()->get<QString>(
+    const QString dir = config()->getString(
         QStringLiteral("incoming_path"), downloadPath);
 
     if (dir.contains(QLatin1String("%1"))) {

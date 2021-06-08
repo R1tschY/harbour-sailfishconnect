@@ -122,18 +122,6 @@ class PluginConfigApi : public KdeConnectPluginConfig {
     Q_OBJECT
 public:
     using KdeConnectPluginConfig::KdeConnectPluginConfig;
-
-    Q_SCRIPTABLE QVariant get(const QString& key){
-        return KdeConnectPluginConfig::get(key, {});
-    }
-
-    Q_SCRIPTABLE QVariant get(const QString& key, const QVariant& defaultValue) {
-        return KdeConnectPluginConfig::get(key, defaultValue);
-    }
-
-    Q_SCRIPTABLE void set(const QString& key, const QVariant& value) {
-        KdeConnectPluginConfig::set(key, value);
-    }
 };
 
 class DeviceApi : public DeviceDbusInterface {

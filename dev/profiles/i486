@@ -5,5 +5,5 @@ arch=x86
 arch_build=x86
 compiler=gcc
 compiler.version=8.3
-compiler.libcxx=libstdc++
+compiler.libcxx=libstdc++11
 build_type=Release

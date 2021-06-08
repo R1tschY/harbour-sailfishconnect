@@ -572,7 +572,7 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
         return;
 
     if (timeout > 0 &&
-            config->get(QStringLiteral("generalPersistent"), false))
+            config->getBool(QStringLiteral("generalPersistent"), false))
         return;
 
     int urgency = -1;
@@ -583,7 +583,7 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
             urgency = -1;
     }
     if (urgency > -1 &&
-            urgency < config->get<int>(QStringLiteral("generalUrgency"), 0))
+            urgency < config->getInt(QStringLiteral("generalUrgency"), 0))
         return;
 
     if (summary.isEmpty())
@@ -591,7 +591,7 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
 
     QString ticker = summary;
     if (!body.isEmpty() &&
-            config->get(QStringLiteral("generalIncludeBody"), true))
+            config->getBool(QStringLiteral("generalIncludeBody"), true))
         ticker += QStringLiteral(": ") + body;
 
     if (app.blacklistExpression.isValid() &&
@@ -625,7 +625,7 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
 
     // sync any icon data?
     // Only send icon on first notify (replacesId == 0)
-    if (config->get(QStringLiteral("generalSynchronizeIcons"), true)
+    if (config->getBool(QStringLiteral("generalSynchronizeIcons"), true)
             && replacesId == 0) {
         QSharedPointer<QIODevice> iconSource;
         // try different image sources according to priorities in notifications-

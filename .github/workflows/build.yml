@@ -28,7 +28,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: .conan/data
-        key: conan-cache1-armv7hl
+        key: conan-cache2-armv7hl
 
     - name: Check style
       run: python3 scripts/bad-style.py bad-style.xml
@@ -47,6 +47,12 @@ jobs:
         name: sailfishconnect-armv7hl
         path: RPMS
 
+    - name: Clean up Conan
+      run: |
+        conan remove -f "*" --builds
+        conan remove -f "*" --src
+        conan remove -f "*" --system-reqs
+
   build-i486:
     runs-on: ubuntu-latest
 
@@ -63,7 +69,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: .conan/data
-        key: conan-cache1-i486
+        key: conan-cache2-i486
 
     - name: Build i486 RPMS
       uses: R1tschY/sailfish-sdk-action@v1
@@ -78,6 +84,12 @@ jobs:
       with:
         name: sailfishconnect-i486
         path: RPMS
+
+    - name: Clean up Conan
+      run: |
+        conan remove -f "*" --builds
+        conan remove -f "*" --src
+        conan remove -f "*" --system-reqs
 
   build-aarch64:
     runs-on: ubuntu-latest
@@ -95,7 +107,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: .conan/data
-        key: conan-cache1-aarch64
+        key: conan-cache2-aarch64
 
     - name: Build aarch64 RPMS
       uses: R1tschY/sailfish-sdk-action@v1
@@ -110,3 +122,9 @@ jobs:
       with:
         name: sailfishconnect-aarch64
         path: RPMS
+
+    - name: Clean up Conan
+      run: |
+        conan remove -f "*" --builds
+        conan remove -f "*" --src
+        conan remove -f "*" --system-reqs

@@ -34,7 +34,7 @@ jobs:
       run: python3 scripts/bad-style.py bad-style.xml
 
     - name: Build armv7hl RPMS
-      uses: R1tschY/sailfish-sdk-action@v1
+      uses: R1tschY/sailfish-build-rpm@v1
       with:
         arch: 'armv7hl'
         release: '3.3.0.16'
@@ -72,7 +72,7 @@ jobs:
         key: conan-cache2-i486
 
     - name: Build i486 RPMS
-      uses: R1tschY/sailfish-sdk-action@v1
+      uses: R1tschY/sailfish-build-rpm@v1
       with:
         arch: 'i486'
         release: '3.3.0.16'
@@ -110,7 +110,7 @@ jobs:
         key: conan-cache2-aarch64
 
     - name: Build aarch64 RPMS
-      uses: R1tschY/sailfish-sdk-action@v1
+      uses: R1tschY/sailfish-build-rpm@v1
       with:
         arch: 'aarch64'
         release: '4.0.1.48'

@@ -11,7 +11,7 @@ Source1:    CMakeLists.txt
 Source2:    %{_target_cpu}.profile
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
-BuildRequires:  pkgconfig(openssl) >= 1.0.1 
+BuildRequires:  pkgconfig(openssl) >= 1.1.1 
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  pkgconfig(Qt5Sql)

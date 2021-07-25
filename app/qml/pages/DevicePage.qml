@@ -196,7 +196,6 @@ Page {
                     pluginId: "sailfishconnect_share"
                     onClicked: pageStack.push(filePickerPage)
 
-                    // TODO: multiselect
                     Component {
                         id: filePickerPage
                         MultiContentPickerDialog {
@@ -229,7 +228,7 @@ Page {
                 }
                 PluginAction {
                     device: _device
-                    title: i18n("Upload clipboard text")
+                    title: i18n("Send clipboard text")
                     icon: "image://theme/icon-m-clipboard"
                     pluginId: "sailfishconnect_clipboard"
                     onClicked: pluginCall("pushClipboard")

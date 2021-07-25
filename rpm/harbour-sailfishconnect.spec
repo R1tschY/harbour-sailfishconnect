@@ -3,7 +3,6 @@ Name:       harbour-sailfishconnect
 Summary:    SailfishOS client for KDE-Connect
 Version:    0.7.0
 Release:    0.1
-Group:      Qt/Qt
 License:    LICENSE
 URL:        https://github.com/R1tschY/harbour-sailfishconnect
 Source0:    %{name}-%{version}.tar.bz2
@@ -50,16 +49,10 @@ export SAILFISHCONNECT_PACKAGE_VERSION="%{version}-%{release}"
 
 SOURCE_DIR=`readlink -f %{_sourcedir}/..`
 
-if [ "$TARGET_CPU" == "i486" ] || [ "$SAILFISH_SDK_FRONTEND" == "qtcreator" ] ; then  
+if [ "$TARGET_CPU" == "i486" ] ; then  
   GENERATOR="Unix Makefiles"
 else
   GENERATOR="Ninja"
-fi
-
-if [ "$SAILFISH_SDK_FRONTEND" == "qtcreator" ] ; then  
-  CMAKE_BUILD_TYPE="Debug"
-else
-  CMAKE_BUILD_TYPE="RelWithDebInfo"
 fi
 
 if [ -f "CMakeLists.txt" ] ; then
@@ -67,7 +60,7 @@ if [ -f "CMakeLists.txt" ] ; then
 else 
   BUILD_DIR="."
 fi
-export CONAN_USER_HOME=`readlink -f .`
+export CONAN_USER_HOME=${SOURCE_DIR}
 
 # install virtualenv
 if [ ! -f ~/.local/bin/virtualenv ] ; then
@@ -93,9 +86,10 @@ mkdir -p "$BUILD_DIR"
 
 cd "$BUILD_DIR"
 conan install "$SOURCE_DIR" --build=missing --profile="$SOURCE_DIR/dev/profiles/%{_target_cpu}"
+conan remove -f "*" --builds --src --system-reqs
 
 cmake \
-  -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DBUILD_SHARED_LIBS=OFF \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
@@ -104,10 +98,7 @@ cmake \
   -G "$GENERATOR" \
   "$SOURCE_DIR"
 
-cd ..
-
-cmake --build "$BUILD_DIR" -- %{?_smp_mflags}
-
+cmake --build . -- %{?_smp_mflags}
 
 %install
 if [ -f "CMakeLists.txt" ] ; then

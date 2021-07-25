@@ -47,12 +47,6 @@ jobs:
         name: sailfishconnect-armv7hl
         path: RPMS
 
-    - name: Clean up Conan
-      run: |
-        conan remove -f "*" --builds
-        conan remove -f "*" --src
-        conan remove -f "*" --system-reqs
-
   build-i486:
     runs-on: ubuntu-latest
 
@@ -85,12 +79,6 @@ jobs:
         name: sailfishconnect-i486
         path: RPMS
 
-    - name: Clean up Conan
-      run: |
-        conan remove -f "*" --builds
-        conan remove -f "*" --src
-        conan remove -f "*" --system-reqs
-
   build-aarch64:
     runs-on: ubuntu-latest
 
@@ -122,9 +110,3 @@ jobs:
       with:
         name: sailfishconnect-aarch64
         path: RPMS
-
-    - name: Clean up Conan
-      run: |
-        conan remove -f "*" --builds
-        conan remove -f "*" --src
-        conan remove -f "*" --system-reqs

@@ -5,3 +5,6 @@ X-Nemo-Single-Instance=yes
 Icon=harbour-sailfishconnect
 Exec=harbour-sailfishconnect
 Name=Sailfish Connect
+
+[X-Sailjail]
+Sandboxing=Disabled

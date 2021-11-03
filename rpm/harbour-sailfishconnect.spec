@@ -85,7 +85,6 @@ fi
 
 # speed up conan remote add
 if ! grep -sq sailfishos "$CONAN_USER_HOME/.conan/remotes.json" ; then
-  conan remote remove conan-center
   conan remote add -f sailfishos https://gitlab.com/api/v4/projects/12208535/packages/conan
 fi
 

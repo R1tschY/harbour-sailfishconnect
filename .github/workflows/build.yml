@@ -9,7 +9,7 @@ on:
       - '*'
 
 env:
-  RELEASE: 3.3.0.14
+  RELEASE: 4.0.1.48
 
 jobs:
   build-armv7hl:
@@ -37,7 +37,7 @@ jobs:
       uses: R1tschY/sailfish-sdk-action@v1
       with:
         arch: 'armv7hl'
-        release: '3.3.0.16'
+        release: '4.0.1.48'
         fix-version: false
         enable-debug: true
 
@@ -69,7 +69,7 @@ jobs:
       uses: R1tschY/sailfish-sdk-action@v1
       with:
         arch: 'i486'
-        release: '3.3.0.16'
+        release: '4.0.1.48'
         fix-version: false
         enable-debug: true
 

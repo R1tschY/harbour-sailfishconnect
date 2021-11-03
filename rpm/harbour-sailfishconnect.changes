@@ -1,6 +1,9 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Wed Nov 03 2021 Richard Liebscher <r1tschy@posteo.de> 0.6.1-2
+- Rebuild to support Sailfish 4.3 (Sailfish 4.0 is now required)
+
 * Fri Jun 04 2021 Richard Liebscher <r1tschy@posteo.de> 0.6.1-1
 - Support for aarch64 architecture
 

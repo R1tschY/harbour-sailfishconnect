@@ -4,7 +4,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# R1tschY <r1tschy@posteo.de>, 2021
+# Lukáš Karas <lukas.karas@centrum.cz>, 2021
 #
 #, fuzzy
 msgid ""
@@ -13,189 +13,190 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-04 22:39+0100\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
-"Last-Translator: R1tschY <r1tschy@posteo.de>, 2021\n"
-"Language-Team: Italian (https://www.transifex.com/r1tschy/teams/89267/it/)\n"
-"Language: it\n"
+"Last-Translator: Lukáš Karas <lukas.karas@centrum.cz>, 2021\n"
+"Language-Team: Czech (https://www.transifex.com/r1tschy/teams/89267/cs/)\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #: app/src/helper/jobsnotificator.cpp:91 app/src/helper/jobsnotificator.cpp:132
 #, kde-format
 msgid "%1 from %2"
-msgstr ""
+msgstr "%1 z %2"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:40
 #, kde-format
 msgid "%1ms repeat interval"
-msgstr "Intervallo di ripetizione %1ms"
+msgstr "interval opakování %1ms"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:73
 #, kde-format
 msgid "&percnt;1 in the path will be replaced with the specific device name."
-msgstr ""
+msgstr "&percnt;1 v cestě bude nahrazeno jménem zařízení."
 
 #: app/qml/pages/AboutPage.qml:39
 #, kde-format
 msgid "About"
-msgstr "Info su"
+msgstr "O Sailfish Connect"
 
 #: app/qml/pages/DeviceListPage.qml:246
 #, kde-format
 msgid "About ..."
-msgstr "Info"
+msgstr "O Sailfish Connect ..."
 
 #: app/qml/pages/DevicePage.qml:124
 #, kde-format
 msgid "Accept"
-msgstr "Accetta"
+msgstr "Přijmout"
 
 #: app/qml/pages/DevicePage.qml:190
 #, kde-format
 msgid "Actions"
-msgstr "Azioni"
+msgstr "Akce"
 
 #: app/qml/pages/SettingsPage.qml:128
 #, kde-format
 msgid "Add device from IP address"
-msgstr ""
+msgstr "Přidat zařízení z IP adresy"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:163
 #, kde-format
 msgid "Add new command"
-msgstr ""
+msgstr "Přidat nový příkaz"
 
 #: app/qml/pages/SettingsPage.qml:46
 #, kde-format
 msgid "Application starts at system start and runs in background."
-msgstr ""
+msgstr "Spustit aplikaci při startu systému a běžet na pozadí."
 
 #: app/qml/pages/AboutPage.qml:87
 #, kde-format
 msgid "Bug reports on Github"
-msgstr "Segnala bug su GitHub"
+msgstr "Hlášení chyb na Githubu"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format
 msgid "Change layout"
-msgstr "Cambia layout"
+msgstr "Změnit rozložení"
 
 #: app/qml/pages/DevicePage.qml:245 app/qml/pages/RemoteVolumePage.qml:38
 #, kde-format
 msgid "Change volume"
-msgstr ""
+msgstr "Změnit hlasitost"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:80
 #, kde-format
 msgid "Command"
-msgstr ""
+msgstr "Příkaz"
 
 #: app/qml/pages/DevicePage.qml:165
 #, kde-format
 msgid "Connect"
-msgstr "Connetti"
+msgstr "Připojit"
 
 #: app/qml/pages/DeviceListPage.qml:145
 #, kde-format
 msgid "Connected"
-msgstr "Connesso"
+msgstr "Připojený"
 
 #: app/qml/pages/DeviceListPage.qml:73
 #, kde-format
 msgid "Device Name"
-msgstr "Nome dispositivo"
+msgstr "Jméno zařízení"
 
 #: app/qml/pages/DevicePage.qml:51
 #, kde-format
 msgid "Device is not reachable"
-msgstr "Dispositivo non raggiungibile"
+msgstr "Zařízení není dostupné"
 
 #: app/qml/pages/SettingsPage.qml:53
 #, kde-format
 msgid "Devices from IP address"
-msgstr ""
+msgstr "Zařízení z IP adresy"
 
 #: app/qml/pages/DevicePage.qml:155
 #, kde-format
 msgid "Do you want to connect to this device?"
-msgstr "Vuoi connetterti a questo dispositivo?"
+msgstr "Chcete se připojit k tomuto zařízení?"
 
 #: app/src/helper/jobsnotificator.cpp:116
 #, kde-format
 msgid "Download aborted"
-msgstr ""
+msgstr "Stažení přerušeno"
 
 #: app/src/helper/jobsnotificator.cpp:105
 #, kde-format
 msgid "Download failed"
-msgstr ""
+msgstr "Stažení selhalo"
 
 #: app/src/helper/jobsnotificator.cpp:140
-#, kde-format
+#, fuzzy, kde-format
 msgid "Download started"
-msgstr ""
+msgstr "Stažení přerušeno"
 
 #: app/src/helper/jobsnotificator.cpp:99
-#, kde-format
+#, fuzzy, kde-format
 msgid "Download succeeded"
-msgstr ""
+msgstr "Stažení bylo úspěšné"
 
 #: app/src/helper/jobsnotificator.cpp:142
 #, kde-format
 msgid "Downloading ..."
-msgstr ""
+msgstr "Stahuji ..."
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:141
 #: app/qml/pages/SettingsPage.qml:76
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "Upravit"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:114
 #, kde-format
 msgid "Edit commands"
-msgstr ""
+msgstr "Upravit příkazy"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:42
 #, kde-format
 msgid "Edit share configuration"
-msgstr ""
+msgstr "Upravit nastavení sdílení"
 
 #: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:267
 #, kde-format
 msgid "Encryption info"
-msgstr ""
+msgstr "Informace o šifrování"
 
 #: app/src/io/jobmanager.cpp:163
 #, kde-format
 msgid "Error %1"
-msgstr ""
+msgstr "Chyba %1"
 
 #: app/src/appdaemon.cpp:178
 #, kde-format
 msgid "Failed to pair. %1"
-msgstr ""
+msgstr "Chyba párování. %1"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:48
 #, kde-format
 msgid "Folder to save files"
-msgstr ""
+msgstr "Složka pro ukládání souborů"
 
 #: app/qml/pages/TouchpadPage.qml:65
 #, kde-format
 msgid "Holding ..."
-msgstr ""
+msgstr "Držím ..."
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:47
 #, kde-format
 msgid "IP address"
-msgstr ""
+msgstr "IP adresa"
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:46
 #, kde-format
 msgid "IPv4 or IPv6 address of device"
-msgstr ""
+msgstr "IPv4 nebo IPv6 adresa zařízení"
 
 #: app/qml/pages/DeviceListPage.qml:57
 #, kde-format
@@ -203,31 +204,33 @@ msgid ""
 "Install KDE Connect or GSConnect on your computer and connect it to the same "
 "WLAN."
 msgstr ""
+"Nainstalujte KDE Connect nebo GSConnect na vašem počítači a připojte jej do "
+"stejné LAN sítě."
 
 #: app/qml/pages/AboutPage.qml:66
 #, kde-format
 msgid "KDE Connect client for Sailfish OS"
-msgstr ""
+msgstr "KDE Connect klient pro Sailfish OS"
 
 #: app/qml/pages/KeyboardPage.qml:105
 #, kde-format
 msgid "Keyboard"
-msgstr ""
+msgstr "Klávesnice"
 
 #: app/qml/pages/AboutPage.qml:104
 #, kde-format
 msgid "Licence"
-msgstr "Licenza"
+msgstr "Licence"
 
 #: app/qml/pages/AboutPage.qml:77
 #, kde-format
 msgid "Links"
-msgstr "Link"
+msgstr "Odkazy"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:41
 #, kde-format
 msgid "Lock device"
-msgstr ""
+msgstr "Zamknout zařízení"
 
 #: app/qml/pages/TouchpadPage.qml:89
 #, kde-format
@@ -237,142 +240,146 @@ msgid ""
 "Hold shortly for Drag'n'Drop\n"
 "Scroll on right side"
 msgstr ""
+"Posouvejte prsty po obrazovce\n"
+"Tapněte pro klik\n"
+"Krátce držte pro přetažení\n"
+"Skrolujte na pravé hraně"
 
 #: app/qml/pages/TouchpadPage.qml:81
 #, kde-format
 msgid "Moving ..."
-msgstr ""
+msgstr "Posouvám ..."
 
 #: app/qml/components/MprisUi.qml:36
 #, kde-format
 msgid "Multimedia Controls"
-msgstr "Controlli multimediali"
+msgstr "Ovládání multimédií"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:72
 #, kde-format
 msgid "Name"
-msgstr ""
+msgstr "Jméno"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:71
 #, kde-format
 msgid "Name of command"
-msgstr ""
+msgstr "Jméno příkazu"
 
 #: app/qml/pages/DeviceListPage.qml:230
 #, kde-format
 msgid "Nearby devices"
-msgstr "Dispositivi vicini"
+msgstr "Blízká zařízení"
 
 #: app/qml/pages/RemoteVolumePage.qml:110
-#, kde-format
+#, fuzzy, kde-format
 msgid "No audio sinks exist on other device"
-msgstr ""
+msgstr "Na vzdáleném zařízení neexistují žádné výstupy"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
 #, kde-format
 msgid "No commands defined"
-msgstr ""
+msgstr "Není definovaný žádný příkaz"
 
 #: app/qml/pages/RemoteCommandsPage.qml:88
 #, kde-format
 msgid "No commands defined on other device"
-msgstr ""
+msgstr "Na druhém zařízení nejsou definovány žádné příkazy"
 
 #: app/qml/pages/SettingsPage.qml:114
 #, kde-format
 msgid "No devices defined"
-msgstr ""
+msgstr "Není zadáno žádné zařízení"
 
 #: app/qml/components/MprisUi.qml:196
 #, kde-format
 msgid "No remote players"
-msgstr "Nessun player remoto"
+msgstr "Žádné vzdálené přehrávače"
 
 #: app/qml/components/MprisUi.qml:94
 #, kde-format
 msgid "Nothing playing"
-msgstr "Niente in riproduzione"
+msgstr "Nic nehraje"
 
 #: app/qml/pages/DevicePluginsPage.qml:89
 #, kde-format
 msgid "Open configuration"
-msgstr ""
+msgstr "Otevřít konfiguraci"
 
 #: app/qml/pages/DevicePluginsPage.qml:78
 #, kde-format
 msgid "Open configuration throught context menu"
-msgstr ""
+msgstr "Otevřít konfiguraci z kontextového menu"
 
 #: app/qml/pages/DevicePage.qml:224
 #, kde-format
 msgid "Open keyboard"
-msgstr ""
+msgstr "Otevřít klávesnici"
 
 #: app/qml/pages/DevicePage.qml:217
 #, kde-format
 msgid "Open touchpad"
-msgstr ""
+msgstr "Otevřít touchpad"
 
 #: app/qml/pages/DeviceListPage.qml:215
 #, kde-format
 msgid "Paired devices"
-msgstr "Dispositivi connessi"
+msgstr "Spárovaná zařízení"
 
 #: app/src/appdaemon.cpp:66
 #, kde-format
 msgid "Pairing request"
-msgstr ""
+msgstr "Požadavek na párování"
 
 #: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
-msgstr ""
+msgstr "Čekající žádost na párování"
 
 #: app/qml/pages/DevicePage.qml:274
 #, kde-format
 msgid "Plugins"
-msgstr "Plugin"
+msgstr "Pluginy"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:85
 #, kde-format
 msgid "Predefined commands"
-msgstr ""
+msgstr "Předdefinované příkazy"
 
 #: app/qml/pages/DeviceListPage.qml:256
 #, kde-format
 msgid "Quit"
-msgstr "Esci"
+msgstr "Ukončit"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:37
 #, kde-format
 msgid "Reboot"
-msgstr ""
+msgstr "Restartovat"
 
 #: app/qml/pages/DeviceListPage.qml:262
 #, kde-format
 msgid "Refresh"
-msgstr "Ricarica"
+msgstr "Obnovit"
 
 #: app/qml/pages/DevicePage.qml:129
 #, kde-format
 msgid "Reject"
-msgstr "Rifiuta"
+msgstr "Odmítnout"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:154
 #: app/qml/pages/SettingsPage.qml:88
 #, kde-format
 msgid "Remove"
-msgstr ""
+msgstr "Odebrat"
 
 #: app/qml/pages/SettingsPage.qml:44
 #, kde-format
 msgid "Run as background service"
-msgstr ""
+msgstr "Běžet jako služba na pozadí"
 
 #: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:238
 #, kde-format
 msgid "Run command"
-msgstr ""
+msgstr "Spustit příkaz"
 
 #: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:237
 #, kde-format
@@ -382,95 +389,95 @@ msgstr "Sailfish Connect"
 #: app/qml/pages/TouchpadPage.qml:73
 #, kde-format
 msgid "Scrolling ..."
-msgstr ""
+msgstr "Skroluji ..."
 
 #: app/qml/pages/DevicePluginsPage.qml:61
 #, kde-format
 msgid "Select Plugins"
-msgstr "Seleziona plugin"
+msgstr "Vyberte pluginy"
 
 #: app/qml/pages/DevicePage.qml:202
 #, fuzzy, kde-format
 msgid "Select files to send"
-msgstr "Seleziona file da inviare"
+msgstr "Vybrat soubor k odeslání"
 
 #: app/qml/pages/DevicePage.qml:231
 #, fuzzy, kde-format
 msgid "Send clipboard text"
-msgstr "Condividi appunti"
+msgstr "Odeslat obsah schránky"
 
 #: app/qml/pages/DevicePage.qml:295
 #, kde-format
 msgid "Send ping"
-msgstr "Invia ping"
+msgstr "Poslat ping"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:31
 #: app/qml/pages/KeyboardPage.qml:110 app/qml/pages/SettingsPage.qml:39
 #, kde-format
 msgid "Settings"
-msgstr ""
+msgstr "Nastavení"
 
 #: app/qml/pages/DeviceListPage.qml:251
 #, kde-format
 msgid "Settings ..."
-msgstr "Impostazioni"
+msgstr "Nastavení ..."
 
 #: app/qml/pages/DevicePage.qml:194
 #, fuzzy, kde-format
 msgid "Share files"
-msgstr "Invia un file"
+msgstr "Sdílet soubor"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
 #, kde-format
 msgid "Shell command to execute"
-msgstr ""
+msgstr "Příkaz shellu k vykonání"
 
 #: app/qml/pages/AboutPage.qml:96
 #, kde-format
 msgid "Source code on Github"
-msgstr "Codice sorgente su GitHub"
+msgstr "Zdrojové kódy na Githubu"
 
 #: app/qml/pages/DevicePage.qml:112
 #, kde-format
 msgid "This device wants to pair with your device."
-msgstr "Questo dispositivo richiede una connessione con te."
+msgstr "Toto zařízení se chce spárovat s vaším zařízením."
 
 #: app/qml/pages/TouchpadPage.qml:56
 #, kde-format
 msgid "Touchpad"
-msgstr ""
+msgstr "Touchpad"
 
 #: app/qml/pages/DevicePage.qml:282 app/qml/pages/DevicePage.qml:285
 #, kde-format
 msgid "Unpair"
-msgstr "Disaccoppia"
+msgstr "Odpárovat"
 
 #: app/src/helper/jobsnotificator.cpp:114
 #, kde-format
 msgid "Upload aborted"
-msgstr ""
+msgstr "Odesílání přerušeno"
 
 #: app/src/helper/jobsnotificator.cpp:103
 #, kde-format
 msgid "Upload failed"
-msgstr ""
+msgstr "Odeslání selhalo"
 
 #: app/src/helper/jobsnotificator.cpp:97
-#, kde-format
+#, fuzzy, kde-format
 msgid "Upload succeeded"
-msgstr ""
+msgstr "Odeslání bylo úspěšné"
 
 #: app/src/helper/jobsnotificator.cpp:138
 #, kde-format
 msgid "Uploading ..."
-msgstr ""
+msgstr "Odesílání ..."
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:48
 #, kde-format
 msgid "Vibration feedback"
-msgstr "Vibrazione"
+msgstr "Odezva vibracemi"
 
 #: app/qml/pages/DevicePage.qml:78
 #, kde-format
 msgid "Waiting for accepted pairing ..."
-msgstr "In attesa che la richiesta sia accettata ..."
+msgstr "Čekám na přijmutí párování..."

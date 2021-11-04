@@ -2,27 +2,26 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # R1tschY <r1tschy@posteo.de>, 2021
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 21:32+0100\n"
+"POT-Creation-Date: 2021-11-04 22:39+0100\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
 "Last-Translator: R1tschY <r1tschy@posteo.de>, 2021\n"
 "Language-Team: Spanish (https://www.transifex.com/r1tschy/teams/89267/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/src/helper/jobsnotificator.cpp:91
-#: app/src/helper/jobsnotificator.cpp:132
+#: app/src/helper/jobsnotificator.cpp:91 app/src/helper/jobsnotificator.cpp:132
 #, kde-format
 msgid "%1 from %2"
 msgstr ""
@@ -47,12 +46,12 @@ msgstr "Acerca de"
 msgid "About ..."
 msgstr "Acerca de"
 
-#: app/qml/pages/DevicePage.qml:120
+#: app/qml/pages/DevicePage.qml:124
 #, kde-format
 msgid "Accept"
 msgstr "Aceptar"
 
-#: app/qml/pages/DevicePage.qml:186
+#: app/qml/pages/DevicePage.qml:190
 #, kde-format
 msgid "Actions"
 msgstr "Acciones"
@@ -82,7 +81,7 @@ msgstr "Bicho"
 msgid "Change layout"
 msgstr "Cambia el diseño"
 
-#: app/qml/pages/DevicePage.qml:238 app/qml/pages/RemoteVolumePage.qml:38
+#: app/qml/pages/DevicePage.qml:245 app/qml/pages/RemoteVolumePage.qml:38
 #, kde-format
 msgid "Change volume"
 msgstr ""
@@ -92,7 +91,7 @@ msgstr ""
 msgid "Command"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:161
+#: app/qml/pages/DevicePage.qml:165
 #, kde-format
 msgid "Connect"
 msgstr "Conectar"
@@ -107,7 +106,7 @@ msgstr "Conectado"
 msgid "Device Name"
 msgstr "Nombre de dispositivo"
 
-#: app/qml/pages/DevicePage.qml:47
+#: app/qml/pages/DevicePage.qml:51
 #, kde-format
 msgid "Device is not reachable"
 msgstr "Dispositivo no accesible"
@@ -117,7 +116,7 @@ msgstr "Dispositivo no accesible"
 msgid "Devices from IP address"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:151
+#: app/qml/pages/DevicePage.qml:155
 #, kde-format
 msgid "Do you want to connect to this device?"
 msgstr "Quieres conectarte a este dispositivo?"
@@ -132,12 +131,17 @@ msgstr ""
 msgid "Download failed"
 msgstr ""
 
-#: app/src/helper/jobsnotificator.cpp:99
+#: app/src/helper/jobsnotificator.cpp:140
 #, kde-format
-msgid "Download succedded"
+msgid "Download started"
 msgstr ""
 
-#: app/src/helper/jobsnotificator.cpp:140
+#: app/src/helper/jobsnotificator.cpp:99
+#, kde-format
+msgid "Download succeeded"
+msgstr ""
+
+#: app/src/helper/jobsnotificator.cpp:142
 #, kde-format
 msgid "Downloading ..."
 msgstr ""
@@ -158,7 +162,7 @@ msgstr ""
 msgid "Edit share configuration"
 msgstr ""
 
-#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:260
+#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:267
 #, kde-format
 msgid "Encryption info"
 msgstr ""
@@ -196,8 +200,8 @@ msgstr ""
 #: app/qml/pages/DeviceListPage.qml:57
 #, kde-format
 msgid ""
-"Install KDE Connect or GSConnect on your computer and connect it to the same"
-" WLAN."
+"Install KDE Connect or GSConnect on your computer and connect it to the same "
+"WLAN."
 msgstr ""
 
 #: app/qml/pages/AboutPage.qml:66
@@ -259,6 +263,11 @@ msgstr ""
 msgid "Nearby devices"
 msgstr "Dispositivos cercanos"
 
+#: app/qml/pages/RemoteVolumePage.qml:110
+#, kde-format
+msgid "No audio sinks exist on other device"
+msgstr ""
+
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
 #, kde-format
 msgid "No commands defined"
@@ -279,11 +288,6 @@ msgstr ""
 msgid "No remote players"
 msgstr "No hay reproductores remotos"
 
-#: app/qml/pages/RemoteVolumePage.qml:110
-#, kde-format
-msgid "No sinks exist on other device"
-msgstr ""
-
 #: app/qml/components/MprisUi.qml:94
 #, kde-format
 msgid "Nothing playing"
@@ -299,12 +303,12 @@ msgstr ""
 msgid "Open configuration throught context menu"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:217
+#: app/qml/pages/DevicePage.qml:224
 #, kde-format
 msgid "Open keyboard"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:210
+#: app/qml/pages/DevicePage.qml:217
 #, kde-format
 msgid "Open touchpad"
 msgstr ""
@@ -324,7 +328,7 @@ msgstr ""
 msgid "Pending pairing request ..."
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:267
+#: app/qml/pages/DevicePage.qml:274
 #, kde-format
 msgid "Plugins"
 msgstr "Enchufes"
@@ -349,7 +353,7 @@ msgstr ""
 msgid "Refresh"
 msgstr "Actualizar"
 
-#: app/qml/pages/DevicePage.qml:125
+#: app/qml/pages/DevicePage.qml:129
 #, kde-format
 msgid "Reject"
 msgstr "Rechazar"
@@ -365,12 +369,12 @@ msgstr ""
 msgid "Run as background service"
 msgstr ""
 
-#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:231
+#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:238
 #, kde-format
 msgid "Run command"
 msgstr ""
 
-#: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:186
+#: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:237
 #, kde-format
 msgid "Sailfish Connect"
 msgstr "Sailfish Connect"
@@ -385,12 +389,17 @@ msgstr ""
 msgid "Select Plugins"
 msgstr "Elegir enchufes"
 
-#: app/qml/pages/DevicePage.qml:199
-#, kde-format
-msgid "Select file to send"
+#: app/qml/pages/DevicePage.qml:202
+#, fuzzy, kde-format
+msgid "Select files to send"
 msgstr "Seleccionar archivo para enviar"
 
-#: app/qml/pages/DevicePage.qml:281
+#: app/qml/pages/DevicePage.qml:231
+#, fuzzy, kde-format
+msgid "Send clipboard text"
+msgstr "Subir texto del portapapeles"
+
+#: app/qml/pages/DevicePage.qml:295
 #, kde-format
 msgid "Send ping"
 msgstr "Enviar una verificación"
@@ -406,9 +415,9 @@ msgstr ""
 msgid "Settings ..."
 msgstr "Ajustes"
 
-#: app/qml/pages/DevicePage.qml:190
-#, kde-format
-msgid "Share a file"
+#: app/qml/pages/DevicePage.qml:194
+#, fuzzy, kde-format
+msgid "Share files"
 msgstr "Compartir un archivo"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
@@ -421,7 +430,7 @@ msgstr ""
 msgid "Source code on Github"
 msgstr "Fuente"
 
-#: app/qml/pages/DevicePage.qml:108
+#: app/qml/pages/DevicePage.qml:112
 #, kde-format
 msgid "This device wants to pair with your device."
 msgstr "Este dispositivo quiere vincularse al dispositivo."
@@ -431,7 +440,7 @@ msgstr "Este dispositivo quiere vincularse al dispositivo."
 msgid "Touchpad"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:275
+#: app/qml/pages/DevicePage.qml:282 app/qml/pages/DevicePage.qml:285
 #, kde-format
 msgid "Unpair"
 msgstr "Desvincular"
@@ -441,11 +450,6 @@ msgstr "Desvincular"
 msgid "Upload aborted"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:224
-#, kde-format
-msgid "Upload clipboard text"
-msgstr "Subir texto del portapapeles"
-
 #: app/src/helper/jobsnotificator.cpp:103
 #, kde-format
 msgid "Upload failed"
@@ -453,7 +457,7 @@ msgstr ""
 
 #: app/src/helper/jobsnotificator.cpp:97
 #, kde-format
-msgid "Upload succedded"
+msgid "Upload succeeded"
 msgstr ""
 
 #: app/src/helper/jobsnotificator.cpp:138
@@ -466,7 +470,7 @@ msgstr ""
 msgid "Vibration feedback"
 msgstr "Vibración haptico"
 
-#: app/qml/pages/DevicePage.qml:74
+#: app/qml/pages/DevicePage.qml:78
 #, kde-format
 msgid "Waiting for accepted pairing ..."
 msgstr "Esperando emparejamiento aceptado ..."

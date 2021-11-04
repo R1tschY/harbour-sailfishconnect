@@ -3,15 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# Translators:
+# Bérenger, 2021
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 21:32+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2021-11-04 22:39+0100\n"
+"PO-Revision-Date: 2021-02-06 22:45+0000\n"
+"Last-Translator: Bérenger, 2021\n"
+"Language-Team: French (https://www.transifex.com/r1tschy/teams/89267/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,52 +24,52 @@ msgstr ""
 #: plugins/sf_share/shareplugin.cpp:143
 #, kde-format
 msgid "%1 does not exist"
-msgstr ""
+msgstr "‎%1 n’existe pas‎"
 
 #: pluginscommon/downloadjob.cpp:62
 #, kde-format
 msgid "Cannot create destination folder"
-msgstr "Impossible de créer un dossier de destination"
+msgstr "‎Impossible de créer le dossier de destination‎"
 
 #: pluginscommon/downloadjob.cpp:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Could not open file `%1`: %2"
-msgstr "Impossible d'ouvrir le fichier en écriture :  %1"
+msgstr "‎Impossible d’ouvrir le fichier `%1` : %2‎"
 
 #: plugins/sf_share/shareplugin.cpp:143
 #, kde-format
 msgid "Could not share file"
-msgstr ""
+msgstr "‎Impossible de partager le fichier‎"
 
 #: pluginscommon/copyjob.cpp:237
-#, fuzzy, kde-format
+#, kde-format
 msgid "Early end of input stream: %1"
-msgstr "Fin de flux d'entrée inattendue"
+msgstr "‎Fin anticipée du flux entrant : %1‎"
 
 #: pluginscommon/copyjob.cpp:225
-#, fuzzy, kde-format
+#, kde-format
 msgid "Early end of output stream: %1"
-msgstr "Fin de flux de sortie inattendue"
+msgstr "‎Fin anticipée du flux sortant : %1‎"
 
 #: pluginscommon/copyjob.cpp:92
 #, kde-format
 msgid "Input stream is not readable."
-msgstr "Impossible de lire le flux d'entré."
+msgstr "‎Le flux entrant n’est pas lisible.‎"
 
 #: pluginscommon/copyjob.cpp:97
 #, kde-format
 msgid "Output stream is not writable."
-msgstr "Impossible d'écrire sur le flux de sortie."
+msgstr "‎Le flux sortant n’est pas accessible en écriture.‎"
 
 #: pluginscommon/copyjob.cpp:152
 #, kde-format
 msgid "Read error: %1"
-msgstr "Erreur de lecture : %1"
+msgstr "‎Erreur de lecture : %1‎"
 
 #: pluginscommon/copyjob.cpp:231
 #, kde-format
 msgid "Read more bytes of input stream than expected."
-msgstr "Trop de bytes lus sur le flux d'entré que prévu."
+msgstr "Plus d’octets que prévu ont été lues du flux entrant.‎"
 
 #: pluginscommon/downloadjob.cpp:85
 #, kde-format
@@ -76,4 +79,4 @@ msgstr "Réception"
 #: pluginscommon/copyjob.cpp:167
 #, kde-format
 msgid "Write error: %1"
-msgstr "Erreur d'écriture : %1"
+msgstr "‎Erreur d’écriture : %1‎"

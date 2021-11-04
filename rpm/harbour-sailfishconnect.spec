@@ -55,6 +55,12 @@ else
   GENERATOR="Ninja"
 fi
 
+if [ "$SAILFISH_SDK_FRONTEND" == "qtcreator" ] ; then  
+  CMAKE_BUILD_TYPE="Debug"
+else
+  CMAKE_BUILD_TYPE="RelWithDebInfo"
+fi
+
 if [ -f "CMakeLists.txt" ] ; then
   BUILD_DIR="rpmbuilddir-%{_target_cpu}"
 else 
@@ -88,7 +94,7 @@ conan install "$SOURCE_DIR" --build=missing --profile="$SOURCE_DIR/dev/profiles/
 conan remove -f "*" --builds --src --system-reqs
 
 cmake \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \
   -DBUILD_SHARED_LIBS=OFF \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \

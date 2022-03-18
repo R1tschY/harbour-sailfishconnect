@@ -26,7 +26,7 @@ msgstr ""
 #: app/src/helper/jobsnotificator.cpp:132
 #, kde-format
 msgid "%1 from %2"
-msgstr ""
+msgstr "%1 из %2"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:40
 #, kde-format
@@ -126,12 +126,12 @@ msgstr "Вы хотите подключиться к этому устройс�
 #: app/src/helper/jobsnotificator.cpp:116
 #, kde-format
 msgid "Download aborted"
-msgstr ""
+msgstr "Скачивание прервано"
 
 #: app/src/helper/jobsnotificator.cpp:105
 #, kde-format
 msgid "Download failed"
-msgstr ""
+msgstr "Не удалось скачать"
 
 #: app/src/helper/jobsnotificator.cpp:99
 #, kde-format
@@ -141,7 +141,7 @@ msgstr ""
 #: app/src/helper/jobsnotificator.cpp:140
 #, kde-format
 msgid "Downloading ..."
-msgstr ""
+msgstr "Скачивание ..."
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:141
 #: app/qml/pages/SettingsPage.qml:76
@@ -446,7 +446,7 @@ msgstr "Отвязать"
 #: app/src/helper/jobsnotificator.cpp:114
 #, kde-format
 msgid "Upload aborted"
-msgstr ""
+msgstr "Закачивание прервано"
 
 #: app/qml/pages/DevicePage.qml:224
 #, kde-format
@@ -456,7 +456,7 @@ msgstr "Загрузить текст из буфера обмена"
 #: app/src/helper/jobsnotificator.cpp:103
 #, kde-format
 msgid "Upload failed"
-msgstr ""
+msgstr "Не удалось закачать"
 
 #: app/src/helper/jobsnotificator.cpp:97
 #, kde-format
@@ -466,7 +466,7 @@ msgstr ""
 #: app/src/helper/jobsnotificator.cpp:138
 #, kde-format
 msgid "Uploading ..."
-msgstr ""
+msgstr "Закачивание ..."
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:48
 #, kde-format

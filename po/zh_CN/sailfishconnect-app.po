@@ -5,6 +5,7 @@
 # 
 # Translators:
 # R1tschY <r1tschy@posteo.de>, 2021
+# rui kon <facebookmail@qq.com>, 2021
 # 
 #, fuzzy
 msgid ""
@@ -13,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-07 21:32+0100\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
-"Last-Translator: R1tschY <r1tschy@posteo.de>, 2021\n"
+"Last-Translator: rui kon <facebookmail@qq.com>, 2021\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/r1tschy/teams/89267/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +26,7 @@ msgstr ""
 #: app/src/helper/jobsnotificator.cpp:132
 #, kde-format
 msgid "%1 from %2"
-msgstr ""
+msgstr "%1 来自 %2"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:40
 #, kde-format
@@ -35,7 +36,7 @@ msgstr "%1ms 重复间隔"
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:73
 #, kde-format
 msgid "&percnt;1 in the path will be replaced with the specific device name."
-msgstr ""
+msgstr "&percnt;1 位于路径的将会替换为特定设备名称。"
 
 #: app/qml/pages/AboutPage.qml:39
 #, kde-format
@@ -60,17 +61,17 @@ msgstr "操作"
 #: app/qml/pages/SettingsPage.qml:128
 #, kde-format
 msgid "Add device from IP address"
-msgstr ""
+msgstr "从IP地址中添加设备"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:163
 #, kde-format
 msgid "Add new command"
-msgstr ""
+msgstr "添加命令行"
 
 #: app/qml/pages/SettingsPage.qml:46
 #, kde-format
 msgid "Application starts at system start and runs in background."
-msgstr ""
+msgstr "软件将会在系统启动之后自启并且运行于后台。"
 
 #: app/qml/pages/AboutPage.qml:87
 #, kde-format
@@ -85,12 +86,12 @@ msgstr "更改布局"
 #: app/qml/pages/DevicePage.qml:238 app/qml/pages/RemoteVolumePage.qml:38
 #, kde-format
 msgid "Change volume"
-msgstr ""
+msgstr "更改音量"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:80
 #, kde-format
 msgid "Command"
-msgstr ""
+msgstr "命令"
 
 #: app/qml/pages/DevicePage.qml:161
 #, kde-format
@@ -115,7 +116,7 @@ msgstr "设备无法访问"
 #: app/qml/pages/SettingsPage.qml:53
 #, kde-format
 msgid "Devices from IP address"
-msgstr ""
+msgstr "来自IP地址的设备"
 
 #: app/qml/pages/DevicePage.qml:151
 #, kde-format
@@ -125,12 +126,12 @@ msgstr "是否想要连接到此设备?"
 #: app/src/helper/jobsnotificator.cpp:116
 #, kde-format
 msgid "Download aborted"
-msgstr ""
+msgstr "下载已中止"
 
 #: app/src/helper/jobsnotificator.cpp:105
 #, kde-format
 msgid "Download failed"
-msgstr ""
+msgstr "下载失败"
 
 #: app/src/helper/jobsnotificator.cpp:99
 #, kde-format
@@ -140,75 +141,75 @@ msgstr ""
 #: app/src/helper/jobsnotificator.cpp:140
 #, kde-format
 msgid "Downloading ..."
-msgstr ""
+msgstr "正在下载…"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:141
 #: app/qml/pages/SettingsPage.qml:76
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:114
 #, kde-format
 msgid "Edit commands"
-msgstr ""
+msgstr "编辑命令"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:42
 #, kde-format
 msgid "Edit share configuration"
-msgstr ""
+msgstr "编辑分享配置"
 
 #: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:260
 #, kde-format
 msgid "Encryption info"
-msgstr ""
+msgstr "加密信息"
 
 #: app/src/io/jobmanager.cpp:163
 #, kde-format
 msgid "Error %1"
-msgstr ""
+msgstr "错误 %1"
 
 #: app/src/appdaemon.cpp:178
 #, kde-format
 msgid "Failed to pair. %1"
-msgstr ""
+msgstr "匹配失败。 %1"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:48
 #, kde-format
 msgid "Folder to save files"
-msgstr ""
+msgstr "保存文件的文件夹"
 
 #: app/qml/pages/TouchpadPage.qml:65
 #, kde-format
 msgid "Holding ..."
-msgstr ""
+msgstr "保持…"
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:47
 #, kde-format
 msgid "IP address"
-msgstr ""
+msgstr "IP地址"
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:46
 #, kde-format
 msgid "IPv4 or IPv6 address of device"
-msgstr ""
+msgstr "IPv4或IPv6设备地址"
 
 #: app/qml/pages/DeviceListPage.qml:57
 #, kde-format
 msgid ""
 "Install KDE Connect or GSConnect on your computer and connect it to the same"
 " WLAN."
-msgstr ""
+msgstr "安装 KDE Connect 或 GSconnect 到你的计算机上并且连接到相同 WLAN 。"
 
 #: app/qml/pages/AboutPage.qml:66
 #, kde-format
 msgid "KDE Connect client for Sailfish OS"
-msgstr ""
+msgstr "旗鱼系统 KDE Connect 客户端"
 
 #: app/qml/pages/KeyboardPage.qml:105
 #, kde-format
 msgid "Keyboard"
-msgstr ""
+msgstr "键盘"
 
 #: app/qml/pages/AboutPage.qml:104
 #, kde-format
@@ -223,7 +224,7 @@ msgstr "链接"
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:41
 #, kde-format
 msgid "Lock device"
-msgstr ""
+msgstr "锁定设备"
 
 #: app/qml/pages/TouchpadPage.qml:89
 #, kde-format
@@ -233,11 +234,15 @@ msgid ""
 "Hold shortly for Drag'n'Drop\n"
 "Scroll on right side"
 msgstr ""
+"在屏幕上移动手指\n"
+"轻触以点击\n"
+"短暂按住以上下拖动\n"
+"向右滚动"
 
 #: app/qml/pages/TouchpadPage.qml:81
 #, kde-format
 msgid "Moving ..."
-msgstr ""
+msgstr "移动..."
 
 #: app/qml/components/MprisUi.qml:36
 #, kde-format
@@ -247,12 +252,12 @@ msgstr "多媒体控制"
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:72
 #, kde-format
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:71
 #, kde-format
 msgid "Name of command"
-msgstr ""
+msgstr "命令名称"
 
 #: app/qml/pages/DeviceListPage.qml:230
 #, kde-format
@@ -262,17 +267,17 @@ msgstr "附近设备"
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
 #, kde-format
 msgid "No commands defined"
-msgstr ""
+msgstr "无明确命令"
 
 #: app/qml/pages/RemoteCommandsPage.qml:88
 #, kde-format
 msgid "No commands defined on other device"
-msgstr ""
+msgstr "其它设备上没有明确命令"
 
 #: app/qml/pages/SettingsPage.qml:114
 #, kde-format
 msgid "No devices defined"
-msgstr ""
+msgstr "没有明确设备"
 
 #: app/qml/components/MprisUi.qml:196
 #, kde-format
@@ -292,22 +297,22 @@ msgstr "无播放项目"
 #: app/qml/pages/DevicePluginsPage.qml:89
 #, kde-format
 msgid "Open configuration"
-msgstr ""
+msgstr "打开配置"
 
 #: app/qml/pages/DevicePluginsPage.qml:78
 #, kde-format
 msgid "Open configuration throught context menu"
-msgstr ""
+msgstr "通过上下文菜单打开配置"
 
 #: app/qml/pages/DevicePage.qml:217
 #, kde-format
 msgid "Open keyboard"
-msgstr ""
+msgstr "打开键盘"
 
 #: app/qml/pages/DevicePage.qml:210
 #, kde-format
 msgid "Open touchpad"
-msgstr ""
+msgstr "打开触控板"
 
 #: app/qml/pages/DeviceListPage.qml:215
 #, kde-format
@@ -317,12 +322,12 @@ msgstr "配对设备"
 #: app/src/appdaemon.cpp:66
 #, kde-format
 msgid "Pairing request"
-msgstr ""
+msgstr "配对请求"
 
 #: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
-msgstr ""
+msgstr "等待配对请求…"
 
 #: app/qml/pages/DevicePage.qml:267
 #, kde-format
@@ -332,7 +337,7 @@ msgstr "插件"
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:85
 #, kde-format
 msgid "Predefined commands"
-msgstr ""
+msgstr "预设命令"
 
 #: app/qml/pages/DeviceListPage.qml:256
 #, kde-format
@@ -342,7 +347,7 @@ msgstr "退出"
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:37
 #, kde-format
 msgid "Reboot"
-msgstr ""
+msgstr "重启"
 
 #: app/qml/pages/DeviceListPage.qml:262
 #, kde-format
@@ -358,17 +363,17 @@ msgstr "拒绝"
 #: app/qml/pages/SettingsPage.qml:88
 #, kde-format
 msgid "Remove"
-msgstr ""
+msgstr "移除"
 
 #: app/qml/pages/SettingsPage.qml:44
 #, kde-format
 msgid "Run as background service"
-msgstr ""
+msgstr "作为后台服务运行"
 
 #: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:231
 #, kde-format
 msgid "Run command"
-msgstr ""
+msgstr "运行命令"
 
 #: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:186
 #, kde-format
@@ -378,7 +383,7 @@ msgstr "旗鱼连接"
 #: app/qml/pages/TouchpadPage.qml:73
 #, kde-format
 msgid "Scrolling ..."
-msgstr ""
+msgstr "滚动…"
 
 #: app/qml/pages/DevicePluginsPage.qml:61
 #, kde-format
@@ -399,7 +404,7 @@ msgstr "发送 ping"
 #: app/qml/pages/KeyboardPage.qml:110 app/qml/pages/SettingsPage.qml:39
 #, kde-format
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #: app/qml/pages/DeviceListPage.qml:251
 #, kde-format
@@ -414,7 +419,7 @@ msgstr "分享文件"
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
 #, kde-format
 msgid "Shell command to execute"
-msgstr ""
+msgstr "执行 shell 命令"
 
 #: app/qml/pages/AboutPage.qml:96
 #, kde-format
@@ -429,7 +434,7 @@ msgstr "此设备希望和你的设备配对"
 #: app/qml/pages/TouchpadPage.qml:56
 #, kde-format
 msgid "Touchpad"
-msgstr ""
+msgstr "触摸板"
 
 #: app/qml/pages/DevicePage.qml:275
 #, kde-format
@@ -439,7 +444,7 @@ msgstr "取消配对"
 #: app/src/helper/jobsnotificator.cpp:114
 #, kde-format
 msgid "Upload aborted"
-msgstr ""
+msgstr "更新已中止"
 
 #: app/qml/pages/DevicePage.qml:224
 #, kde-format
@@ -449,7 +454,7 @@ msgstr "上传剪切板文本"
 #: app/src/helper/jobsnotificator.cpp:103
 #, kde-format
 msgid "Upload failed"
-msgstr ""
+msgstr "更新失败"
 
 #: app/src/helper/jobsnotificator.cpp:97
 #, kde-format
@@ -459,7 +464,7 @@ msgstr ""
 #: app/src/helper/jobsnotificator.cpp:138
 #, kde-format
 msgid "Uploading ..."
-msgstr ""
+msgstr "正在更新…"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:48
 #, kde-format

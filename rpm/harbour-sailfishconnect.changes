@@ -1,6 +1,9 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Fri Mar 18 2022 Richard Liebscher <r1tschy@posteo.de> 0.6.2-1
+- Disable sandbox for Sailfish 4.4 support
+
 * Wed Nov 03 2021 Richard Liebscher <r1tschy@posteo.de> 0.6.1-2
 - Rebuild to support Sailfish 4.3 (Sailfish 4.0 is now required)
 

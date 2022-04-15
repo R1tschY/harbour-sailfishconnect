@@ -38,6 +38,7 @@ add_static_plugins_lib(
     Share
     Telepathy
     Telephony
+    SftpServer
 )
 
 # plugin clients

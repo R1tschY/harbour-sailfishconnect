@@ -1,0 +1,27 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "r1tschy@posteo.de",
+                "Name": "Richard Liebscher",
+                "Name[x-test]": "xxRichard Liebscherxx"
+            }
+        ],
+        "Description": "Provide SFTP server",
+        "EnabledByDefault": true,
+        "Icon": null,
+        "Id": "sailfishconnect_sftpserver",
+        "License": "GPL",
+        "Name": "SFTP Server",
+        "ServiceTypes": [
+            "KdeConnect/Plugin"
+        ],
+        "Version": "0.1"
+    },
+    "X-KdeConnect-OutgoingPacketType": [
+        "kdeconnect.sftp"
+    ],
+    "X-KdeConnect-SupportedPacketType": [
+        "kdeconnect.sftp.request"
+    ]
+}

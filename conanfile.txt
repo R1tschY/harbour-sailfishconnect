@@ -6,6 +6,7 @@ KF5CoreAddons/5.36.0@r1tschy/stable
 KF5I18n/5.36.0@r1tschy/stable
 KF5Config/5.36.0@r1tschy/stable
 Qca-qt5/2.2.1@r1tschy/stable
+libssh/0.9.5@r1tschy/stable
 
 [options]
 KF5CoreAddons:shared=False

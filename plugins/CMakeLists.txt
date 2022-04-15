@@ -8,6 +8,7 @@ add_subdirectory(batteryreport)
 add_subdirectory(contacts)
 add_subdirectory(telepathy)
 add_subdirectory(telephony)
+add_subdirectory(sftpserver)
 
 add_subdirectory(sf_sendnotifications)
 add_subdirectory(sf_share)

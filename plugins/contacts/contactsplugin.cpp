@@ -31,13 +31,13 @@ K_PLUGIN_CLASS_WITH_JSON(ContactsPlugin, "sailfishconnect_contacts.json")
 
 static Q_LOGGING_CATEGORY(logger, "kdeconnect.plugin.contacts");
 
-QString PACKET_TYPE_CONTACTS_REQUEST_ALL_UIDS_TIMESTAMP = QStringLiteral("kdeconnect.contacts.request_all_uids_timestamps");
+static const QString PACKET_TYPE_CONTACTS_REQUEST_ALL_UIDS_TIMESTAMP = QStringLiteral("kdeconnect.contacts.request_all_uids_timestamps");
 
-QString PACKET_TYPE_CONTACTS_REQUEST_VCARDS_BY_UIDS = QStringLiteral("kdeconnect.contacts.request_vcards_by_uid");
+static const QString PACKET_TYPE_CONTACTS_REQUEST_VCARDS_BY_UIDS = QStringLiteral("kdeconnect.contacts.request_vcards_by_uid");
 
-QString PACKAGE_TYPE_CONTACTS_RESPONSE_UIDS_TIMESTAMPS = QStringLiteral("kdeconnect.contacts.response_uids_timestamps");
+static const QString PACKAGE_TYPE_CONTACTS_RESPONSE_UIDS_TIMESTAMPS = QStringLiteral("kdeconnect.contacts.response_uids_timestamps");
 
-QString PACKET_TYPE_CONTACTS_RESPONSE_VCARDS = QStringLiteral("kdeconnect.contacts.response_vcards");
+static const QString PACKET_TYPE_CONTACTS_RESPONSE_VCARDS = QStringLiteral("kdeconnect.contacts.response_vcards");
 
 
 bool ContactsPlugin::receivePacket(const NetworkPacket& np)

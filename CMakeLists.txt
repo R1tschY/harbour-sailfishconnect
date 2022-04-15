@@ -5,7 +5,7 @@ project(SailfishConnect VERSION 0.7.0 LANGUAGES C CXX)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(TARGETS)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(SAILFISHOS ON)
 set(BUILD_SHARED_LIBS OFF)
 

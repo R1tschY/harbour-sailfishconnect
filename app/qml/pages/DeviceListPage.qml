@@ -231,8 +231,10 @@ Page {
                 delegate: deviceDelegate
                 visible: trustedDevices.count > 0
 
-                _listView.section.property: "section"
-                _listView.section.delegate: sectionHeading
+                Component.onCompleted: {
+                    trustedDevices._listView.section.property = "section"
+                    trustedDevices._listView.section.delegate = sectionHeading
+                }
             }
         }
 

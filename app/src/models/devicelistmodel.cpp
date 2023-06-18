@@ -91,6 +91,10 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
         return device->id();
     case IconUrlRole:
         return deviceTypeToIcon(device->type());
+    case SectionRole:
+        return device->isTrusted()
+                ? (device->isReachable() ? Connected : Trusted)
+                : (device->isReachable() ? Near : Nothing);
     case TrustedRole:
         return device->isTrusted();
     case ReachableRole:
@@ -112,6 +116,7 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
     roles.insert(IconUrlRole, "iconUrl");
     roles.insert(TrustedRole, "trusted");
     roles.insert(ReachableRole, "reachable");
+    roles.insert(SectionRole, "section");
     roles.insert(HasPairingRequestsRole, "hasPairingRequests");
     roles.insert(WaitsForPairingRole, "waitsForPairing");
     return roles;

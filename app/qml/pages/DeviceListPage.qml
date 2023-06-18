@@ -190,31 +190,17 @@ Page {
                 id: trustedDevicesModel
 
                 sortRole: "name"
-                filterRole: "trusted"
-                filterValue: true
                 sourceModel: devicelistModel
             }
 
-            SortFilterModel {
-                id: nontrustedDevicesModel
+            Component {
+                id: sectionHeading
 
-                sortRole: "name"
-                filterRole: "trusted"
-                filterValue: false
-                sourceModel: devicelistModel
-            }
-            SortFilterModel {
-                id: otherNearDevicesModel
-
-                filterRole: "reachable"
-                filterValue: true
-                sourceModel: nontrustedDevicesModel
+                SectionHeader {
+                    text: section
+                }
             }
 
-            SectionHeader {
-                text: i18n("Paired devices")
-                visible: trustedDevices.count > 0
-            }
             ColumnView {
                 id: trustedDevices
                 width: page.width
@@ -224,20 +210,9 @@ Page {
                 model: trustedDevicesModel
                 delegate: deviceDelegate
                 visible: trustedDevices.count > 0
-            }
 
-            SectionHeader {
-                text: i18n("Nearby devices")
-                visible: nearDevices.count > 0
-            }
-            ColumnView {
-                id: nearDevices
-                width: page.width
-                itemHeight: Theme.itemSizeMedium
-
-                model: otherNearDevicesModel
-                delegate: deviceDelegate
-                visible: nearDevices.count > 0
+                _listView.section.property: "section"
+                _listView.section.delegate: sectionHeading
             }
         }
 

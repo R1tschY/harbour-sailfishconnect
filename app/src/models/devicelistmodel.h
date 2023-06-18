@@ -37,9 +37,18 @@ public:
         IconUrlRole,
         TrustedRole,
         ReachableRole,
+        SectionRole,
         HasPairingRequestsRole,
         WaitsForPairingRole
     };
+
+    enum Section {
+        Connected,
+        Trusted,
+        Near,
+        Nothing
+    };
+    Q_ENUM(Section)
 
     explicit DeviceListModel(QObject *parent = nullptr);
     ~DeviceListModel();

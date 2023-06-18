@@ -157,6 +157,19 @@ Page {
                         Behavior on opacity { FadeAnimation {} }
                     }
 
+                    RemorseItem {
+                        id: remorse
+                    }
+
+                    function requestUnpairDevice() {
+                        var deviceId = id
+                        remorse.execute(
+                                    listItem, i18n("Unpaired"),
+                                    function() {
+                                        page.unpairDeviceById(deviceId)
+                                    })
+                    }
+
                     onClicked: {
                         pageStack.push(
                             Qt.resolvedUrl("DevicePage.qml"),
@@ -276,6 +289,17 @@ Page {
             Qt.resolvedUrl("DevicePage.qml"),
             { deviceId: deviceId },
             PageStackAction.Immediate)
+    }
+
+    function unpairDeviceById(deviceId) {
+        console.log("Unpairing device " + deviceId)
+        var device = daemon.getDevice(deviceId)
+        if (device) {
+            device.unpair()
+        } else {
+            console.warn("Unpairing request for non-existing device "
+                         + deviceId + " ignored")
+        }
     }
 }
 

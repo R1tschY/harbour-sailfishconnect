@@ -1,4 +1,4 @@
-[build_requires]
+[tool_requires]
 extra-cmake-modules/5.68.0@r1tschy/stable
 
 [requires]
@@ -9,11 +9,11 @@ Qca-qt5/2.2.1@r1tschy/stable
 libssh/0.9.5@r1tschy/stable
 
 [options]
-KF5CoreAddons:shared=False
-KF5I18n:shared=False
-KF5Config:shared=False
+KF5CoreAddons/*:shared=False
+KF5I18n/*:shared=False
+KF5Config/*:shared=False
 
-Qca-qt5:shared=False
+Qca-qt5/*:shared=False
 
 [imports]
 lib, *.so.* -> ./deps/lib

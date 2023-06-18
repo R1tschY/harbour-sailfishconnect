@@ -77,10 +77,10 @@ fi
 if [ ! -f "$VENV/bin/conan" ] ; then
   ~/.local/bin/virtualenv --python=python3 "$VENV"
   source "$VENV/bin/activate"
-  pip install conan
 else
   source "$VENV/bin/activate"
 fi
+pip install conan===1.60.1
 
 # speed up conan remote add
 if ! grep -sq sailfishos "$CONAN_USER_HOME/.conan/remotes.json" ; then
@@ -90,7 +90,7 @@ fi
 mkdir -p "$BUILD_DIR"
 
 cd "$BUILD_DIR"
-conan install "$SOURCE_DIR" --build=missing --profile="$SOURCE_DIR/dev/profiles/%{_target_cpu}"
+conan install "$SOURCE_DIR" --build=missing --profile:build="$SOURCE_DIR/dev/profiles/%{_target_cpu}" --profile:host="$SOURCE_DIR/dev/profiles/%{_target_cpu}"
 conan remove -f "*" --builds --src --system-reqs
 
 cmake \

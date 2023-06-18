@@ -99,7 +99,7 @@ Page {
                     property bool showStatus: deviceStatusLabel.text.length
 
                     width: page.width
-                    height: Theme.itemSizeMedium
+                    contentHeight: Theme.itemSizeMedium
 
                     Image {
                         id: icon
@@ -155,6 +155,13 @@ Page {
                         textFormat: Text.PlainText
 
                         Behavior on opacity { FadeAnimation {} }
+                    }
+
+                    menu: ContextMenu {
+                        MenuItem {
+                            text: i18n("Unpair")
+                            onClicked: listItem.requestUnpairDevice()
+                        }
                     }
 
                     RemorseItem {

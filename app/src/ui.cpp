@@ -53,8 +53,8 @@ UI::UI(bool daemonMode, QObject *parent)
     : QObject(parent)
     , m_daemon(new AppDaemon())
     , m_daemonApi(new DaemonApi(this))
-    , m_daemonMode(daemonMode)
     , m_keyboardLayoutProvider(new KeyboardLayoutProvider(this))
+    , m_daemonMode(daemonMode)
 {
     m_settings.beginGroup(QStringLiteral("UI"));
 

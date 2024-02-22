@@ -67,6 +67,12 @@ public:
         return checkForDbusError(
             RemoteKeyboardDbusInterface::sendKeyPress(key, specialKey, shift, ctrl, alt, sendAck));
     }
+
+    Q_SCRIPTABLE void sendQKeyEvent(const QVariantMap &keyEvent, bool sendAck = true)
+    {
+        return checkForDbusError(
+            RemoteKeyboardDbusInterface::sendQKeyEvent(keyEvent, sendAck));
+    }
 };
 
 class RemoteCommandsApi : public RemoteCommandsDbusInterface {

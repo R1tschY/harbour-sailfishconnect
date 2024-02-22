@@ -22,6 +22,7 @@ import "../components"
 Page {
     id: page
     allowedOrientations: Orientation.All
+
     property QtObject device
     property QtObject plugin: device.getRemoteKeyboardApi()
     property QtObject modifiers: QtObject {
@@ -105,6 +106,44 @@ Page {
             title: i18n("Keyboard")
         }
 
+        TextInput {
+            id: keyArea
+
+            inputMethodHints:
+                Qt.ImhSensitiveData | Qt.ImhNoPredictiveText | Qt.ImhMultiLine
+            echoMode: TextInput.NoEcho
+
+            // HACK: To make backspace work in initial state
+            text: stringRepeat("-", 200)
+
+            property string oldText: stringRepeat("-", 200)
+
+            function stringRepeat(s, n) {
+                var res = '';
+                for (var i = 0; i < n; i++) {
+                  res += s;
+                }
+                return res;
+            }
+
+            onTextChanged: {
+                var old = oldText
+                var current = text
+
+                if (current.length > old.length) {
+                    var input = current.substring(old.length)
+                    plugin.sendKeyPress(input, 0, false, false, false)
+                } else if (current.length < old.length) {
+                    plugin.sendKeyPress("", 1, false, false, false)
+                }
+
+                oldText = current
+            }
+
+            Keys.onReturnPressed:
+                plugin.sendKeyPress("", 12, false, false, false)
+        }
+
         PullDownMenu {
             MenuItem {
                 text: i18n("Settings")
@@ -116,6 +155,14 @@ Page {
 
         Column {
             anchors.bottom: parent.bottom
+            visible: !Qt.inputMethod.visible && !Qt.inputMethod.animating
+
+            IconButton {
+                icon.source: "image://theme/icon-m-keyboard?" + (highlighted
+                                  ? Theme.highlightColor
+                                  : Theme.primaryColor)
+                onClicked: keyArea.focus = true
+            }
 
             Row {
                 Repeater {

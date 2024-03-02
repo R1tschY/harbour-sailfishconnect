@@ -87,8 +87,6 @@ void MprisPlayer::setPosition(int value)
 
 void MprisPlayer::receivePacket(const NetworkPacket &np, AlbumArtCache *cache)
 {
-    m_currentSong =
-            np.get<QString>(QStringLiteral("nowPlaying"), m_currentSong);
     m_title =
             np.get<QString>(QStringLiteral("title"), m_title);
     m_artist =

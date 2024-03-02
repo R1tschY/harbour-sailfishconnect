@@ -209,7 +209,7 @@ Page {
             SortFilterModel {
                 id: trustedDevicesModel
 
-                sortRole: "name"
+                sortRole: "section"
                 sourceModel: devicelistModel
             }
 
@@ -224,7 +224,7 @@ Page {
             ColumnView {
                 id: trustedDevices
                 width: page.width
-                itemHeight: Theme.itemSizeMedium
+                itemHeight: Theme.itemSizeMedium + (3 * Theme.itemSizeSmall / trustedDevices.count)
 
 
                 model: trustedDevicesModel

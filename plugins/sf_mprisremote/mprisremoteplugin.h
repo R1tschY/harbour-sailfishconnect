@@ -35,7 +35,6 @@ class MprisPlayer : public QObject
     Q_CLASSINFO("D-Bus Interface", "de.richardliebscher.sailfishconnect.mprisremote.player")
     Q_PROPERTY(QString name READ name CONSTANT)
     Q_PROPERTY(bool isPlaying READ isPlaying NOTIFY propertiesChanged)
-    Q_PROPERTY(QString currentSong READ currentSong NOTIFY propertiesChanged)
     Q_PROPERTY(QString title READ title NOTIFY propertiesChanged)
     Q_PROPERTY(QString artist READ artist NOTIFY propertiesChanged)
     Q_PROPERTY(QString album READ album NOTIFY propertiesChanged)
@@ -56,7 +55,6 @@ public:
 
     QString name() const { return m_player; }
     bool isPlaying() const { return m_isPlaying; }
-    QString currentSong() const { return m_currentSong; }
     QString title() const { return m_title; }
     QString artist() const { return m_artist; }
     QString album() const { return m_album; }
@@ -105,7 +103,6 @@ private:
     qint64 m_length = -1;
     qint64 m_lastPosition = -1;
     qint64 m_lastPositionTime = -1;
-    QString m_currentSong;
     QString m_title;
     QString m_artist;
     QString m_album;

@@ -56,8 +56,6 @@ QVariant MprisPlayersModel::data(const QModelIndex &index, int role) const
         return m_players[index.row()];
     case IsPlayingRole:
         return player->isPlaying();
-    case CurrentSongRole:
-        return player->currentSong();
     case TitleRole:
         return player->title();
     case ArtistRole:
@@ -95,7 +93,6 @@ QHash<int, QByteArray> MprisPlayersModel::roleNames() const
     roles[Player] = "player";
     roles[PlayerNameRole] = "playerName";
     roles[IsPlayingRole] = "isPlaying";
-    roles[CurrentSongRole] = "song";
     roles[TitleRole] = "title";
     roles[ArtistRole] = "artist";
     roles[AlbumRole] = "album";

@@ -91,7 +91,7 @@ Column {
 
                     Label {
                         id: songLabel
-                        text: song ? song : ("<" + i18n("Nothing playing") + ">")
+                        text: ( title ) ? (artist ? (artist + " - " + title) : title) : ("<" + i18n("Nothing playing") + ">")
                         color: Theme.highlightColor
                         truncationMode: TruncationMode.Fade
                         textFormat: Text.PlainText

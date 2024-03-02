@@ -38,7 +38,6 @@ public:
         Player = Qt::UserRole,
         PlayerNameRole,
         IsPlayingRole,
-        CurrentSongRole,
         TitleRole,
         ArtistRole,
         AlbumRole,

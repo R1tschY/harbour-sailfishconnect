@@ -217,7 +217,7 @@ Page {
                 id: sectionHeading
 
                 SectionHeader {
-                    text: section
+                    text: roleTexts(section)
                 }
             }
 
@@ -274,6 +274,20 @@ Page {
         running: true
         repeat: false
         onTriggered: startup = false
+    }
+
+    function roleTexts(section) {
+        switch(Number(section)) {
+        case DeviceListModel.Connected:
+            return i18n("Connected")
+        case DeviceListModel.Trusted:
+            return i18n("Paired devices")
+        case DeviceListModel.Near:
+            return i18n("Nearby devices")
+        case DeviceListModel.Nothing:
+        default:
+            return "-"
+        }
     }
 
     function openDevicePage(deviceId) {

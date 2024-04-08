@@ -31,12 +31,12 @@ add_static_plugins_lib(
   PREFIX sailfishconnect
   PLUGINS
     BatteryReport
-    Contacts
+#    Contacts
     Clipboard
     MprisRemote
     SendNotifications
     Share
-    Telepathy
+#    Telepathy
     Telephony
     SftpServer
 )

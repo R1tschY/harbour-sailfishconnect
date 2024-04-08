@@ -5,8 +5,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 add_subdirectory(batteryreport)
-add_subdirectory(contacts)
-add_subdirectory(telepathy)
+#add_subdirectory(contacts)
+#add_subdirectory(telepathy)
 add_subdirectory(telephony)
 add_subdirectory(sftpserver)
 

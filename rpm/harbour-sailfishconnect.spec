@@ -80,7 +80,8 @@ if [ ! -f "$VENV/bin/conan" ] ; then
 else
   source "$VENV/bin/activate"
 fi
-pip install conan===1.60.1
+echo "cython<3" > /tmp/pip-constraint.txt
+PIP_CONSTRAINT=/tmp/pip-constraint.txt pip install conan===1.60.1
 
 # speed up conan remote add
 if ! grep -sq sailfishos "$CONAN_USER_HOME/.conan/remotes.json" ; then

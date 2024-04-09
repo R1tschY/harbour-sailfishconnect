@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Check style
         run: python3 scripts/bad-style.py bad-style.xml
@@ -33,16 +33,16 @@ jobs:
       SFOS_ARCH: ${{ matrix.arch }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           path: .venv-conan-*
           key: venv-cache4-${{ matrix.arch }}
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           path: .conan/data
           key: conan-cache2-${{ env.SFOS_RELEASE }}-${{ matrix.arch }}

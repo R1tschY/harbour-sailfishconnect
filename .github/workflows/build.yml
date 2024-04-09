@@ -28,7 +28,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: .conan/data
-        key: conan-cache2-4.0.1-armv7hl
+        key: conan-cache2-4.4.0-armv7hl
 
     - name: Check style
       run: python3 scripts/bad-style.py bad-style.xml
@@ -37,7 +37,7 @@ jobs:
       uses: R1tschY/sailfish-build-rpm@v1
       with:
         arch: 'armv7hl'
-        release: '4.0.1.48'
+        release: '4.4.0.58'
         fix-version: false
         enable-debug: true
 
@@ -63,13 +63,13 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: .conan/data
-        key: conan-cache2-4.0.1-i486
+        key: conan-cache2-4.4.0-i486
 
     - name: Build i486 RPMS
       uses: R1tschY/sailfish-build-rpm@v1
       with:
         arch: 'i486'
-        release: '4.0.1.48'
+        release: '4.4.0.58'
         fix-version: false
         enable-debug: true
 
@@ -95,13 +95,13 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: .conan/data
-        key: conan-cache2-4.0.1-aarch64
+        key: conan-cache2-4.4.0-aarch64
 
     - name: Build aarch64 RPMS
       uses: R1tschY/sailfish-build-rpm@v1
       with:
         arch: 'aarch64'
-        release: '4.0.1.48'
+        release: '4.4.0.58'
         fix-version: false
         enable-debug: true
 

@@ -9,7 +9,7 @@ on:
       - '*'
 
 env:
-  RELEASE: 4.0.1.48
+  RELEASE: 4.4.0.58
 
 jobs:
   build-armv7hl:

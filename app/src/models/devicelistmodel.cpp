@@ -50,9 +50,6 @@ DeviceListModel::DeviceListModel(QObject *parent)
 {
     m_daemon = Daemon::instance();
 
-    m_id = QString("DeviceListModel{0x%1}").arg(
-                reinterpret_cast<std::uintptr_t>(this), 0, 16);
-    m_daemon->acquireDiscoveryMode(m_id);
     m_devices = m_daemon->devicesList();       
 
     connect(m_daemon, &Daemon::deviceAdded,
@@ -65,10 +62,7 @@ DeviceListModel::DeviceListModel(QObject *parent)
     }
 }
 
-DeviceListModel::~DeviceListModel()
-{
-    m_daemon->releaseDiscoveryMode(m_id);
-}
+DeviceListModel::~DeviceListModel() = default;
 
 int DeviceListModel::rowCount(const QModelIndex &parent) const
 {
@@ -90,19 +84,19 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
     case IdRole:
         return device->id();
     case IconUrlRole:
-        return deviceTypeToIcon(device->type());
+        return deviceTypeToIcon(device->type().toString());
     case SectionRole:
-        return device->isTrusted()
+        return device->isPaired()
                 ? (device->isReachable() ? Connected : Trusted)
                 : (device->isReachable() ? Near : Nothing);
     case TrustedRole:
-        return device->isTrusted();
+        return device->isPaired();
     case ReachableRole:
         return device->isReachable();
     case HasPairingRequestsRole:
-        return device->hasPairingRequests();
+        return device->isPairRequestedByPeer();
     case WaitsForPairingRole:
-        return device->waitsForPairing();
+        return device->isPairRequested();
     }
 
     return QVariant();
@@ -183,17 +177,11 @@ void DeviceListModel::connectDevice(Device *device)
     connect(device, &Device::nameChanged, this, [=]{
         deviceDataChanged(device, {Qt::DisplayRole, NameRole});
     });
-    connect(device, &Device::trustedChanged, this, [=]{
-        deviceDataChanged(device, {TrustedRole});
+    connect(device, &Device::pairStateChanged, this, [=]{
+        deviceDataChanged(device, {TrustedRole, HasPairingRequestsRole, WaitsForPairingRole});
     });
     connect(device, &Device::reachableChanged, this, [=]{
         deviceDataChanged(device, {ReachableRole});
-    });
-    connect(device, &Device::hasPairingRequestsChanged, this, [=]{
-        deviceDataChanged(device, {HasPairingRequestsRole});
-    });
-    connect(device, &Device::waitsForPairingChanged, this, [=]{
-        deviceDataChanged(device, {WaitsForPairingRole});
     });
     connect(device, &Device::destroyed, this, [=]{
         //qCCritical(logger) << "device destroyed with id" << device->id();

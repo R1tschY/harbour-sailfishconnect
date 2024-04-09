@@ -29,10 +29,9 @@ SendNotificationsPlugin::SendNotificationsPlugin(QObject* parent, const QVariant
     , m_listener(new NotificationsListener(this))
 { }
 
-bool SendNotificationsPlugin::receivePacket(const NetworkPacket&)
+void SendNotificationsPlugin::receivePacket(const NetworkPacket&)
 {
     // impl. request for existing notifications
-    return false;
 }
 
 #include "sendnotificationsplugin.moc"

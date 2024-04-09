@@ -123,7 +123,7 @@ Page {
 
                     Button {
                         text: i18n("Reject")
-                        onClicked: _device.rejectPairing()
+                        onClicked: _device.cancelPairing()
                     }
                 }
 
@@ -160,7 +160,7 @@ Page {
 
                     text: i18n("Connect")
                     onClicked: {
-                        _device.requestPair()
+                        _device.requestPairing()
                     }
                 }
 

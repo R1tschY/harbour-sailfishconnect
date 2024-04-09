@@ -36,7 +36,7 @@ public:
     QString dbusPath() const override;
 
     void connected() override {}
-    bool receivePacket(const NetworkPacket &np) override;
+    void receivePacket(const NetworkPacket &np) override;
     Q_SCRIPTABLE void pushClipboard();
 
 private:

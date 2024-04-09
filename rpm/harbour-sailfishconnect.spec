@@ -28,6 +28,7 @@ BuildRequires:  python3-base
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-pip
 BuildRequires:  desktop-file-utils
+BuildRequires:  extra-cmake-modules
 # needed only for building dependencies
 BuildRequires:  git
 BuildRequires:  pkgconfig(Qt5Script)
@@ -81,7 +82,7 @@ else
   source "$VENV/bin/activate"
 fi
 echo "cython<3" > /tmp/pip-constraint.txt
-PIP_CONSTRAINT=/tmp/pip-constraint.txt pip install conan===1.60.1
+#PIP_CONSTRAINT=/tmp/pip-constraint.txt pip install conan===1.60.1
 
 # speed up conan remote add
 if ! grep -sq sailfishos "$CONAN_USER_HOME/.conan/remotes.json" ; then
@@ -91,8 +92,8 @@ fi
 mkdir -p "$BUILD_DIR"
 
 cd "$BUILD_DIR"
-conan install "$SOURCE_DIR" --build=missing --profile:build="$SOURCE_DIR/dev/profiles/%{_target_cpu}" --profile:host="$SOURCE_DIR/dev/profiles/%{_target_cpu}"
-conan remove -f "*" --builds --src --system-reqs
+#conan install "$SOURCE_DIR" --build=missing --profile:build="$SOURCE_DIR/dev/profiles/%{_target_cpu}" --profile:host="$SOURCE_DIR/dev/profiles/%{_target_cpu}"
+#conan remove -f "*" --builds --src --system-reqs
 
 cmake \
   -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \

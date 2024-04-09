@@ -32,7 +32,7 @@ public:
     QString incomingPath() const;
 
     void connected() override { }
-    bool receivePacket(const NetworkPacket &np) override;
+    void receivePacket(const NetworkPacket &np) override;
     
     Q_SCRIPTABLE void shareUrl(const QString& url) { shareUrl(QUrl(url), false); }
     Q_SCRIPTABLE void shareUrls(const QStringList& urls);

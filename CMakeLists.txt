@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.16)
 cmake_policy(SET CMP0071 NEW)
 project(SailfishConnect VERSION 0.7.0 LANGUAGES C CXX)
 

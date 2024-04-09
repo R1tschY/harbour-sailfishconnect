@@ -34,7 +34,7 @@ ClipboardPlugin::ClipboardPlugin(QObject* parent, const QVariantList& args)
     , m_clipboard(QGuiApplication::clipboard())
 {}
 
-bool ClipboardPlugin::receivePacket(const NetworkPacket &np)
+void ClipboardPlugin::receivePacket(const NetworkPacket &np)
 {
     QString content = np.get<QString>(QStringLiteral("content"));
     if (np.type() == PACKET_TYPE_CLIPBOARD) {
@@ -49,8 +49,6 @@ bool ClipboardPlugin::receivePacket(const NetworkPacket &np)
             m_clipboard->setText(content);
         }
     }
-
-    return true;
 }
 
 void ClipboardPlugin::pushClipboard()

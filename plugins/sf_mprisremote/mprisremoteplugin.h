@@ -129,7 +129,7 @@ public:
     explicit MprisRemotePlugin(QObject* parent, const QVariantList& args);
 
     void connected() override { }
-    bool receivePacket(const NetworkPacket& np) override;
+    void receivePacket(const NetworkPacket& np) override;
 
     Q_SCRIPTABLE void sendCommand(
             const QString& player, const QString& method, const QString& value);

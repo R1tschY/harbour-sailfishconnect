@@ -64,7 +64,7 @@ void AppDaemon::askPairingConfirmation(Device *device)
     notification->setBody(i18n("Pending pairing request ..."));
     notification->setPreviewSummary(device->name());
     notification->setPreviewBody(i18n("Pairing request"));
-    notification->setExpireTimeout(PairingHandler::pairingTimeoutMsec());
+    notification->setExpireTimeout(PairingHandler::pairingTimeoutMsec);
     notification->setRemoteActions(
                 { UI::openDevicePageDbusAction(device->id()) });
 
@@ -161,7 +161,7 @@ void AppDaemon::onWakeUp()
 void AppDaemon::onDeviceAdded(const QString &deviceId)
 {
     auto device = this->getDevice(deviceId);
-    connect(device, &Device::pairingError, this,
+    connect(device, &Device::pairingFailed, this,
             [this, deviceId](const QString& err) {
         onPairingError(deviceId, err);
     });

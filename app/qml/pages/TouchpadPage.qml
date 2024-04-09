@@ -153,9 +153,9 @@ Page {
         onClicked: {
             if (!wasMoved && plugin !== null) {
                 if (!holding) {
-                    plugin.sendCommand("singleclick", true)
+                    plugin.sendCommand({"singleclick": true})
                 } else {
-                    plugin.sendCommand("singlerelease", true)
+                    plugin.sendCommand({"singlerelease": true})
                     holding = false
                 }
             }
@@ -164,9 +164,9 @@ Page {
         onDoubleClicked: {
             if (!wasMoved && plugin !== null) {
                 if (!holding) {
-                    plugin.sendCommand("doubleclick", true)
+                    plugin.sendCommand({"doubleclick": true})
                 } else {
-                    plugin.sendCommand("singlerelease", true)
+                    plugin.sendCommand({"singlerelease": true})
                     holding = false
                 }
             }
@@ -174,7 +174,7 @@ Page {
 
         onPressAndHold: {
             if (!wasMoved && plugin !== null) {
-                plugin.sendCommand("singlehold", true)
+                plugin.sendCommand({"singlehold": true})
                 holding = true
             }
         }
@@ -204,7 +204,7 @@ Page {
         spacing: Theme.paddingSmall
 
         Button {
-           onClicked: plugin.sendCommand("singleclick", true)
+           onClicked: plugin.sendCommand({"singleclick": true})
            preferredWidth: Theme.buttonWidthExtraSmall
            width: parent.btnWidth
         }
@@ -216,7 +216,7 @@ Page {
         }
 
         Button {
-           onClicked: plugin.sendCommand("rightclick", true)
+           onClicked: plugin.sendCommand({"rightclick": true})
            preferredWidth: Theme.buttonWidthExtraSmall
            width: parent.btnWidth
         }

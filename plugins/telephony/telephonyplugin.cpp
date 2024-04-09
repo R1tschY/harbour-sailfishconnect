@@ -102,11 +102,10 @@ TelephonyPlugin::TelephonyPlugin(QObject* parent, const QVariantList& args)
             this, &TelephonyPlugin::onModemRemoved);
 }
 
-bool TelephonyPlugin::receivePacket(const NetworkPacket &np)
+void TelephonyPlugin::receivePacket(const NetworkPacket &np)
 {
     // TODO: handle mute request
     Q_UNUSED(np);
-    return false;
 }
 
 void TelephonyPlugin::onModemAdded(

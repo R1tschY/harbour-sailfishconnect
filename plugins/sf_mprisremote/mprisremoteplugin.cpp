@@ -190,11 +190,11 @@ MprisRemotePlugin::MprisRemotePlugin(QObject* parent, const QVariantList& args)
         this, &MprisRemotePlugin::askForAlbumArt);
 }
 
-bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
+void MprisRemotePlugin::receivePacket(const NetworkPacket& np)
 {
     if (np.get<bool>("transferringAlbumArt", false)) {
         m_cache->endFetching(np.get<QString>("albumArtUrl"), np.payload(), np.payloadSize());
-        return true;
+        return;
     }
 
     m_supportAlbumArtPayload = np.get<bool>(
@@ -238,8 +238,6 @@ bool MprisRemotePlugin::receivePacket(const NetworkPacket& np)
             emit playerRemoved(removedPlayer);
         }
     }
-
-    return true;
 }
 
 void MprisRemotePlugin::askForAlbumArt(

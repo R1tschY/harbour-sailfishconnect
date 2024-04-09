@@ -32,7 +32,7 @@ public:
     SendNotificationsPlugin(QObject* parent, const QVariantList& args);
 
     void connected() override { }
-    bool receivePacket(const NetworkPacket &np) override;
+    void receivePacket(const NetworkPacket &np) override;
 
 private:
     NotificationsListener* m_listener;

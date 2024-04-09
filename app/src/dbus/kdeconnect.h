@@ -46,8 +46,8 @@ public:
         checkForDbusError(RemoteControlDbusInterface::moveCursor(p));
     }
 
-    Q_SCRIPTABLE void sendCommand(const QString &name, bool val) {
-        checkForDbusError(RemoteControlDbusInterface::sendCommand(name, val));
+    Q_SCRIPTABLE void sendCommand(const QVariantMap &body) {
+        checkForDbusError(RemoteControlDbusInterface::sendCommand(body));
     }
 
     Q_SCRIPTABLE void scroll(int x, int y) {
@@ -140,16 +140,16 @@ public:
         checkForDbusError(DeviceDbusInterface::unpair());
     }
 
-    Q_SCRIPTABLE void requestPair() {
-        checkForDbusError(DeviceDbusInterface::requestPair());
+    Q_SCRIPTABLE void requestPairing() {
+        checkForDbusError(DeviceDbusInterface::requestPairing());
     }
 
     Q_SCRIPTABLE void acceptPairing() {
         checkForDbusError(DeviceDbusInterface::acceptPairing());
     }
 
-    Q_SCRIPTABLE void rejectPairing() {
-        checkForDbusError(DeviceDbusInterface::rejectPairing());
+    Q_SCRIPTABLE void cancelPairing() {
+        checkForDbusError(DeviceDbusInterface::cancelPairing());
     }
 
     Q_SCRIPTABLE QString encryptionInfo() {

@@ -26,5 +26,5 @@ public:
     using KdeConnectPlugin::KdeConnectPlugin;
 
     void connected() override {}
-    bool receivePacket(const NetworkPacket &np) override;
+    void receivePacket(const NetworkPacket &np) override;
 };

@@ -83,7 +83,7 @@ QString SharePlugin::incomingPath() const
     }
 }
 
-bool SharePlugin::receivePacket(const NetworkPacket& np)
+void SharePlugin::receivePacket(const NetworkPacket& np)
 {
     if (np.hasPayload()) {
         const QString filename = escapeForFilePath(np.get<QString>(
@@ -112,7 +112,7 @@ bool SharePlugin::receivePacket(const NetworkPacket& np)
             qCWarning(logger)
                 << "Share failed: failed to create temporary text file"
                 << tmpFile.fileName();
-            return true;
+            return;
         }
 
         tmpFile.write(text.toUtf8());
@@ -129,8 +129,6 @@ bool SharePlugin::receivePacket(const NetworkPacket& np)
     } else {
         qCWarning(logger) << "Empty share received";
     }
-
-    return true;
 }
 
 void SharePlugin::shareUrl(const QUrl& url, bool open)

@@ -72,7 +72,7 @@ public:
     TelephonyPlugin(QObject* parent, const QVariantList& args);
 
     void connected() override { }
-    bool receivePacket(const NetworkPacket &np) override;
+    void receivePacket(const NetworkPacket &np) override;
 
 private:
     SailfishConnect::Ofono::Manager* m_modem_manager;

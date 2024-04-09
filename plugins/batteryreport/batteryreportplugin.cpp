@@ -181,13 +181,11 @@ BatteryReportPlugin::BatteryReportPlugin(QObject* parent, const QVariantList& ar
             this, &BatteryReportPlugin::sendStatus);
 }
 
-bool BatteryReportPlugin::receivePacket(const NetworkPacket &np)
+void BatteryReportPlugin::receivePacket(const NetworkPacket &np)
 {
     if (np.get<bool>(QStringLiteral("request"))) {
         sendStatus();
     }
-
-    return true;
 }
 
 void BatteryReportPlugin::connected()

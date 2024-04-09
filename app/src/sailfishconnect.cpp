@@ -63,9 +63,6 @@
 #include "helper/jobsnotificator.h"
 #include "helper/keyboardlayoutprovider.h"
 
-// load QCA openssl plugin
-Q_IMPORT_PLUGIN(opensslPlugin)
-
 namespace SailfishConnect {
 
 namespace {

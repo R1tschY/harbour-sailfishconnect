@@ -9,104 +9,54 @@ on:
       - '*'
 
 env:
-  RELEASE: 4.4.0.58
+  SFOS_RELEASE: 4.5.0.18
 
 jobs:
-  build-armv7hl:
+  check:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
+      - uses: actions/checkout@v2
 
-    - uses: actions/cache@v2
-      with:
-        path: .venv-conan-*
-        key: venv-cache4-armv7hl
+      - name: Check style
+        run: python3 scripts/bad-style.py bad-style.xml
 
-    - uses: actions/cache@v2
-      with:
-        path: .conan/data
-        key: conan-cache2-4.4.0-armv7hl
+  build:
+    strategy:
+      matrix:
+        arch: ['armv7hl', 'i486', 'aarch64']
 
-    - name: Check style
-      run: python3 scripts/bad-style.py bad-style.xml
-
-    - name: Build armv7hl RPMS
-      uses: R1tschY/sailfish-build-rpm@v1
-      with:
-        arch: 'armv7hl'
-        release: '4.4.0.58'
-        fix-version: false
-        enable-debug: true
-
-    - name: Upload build result
-      uses: actions/upload-artifact@v2
-      with:
-        name: sailfishconnect-armv7hl
-        path: RPMS
-
-  build-i486:
     runs-on: ubuntu-latest
+    needs: [check]
+
+    env:
+      SFOS_ARCH: ${{ matrix.arch }}
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
-    - uses: actions/cache@v2
-      with:
-        path: .venv-conan-*
-        key: venv-cache4-i486
+      - uses: actions/cache@v2
+        with:
+          path: .venv-conan-*
+          key: venv-cache4-${{ matrix.arch }}
 
-    - uses: actions/cache@v2
-      with:
-        path: .conan/data
-        key: conan-cache2-4.4.0-i486
+      - uses: actions/cache@v2
+        with:
+          path: .conan/data
+          key: conan-cache2-${{ env.SFOS_RELEASE }}-${{ matrix.arch }}
 
-    - name: Build i486 RPMS
-      uses: R1tschY/sailfish-build-rpm@v1
-      with:
-        arch: 'i486'
-        release: '4.4.0.58'
-        fix-version: false
-        enable-debug: true
+      - name: Build ${{ matrix.arch }} RPMS
+        uses: R1tschY/sailfish-build-rpm@v1
+        with:
+          arch: '${{ matrix.arch }}'
+          release: '${{ env.SFOS_RELEASE }}'
+          fix-version: false
+          enable-debug: true
 
-    - name: Upload build result
-      uses: actions/upload-artifact@v2
-      with:
-        name: sailfishconnect-i486
-        path: RPMS
-
-  build-aarch64:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-
-    - uses: actions/cache@v2
-      with:
-        path: .venv-conan-*
-        key: venv-cache4-aarch64
-
-    - uses: actions/cache@v2
-      with:
-        path: .conan/data
-        key: conan-cache2-4.4.0-aarch64
-
-    - name: Build aarch64 RPMS
-      uses: R1tschY/sailfish-build-rpm@v1
-      with:
-        arch: 'aarch64'
-        release: '4.4.0.58'
-        fix-version: false
-        enable-debug: true
-
-    - name: Upload build result
-      uses: actions/upload-artifact@v2
-      with:
-        name: sailfishconnect-aarch64
-        path: RPMS
+      - name: Upload build result
+        uses: actions/upload-artifact@v2
+        with:
+          name: sailfishconnect-${{ matrix.arch }}
+          path: RPMS

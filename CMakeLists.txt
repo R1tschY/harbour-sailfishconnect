@@ -46,7 +46,7 @@ add_definitions(-DSAILFISHOS)
 add_subdirectory(kdeconnect-kde)
 
 # Sailfish Connect
-find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
+find_package(ECM 5.99 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 include(ECMQtDeclareLoggingCategory)
 

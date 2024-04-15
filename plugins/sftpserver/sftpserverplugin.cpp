@@ -33,7 +33,7 @@ static const QString PACKET_TYPE_SFTP_REQUEST = QStringLiteral("kdeconnect.sftp.
 void SftpServerPlugin::receivePacket(const NetworkPacket& np)
 {
     if (np.type() == PACKET_TYPE_SFTP_REQUEST) {
-        if (np.get<bool>("startBrowsing")) {
+        if (np.get<bool>(QStringLiteral("startBrowsing"))) {
             
         }
 

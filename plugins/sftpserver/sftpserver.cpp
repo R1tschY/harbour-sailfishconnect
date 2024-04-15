@@ -17,8 +17,6 @@
 
 #define KEYS_FOLDER "/home/richard/tmp/"
 
-#define USER "myuser"
-#define PASSWORD "mypassword"
 
 class SshServer {
 public:
@@ -36,7 +34,8 @@ public:
 
     bool checkPassword(const char* user, const char* password) const
     {
-        return strcmp(user, USER) == 0 && strcmp(password, PASSWORD) == 0;
+        return m_user == QString::fromUtf8(user)
+                && m_password == QString::fromUtf8(password);
     }
 
 private:
@@ -486,7 +485,7 @@ private:
 int main(int argc, char** argv)
 {
     printf("Debug: %d\n", __LINE__);
-    SshServer server(USER, PASSWORD, 3);
+    SshServer server(QStringLiteral("user"), QStringLiteral("password"), 3);
     SshContext context;
     printf("Debug: %d\n", __LINE__);
     SshBind bind;

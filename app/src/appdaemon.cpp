@@ -104,7 +104,7 @@ void AppDaemon::sendSimpleNotification(const QString &eventId, const QString &ti
     notification->setPreviewSummary(title);
     notification->setPreviewBody(text);
     if (eventId == QStringLiteral("pingReceived")) {
-        notification->setIcon("image://theme/icon-lock-information");
+        notification->setIcon(QStringLiteral("image://theme/icon-lock-information"));
     }
     notification->publish();
 }

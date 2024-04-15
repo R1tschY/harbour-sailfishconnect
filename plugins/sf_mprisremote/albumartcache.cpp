@@ -43,7 +43,7 @@ using namespace SailfishConnect;
 static Q_LOGGING_CATEGORY(logger, "kdeconnect.plugin.mprisremote.albumartcache")
 
 static QString getCacheDir(const QString& id) {
-    return QStandardPaths::writableLocation(QStandardPaths::CacheLocation) % '/' % id % "/albumart";
+    return QStandardPaths::writableLocation(QStandardPaths::CacheLocation) % QChar::fromLatin1('/') % id % QStringLiteral("/albumart");
 }
 
 AlbumArtCache::AlbumArtCache(const QString& deviceId, KdeConnectPluginConfig *config, QObject* parent)
@@ -105,9 +105,9 @@ QString AlbumArtCache::cacheFileFor(const QUrl& url) const
 {
     auto fileExt = QFileInfo(url.fileName()).suffix();
     if (fileExt.isEmpty()) {
-        return m_cacheDir.path() % QChar('/') % hashFor(url);
+        return m_cacheDir.path() % QChar::fromLatin1('/') % hashFor(url);
     } else {
-        return m_cacheDir.path() % QChar('/') % hashFor(url) % QChar('.') % fileExt;
+        return m_cacheDir.path() % QChar::fromLatin1('/') % hashFor(url) % QChar::fromLatin1('.') % fileExt;
     }
 }
 
@@ -117,7 +117,7 @@ QString AlbumArtCache::cacheFileNameFor(const QUrl &url) const
     if (fileExt.isEmpty()) {
         return hashFor(url);
     } else {
-        return hashFor(url) % QChar('.') % fileExt;
+        return hashFor(url) % QChar::fromLatin1('.') % fileExt;
     }
 }
 
@@ -132,7 +132,7 @@ DownloadAlbumArtJob *AlbumArtCache::startFetching(const QString& originalUrl, co
     if (originalUrl.isEmpty())
         return nullptr;
 
-    QUrl url = originalUrl;
+    QUrl url{originalUrl};
 
     QString hash = hashFor(url);
     if (m_diskCache.contains(hash) || m_fetching.contains(hash)) {
@@ -151,7 +151,7 @@ DownloadAlbumArtJob *AlbumArtCache::startFetching(const QString& originalUrl, co
         auto network = Daemon::instance()->networkAccessManager();
         job->gotData(QSharedPointer<QIODevice>(network->get(QNetworkRequest(url))), -1);
     } else {
-        emit requestAlbumArt(originalUrl, playerName);
+        Q_EMIT requestAlbumArt(originalUrl, playerName);
     }
 
     return job;
@@ -206,7 +206,7 @@ QQuickImageResponse *AlbumArtProvider::unsafeRequestImageResponse(
 QQuickImageResponse *AlbumArtProvider::unsafeRequestImageResponse_(
         const QString& id, const QSize& requestedSize)
 {
-    auto parts = id.split(QChar('/'));
+    auto parts = id.split(QChar::fromLatin1('/'));
     if (parts.length() != 2) {
         return new CachedAlbumArtImageResponse(QImage());
     }
@@ -218,7 +218,7 @@ QQuickImageResponse *AlbumArtProvider::unsafeRequestImageResponse_(
     }
 
     MprisRemotePlugin* plugin = qobject_cast<MprisRemotePlugin*>(
-                device->plugin("sailfishconnect_mprisremote"));
+                device->plugin(QStringLiteral("sailfishconnect_mprisremote")));
     if (plugin == nullptr) {
         qCDebug(logger) << "mpris plugin not loaded";
         return new CachedAlbumArtImageResponse(QImage());
@@ -290,13 +290,13 @@ void AlbumArtImageResponse::onFinished(
         m_image = QImage(cacheFile);
     }
 
-    emit finished();
+    Q_EMIT finished();
 }
 
 void AlbumArtImageResponse::onJobDestroyed()
 {
     m_errorString = QStringLiteral("job destroyed");
-    emit finished();
+    Q_EMIT finished();
 }
 
 // -----------------------------------------------------------------------------
@@ -331,7 +331,7 @@ bool DownloadAlbumArtJob::gotData(const QSharedPointer<QIODevice>& payload, qint
 
     if (payload.isNull()) {
         qCDebug(logger) << "Empty payload";
-        emit finished(m_filePath, QStringLiteral("Empty payload"));
+        Q_EMIT finished(m_filePath, QStringLiteral("Empty payload"));
         return false;
     }
 
@@ -340,7 +340,7 @@ bool DownloadAlbumArtJob::gotData(const QSharedPointer<QIODevice>& payload, qint
         qCCritical(logger).noquote()
                 << "Failed to create cache file" << file->fileName()
                 << file->errorString();
-        emit finished(
+        Q_EMIT finished(
             m_filePath, QStringLiteral("Failed to create cache file"));
         return false;
     }
@@ -383,7 +383,7 @@ void DownloadAlbumArtJob::fetchFinished(KJob* fileTransfer)
                     // TODO: set QNetworkRequest::BackgroundRequestAttribute
                     m_fileTransfer = nullptr;
                     gotData(QSharedPointer<QIODevice>(
-                        network->get(QNetworkRequest(location))), -1);
+                        network->get(QNetworkRequest(QUrl(location)))), -1);
                     return;
                 }
 
@@ -397,7 +397,7 @@ void DownloadAlbumArtJob::fetchFinished(KJob* fileTransfer)
         }
 
         m_fileSize = fileTransfer->processedAmount(KJob::Bytes);
-        emit finished(m_filePath, QString());
+        Q_EMIT finished(m_filePath, QString());
     }
 }
 
@@ -411,7 +411,7 @@ void DownloadAlbumArtJob::failed(const QString &error)
     file.open(QIODevice::WriteOnly);
     file.close();
 
-    emit finished(m_filePath, error);
+    Q_EMIT finished(m_filePath, error);
 }
 
 QString DownloadAlbumArtJob::fileName() const

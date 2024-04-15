@@ -65,23 +65,23 @@ bool MprisPlayer::seekAllowed() const
 void MprisPlayer::setVolume(int value)
 {
     if (setVolumeAllowed()) {
-        m_parent->sendCommand(m_player, "setVolume", value);
+        m_parent->sendCommand(m_player, QStringLiteral("setVolume"), value);
 
         m_volume = value;
 
-        emit propertiesChanged();
+        Q_EMIT propertiesChanged();
     }
 }
 
 void MprisPlayer::setPosition(int value)
 {
     if (seekAllowed()) {
-        m_parent->sendCommand(m_player, "SetPosition", value);
+        m_parent->sendCommand(m_player, QStringLiteral("SetPosition"), value);
 
         m_lastPosition = value;
         m_lastPositionTime = QDateTime::currentMSecsSinceEpoch();
 
-        emit propertiesChanged();
+        Q_EMIT propertiesChanged();
     }
 }
 
@@ -110,7 +110,7 @@ void MprisPlayer::receivePacket(const NetworkPacket &np, AlbumArtCache *cache)
 
     QString remoteAlbumArtUrl = np.get<QString>(QStringLiteral("albumArtUrl"));
     if (!remoteAlbumArtUrl.isEmpty()) {
-        QUrl albumArtUrl = remoteAlbumArtUrl;
+        QUrl albumArtUrl = QUrl(remoteAlbumArtUrl);
         // workaround https://community.spotify.com/t5/Desktop-Linux/MPRIS-cover-art-url-file-not-found/m-p/4929877
         if (albumArtUrl.host() == QStringLiteral("open.spotify.com")) {
             albumArtUrl.setHost(QStringLiteral("i.scdn.co"));
@@ -127,53 +127,53 @@ void MprisPlayer::receivePacket(const NetworkPacket &np, AlbumArtCache *cache)
         m_lastPositionTime = QDateTime::currentMSecsSinceEpoch();
     }
 
-    emit propertiesChanged();
+    Q_EMIT propertiesChanged();
 }
 
 void MprisPlayer::playPause()
 {
     if (pauseAllowed() || playAllowed()) {
-        m_parent->sendCommand(m_player, "action", "PlayPause");
+        m_parent->sendCommand(m_player, QStringLiteral("action"), QStringLiteral("PlayPause"));
     }
 }
 
 void MprisPlayer::play()
 {
     if (playAllowed()) {
-        m_parent->sendCommand(m_player, "action", "Play");
+        m_parent->sendCommand(m_player, QStringLiteral("action"), QStringLiteral("Play"));
     }
 }
 
 void MprisPlayer::pause()
 {
     if (pauseAllowed()) {
-        m_parent->sendCommand(m_player, "action", "Pause");
+        m_parent->sendCommand(m_player, QStringLiteral("action"), QStringLiteral("Pause"));
     }
 }
 
 void MprisPlayer::stop()
 {
-    m_parent->sendCommand(m_player, "action", "Stop");
+    m_parent->sendCommand(m_player, QStringLiteral("action"), QStringLiteral("Stop"));
 }
 
 void MprisPlayer::previous()
 {
     if (goPreviousAllowed()) {
-        m_parent->sendCommand(m_player, "action", "Previous");
+        m_parent->sendCommand(m_player, QStringLiteral("action"), QStringLiteral("Previous"));
     }
 }
 
 void MprisPlayer::next()
 {
     if (goNextAllowed()) {
-        m_parent->sendCommand(m_player, "action", "Next");
+        m_parent->sendCommand(m_player, QStringLiteral("action"), QStringLiteral("Next"));
     }
 }
 
 void MprisPlayer::seek(int value)
 {
     if (seekAllowed()) {
-        m_parent->sendCommand(m_player, "seek", value);
+        m_parent->sendCommand(m_player, QStringLiteral("seek"), value);
     }
 }
 
@@ -192,8 +192,8 @@ MprisRemotePlugin::MprisRemotePlugin(QObject* parent, const QVariantList& args)
 
 void MprisRemotePlugin::receivePacket(const NetworkPacket& np)
 {
-    if (np.get<bool>("transferringAlbumArt", false)) {
-        m_cache->endFetching(np.get<QString>("albumArtUrl"), np.payload(), np.payloadSize());
+    if (np.get<bool>(QStringLiteral("transferringAlbumArt"), false)) {
+        m_cache->endFetching(QUrl(np.get<QString>(QStringLiteral("albumArtUrl"))), np.payload(), np.payloadSize());
         return;
     }
 
@@ -201,7 +201,7 @@ void MprisRemotePlugin::receivePacket(const NetworkPacket& np)
                 QStringLiteral("supportAlbumArtPayload"),
                 m_supportAlbumArtPayload);
 
-    if (np.has("player")) {
+    if (np.has(QStringLiteral("player"))) {
         MprisPlayer* player = m_players.value(
                     np.get<QString>(QStringLiteral("player")), nullptr);
         if (player) {
@@ -232,10 +232,10 @@ void MprisRemotePlugin::receivePacket(const NetworkPacket& np)
         }
 
         for (auto addedPlayer : qAsConst(addedPlayers)) {
-            emit playerAdded(addedPlayer);
+            Q_EMIT playerAdded(addedPlayer);
         }
         for (auto removedPlayer : qAsConst(oldPlayerList)) {
-            emit playerRemoved(removedPlayer);
+            Q_EMIT playerRemoved(removedPlayer);
         }
     }
 }
@@ -256,8 +256,8 @@ void MprisRemotePlugin::askForAlbumArt(
     NetworkPacket np{
         PACKET_TYPE_MPRIS_REQUEST,
         {
-            {"player", plyr->name()},
-            {"albumArtUrl", url}
+            {QStringLiteral("player"), plyr->name()},
+            {QStringLiteral("albumArtUrl"), url}
         }
     };
     sendPacket(np);
@@ -267,7 +267,7 @@ void MprisRemotePlugin::sendCommand(
         const QString& player, const QString& method, const QString& value)
 {
     NetworkPacket np(PACKET_TYPE_MPRIS_REQUEST);
-    np.set("player", player);
+    np.set(QStringLiteral("player"), player);
     np.set(method, value);
     sendPacket(np);
 }
@@ -276,7 +276,7 @@ void MprisRemotePlugin::sendCommand(
         const QString& player, const QString& method, int value)
 {
     NetworkPacket np(PACKET_TYPE_MPRIS_REQUEST);
-    np.set("player", player);
+    np.set(QStringLiteral("player"), player);
     np.set(method, value);
     sendPacket(np);
 }
@@ -301,16 +301,16 @@ AlbumArtCache *MprisRemotePlugin::albumArtCache()
 void MprisRemotePlugin::requestPlayerList()
 {
     NetworkPacket np(PACKET_TYPE_MPRIS_REQUEST);
-    np.set("requestPlayerList", true);
+    np.set(QStringLiteral("requestPlayerList"), true);
     sendPacket(np);
 }
 
 void MprisRemotePlugin::requestPlayerStatus(const QString& player)
 {
     NetworkPacket np(PACKET_TYPE_MPRIS_REQUEST);
-    np.set("player", player);
-    np.set("requestNowPlaying", true);
-    np.set("requestVolume", true);
+    np.set(QStringLiteral("player"), player);
+    np.set(QStringLiteral("requestNowPlaying"), true);
+    np.set(QStringLiteral("requestVolume"), true);
     sendPacket(np);
 }
 

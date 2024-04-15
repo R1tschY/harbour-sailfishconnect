@@ -27,9 +27,9 @@ VCardBuilder::VCardBuilder()
     m_vCard.append(QStringLiteral("BEGIN:VCARD\nVERSION:4.0\n"));
 }
 
-void VCardBuilder::addRawProperty(const QString &name, const QString &rawValue)
+void VCardBuilder::addRawProperty(const QString& name, const QString& rawValue)
 {
-    m_vCard.append(name % QChar(':') % rawValue % QChar('\n'));
+    m_vCard.append(name % QChar::fromLatin1(':') % rawValue % QChar::fromLatin1('\n'));
 }
 
 QString VCardBuilder::result()

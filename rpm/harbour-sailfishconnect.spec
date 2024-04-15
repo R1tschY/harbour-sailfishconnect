@@ -120,7 +120,8 @@ rm -rf \
   %{buildroot}%{_datadir}/knotifications5 \
   %{buildroot}%{_datadir}/kservicetypes5 \
   %{buildroot}%{_datadir}/qlogging-categories5 \
-  %{buildroot}%{_datadir}/%{name}/lib/*.a
+  %{buildroot}%{_datadir}/%{name}/lib/*.a \
+  %{buildroot}%{_datadir}/locale
 mkdir -p %{buildroot}%{_bindir}
 
 desktop-file-install --delete-original       \

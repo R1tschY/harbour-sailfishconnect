@@ -186,21 +186,21 @@ bool copyDirectory(const QString& src, const QString& dst)
 
     for (const QString dir : srcDir.entryList(
              QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks)) {
-        QString dst_path = dst % '/' % dir;
+        QString dst_path = dst % QChar::fromLatin1('/') % dir;
         if (!srcDir.mkpath(dst_path)) {
             qCCritical(logger) << "Failed to create directory" << dst_path;
             return false;
         }
-        if (!copyDirectory(src % '/' % dir, dst_path)) {
+        if (!copyDirectory(src % QChar::fromLatin1('/') % dir, dst_path)) {
             return false;
         }
     }
 
     for (const QString file : srcDir.entryList(QDir::Files)) {
-        if (!QFile::copy(src  % '/' % file, dst  % '/' % file)) {
+        if (!QFile::copy(src  % QChar::fromLatin1('/') % file, dst  % QChar::fromLatin1('/') % file)) {
             qCCritical(logger)
-                << "Failed to copy file" << (src  % '/' % file)
-                << "to" << (dst  % '/' % file);
+                << "Failed to copy file" << (src  % QChar::fromLatin1('/') % file)
+                << "to" << (dst  % QChar::fromLatin1('/') % file);
             return false;
         }
     }
@@ -211,13 +211,13 @@ bool copyDirectory(const QString& src, const QString& dst)
 void migrateOldInstallation() {
     QString configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
     QString oldConfigPath = configPath
-            % '/' % QStringLiteral("harbour-sailfishconnect")
-            % '/' % QStringLiteral("harbour-sailfishconnect");
+            % QChar::fromLatin1('/') % QStringLiteral("harbour-sailfishconnect")
+            % QChar::fromLatin1('/') % QStringLiteral("harbour-sailfishconnect");
     QString newConfigPath = configPath
-            % '/' % QStringLiteral("harbour-sailfishconnect");
+            % QChar::fromLatin1('/') % QStringLiteral("harbour-sailfishconnect");
 
-    QString oldCertificatePath = oldConfigPath % '/' % QStringLiteral("certificate.pem");
-    QString newCertificatePath = newConfigPath % '/' % QStringLiteral("certificate.pem");
+    QString oldCertificatePath = oldConfigPath % QChar::fromLatin1('/') % QStringLiteral("certificate.pem");
+    QString newCertificatePath = newConfigPath % QChar::fromLatin1('/') % QStringLiteral("certificate.pem");
 
     if (QFileInfo::exists(oldCertificatePath) && !QFileInfo::exists(newCertificatePath)) {
         qCInfo(logger) << "Migrate config from" << oldConfigPath << "to" << newConfigPath;
@@ -247,7 +247,7 @@ Options parseCommandLine(const QCoreApplication &app) {
     parser.addHelpOption();
     parser.addVersionOption();
 
-    QCommandLineOption daemonOption(QStringList() << "d" << "daemon",
+    QCommandLineOption daemonOption(QStringList() << QStringLiteral("d") << QStringLiteral("daemon"),
         QStringLiteral("Start application in daemon mode. "
                        "Window is not shown until a call without is flag."));
     parser.addOption(daemonOption);
@@ -276,7 +276,7 @@ int main(int argc, char *argv[])
 
     // Logging
     qInstallMessageHandler(myMessageOutput);
-    QLoggingCategory::setFilterRules("kdeconnect.*=true");
+    QLoggingCategory::setFilterRules(QStringLiteral("kdeconnect.*=true"));
 
     // I18n
     initI18n();

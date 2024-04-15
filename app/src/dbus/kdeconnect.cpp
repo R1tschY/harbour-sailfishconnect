@@ -64,7 +64,7 @@ void DeviceApi::pluginCall(const QString& plugin, const QString& method)
 {
     QDBusMessage msg = QDBusMessage::createMethodCall(
         QStringLiteral("org.kde.kdeconnect"), 
-        QStringLiteral("/modules/kdeconnect/devices/") % id() % QChar('/') % plugin, 
+        QStringLiteral("/modules/kdeconnect/devices/") % id() % QChar::fromLatin1('/') % plugin,
         QStringLiteral("org.kde.kdeconnect.device.") + plugin, 
         method);
     checkForDbusError(QDBusConnection::sessionBus().asyncCall(msg));

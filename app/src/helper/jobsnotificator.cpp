@@ -64,7 +64,7 @@ void JobsNotificator::jobChanged(JobInfo *job)
     Q_ASSERT(notification != nullptr);
 
     if (job->state() == QStringLiteral("running")) {
-        notification->setHintValue("x-nemo-progress", job->progress());
+        notification->setHintValue(QStringLiteral("x-nemo-progress"), job->progress());
 
         if (job->totalFiles() > 1) {
             notification->setBody(job->title());
@@ -141,7 +141,7 @@ void JobsNotificator::addJob(JobInfo *job)
         notification->setPreviewBody(body);
         notification->setSummary(i18n("Downloading ..."));
     }
-    notification->setHintValue("x-nemo-progress", job->progress());
+    notification->setHintValue(QStringLiteral("x-nemo-progress"), job->progress());
     if (device) {
         notification->setRemoteActions(
             { UI::openDevicePageDbusAction(device->id()) });

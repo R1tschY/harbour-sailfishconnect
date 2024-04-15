@@ -95,7 +95,7 @@ void SharePlugin::receivePacket(const NetworkPacket& np)
         qCDebug(logger) << "Start receiving file" << filename << dateModified << open;
 
         KJob* job = new DownloadJob(
-            device()->id(), np.payload(), incomingPath() % "/" % filename, np.payloadSize(), this);
+            device()->id(), np.payload(), incomingPath() % QChar::fromLatin1('/') % filename, np.payloadSize(), this);
         Daemon::instance()->jobTracker()->registerJob(job);
         connect(job, &KJob::result, 
             this, [=](KJob* job) { finished(job, dateModified, open); });
@@ -160,7 +160,7 @@ void SharePlugin::finished(KJob* job, qint64 dateModified, bool open)
         qCDebug(logger)
             << "Share succeeded:" << download->destination();
         if (open) {
-            QDesktopServices::openUrl(download->destination());
+            QDesktopServices::openUrl(QUrl::fromUserInput(download->destination()));
         }
     } else {
         qCWarning(logger)

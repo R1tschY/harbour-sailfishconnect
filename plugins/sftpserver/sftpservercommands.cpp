@@ -37,64 +37,64 @@ QString createLongName(const QFileInfo& file_info, const QString& filename)
     auto mode = file_info.permissions();
 
     if (file_info.isSymLink())
-        out.append(QChar('l'));
+        out.append(QChar::fromLatin1('l'));
     else if (file_info.isDir())
-        out.append(QChar('d'));
+        out.append(QChar::fromLatin1('d'));
     else
-        out.append(QChar('-'));
+        out.append(QChar::fromLatin1('-'));
 
     /* user */
     if (mode & QFileDevice::ReadOwner)
-        out.append(QChar('r'));
+        out.append(QChar::fromLatin1('r'));
     else
-        out.append(QChar('-'));
+        out.append(QChar::fromLatin1('-'));
 
     if (mode & QFileDevice::WriteOwner)
-        out.append(QChar('w'));
+        out.append(QChar::fromLatin1('w'));
     else
-        out.append(QChar('-'));
+        out.append(QChar::fromLatin1('-'));
 
     if (mode & QFileDevice::ExeOwner)
-        out.append(QChar('x'));
+        out.append(QChar::fromLatin1('x'));
     else
-        out.append(QChar('-'));
+        out.append(QChar::fromLatin1('-'));
 
     /*group*/
     if (mode & QFileDevice::ReadGroup)
-        out.append(QChar('r'));
+        out.append(QChar::fromLatin1('r'));
     else
-        out.append(QChar('-'));
+        out.append(QChar::fromLatin1('-'));
 
     if (mode & QFileDevice::WriteGroup)
-        out.append(QChar('w'));
+        out.append(QChar::fromLatin1('w'));
     else
-        out.append(QChar('-'));
+        out.append(QChar::fromLatin1('-'));
 
     if (mode & QFileDevice::ExeGroup)
-        out.append(QChar('x'));
+        out.append(QChar::fromLatin1('x'));
     else
-        out.append(QChar('-'));
+        out.append(QChar::fromLatin1('-'));
 
     /* other */
     if (mode & QFileDevice::ReadOther)
-        out.append(QChar('r'));
+        out.append(QChar::fromLatin1('r'));
     else
-        out.append(QChar('-'));
+        out.append(QChar::fromLatin1('-'));
 
     if (mode & QFileDevice::WriteOther)
-        out.append(QChar('w'));
+        out.append(QChar::fromLatin1('w'));
     else
-        out.append(QChar('-'));
+        out.append(QChar::fromLatin1('-'));
 
     if (mode & QFileDevice::ExeOther)
-        out.append(QChar('x'));
+        out.append(QChar::fromLatin1('x'));
     else
-        out.append(QChar('-'));
+        out.append(QChar::fromLatin1('-'));
 
-    out.append(QString(" 1 %1 %2 %3").arg(file_info.ownerId()).arg(file_info.groupId()).arg(file_info.size()));
-    out.append(QChar(' '));
-    out.append(file_info.lastModified().toString("MMM d hh:mm:ss yyyy"));
-    out.append(QChar(' '));
+    out.append(QStringLiteral(" 1 %1 %2 %3").arg(file_info.ownerId()).arg(file_info.groupId()).arg(file_info.size()));
+    out.append(QChar::fromLatin1(' '));
+    out.append(file_info.lastModified().toString(QStringLiteral("MMM d hh:mm:ss yyyy")));
+    out.append(QChar::fromLatin1(' '));
     out.append(filename);
     return out;
 }
@@ -120,7 +120,7 @@ bool replyFileError(sftp_client_message msg, const QFile& file) {
 
 SftpServerSession::SftpServerSession(sftp_session sftp)
     : m_sftpSession(sftp)
-    , m_cwd("/home")
+    , m_cwd(QStringLiteral("/home"))
 {
 }
 

@@ -352,7 +352,7 @@ static QByteArray imageToPng(const QImage& image) {
     buffer.open(QIODevice::ReadWrite);
 
     // TODO: cache icons
-    bool success = image.save(buffer.data(), "PNG");
+    bool success = image.save(&buffer, "PNG");
     if (success) {
         return buffer.data();
     } else {
@@ -367,7 +367,7 @@ static QSharedPointer<QIODevice> imageToPngBuffer(const QImage& image) {
     QSharedPointer<QBuffer> buffer;
     buffer->open(QIODevice::ReadWrite);
 
-    bool success = image.save(buffer->data(), "PNG");
+    bool success = image.save(buffer.data(), "PNG");
     if (success) {
         buffer->seek(0);
         return buffer;
@@ -446,7 +446,7 @@ QSharedPointer<QIODevice> NotificationsListener::iconForIconName(
     qCDebug(logger) << "convert icon name" << iconName << "to png";
 
     QByteArray result;
-    if (!iconName.contains(QChar('/'))) {
+    if (!iconName.contains(QChar::fromLatin1('/'))) {
         result = themeIconToPng(iconName);
     } else {
         auto url = QUrl::fromUserInput(
@@ -612,7 +612,7 @@ void NotificationsListener::onNotify(const QString& appName, uint replacesId,
     // TODO: use nemo hints
     // TODO: if id == 0 use return value of call
     //qCDebug(logger) << "Sending notification from" << appName << ":" <<ticker << "; appIcon=" << appIcon;
-    NetworkPacket np("kdeconnect.notification", {
+    NetworkPacket np(QStringLiteral("kdeconnect.notification"), {
         {QStringLiteral("id"), QString::number(replacesId)},
         {QStringLiteral("appName"), appName},
         {QStringLiteral("ticker"), ticker},

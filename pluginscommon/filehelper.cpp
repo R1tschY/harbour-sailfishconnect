@@ -28,8 +28,8 @@ QFileInfo nonexistingFile(const QFileInfo& path) {
     QFileInfo result = path;
     const QString prefix = result.baseName();
     QString suffix = result.completeSuffix();
-    if (path.fileName().contains(QChar('.'))) {
-        suffix.insert(0, QChar('.'));
+    if (path.fileName().contains(QChar::fromLatin1('.'))) {
+        suffix.insert(0, QChar::fromLatin1('.'));
     }
 
     if (!prefix.isEmpty()) {
@@ -57,8 +57,8 @@ QFileInfo nonexistingFile(const QFileInfo& path) {
 QString escapeForFilePath(const QString& name)
 {
     QString result = name.trimmed();
-    result.replace(QChar('/'), QString());
-    result.replace(QChar('\0'), QString());
+    result.replace(QChar((int) '/'), QString());
+    result.replace(QChar((int) '\0'), QString());
 
     if (result.isEmpty()
             || result == QLatin1String(".")

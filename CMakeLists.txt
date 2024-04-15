@@ -42,18 +42,22 @@ if (NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
 endif()
 add_definitions(-DSAILFISHOS)
 
-# KDE Connect
-add_subdirectory(kdeconnect-kde)
-
 # Sailfish Connect
 find_package(ECM 5.99 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 include(ECMQtDeclareLoggingCategory)
 
+# KDE Connect
+add_subdirectory(kdeconnect-kde)
+
 find_package(Qt5 REQUIRED COMPONENTS Core DBus Network Gui Sql Quick Feedback)
 find_package(KF5 REQUIRED COMPONENTS I18n CoreAddons Config)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
+remove_definitions(
+    -DQT_NO_KEYWORDS
+    -DQT_NO_FOREACH
+)
 
 # Options
 set(PACKAGE_NAME harbour-sailfishconnect)

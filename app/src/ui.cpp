@@ -88,12 +88,12 @@ void UI::showMainWindow()
     m_view->installEventFilter(this);
 
     setRunInBackground(
-        m_settings.value("runInBackground", m_runInBackground).toBool());
+        m_settings.value(QStringLiteral("runInBackground"), m_runInBackground).toBool());
 
     // view
-    m_view->rootContext()->setContextProperty("daemon", m_daemonApi);
-    m_view->rootContext()->setContextProperty("ui", this);
-    m_view->rootContext()->setContextProperty("keyboardLayout", m_keyboardLayoutProvider);
+    m_view->rootContext()->setContextProperty(QStringLiteral("daemon"), m_daemonApi);
+    m_view->rootContext()->setContextProperty(QStringLiteral("ui"), this);
+    m_view->rootContext()->setContextProperty(QStringLiteral("keyboardLayout"), m_keyboardLayoutProvider);
     m_view->setSource(SailfishApp::pathToMainQml());
     m_view->showFullScreen();
 }
@@ -189,7 +189,7 @@ void UI::setRunInBackground(bool value)
         return;
 
     m_runInBackground = value;
-    m_settings.setValue("runInBackground", value);
+    m_settings.setValue(QStringLiteral("runInBackground"), value);
     m_settings.sync();
 
     qGuiApp->setQuitOnLastWindowClosed(!value);
@@ -199,10 +199,10 @@ void UI::setRunInBackground(bool value)
     systemctl->setProcessChannelMode(QProcess::MergedChannels);
     if (value) {
         connect(systemctl, SIGNAL(finished(int)), this, SLOT(onRegisteredService()));
-        systemctl->start("systemctl", { "--user", "enable", SERVICE_FILE_LOCATION });
+        systemctl->start(QStringLiteral("systemctl"), { QStringLiteral("--user"), QStringLiteral("enable"), SERVICE_FILE_LOCATION });
     } else {
         connect(systemctl, SIGNAL(finished(int)), this, SLOT(onUnregisteredService()));
-        systemctl->start("systemctl", { "--user", "disable", SERVICE_FILE_LOCATION });
+        systemctl->start(QStringLiteral("systemctl"), { QStringLiteral("--user"), QStringLiteral("disable"), SERVICE_FILE_LOCATION });
     }
 #endif
 
@@ -212,7 +212,7 @@ void UI::setRunInBackground(bool value)
 QVariant UI::openDevicePageDbusAction(const QString &deviceId)
 {
     return Notification::remoteAction(
-            QStringLiteral("default"), QString("default"),
+            QStringLiteral("default"), QStringLiteral("default"),
             DBUS_SERVICE_NAME, UI::DBUS_PATH, UI::DBUS_INTERFACE_NAME,
             QStringLiteral("openDevicePage"), { deviceId });
 }

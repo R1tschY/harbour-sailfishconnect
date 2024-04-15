@@ -35,14 +35,14 @@ static QUrl deviceTypeToIcon(const QString& deviceType)
     // TODO: move to qml part
     if (deviceType == QLatin1String("smartphone")
             || deviceType == QLatin1String("phone"))
-        return QStringLiteral("image://theme/icon-m-phone");
+        return QUrl(QStringLiteral("image://theme/icon-m-phone"));
 
     if (deviceType == QLatin1String("tablet"))
-        return QStringLiteral("image://theme/icon-m-tablet");
+        return QUrl(QStringLiteral("image://theme/icon-m-tablet"));
 
     // FUTURE-TODO: use a television icon for "tv" when it exists
 
-    return QStringLiteral("image://theme/icon-m-computer");
+    return QUrl(QStringLiteral("image://theme/icon-m-computer"));
 }
 
 DeviceListModel::DeviceListModel(QObject *parent)

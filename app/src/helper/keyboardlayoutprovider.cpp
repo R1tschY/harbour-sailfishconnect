@@ -43,12 +43,12 @@ KeyboardLayoutProvider::KeyboardLayoutProvider(QObject *parent)
     m_settings.endGroup();
 
     QJsonArray row1;
-    for (const QString& key : {"esc", "F1", "F2", "F3", "F4", "F5", "F6"}) {
+    for (const QString& key : {QStringLiteral("esc"), QStringLiteral("F1"), QStringLiteral("F2"), QStringLiteral("F3"), QStringLiteral("F4"), QStringLiteral("F5"), QStringLiteral("F6")}) {
         QJsonObject keyObject;
         keyObject.insert(QStringLiteral("caption"), key);
-        if (key.startsWith('F')) {
+        if (key.startsWith(QChar::fromLatin1('F'))) {
             int num = key.at(1).toLatin1() - '0';
-            QString name = 'F' % QString::number(num + 6);
+            QString name = QChar::fromLatin1('F') % QString::number(num + 6);
             keyObject.insert(QStringLiteral("captionShifted"), name);
         }
         row1.append(keyObject);
@@ -67,50 +67,50 @@ QString KeyboardLayoutProvider::layout() const
 void KeyboardLayoutProvider::setLayout(const QString &layout)
 {
     // seems to be the only way to get the files stored
-    QFile layoutFile(MALIIT_LAYOUT_DIR % layout % ".qml");
+    QFile layoutFile(MALIIT_LAYOUT_DIR % layout % QStringLiteral(".qml"));
     if (!layoutFile.open(QIODevice::ReadOnly)) {
         qCDebug(logger) << "Unknown layout: " << layout;
         return;
     }
 
-    QRegularExpression caption("caption: \"([\\S])\"");
-    QRegularExpression captionShifted("captionShifted: \"([\\S])\"");
-    QRegularExpression symView("symView: \"([\\S]+)\"");
-    QRegularExpression symView2("symView2: \"([\\S]+)\"");
-    QByteArray line = layoutFile.readLine();
+    QRegularExpression caption(QStringLiteral("caption: \"([\\S])\""));
+    QRegularExpression captionShifted(QStringLiteral("captionShifted: \"([\\S])\""));
+    QRegularExpression symView(QStringLiteral("symView: \"([\\S]+)\""));
+    QRegularExpression symView2(QStringLiteral("symView2: \"([\\S]+)\""));
+    QString line = QString::fromUtf8(layoutFile.readLine());
     QJsonArray keys;
     QJsonArray row;
 
     while (line.length() > 0) {
-        if (line.contains("  }")) {
+        if (line.contains(QStringLiteral("  }"))) {
             keys.append(row);
-        } else if (line.contains("KeyboardRow {")) {
+        } else if (line.contains(QStringLiteral("KeyboardRow {"))) {
             row = QJsonArray();
-        } else if (line.contains("Key")) {
-            QByteArray keySequence = line;
-            while (!line.contains('}')) {
-                line = layoutFile.readLine();
+        } else if (line.contains(QStringLiteral("Key"))) {
+            QString keySequence = line;
+            while (!line.contains(QChar::fromLatin1('}'))) {
+                line = QString::fromUtf8(layoutFile.readLine());
                 keySequence.append(line);
             }
-            while (keySequence.contains('\n')) {
-                keySequence.replace('\n', ' ');
+            while (keySequence.contains(QChar::fromLatin1('\n'))) {
+                keySequence.replace(QChar::fromLatin1('\n'), QChar::fromLatin1(' '));
             }
 
             // remove backslash
-            keySequence.replace("\\\"", "\"");
-            keySequence.replace("\\\\", "\\");
+            keySequence.replace(QStringLiteral("\\\""), QStringLiteral("\""));
+            keySequence.replace(QStringLiteral("\\\\"), QStringLiteral("\\"));
 
-            if (keySequence.contains("ShiftKey")) {
+            if (keySequence.contains(QStringLiteral("ShiftKey"))) {
                 QJsonObject key;
-                key["caption"] = "shift";
+                key[QStringLiteral("caption")] = QStringLiteral("shift");
                 row.append(key);
-            } else if (keySequence.contains("BackspaceKey")) {
+            } else if (keySequence.contains(QStringLiteral("BackspaceKey"))) {
                 QJsonObject upKey;
-                upKey["caption"] = "";
-                upKey["symView"] = "up";
+                upKey[QStringLiteral("caption")] = QStringLiteral("");
+                upKey[QStringLiteral("symView")] = QStringLiteral("up");
                 row.append(upKey);
                 QJsonObject key;
-                key["caption"] = "backspace";
+                key[QStringLiteral("caption")] = QStringLiteral("backspace");
                 row.append(key);
             } else {
                 QRegularExpressionMatch captionMatch =
@@ -122,21 +122,21 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
                 QRegularExpressionMatch symView2Match =
                         symView2.match(keySequence);
                 QJsonObject key;
-                key["caption"] = captionMatch.captured(1);
+                key[QStringLiteral("caption")] = captionMatch.captured(1);
                 if (captionShiftedMatch.hasMatch()) {
-                    key["captionShifted"] = captionShiftedMatch.captured(1);
+                    key[QStringLiteral("captionShifted")] = captionShiftedMatch.captured(1);
                 }
                 if (symViewMatch.hasMatch()) {
-                    key["symView"] = symViewMatch.captured(1);
+                    key[QStringLiteral("symView")] = symViewMatch.captured(1);
                 }
                 if (symView2Match.hasMatch()) {
-                    key["symView2"] = symView2Match.captured(1);
+                    key[QStringLiteral("symView2")] = symView2Match.captured(1);
                 }
                 row.append(key);
             }
         }
 
-        line = layoutFile.readLine();
+        line = QString::fromUtf8(layoutFile.readLine());
     }
 
     layoutFile.close();
@@ -150,17 +150,17 @@ void KeyboardLayoutProvider::setLayout(const QString &layout)
     m_row4 = keys[2].toArray().toVariantList();
 
     QJsonArray row5;
-    for (const QString& key : {"?123", "ctrl", ",", " ", ".", "alt", "enter"}) {
+    for (const QString& key : {QStringLiteral("?123"), QStringLiteral("ctrl"), QStringLiteral(","), QStringLiteral(" "), QStringLiteral("."), QStringLiteral("alt"), QStringLiteral("enter")}) {
         QJsonObject keyObject;
-        keyObject["caption"] = key;
-        if (key == ".") {
-            keyObject["symView"] = "left";
-        } else if (key == "alt") {
-            keyObject["symView"] = "down";
-        } else if (key == "enter") {
-            keyObject["symView"] = "right";
-        } else if (key == "?123") {
-            keyObject["symView"] = "ABC";
+        keyObject[QStringLiteral("caption")] = key;
+        if (key == QStringLiteral(".")) {
+            keyObject[QStringLiteral("symView")] = QStringLiteral("left");
+        } else if (key == QStringLiteral("alt")) {
+            keyObject[QStringLiteral("symView")] = QStringLiteral("down");
+        } else if (key == QStringLiteral("enter")) {
+            keyObject[QStringLiteral("symView")] = QStringLiteral("right");
+        } else if (key == QStringLiteral("?123")) {
+            keyObject[QStringLiteral("symView")] = QStringLiteral("ABC");
         }
         row5.append(keyObject);
     }
@@ -261,8 +261,7 @@ void KeyboardLayoutProvider::loadNames()
 
             for (const QString &group : settings.childGroups()) {
                  settings.beginGroup(group);
-                 longNames[group] = settings.value(
-                     QStringLiteral("name")).toByteArray();
+                 longNames[group] = settings.value(QStringLiteral("name")).toString();
                  settings.endGroup();
             }
         }
@@ -270,7 +269,7 @@ void KeyboardLayoutProvider::loadNames()
 
     // then load layouts
     for (const QString &layout : confDir.entryList()) {
-        if (layout.endsWith(QStringLiteral(".qml")) && !layout.contains('_')) {
+        if (layout.endsWith(QStringLiteral(".qml")) && !layout.contains(QChar::fromLatin1('_'))) {
             // hi, kn, mr and te are currentently not working
             if (layout.contains(QStringLiteral("hi")) || layout.contains(QStringLiteral("kn")) ||
                     layout.contains(QStringLiteral("mr")) || layout.contains(QStringLiteral("te")) ||
@@ -279,8 +278,8 @@ void KeyboardLayoutProvider::loadNames()
             }
 
             QJsonObject language;
-            language.insert("short", layout.left(layout.indexOf('.')));
-            language.insert("long", longNames[layout]);
+            language.insert(QStringLiteral("short"), layout.left(layout.indexOf(QChar::fromLatin1('.'))));
+            language.insert(QStringLiteral("long"), longNames[layout]);
             m_layouts.append(language);
         }
     }

@@ -281,6 +281,9 @@ int main(int argc, char *argv[])
     // I18n
     initI18n();
 
+    // KDE Connect
+    qputenv("PLASMA_PLATFORM", "phone");
+
     // Migration
     migrateOldInstallation();
 

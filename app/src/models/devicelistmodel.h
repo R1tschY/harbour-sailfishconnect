@@ -38,8 +38,8 @@ public:
         TrustedRole,
         ReachableRole,
         SectionRole,
-        HasPairingRequestsRole,
-        WaitsForPairingRole
+        IsPairRequestedByPeerRole,
+        IsPairRequestedRole
     };
 
     enum Section {

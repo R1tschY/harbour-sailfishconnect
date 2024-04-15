@@ -143,7 +143,7 @@ Page {
 
                         text: (trusted && reachable)
                               ? i18n("Connected")
-                              : (hasPairingRequests || waitsForPairing
+                              : (isPairRequested || isPairRequestedByPeer
                                  ? i18n("Pending pairing request ...") : "")
                         color: listItem.highlighted
                                ? Theme.secondaryHighlightColor

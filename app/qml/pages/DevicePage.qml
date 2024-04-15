@@ -30,7 +30,7 @@ Page {
     property string deviceId
     property QtObject _device: daemon.getDevice(deviceId)
 
-    property bool connected: _device && _device.isTrusted && _device.isReachable
+    property bool connected: _device && _device.isPaired && _device.isReachable
 
     SilicaFlickable {
         id: deviceView
@@ -49,7 +49,7 @@ Page {
             },
             State {
                 name: "trusted"
-                when: _device.isTrusted
+                when: _device.isPaired
 
                 PropertyChanges {
                     target: placeholder
@@ -58,7 +58,7 @@ Page {
             },
             State {
                 name: "waitingParingRequest"
-                when: _device.hasPairingRequests
+                when: _device.isPairRequestedByPeer
 
                 PropertyChanges {
                     target: placeholder
@@ -67,7 +67,7 @@ Page {
             },
             State {
                 name: "waitForAcceptedPairing"
-                when: _device.waitsForPairing
+                when: _device.isPairRequested
 
                 PropertyChanges {
                     target: placeholder
@@ -76,7 +76,7 @@ Page {
             },
             State {
                 name: "notTrusted"
-                when: !_device.isTrusted
+                when: !_device.isPaired
 
                 PropertyChanges {
                     target: placeholder

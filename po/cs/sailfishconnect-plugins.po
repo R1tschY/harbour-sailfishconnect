@@ -2,27 +2,26 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
 # Lukáš Karas <lukas.karas@centrum.cz>, 2021
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-04 22:39+0100\n"
+"POT-Creation-Date: 2024-04-15 20:33+0200\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
 "Last-Translator: Lukáš Karas <lukas.karas@centrum.cz>, 2021\n"
-"Language-Team: Czech (https://www.transifex.com/r1tschy/teams/89267/cs/)\n"
-"Language: cs\n"
+"Language-Team: Czech (https://app.transifex.com/r1tschy/teams/89267/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
-"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: plugins/sf_share/shareplugin.cpp:143
+#: plugins/sf_share/shareplugin.cpp:141
 #, kde-format
 msgid "%1 does not exist"
 msgstr "%1 neexistuje"
@@ -37,7 +36,7 @@ msgstr "Nemohu vytvořit cílovou složku"
 msgid "Could not open file `%1`: %2"
 msgstr "Nemohu otevřít soubor \"%1\": %2"
 
-#: plugins/sf_share/shareplugin.cpp:143
+#: plugins/sf_share/shareplugin.cpp:141
 #, kde-format
 msgid "Could not share file"
 msgstr "Nemohu sdílet soubor"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-02-01 02:33+0100\n"
+"POT-Creation-Date: 2024-04-01 00:37+0000\n"
 "PO-Revision-Date: 2019-11-29 20:54+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -17,77 +17,59 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 19.08.1\n"
 
-#: backends/bluetooth/bluetoothpairinghandler.cpp:57
-#: backends/lan/lanpairinghandler.cpp:53
-#, kde-format
-msgid "Canceled by other peer"
-msgstr "Teine pool katkestas"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:66
-#: backends/lan/lanpairinghandler.cpp:62
-#, kde-format
-msgid "%1: Already paired"
-msgstr "%1: juba paardunud"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:69
-#, kde-format
-msgid "%1: Pairing already requested for this device"
-msgstr "%1: selle seadme paardumist on juba soovitud"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:125
-#: backends/lan/lanpairinghandler.cpp:106
-#, kde-format
-msgid "Timed out"
-msgstr "Ajaületus"
-
-#: backends/lan/compositeuploadjob.cpp:81
+#: backends/lan/compositeuploadjob.cpp:77
 #, kde-format
 msgid "Couldn't find an available port"
 msgstr "Kättesaadavat porti ei leitud"
 
-#: backends/lan/compositeuploadjob.cpp:120
+#: backends/lan/compositeuploadjob.cpp:115
 #, kde-format
 msgid "Failed to send packet to %1"
 msgstr "Paketi saatmine seadmesse %1 nurjus"
 
-#: backends/lan/compositeuploadjob.cpp:278
-#, kde-format
-msgid "Sent 1 file"
-msgid_plural "Sent %1 files"
-msgstr[0] "Saadeti 1 fail"
-msgstr[1] "Saadeti %1 faili"
-
-#: backends/lan/compositeuploadjob.cpp:279
-#: backends/lan/compositeuploadjob.cpp:294
+#: backends/lan/compositeuploadjob.cpp:271
 #, kde-format
 msgid "Sending to %1"
 msgstr "Saatmine seadmesse %1"
 
-#: backends/lan/compositeuploadjob.cpp:290
-#, kde-format
-msgid "Progress"
-msgstr "Edenemine"
-
-#: backends/lan/compositeuploadjob.cpp:291
-#, kde-format
-msgid "Sending file %1 of %2"
-msgstr "Saadetakse faili %1 (kokku %2)"
-
-#: backends/lan/compositeuploadjob.cpp:295
+#: backends/lan/compositeuploadjob.cpp:271
 #, kde-format
 msgid "File"
 msgstr "Fail"
 
-#: backends/lan/landevicelink.cpp:146 backends/lan/landevicelink.cpp:160
+#: backends/pairinghandler.cpp:59
 #, kde-format
-msgid ""
-"This device cannot be paired because it is running an old version of KDE "
-"Connect."
-msgstr ""
-"Seadmega paardumine ei ole võimalik, sest seal töötab KDE Connecti vana "
-"versioon."
+msgid "Canceled by other peer"
+msgstr "Teine pool katkestas"
 
-#: compositefiletransferjob.cpp:45
+#: backends/pairinghandler.cpp:75
+#, kde-format
+msgid "%1: Already paired"
+msgstr "%1: juba paardunud"
+
+#: backends/pairinghandler.cpp:84 backends/pairinghandler.cpp:98
+#, fuzzy, kde-format
+#| msgid "Device not reachable"
+msgid "%1: Device not reachable"
+msgstr "Seade pole saadaval"
+
+#: backends/pairinghandler.cpp:113
+#, kde-format
+msgid "Device not reachable"
+msgstr "Seade pole saadaval"
+
+#: backends/pairinghandler.cpp:124
+#, fuzzy, kde-format
+#| msgid "Canceled by the user"
+msgid "Cancelled by user"
+msgstr "Kasutaja katkestas"
+
+#: backends/pairinghandler.cpp:140
+#, kde-format
+msgid "Timed out"
+msgstr "Ajaületus"
+
+#: compositefiletransferjob.cpp:46
 #, fuzzy, kde-format
 #| msgid "Receiving file from %2"
 #| msgid_plural "Receiving %1 files from %2"
@@ -97,80 +79,104 @@ msgid_plural "Receiving files"
 msgstr[0] "Saadi fail seadmest %2"
 msgstr[1] "Saadi %1 faili seadmest %2"
 
-#: compositefiletransferjob.cpp:46
+#: compositefiletransferjob.cpp:47
 #, kde-format
 msgctxt "The source of a file operation"
 msgid "Source"
 msgstr ""
 
-#: compositefiletransferjob.cpp:47
+#: compositefiletransferjob.cpp:48
 #, kde-format
 msgctxt "The destination of a file operation"
 msgid "Destination"
 msgstr ""
 
-#: device.cpp:212
-#, kde-format
-msgid "Already paired"
-msgstr "Juba paardunud"
-
-#: device.cpp:217
-#, kde-format
-msgid "Device not reachable"
-msgstr "Seade pole saadaval"
-
-#: device.cpp:547
+#: device.cpp:455
 #, fuzzy, kde-format
 #| msgid "SHA1 fingerprint of your device certificate is: %1\n"
 msgid "SHA256 fingerprint of your device certificate is: %1\n"
 msgstr "Sinu seadme sertifikaadi SHA1 sõrmejälg on: %1\n"
 
-#: device.cpp:555
+#: device.cpp:461
 #, fuzzy, kde-format
 #| msgid "SHA1 fingerprint of remote device certificate is: %1\n"
 msgid "SHA256 fingerprint of remote device certificate is: %1\n"
 msgstr "Kaugseadme sertifikaadi SHA1 sõrmejälg on: %1\n"
 
-#: filetransferjob.cpp:51
+#: filetransferjob.cpp:53
 #, kde-format
 msgid "Filename already present"
 msgstr "Failinimi on juba olemas"
 
-#: filetransferjob.cpp:101
+#: filetransferjob.cpp:105
 #, kde-format
 msgid "Received incomplete file: %1"
 msgstr "Saadi ebatäielik fail: %1"
 
-#: filetransferjob.cpp:119
+#: filetransferjob.cpp:123
 #, kde-format
 msgid "Received incomplete file from: %1"
 msgstr "Saadi ebatäielik fail seadmest %1"
 
-#: kdeconnectconfig.cpp:78
+#: kdeconnectconfig.cpp:301 kdeconnectconfig.cpp:332
 #, kde-format
 msgid "KDE Connect failed to start"
 msgstr "KDE Connecti käivitamine nurjus"
 
-#: kdeconnectconfig.cpp:79
-#, kde-format
-msgid ""
-"Could not find support for RSA in your QCA installation. If your "
-"distribution provides separate packets for QCA-ossl and QCA-gnupg, make sure "
-"you have them installed and try again."
-msgstr ""
-"Sinu QCA paigalduses ei leitud RSA tuge. Kui sinu distributsioon pakub "
-"eraldi pakette QCA-ossl ja QCA-gnupg jaoks, kontrolli, kas need on ikka "
-"paigaldatud, ja proovi uuesti."
+#: kdeconnectconfig.cpp:301
+#, fuzzy, kde-format
+#| msgid "Could not store private key file: %1"
+msgid "Could not generate the private key."
+msgstr "Privaatvõtmefaili salvestamine nurjus: %1"
 
-#: kdeconnectconfig.cpp:316
+#: kdeconnectconfig.cpp:317
 #, kde-format
 msgid "Could not store private key file: %1"
 msgstr "Privaatvõtmefaili salvestamine nurjus: %1"
 
-#: kdeconnectconfig.cpp:361
+#: kdeconnectconfig.cpp:332
+#, fuzzy, kde-format
+#| msgid "Could not store certificate file: %1"
+msgid "Could not generate the device certificate."
+msgstr "Sertifikaadifaili salvestamine nurjus: %1"
+
+#: kdeconnectconfig.cpp:348
 #, kde-format
 msgid "Could not store certificate file: %1"
 msgstr "Sertifikaadifaili salvestamine nurjus: %1"
+
+#~ msgid ""
+#~ "Could not find support for RSA in your QCA installation. If your "
+#~ "distribution provides separate packets for QCA-ossl and QCA-gnupg, make "
+#~ "sure you have them installed and try again."
+#~ msgstr ""
+#~ "Sinu QCA paigalduses ei leitud RSA tuge. Kui sinu distributsioon pakub "
+#~ "eraldi pakette QCA-ossl ja QCA-gnupg jaoks, kontrolli, kas need on ikka "
+#~ "paigaldatud, ja proovi uuesti."
+
+#~ msgid "%1: Pairing already requested for this device"
+#~ msgstr "%1: selle seadme paardumist on juba soovitud"
+
+#~ msgid ""
+#~ "This device cannot be paired because it is running an old version of KDE "
+#~ "Connect."
+#~ msgstr ""
+#~ "Seadmega paardumine ei ole võimalik, sest seal töötab KDE Connecti vana "
+#~ "versioon."
+
+#~ msgid "Already paired"
+#~ msgstr "Juba paardunud"
+
+#~ msgid "Sent 1 file"
+#~ msgid_plural "Sent %1 files"
+#~ msgstr[0] "Saadeti 1 fail"
+#~ msgstr[1] "Saadeti %1 faili"
+
+#~ msgid "Progress"
+#~ msgstr "Edenemine"
+
+#~ msgid "Sending file %1 of %2"
+#~ msgstr "Saadetakse faili %1 (kokku %2)"
 
 #~ msgid "Receiving file %1 of %2"
 #~ msgstr "Saadi fail %1 / %2"
@@ -188,6 +194,3 @@ msgstr "Sertifikaadifaili salvestamine nurjus: %1"
 
 #~ msgid "Received incorrect key"
 #~ msgstr "Saadi vigane võti"
-
-#~ msgid "Canceled by the user"
-#~ msgstr "Kasutaja katkestas"

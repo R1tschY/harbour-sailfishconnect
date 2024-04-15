@@ -3,13 +3,15 @@
 #
 # Alexander Potashev <aspotashev@gmail.com>, 2015, 2017.
 # Dmitry Serov <dmitri.s93@gmail.com>, 2015.
-# Alexander Yavorsky <kekcuha@gmail.com>, 2019, 2021.
+# SPDX-FileCopyrightText: 2019, 2021, 2024 Alexander Yavorsky <kekcuha@gmail.com>
+# Дронова Юлия <juliette.tux@gmail.com>, 2021.
+# Olesya Gerasimenko <translation-team@basealt.ru>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-02-01 02:33+0100\n"
-"PO-Revision-Date: 2021-02-05 22:24+0300\n"
+"POT-Creation-Date: 2024-04-01 00:37+0000\n"
+"PO-Revision-Date: 2024-01-10 21:58+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -18,81 +20,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.12.2\n"
+"X-Generator: Lokalize 23.08.4\n"
 
-#: backends/bluetooth/bluetoothpairinghandler.cpp:57
-#: backends/lan/lanpairinghandler.cpp:53
-#, kde-format
-msgid "Canceled by other peer"
-msgstr "Отменено другим клиентом."
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:66
-#: backends/lan/lanpairinghandler.cpp:62
-#, kde-format
-msgid "%1: Already paired"
-msgstr "%1: Устройство уже сопряжено"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:69
-#, kde-format
-msgid "%1: Pairing already requested for this device"
-msgstr "%1: Сопряжение уже запрошено для этого устройства"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:125
-#: backends/lan/lanpairinghandler.cpp:106
-#, kde-format
-msgid "Timed out"
-msgstr "Истекло время ожидания."
-
-#: backends/lan/compositeuploadjob.cpp:81
+#: backends/lan/compositeuploadjob.cpp:77
 #, kde-format
 msgid "Couldn't find an available port"
 msgstr "Не удалось найти доступный порт"
 
-#: backends/lan/compositeuploadjob.cpp:120
+#: backends/lan/compositeuploadjob.cpp:115
 #, kde-format
 msgid "Failed to send packet to %1"
-msgstr "Не удалось передать пакет на %1"
+msgstr "Не удалось отправить пакет на %1"
 
-#: backends/lan/compositeuploadjob.cpp:278
-#, kde-format
-msgid "Sent 1 file"
-msgid_plural "Sent %1 files"
-msgstr[0] "Передан %1 файл"
-msgstr[1] "Передано %1 файла"
-msgstr[2] "Передано %1 файлов"
-msgstr[3] "Передан один файл"
-
-#: backends/lan/compositeuploadjob.cpp:279
-#: backends/lan/compositeuploadjob.cpp:294
+#: backends/lan/compositeuploadjob.cpp:271
 #, kde-format
 msgid "Sending to %1"
-msgstr "Передача на %1"
+msgstr "Отправка на %1"
 
-#: backends/lan/compositeuploadjob.cpp:290
-#, kde-format
-msgid "Progress"
-msgstr "Ход выполнения"
-
-#: backends/lan/compositeuploadjob.cpp:291
-#, kde-format
-msgid "Sending file %1 of %2"
-msgstr "Передача файла %1 из %2"
-
-#: backends/lan/compositeuploadjob.cpp:295
+#: backends/lan/compositeuploadjob.cpp:271
 #, kde-format
 msgid "File"
 msgstr "Файл"
 
-#: backends/lan/landevicelink.cpp:146 backends/lan/landevicelink.cpp:160
+#: backends/pairinghandler.cpp:59
 #, kde-format
-msgid ""
-"This device cannot be paired because it is running an old version of KDE "
-"Connect."
-msgstr ""
-"Это устройство не может быть сопряжено, так как на нём установлена старая "
-"версия KDE Connect."
+msgid "Canceled by other peer"
+msgstr "Отменено другим клиентом"
 
-#: compositefiletransferjob.cpp:45
+#: backends/pairinghandler.cpp:75
+#, kde-format
+msgid "%1: Already paired"
+msgstr "%1: уже сопряжено"
+
+#: backends/pairinghandler.cpp:84 backends/pairinghandler.cpp:98
+#, kde-format
+msgid "%1: Device not reachable"
+msgstr "%1: устройство недоступно"
+
+#: backends/pairinghandler.cpp:113
+#, kde-format
+msgid "Device not reachable"
+msgstr "Устройство недоступно"
+
+#: backends/pairinghandler.cpp:124
+#, kde-format
+msgid "Cancelled by user"
+msgstr "Отменено пользователем"
+
+#: backends/pairinghandler.cpp:140
+#, kde-format
+msgid "Timed out"
+msgstr "Истекло время ожидания"
+
+#: compositefiletransferjob.cpp:46
 #, kde-format
 msgctxt "@title job"
 msgid "Receiving file"
@@ -102,78 +82,102 @@ msgstr[1] "Получение файлов"
 msgstr[2] "Получение файлов"
 msgstr[3] "Получение файлов"
 
-#: compositefiletransferjob.cpp:46
+#: compositefiletransferjob.cpp:47
 #, kde-format
 msgctxt "The source of a file operation"
 msgid "Source"
 msgstr "Источник"
 
-#: compositefiletransferjob.cpp:47
+#: compositefiletransferjob.cpp:48
 #, kde-format
 msgctxt "The destination of a file operation"
 msgid "Destination"
 msgstr "Назначение"
 
-#: device.cpp:212
-#, kde-format
-msgid "Already paired"
-msgstr "Устройство уже сопряжено."
-
-#: device.cpp:217
-#, kde-format
-msgid "Device not reachable"
-msgstr "Устройство недоступно."
-
-#: device.cpp:547
+#: device.cpp:455
 #, kde-format
 msgid "SHA256 fingerprint of your device certificate is: %1\n"
-msgstr "Отпечаток SHA256 сертификата вашего устройства: %1\n"
+msgstr "Отпечаток SHA256 сертификата данного устройства: %1\n"
 
-#: device.cpp:555
+#: device.cpp:461
 #, kde-format
 msgid "SHA256 fingerprint of remote device certificate is: %1\n"
 msgstr "Отпечаток SHA256 сертификата удалённого устройства: %1\n"
 
-#: filetransferjob.cpp:51
+#: filetransferjob.cpp:53
 #, kde-format
 msgid "Filename already present"
-msgstr "Файл с таким именем уже существует."
+msgstr "Такое имя файла уже существует"
 
-#: filetransferjob.cpp:101
+#: filetransferjob.cpp:105
 #, kde-format
 msgid "Received incomplete file: %1"
 msgstr "Получен неполный файл: %1"
 
-#: filetransferjob.cpp:119
+#: filetransferjob.cpp:123
 #, kde-format
 msgid "Received incomplete file from: %1"
-msgstr "С %1 получен неполный файл."
+msgstr "С %1 получен неполный файл"
 
-#: kdeconnectconfig.cpp:78
+#: kdeconnectconfig.cpp:301 kdeconnectconfig.cpp:332
 #, kde-format
 msgid "KDE Connect failed to start"
-msgstr "Не удалось запустить KDE Connect."
+msgstr "Не удалось запустить KDE Connect"
 
-#: kdeconnectconfig.cpp:79
+#: kdeconnectconfig.cpp:301
 #, kde-format
-msgid ""
-"Could not find support for RSA in your QCA installation. If your "
-"distribution provides separate packets for QCA-ossl and QCA-gnupg, make sure "
-"you have them installed and try again."
-msgstr ""
-"На вашей системе установлен пакет QCA, но в нём отсутствует поддержка RSA. "
-"Если ваш дистрибутив содержит отдельные пакеты для QCA-ossl и QCA-gnupg, "
-"установите их и повторите попытку."
+msgid "Could not generate the private key."
+msgstr "Не удалось создать закрытый ключ."
 
-#: kdeconnectconfig.cpp:316
+#: kdeconnectconfig.cpp:317
 #, kde-format
 msgid "Could not store private key file: %1"
 msgstr "Не удалось сохранить файл закрытого ключа: %1"
 
-#: kdeconnectconfig.cpp:361
+#: kdeconnectconfig.cpp:332
+#, kde-format
+msgid "Could not generate the device certificate."
+msgstr "Не удалось создать сертификата устройства."
+
+#: kdeconnectconfig.cpp:348
 #, kde-format
 msgid "Could not store certificate file: %1"
 msgstr "Не удалось сохранить файл сертификата: %1"
+
+#~ msgid ""
+#~ "Could not find support for RSA in your QCA installation. If your "
+#~ "distribution provides separate packets for QCA-ossl and QCA-gnupg, make "
+#~ "sure you have them installed and try again."
+#~ msgstr ""
+#~ "В данной системе установлен пакет QCA, но отсутствует поддержка RSA. Если "
+#~ "в этом дистрибутиве предоставляются отдельные пакеты для QCA-ossl и для "
+#~ "QCA-gnupg, убедитесь, что они установлены и повторите попытку."
+
+#~ msgid "%1: Pairing already requested for this device"
+#~ msgstr "%1: сопряжение уже запрошено для этого устройства"
+
+#~ msgid ""
+#~ "This device cannot be paired because it is running an old version of KDE "
+#~ "Connect."
+#~ msgstr ""
+#~ "Это устройство не может быть сопряжено, так как на нём установлена старая "
+#~ "версия KDE Connect."
+
+#~ msgid "Already paired"
+#~ msgstr "Уже сопряжено"
+
+#~ msgid "Sent 1 file"
+#~ msgid_plural "Sent %1 files"
+#~ msgstr[0] "Передан %1 файл"
+#~ msgstr[1] "Передано %1 файла"
+#~ msgstr[2] "Передано %1 файлов"
+#~ msgstr[3] "Передан один файл"
+
+#~ msgid "Progress"
+#~ msgstr "Ход выполнения"
+
+#~ msgid "Sending file %1 of %2"
+#~ msgstr "Передача файла %1 из %2"
 
 # BUGME: please change to "KDE Connect" --aspotashev
 #~ msgid "Receiving file %1 of %2"
@@ -192,6 +196,3 @@ msgstr "Не удалось сохранить файл сертификата: 
 
 #~ msgid "Received incorrect key"
 #~ msgstr "Получен неправильный ключ."
-
-#~ msgid "Canceled by the user"
-#~ msgstr "Отменено пользователем."

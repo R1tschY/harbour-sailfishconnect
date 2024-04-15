@@ -3,5 +3,5 @@
 SCRIPT_DIR=`dirname "${BASH_SOURCE[0]}"`
 cd "${SCRIPT_DIR}/.."
 
-tx push --translations --language es --source
+tx push --translation --languages es --source
 tx pull --all --force

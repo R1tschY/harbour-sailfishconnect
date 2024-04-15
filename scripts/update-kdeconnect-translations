@@ -14,10 +14,7 @@ do
     for domain in $KDECONNECT_DOMAINS
     do
         mkdir -p "$podir/$translation"
-        echo "Download $translation for $domain"
-        curl -sS --fail \
-            -A "Mozilla/5.0 (X11; Ubuntu) Gecko/20100101 Firefox/73.0" \
-            "https://websvn.kde.org/*checkout*/trunk/l10n-kf5/$translation/messages/kdeconnect-kde/$domain.po" \
-            -o "$podir/$translation/$domain.po" || true
+        echo "Copy $translation for $domain"
+        cp "kdeconnect-kde/po/$translation/$domain.po" "$podir/$translation/$domain.po"
     done
 done

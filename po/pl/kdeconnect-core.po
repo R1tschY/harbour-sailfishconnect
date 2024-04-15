@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2014, 2015, 2016, 2018, 2019, 2020.
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-02-01 02:33+0100\n"
-"PO-Revision-Date: 2020-12-19 12:25+0100\n"
+"POT-Creation-Date: 2024-04-01 00:37+0000\n"
+"PO-Revision-Date: 2023-09-24 08:26+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -16,162 +16,162 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.08.1\n"
+"X-Generator: Lokalize 23.04.3\n"
 
-#: backends/bluetooth/bluetoothpairinghandler.cpp:57
-#: backends/lan/lanpairinghandler.cpp:53
-#, kde-format
-msgid "Canceled by other peer"
-msgstr "Anulowane przez innego uczestnika"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:66
-#: backends/lan/lanpairinghandler.cpp:62
-#, kde-format
-msgid "%1: Already paired"
-msgstr "%1: Już sparowane"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:69
-#, kde-format
-msgid "%1: Pairing already requested for this device"
-msgstr "%1: Już zażądano parowania dla tego urządzenia"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:125
-#: backends/lan/lanpairinghandler.cpp:106
-#, kde-format
-msgid "Timed out"
-msgstr "Upłynął czasu oczekiwania"
-
-#: backends/lan/compositeuploadjob.cpp:81
+#: backends/lan/compositeuploadjob.cpp:77
 #, kde-format
 msgid "Couldn't find an available port"
 msgstr "Nie można było znaleźć dostępnego portu"
 
-#: backends/lan/compositeuploadjob.cpp:120
+#: backends/lan/compositeuploadjob.cpp:115
 #, kde-format
 msgid "Failed to send packet to %1"
 msgstr "Nie udało się wysyłanie pakietu do %1"
 
-#: backends/lan/compositeuploadjob.cpp:278
-#, kde-format
-msgid "Sent 1 file"
-msgid_plural "Sent %1 files"
-msgstr[0] "Wysłano 1 plik"
-msgstr[1] "Wysłano %1 pliki"
-msgstr[2] "Wysłano %1 plików"
-
-#: backends/lan/compositeuploadjob.cpp:279
-#: backends/lan/compositeuploadjob.cpp:294
+#: backends/lan/compositeuploadjob.cpp:271
 #, kde-format
 msgid "Sending to %1"
 msgstr "Wysyłanie do %1"
 
-#: backends/lan/compositeuploadjob.cpp:290
-#, kde-format
-msgid "Progress"
-msgstr "Postęp"
-
-#: backends/lan/compositeuploadjob.cpp:291
-#, kde-format
-msgid "Sending file %1 of %2"
-msgstr "Wysyłanie pliku %1 z %2"
-
-#: backends/lan/compositeuploadjob.cpp:295
+#: backends/lan/compositeuploadjob.cpp:271
 #, kde-format
 msgid "File"
 msgstr "Plik"
 
-#: backends/lan/landevicelink.cpp:146 backends/lan/landevicelink.cpp:160
+#: backends/pairinghandler.cpp:59
 #, kde-format
-msgid ""
-"This device cannot be paired because it is running an old version of KDE "
-"Connect."
-msgstr ""
-"Nie można sparować tego urządzenia, bo działa ono na starej wersji KDE "
-"Connect."
+msgid "Canceled by other peer"
+msgstr "Anulowane przez innego uczestnika"
 
-#: compositefiletransferjob.cpp:45
-#, fuzzy, kde-format
-#| msgid "Receiving file from %2"
-#| msgid_plural "Receiving %1 files from %2"
-msgctxt "@title job"
-msgid "Receiving file"
-msgid_plural "Receiving files"
-msgstr[0] "Pobieranie pliku od %2"
-msgstr[1] "Pobieranie %1 plików od %2"
-msgstr[2] "Pobieranie %1 plików od %2"
-
-#: compositefiletransferjob.cpp:46
+#: backends/pairinghandler.cpp:75
 #, kde-format
-msgctxt "The source of a file operation"
-msgid "Source"
-msgstr ""
+msgid "%1: Already paired"
+msgstr "%1: Już sparowane"
 
-#: compositefiletransferjob.cpp:47
+#: backends/pairinghandler.cpp:84 backends/pairinghandler.cpp:98
 #, kde-format
-msgctxt "The destination of a file operation"
-msgid "Destination"
-msgstr ""
+msgid "%1: Device not reachable"
+msgstr "%1: Urządzenie jest nieosiągalne"
 
-#: device.cpp:212
-#, kde-format
-msgid "Already paired"
-msgstr "Już sparowane"
-
-#: device.cpp:217
+#: backends/pairinghandler.cpp:113
 #, kde-format
 msgid "Device not reachable"
 msgstr "Urządzenie nieosiągalne"
 
-#: device.cpp:547
+#: backends/pairinghandler.cpp:124
+#, kde-format
+msgid "Cancelled by user"
+msgstr "Porzucone przez użytkownika"
+
+#: backends/pairinghandler.cpp:140
+#, kde-format
+msgid "Timed out"
+msgstr "Upłynął czasu oczekiwania"
+
+#: compositefiletransferjob.cpp:46
+#, kde-format
+msgctxt "@title job"
+msgid "Receiving file"
+msgid_plural "Receiving files"
+msgstr[0] "Pobieranie pliku"
+msgstr[1] "Pobieranie plików"
+msgstr[2] "Pobieranie plików"
+
+#: compositefiletransferjob.cpp:47
+#, kde-format
+msgctxt "The source of a file operation"
+msgid "Source"
+msgstr "Źródło"
+
+#: compositefiletransferjob.cpp:48
+#, kde-format
+msgctxt "The destination of a file operation"
+msgid "Destination"
+msgstr "Cel"
+
+#: device.cpp:455
 #, kde-format
 msgid "SHA256 fingerprint of your device certificate is: %1\n"
 msgstr "Odcisk palca SHA256 certyfikatu twojego urządzenia to: %1\n"
 
-#: device.cpp:555
+#: device.cpp:461
 #, kde-format
 msgid "SHA256 fingerprint of remote device certificate is: %1\n"
 msgstr "Odcisk palca SHA256 certyfikatu twojego zdalnego urządzenia to: %1\n"
 
-#: filetransferjob.cpp:51
+#: filetransferjob.cpp:53
 #, kde-format
 msgid "Filename already present"
 msgstr "Nazwa pliku już istnieje"
 
-#: filetransferjob.cpp:101
+#: filetransferjob.cpp:105
 #, kde-format
 msgid "Received incomplete file: %1"
 msgstr "Pobrano niepełny plik: %1"
 
-#: filetransferjob.cpp:119
+#: filetransferjob.cpp:123
 #, kde-format
 msgid "Received incomplete file from: %1"
 msgstr "Pobrano niepełny plik od: %1"
 
-#: kdeconnectconfig.cpp:78
+#: kdeconnectconfig.cpp:301 kdeconnectconfig.cpp:332
 #, kde-format
 msgid "KDE Connect failed to start"
 msgstr "Nie udało się uruchomić KDE Connect"
 
-#: kdeconnectconfig.cpp:79
+#: kdeconnectconfig.cpp:301
 #, kde-format
-msgid ""
-"Could not find support for RSA in your QCA installation. If your "
-"distribution provides separate packets for QCA-ossl and QCA-gnupg, make sure "
-"you have them installed and try again."
-msgstr ""
-"Nie można znaleźć obsługi RSA w twojej instalacji QCA. Jeśli twoja "
-"dystrybucja dostarcza osobne pakiety dla QCA-ossl i QCA-gnupg, to upewnij "
-"się, że są one dograne i spróbuj ponownie."
+msgid "Could not generate the private key."
+msgstr "Nie można utworzyć klucza prywatnego."
 
-#: kdeconnectconfig.cpp:316
+#: kdeconnectconfig.cpp:317
 #, kde-format
 msgid "Could not store private key file: %1"
 msgstr "Nie można zachować pliku klucza prywatnego: %1"
 
-#: kdeconnectconfig.cpp:361
+#: kdeconnectconfig.cpp:332
+#, kde-format
+msgid "Could not generate the device certificate."
+msgstr "Nie można utworzyć certyfikatu urządzenia."
+
+#: kdeconnectconfig.cpp:348
 #, kde-format
 msgid "Could not store certificate file: %1"
 msgstr "Nie można zachować pliku certyfikatu: %1"
+
+#~ msgid ""
+#~ "Could not find support for RSA in your QCA installation. If your "
+#~ "distribution provides separate packets for QCA-ossl and QCA-gnupg, make "
+#~ "sure you have them installed and try again."
+#~ msgstr ""
+#~ "Nie można znaleźć obsługi RSA w twojej instalacji QCA. Jeśli twoja "
+#~ "dystrybucja dostarcza osobne pakiety dla QCA-ossl i QCA-gnupg, to upewnij "
+#~ "się, że są one dograne i spróbuj ponownie."
+
+#~ msgid "%1: Pairing already requested for this device"
+#~ msgstr "%1: Już zażądano parowania dla tego urządzenia"
+
+#~ msgid ""
+#~ "This device cannot be paired because it is running an old version of KDE "
+#~ "Connect."
+#~ msgstr ""
+#~ "Nie można sparować tego urządzenia, bo działa ono na starej wersji KDE "
+#~ "Connect."
+
+#~ msgid "Already paired"
+#~ msgstr "Już sparowane"
+
+#~ msgid "Sent 1 file"
+#~ msgid_plural "Sent %1 files"
+#~ msgstr[0] "Wysłano 1 plik"
+#~ msgstr[1] "Wysłano %1 pliki"
+#~ msgstr[2] "Wysłano %1 plików"
+
+#~ msgid "Progress"
+#~ msgstr "Postęp"
+
+#~ msgid "Sending file %1 of %2"
+#~ msgstr "Wysyłanie pliku %1 z %2"
 
 #~ msgid "Receiving file %1 of %2"
 #~ msgstr "Pobieranie pliku %1 z %2"
@@ -195,9 +195,6 @@ msgstr "Nie można zachować pliku certyfikatu: %1"
 
 #~ msgid "Received incorrect key"
 #~ msgstr "Otrzymano niepoprawny klucz"
-
-#~ msgid "Canceled by the user"
-#~ msgstr "Anulowane przez użytkownika"
 
 #~ msgid "Pairing request from %1"
 #~ msgstr "Żądanie parowania z %1"

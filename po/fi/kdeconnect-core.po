@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Tommi Nieminen <translator@legisign.org>, 2014, 2018, 2019, 2020.
+# Tommi Nieminen <translator@legisign.org>, 2014, 2018, 2019, 2020, 2021, 2023.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2021-02-01 02:33+0100\n"
-"PO-Revision-Date: 2020-12-18 16:25+0200\n"
+"POT-Creation-Date: 2024-04-01 00:37+0000\n"
+"PO-Revision-Date: 2023-08-26 17:59+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -16,160 +16,160 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 20.08.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 
-#: backends/bluetooth/bluetoothpairinghandler.cpp:57
-#: backends/lan/lanpairinghandler.cpp:53
-#, kde-format
-msgid "Canceled by other peer"
-msgstr "Vertaiskäyttäjä perui"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:66
-#: backends/lan/lanpairinghandler.cpp:62
-#, kde-format
-msgid "%1: Already paired"
-msgstr "%1: Pari on jo muodostettu"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:69
-#, kde-format
-msgid "%1: Pairing already requested for this device"
-msgstr "%1: Tälle laitteelle on jo pyydetty paria"
-
-#: backends/bluetooth/bluetoothpairinghandler.cpp:125
-#: backends/lan/lanpairinghandler.cpp:106
-#, kde-format
-msgid "Timed out"
-msgstr "Aikakatkaisu"
-
-#: backends/lan/compositeuploadjob.cpp:81
+#: backends/lan/compositeuploadjob.cpp:77
 #, kde-format
 msgid "Couldn't find an available port"
 msgstr "Käytettävissä olevaa porttia ei löydetty"
 
-#: backends/lan/compositeuploadjob.cpp:120
+#: backends/lan/compositeuploadjob.cpp:115
 #, kde-format
 msgid "Failed to send packet to %1"
 msgstr "Paketin lähetys kohteeseen %1 epäonnistui"
 
-#: backends/lan/compositeuploadjob.cpp:278
-#, kde-format
-msgid "Sent 1 file"
-msgid_plural "Sent %1 files"
-msgstr[0] "Lähetettiin 1 tiedosto"
-msgstr[1] "Lähetettiin %1 tiedostoa"
-
-#: backends/lan/compositeuploadjob.cpp:279
-#: backends/lan/compositeuploadjob.cpp:294
+#: backends/lan/compositeuploadjob.cpp:271
 #, kde-format
 msgid "Sending to %1"
 msgstr "Lähetetään kohteeseen %1"
 
-#: backends/lan/compositeuploadjob.cpp:290
-#, kde-format
-msgid "Progress"
-msgstr "Edistyminen"
-
-#: backends/lan/compositeuploadjob.cpp:291
-#, kde-format
-msgid "Sending file %1 of %2"
-msgstr "Lähetetään tiedostoa %1 / %2"
-
-#: backends/lan/compositeuploadjob.cpp:295
+#: backends/lan/compositeuploadjob.cpp:271
 #, kde-format
 msgid "File"
 msgstr "Tiedosto"
 
-#: backends/lan/landevicelink.cpp:146 backends/lan/landevicelink.cpp:160
+#: backends/pairinghandler.cpp:59
 #, kde-format
-msgid ""
-"This device cannot be paired because it is running an old version of KDE "
-"Connect."
-msgstr ""
-"Tätä laitetta ei voi yhdistää pariksi, koska se käyttää vanhaa versiota KDE "
-"Connectista."
+msgid "Canceled by other peer"
+msgstr "Vertaiskäyttäjä perui"
 
-#: compositefiletransferjob.cpp:45
-#, fuzzy, kde-format
-#| msgid "Receiving file from %2"
-#| msgid_plural "Receiving %1 files from %2"
-msgctxt "@title job"
-msgid "Receiving file"
-msgid_plural "Receiving files"
-msgstr[0] "Vastaanotettiin tiedosto laitteelta %2"
-msgstr[1] "Vastaanotettiin %1 tiedostoa laitteelta %2"
-
-#: compositefiletransferjob.cpp:46
+#: backends/pairinghandler.cpp:75
 #, kde-format
-msgctxt "The source of a file operation"
-msgid "Source"
-msgstr ""
+msgid "%1: Already paired"
+msgstr "%1: Pari on jo muodostettu"
 
-#: compositefiletransferjob.cpp:47
+#: backends/pairinghandler.cpp:84 backends/pairinghandler.cpp:98
 #, kde-format
-msgctxt "The destination of a file operation"
-msgid "Destination"
-msgstr ""
+msgid "%1: Device not reachable"
+msgstr "%1: laite tavoittamattomissa"
 
-#: device.cpp:212
-#, kde-format
-msgid "Already paired"
-msgstr "Pari on jo muodostettu"
-
-#: device.cpp:217
+#: backends/pairinghandler.cpp:113
 #, kde-format
 msgid "Device not reachable"
 msgstr "Laite tavoittamattomissa"
 
-#: device.cpp:547
+#: backends/pairinghandler.cpp:124
+#, kde-format
+msgid "Cancelled by user"
+msgstr "Käyttäjä perui"
+
+#: backends/pairinghandler.cpp:140
+#, kde-format
+msgid "Timed out"
+msgstr "Aikakatkaisu"
+
+#: compositefiletransferjob.cpp:46
+#, kde-format
+msgctxt "@title job"
+msgid "Receiving file"
+msgid_plural "Receiving files"
+msgstr[0] "Vastaanotetaan tiedostoa"
+msgstr[1] "Vastaanotetaan tiedostoja"
+
+#: compositefiletransferjob.cpp:47
+#, kde-format
+msgctxt "The source of a file operation"
+msgid "Source"
+msgstr "Lähde"
+
+#: compositefiletransferjob.cpp:48
+#, kde-format
+msgctxt "The destination of a file operation"
+msgid "Destination"
+msgstr "Kohde"
+
+#: device.cpp:455
 #, kde-format
 msgid "SHA256 fingerprint of your device certificate is: %1\n"
 msgstr "Laitteen varmenteen SHA256-sormenjälki on: %1\n"
 
-#: device.cpp:555
+#: device.cpp:461
 #, kde-format
 msgid "SHA256 fingerprint of remote device certificate is: %1\n"
 msgstr "Etälaitteen varmenteen SHA256-sormenjälki on: %1\n"
 
-#: filetransferjob.cpp:51
+#: filetransferjob.cpp:53
 #, kde-format
 msgid "Filename already present"
 msgstr "Tiedostonimi on jo olemassa"
 
-#: filetransferjob.cpp:101
+#: filetransferjob.cpp:105
 #, kde-format
 msgid "Received incomplete file: %1"
 msgstr "Vastaanotettiin epätäydellinen tiedosto: %1"
 
-#: filetransferjob.cpp:119
+#: filetransferjob.cpp:123
 #, kde-format
 msgid "Received incomplete file from: %1"
 msgstr "Vastaanotettiin epätäydellinen lähettäjältä: %1"
 
-#: kdeconnectconfig.cpp:78
+#: kdeconnectconfig.cpp:301 kdeconnectconfig.cpp:332
 #, kde-format
 msgid "KDE Connect failed to start"
 msgstr "KDE Connectin käynnistyminen epäonnistui"
 
-#: kdeconnectconfig.cpp:79
+#: kdeconnectconfig.cpp:301
 #, kde-format
-msgid ""
-"Could not find support for RSA in your QCA installation. If your "
-"distribution provides separate packets for QCA-ossl and QCA-gnupg, make sure "
-"you have them installed and try again."
-msgstr ""
-"QCA-asennuksestasi ei löytynyt RSA-tukea. Jos jakelusi tarjoaa erilliset QCA-"
-"ossl- ja QCA-gnupg-paketit, tarkista, että ne on asennettu, ja yritä "
-"uudelleen."
+msgid "Could not generate the private key."
+msgstr "Ei voitu luoda yksityistä avainta."
 
-#: kdeconnectconfig.cpp:316
+#: kdeconnectconfig.cpp:317
 #, kde-format
 msgid "Could not store private key file: %1"
 msgstr "Ei voitu tallentaa yksityisen avaimen tiedostoa: %1"
 
-#: kdeconnectconfig.cpp:361
+#: kdeconnectconfig.cpp:332
+#, kde-format
+msgid "Could not generate the device certificate."
+msgstr "Ei voitu luoda laitevarmennetta."
+
+#: kdeconnectconfig.cpp:348
 #, kde-format
 msgid "Could not store certificate file: %1"
 msgstr "Ei voitu tallentaa vamennetiedostoa: %1"
+
+#~ msgid ""
+#~ "Could not find support for RSA in your QCA installation. If your "
+#~ "distribution provides separate packets for QCA-ossl and QCA-gnupg, make "
+#~ "sure you have them installed and try again."
+#~ msgstr ""
+#~ "QCA-asennuksestasi ei löytynyt RSA-tukea. Jos jakelusi tarjoaa erilliset "
+#~ "QCA-ossl- ja QCA-gnupg-paketit, tarkista, että ne on asennettu, ja yritä "
+#~ "uudelleen."
+
+#~ msgid "%1: Pairing already requested for this device"
+#~ msgstr "%1: Tälle laitteelle on jo pyydetty paria"
+
+#~ msgid ""
+#~ "This device cannot be paired because it is running an old version of KDE "
+#~ "Connect."
+#~ msgstr ""
+#~ "Tätä laitetta ei voi yhdistää pariksi, koska se käyttää vanhaa versiota "
+#~ "KDE Connectista."
+
+#~ msgid "Already paired"
+#~ msgstr "Pari on jo muodostettu"
+
+#~ msgid "Sent 1 file"
+#~ msgid_plural "Sent %1 files"
+#~ msgstr[0] "Lähetettiin 1 tiedosto"
+#~ msgstr[1] "Lähetettiin %1 tiedostoa"
+
+#~ msgid "Progress"
+#~ msgstr "Edistyminen"
+
+#~ msgid "Sending file %1 of %2"
+#~ msgstr "Lähetetään tiedostoa %1 / %2"
 
 #~ msgid "Receiving file %1 of %2"
 #~ msgstr "Vastaanotetaan tiedostoa %1 / %2"
@@ -193,9 +193,6 @@ msgstr "Ei voitu tallentaa vamennetiedostoa: %1"
 
 #~ msgid "Received incorrect key"
 #~ msgstr "Vastaanotettiin väärä avain"
-
-#~ msgid "Canceled by the user"
-#~ msgstr "Käyttäjä perui"
 
 #~ msgid "Pairing request from %1"
 #~ msgstr "Paripyyntö laitteelta %1"

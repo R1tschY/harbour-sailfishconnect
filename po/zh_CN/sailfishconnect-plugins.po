@@ -2,26 +2,29 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Inoki Shaw, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-04 22:39+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: zh_CN\n"
+"POT-Creation-Date: 2024-04-15 20:33+0200\n"
+"PO-Revision-Date: 2021-02-06 22:45+0000\n"
+"Last-Translator: Inoki Shaw, 2021\n"
+"Language-Team: Chinese (China) (https://app.transifex.com/r1tschy/teams/89267/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: plugins/sf_share/shareplugin.cpp:143
+#: plugins/sf_share/shareplugin.cpp:141
 #, kde-format
 msgid "%1 does not exist"
-msgstr ""
+msgstr "%1 不存在"
 
 #: pluginscommon/downloadjob.cpp:62
 #, kde-format
@@ -29,24 +32,24 @@ msgid "Cannot create destination folder"
 msgstr "无法创建目标文件夹"
 
 #: pluginscommon/downloadjob.cpp:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Could not open file `%1`: %2"
-msgstr "无法打开要写入的文件:% 1"
+msgstr "无法打开文件 `%1`: %2"
 
-#: plugins/sf_share/shareplugin.cpp:143
+#: plugins/sf_share/shareplugin.cpp:141
 #, kde-format
 msgid "Could not share file"
-msgstr ""
+msgstr "无法分享文件"
 
 #: pluginscommon/copyjob.cpp:237
-#, fuzzy, kde-format
+#, kde-format
 msgid "Early end of input stream: %1"
-msgstr "输入流提前结束"
+msgstr "输入流提前结束：%1"
 
 #: pluginscommon/copyjob.cpp:225
-#, fuzzy, kde-format
+#, kde-format
 msgid "Early end of output stream: %1"
-msgstr "输入流提前结束"
+msgstr "输出流提前结束：%1"
 
 #: pluginscommon/copyjob.cpp:92
 #, kde-format
@@ -71,7 +74,7 @@ msgstr "读取比预期更多的输入流字节"
 #: pluginscommon/downloadjob.cpp:85
 #, kde-format
 msgid "Receiving"
-msgstr "移除中"
+msgstr "接收中"
 
 #: pluginscommon/copyjob.cpp:167
 #, kde-format

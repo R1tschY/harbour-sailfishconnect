@@ -2,28 +2,26 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
 # Вячеслав Диконов <sdiconov@mail.ru>, 2021
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-04 22:39+0100\n"
+"POT-Creation-Date: 2024-04-15 20:33+0200\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
 "Last-Translator: Вячеслав Диконов <sdiconov@mail.ru>, 2021\n"
-"Language-Team: Russian (https://www.transifex.com/r1tschy/teams/89267/ru/)\n"
-"Language: ru\n"
+"Language-Team: Russian (https://app.transifex.com/r1tschy/teams/89267/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: plugins/sf_share/shareplugin.cpp:143
+#: plugins/sf_share/shareplugin.cpp:141
 #, kde-format
 msgid "%1 does not exist"
 msgstr "%1 не существует"
@@ -38,7 +36,7 @@ msgstr "Невозможно создать каталог назначения"
 msgid "Could not open file `%1`: %2"
 msgstr "Невозможно открыть файл `%1`: %2"
 
-#: plugins/sf_share/shareplugin.cpp:143
+#: plugins/sf_share/shareplugin.cpp:141
 #, kde-format
 msgid "Could not share file"
 msgstr "Невозможно открыть доступ к файлу"

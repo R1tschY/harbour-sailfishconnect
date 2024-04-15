@@ -1,17 +1,21 @@
 [main]
 host = https://www.transifex.com
 
-[sailfish-connect.app]
-file_filter = po/<lang>/sailfishconnect-app.po
-source_file = po/templates/sailfishconnect-app.pot
-source_lang = en
-minimum_perc = 1
-type = PO
+[o:r1tschy:p:sailfish-connect:r:app]
+file_filter            = po/<lang>/sailfishconnect-app.po
+source_file            = po/templates/sailfishconnect-app.pot
+source_lang            = en
+type                   = PO
+minimum_perc           = 1
+replace_edited_strings = false
+keep_translations      = false
 
-[sailfish-connect.plugins]
-file_filter = po/<lang>/sailfishconnect-plugins.po
-source_file = po/templates/sailfishconnect-plugins.pot
-source_lang = en
-minimum_perc = 1
-type = PO
+[o:r1tschy:p:sailfish-connect:r:plugins]
+file_filter            = po/<lang>/sailfishconnect-plugins.po
+source_file            = po/templates/sailfishconnect-plugins.pot
+source_lang            = en
+type                   = PO
+minimum_perc           = 1
+replace_edited_strings = false
+keep_translations      = false
 

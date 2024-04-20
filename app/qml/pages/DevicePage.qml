@@ -189,7 +189,7 @@ Page {
                     device: _device
                     title: i18n("Share files")
                     icon: "image://theme/icon-m-share"
-                    pluginId: "sailfishconnect_share"
+                    pluginId: "Share"
                     onClicked: pageStack.push(filePickerPage)
 
                     Component {
@@ -212,35 +212,35 @@ Page {
                     device: _device
                     title: i18n("Open touchpad")
                     icon: "image://theme/icon-m-gesture"  
-                    pluginId: "kdeconnect_remotecontrol"
+                    pluginId: "RemoteControl"
                     onClicked: openPage(Qt.resolvedUrl("TouchpadPage.qml"))
                 }
                 PluginAction {
                     device: _device
                     title: i18n("Open keyboard")
                     icon: "image://theme/icon-m-keyboard"
-                    pluginId: "kdeconnect_remotekeyboard"
+                    pluginId: "RemoteKeyboard"
                     onClicked: openPage(Qt.resolvedUrl("KeyboardPage.qml"))
                 }
                 PluginAction {
                     device: _device
                     title: i18n("Send clipboard text")
                     icon: "image://theme/icon-m-clipboard"
-                    pluginId: "sailfishconnect_clipboard"
+                    pluginId: "Clipboard"
                     onClicked: pluginCall("pushClipboard")
                 }
                 PluginAction {
                     device: _device
                     title: i18n("Run command")
                     icon: "image://theme/icon-m-wizard"
-                    pluginId: "kdeconnect_remotecommands"
+                    pluginId: "RemoteCommands"
                     onClicked: openPage(Qt.resolvedUrl("RemoteCommandsPage.qml"))
                 }
                 PluginAction {
                     device: _device
                     title: i18n("Change volume")
                     icon: "image://theme/icon-m-speaker"
-                    pluginId: "kdeconnect_remotesystemvolume"
+                    pluginId: "RemoteSystemVolume"
                     onClicked: openPage(Qt.resolvedUrl("RemoteVolumePage.qml"))
                 }
 

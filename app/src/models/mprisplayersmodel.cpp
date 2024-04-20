@@ -226,7 +226,7 @@ void MprisPlayersModel::devicePluginsChanged()
 
     // set plugin when it is reloaded
     setPlugin(qobject_cast<MprisRemotePlugin*>(m_device->plugin(
-        QStringLiteral("sailfishconnect_mprisremote"))));
+        QStringLiteral("MprisRemote"))));
 }
 
 } // namespace SailfishConnect

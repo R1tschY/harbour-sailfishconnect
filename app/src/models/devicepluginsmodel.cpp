@@ -32,10 +32,18 @@ DevicePluginsModel::DevicePluginsModel(QObject* parent)
 {
     const QVector<QStaticPlugin> staticPlugins = QPluginLoader::staticPlugins();
     for (auto& staticPlugin : staticPlugins) {
-        QJsonObject jsonMetadata = staticPlugin.metaData().value(QStringLiteral("MetaData")).toObject();
-        KPluginMetaData metadata(jsonMetadata, QString());
-        if (metadata.serviceTypes().contains(QStringLiteral("KdeConnect/Plugin"))) {
-            m_plugins.append(metadata);
+        QJsonObject pluginMetadata = staticPlugin.metaData();
+        QJsonObject jsonMetadata = pluginMetadata.value(QStringLiteral("MetaData")).toObject();
+        if (jsonMetadata.contains(QStringLiteral("X-KdeConnect-OutgoingPacketType"))
+                || jsonMetadata.contains(QStringLiteral("X-KdeConnect-SupportedPacketType"))) {
+            QString pluginId = pluginMetadata.value(QStringLiteral("className")).toString();
+            pluginId.chop(7 + 6);
+
+            auto kplugin = jsonMetadata.value(QStringLiteral("KPlugin")).toObject();
+            kplugin.insert(QStringLiteral("Id"), pluginId);
+            jsonMetadata.insert(QStringLiteral("KPlugin"), kplugin);
+
+            m_plugins.append(KPluginMetaData(jsonMetadata, QString()));
         }
     }
 }

@@ -25,24 +25,24 @@ Page {
 
     property QtObject device
     readonly property var _pluginIcons: {
-        "kdeconnect_ping": "image://theme/icon-m-accept",
-        "kdeconnect_remotecontrol": "image://theme/icon-m-gesture",
-        "kdeconnect_remotekeyboard": "image://theme/icon-m-keyboard",
-        "kdeconnect_remotecommands": "image://theme/icon-m-wizard",
-        "kdeconnect_runcommand": "image://theme/icon-m-wizard",
-        "kdeconnect_remotesystemvolume": "image://theme/icon-m-speaker",
-        "sailfishconnect_batteryreport": "image://theme/icon-m-battery",
-        "sailfishconnect_clipboard": "image://theme/icon-m-clipboard",
-        "sailfishconnect_contacts": "image://theme/icon-m-contact",
-        "sailfishconnect_share": "image://theme/icon-m-share",
-        "sailfishconnect_telepathy": "image://theme/icon-m-sms",
-        "sailfishconnect_sendnotifications": "image://theme/icon-m-notifications",
-        "sailfishconnect_mprisremote": "image://theme/icon-m-media"
+        "Ping": "image://theme/icon-m-accept",
+        "RemoteControl": "image://theme/icon-m-gesture",
+        "RemoteKeyboard": "image://theme/icon-m-keyboard",
+        "RemoteCommands": "image://theme/icon-m-wizard",
+        "RunCommand": "image://theme/icon-m-wizard",
+        "RemoteSystemVolume": "image://theme/icon-m-speaker",
+        "BatteryReport": "image://theme/icon-m-battery",
+        "Clipboard": "image://theme/icon-m-clipboard",
+        "Contacts": "image://theme/icon-m-contact",
+        "Share": "image://theme/icon-m-share",
+        "Telepathy": "image://theme/icon-m-sms",
+        "SendNotifications": "image://theme/icon-m-notifications",
+        "MprisRemote": "image://theme/icon-m-media"
     }
 
     readonly property var _pluginConfigs: {
-        "kdeconnect_runcommand": Qt.resolvedUrl("pluginConfigs/RunCommandsConfigPage.qml"),
-        "sailfishconnect_share": Qt.resolvedUrl("pluginConfigs/ShareConfigPage.qml"),
+        "RunCommand": Qt.resolvedUrl("pluginConfigs/RunCommandsConfigPage.qml"),
+        "Share": Qt.resolvedUrl("pluginConfigs/ShareConfigPage.qml"),
     }
 
     allowedOrientations: Orientation.All

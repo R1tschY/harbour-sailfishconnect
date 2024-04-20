@@ -24,7 +24,7 @@ Column {
     property QtObject device
 
     width: parent.width
-    visible: device && device.isPluginLoaded("sailfishconnect_mprisremote")
+    visible: device && device.isPluginLoaded("MprisRemote")
 
 
     SilicaListView {

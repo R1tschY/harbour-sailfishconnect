@@ -218,7 +218,7 @@ QQuickImageResponse *AlbumArtProvider::unsafeRequestImageResponse_(
     }
 
     MprisRemotePlugin* plugin = qobject_cast<MprisRemotePlugin*>(
-                device->plugin(QStringLiteral("sailfishconnect_mprisremote")));
+                device->plugin(QStringLiteral("MprisRemote")));
     if (plugin == nullptr) {
         qCDebug(logger) << "mpris plugin not loaded";
         return new CachedAlbumArtImageResponse(QImage());

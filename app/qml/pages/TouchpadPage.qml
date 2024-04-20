@@ -50,6 +50,7 @@ Page {
     property bool holding: false
     property bool wasMoved: false
     property bool scrolling: false
+    property int pressedTime: -1
 
     PageHeader {
         id: header
@@ -125,11 +126,16 @@ Page {
         acceptedButtons: Qt.AllButtons  // FIXME: is ignored
 
         onPressed: {
+            console.log("pressed", wasMoved, mouse.x, mouse.y)
             wasMoved = false
+            lastX = mouse.x
+            lastY = mouse.y
+            pressedTime = Date.now()
             scrolling = ((touchpad.x + touchpad.width - mouse.x) < Theme.itemSizeSmall)
         }
 
         onPositionChanged: {
+            console.log("moved", pressed, mouse.x - lastX, mouse.y - lastY)
             if (pressed) {
                 if (lastX !== 0xDEAD && plugin !== null) {
                     if (scrolling) {
@@ -146,14 +152,19 @@ Page {
         }
 
         onReleased: {
+            console.log("released")
             lastX = lastY = 0xDEAD
             scrolling = false
         }
 
         onClicked: {
-            if (!wasMoved && plugin !== null) {
+            console.log("clicked", wasMoved)
+            if (plugin !== null) {
                 if (!holding) {
-                    plugin.sendCommand({"singleclick": true})
+                    var clickPeriod = Date.now() - pressedTime
+                    if (clickPeriod <= 500) {
+                        plugin.sendCommand({"singleclick": true})
+                    }
                 } else {
                     plugin.sendCommand({"singlerelease": true})
                     holding = false
@@ -162,6 +173,7 @@ Page {
         }
 
         onDoubleClicked: {
+            console.log("double clicked", wasMoved)
             if (!wasMoved && plugin !== null) {
                 if (!holding) {
                     plugin.sendCommand({"doubleclick": true})
@@ -173,6 +185,7 @@ Page {
         }
 
         onPressAndHold: {
+            console.log("pressed and hold", wasMoved)
             if (!wasMoved && plugin !== null) {
                 plugin.sendCommand({"singlehold": true})
                 holding = true

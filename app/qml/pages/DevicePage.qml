@@ -71,7 +71,7 @@ Page {
 
                 PropertyChanges {
                     target: placeholder
-                    text: i18n("Waiting for accepted pairing ...")
+                    text: ""
                 }
             },
             State {
@@ -125,6 +125,37 @@ Page {
                         text: i18n("Reject")
                         onClicked: _device.cancelPairing()
                     }
+                }
+
+                Item {
+                    height: Theme.paddingLarge
+                    width: parent.width
+                }
+
+                EncryptionInfo {
+                    width: parent.width
+                    encryptionInfo: _device ? _device.encryptionInfo() : ""
+                }
+            }
+
+            Column {
+                id: waitForAcceptedPairingEntry
+                spacing: Theme.paddingLarge
+                height: Theme.itemSizeSmall
+                width: parent.width - Theme.paddingLarge * 2
+                x: Theme.horizontalPageMargin
+                visible: deviceView.state === "waitForAcceptedPairing"
+
+                Label {
+                    color: Theme.highlightColor
+                    text: i18n("Waiting for accepted pairing ...")
+                    width: parent.width
+                    wrapMode: Text.Wrap
+                }
+
+                Button {
+                    text: i18n("Cancel")
+                    onClicked: _device.cancelPairing()
                 }
 
                 Item {

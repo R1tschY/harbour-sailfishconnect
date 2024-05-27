@@ -31,9 +31,7 @@ Label {
             var parts = match.split(":")
             var result = ""
             for (var i = 0; i < parts.length; i += 5) {
-                result += parts[i + 0] + ":" + parts[i + 1] + ":"
-                        + parts[i + 2] + ":" + parts[i + 3] + ":" + parts[i + 4]
-                        + "\n"
+                result += parts.slice(i, i + 5).join(":") + "\n"
             }
 
             return "<pre style=\"text-align: center;\">" + result + "</pre><br>"

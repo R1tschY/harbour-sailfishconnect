@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Priit Jõerüüt <transifex@joeruut.com>, 2021
+# Priit Jõerüüt <transifex@joeruut.com>, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-15 20:33+0200\n"
+"POT-Creation-Date: 2024-05-27 20:44+0200\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
-"Last-Translator: Priit Jõerüüt <transifex@joeruut.com>, 2021\n"
+"Last-Translator: Priit Jõerüüt <transifex@joeruut.com>, 2024\n"
 "Language-Team: Estonian (https://app.transifex.com/r1tschy/teams/89267/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +42,7 @@ msgstr "Otsiteel asuv &percnt;1 asendatakse seadme nimega."
 msgid "About"
 msgstr "Rakenduse teave"
 
-#: app/qml/pages/DeviceListPage.qml:243
+#: app/qml/pages/DeviceListPage.qml:267
 #, kde-format
 msgid "About ..."
 msgstr "Rakenduse teave..."
@@ -52,7 +52,7 @@ msgstr "Rakenduse teave..."
 msgid "Accept"
 msgstr "Nõustun"
 
-#: app/qml/pages/DevicePage.qml:186
+#: app/qml/pages/DevicePage.qml:217
 #, kde-format
 msgid "Actions"
 msgstr "Tegevused"
@@ -77,12 +77,17 @@ msgstr "Rakendus käivitub koos muu süsteemiga ja töötab taustal."
 msgid "Bug reports on Github"
 msgstr "Veateated Github'is"
 
+#: app/qml/pages/DevicePage.qml:157
+#, kde-format
+msgid "Cancel"
+msgstr ""
+
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format
 msgid "Change layout"
 msgstr "Muuda paigutust"
 
-#: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:241
+#: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:272
 #, kde-format
 msgid "Change volume"
 msgstr "Muuda heli valjust"
@@ -92,17 +97,17 @@ msgstr "Muuda heli valjust"
 msgid "Command"
 msgstr "Käsk"
 
-#: app/qml/pages/DevicePage.qml:161
+#: app/qml/pages/DevicePage.qml:192
 #, kde-format
 msgid "Connect"
 msgstr "Ühendan"
 
-#: app/qml/pages/DeviceListPage.qml:145 app/qml/pages/DeviceListPage.qml:282
+#: app/qml/pages/DeviceListPage.qml:146
 #, kde-format
 msgid "Connected"
 msgstr "Ühendatud"
 
-#: app/qml/pages/DeviceListPage.qml:73
+#: app/qml/pages/DeviceListPage.qml:74
 #, kde-format
 msgid "Device Name"
 msgstr "Seadme nimi"
@@ -117,7 +122,7 @@ msgstr "Seade pole leitav"
 msgid "Devices from IP address"
 msgstr "Seadmed IP-aadressi alusel"
 
-#: app/qml/pages/DevicePage.qml:151
+#: app/qml/pages/DevicePage.qml:182
 #, kde-format
 msgid "Do you want to connect to this device?"
 msgstr "Kas sa soovid luua ühendust selle seadmega?"
@@ -135,12 +140,12 @@ msgstr "Allalaadimine ei õnnestunud"
 #: app/src/helper/jobsnotificator.cpp:140
 #, kde-format
 msgid "Download started"
-msgstr ""
+msgstr "Allalaadimine algas"
 
 #: app/src/helper/jobsnotificator.cpp:99
 #, kde-format
 msgid "Download succeeded"
-msgstr ""
+msgstr "Allalaadimine õnnestus"
 
 #: app/src/helper/jobsnotificator.cpp:142
 #, kde-format
@@ -163,7 +168,7 @@ msgstr "Muuda käske"
 msgid "Edit share configuration"
 msgstr "Seadista failide jagamist"
 
-#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:263
+#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:294
 #, kde-format
 msgid "Encryption info"
 msgstr "Krüptimise teave"
@@ -183,7 +188,7 @@ msgstr "Paardumine ei õnnestunud. %1"
 msgid "Folder to save files"
 msgstr "Kaust failide salvestamiseks"
 
-#: app/qml/pages/TouchpadPage.qml:65
+#: app/qml/pages/TouchpadPage.qml:66
 #, kde-format
 msgid "Holding ..."
 msgstr "Hoian..."
@@ -198,7 +203,7 @@ msgstr "IP-aadress"
 msgid "IPv4 or IPv6 address of device"
 msgstr "Seadme IPv4 või IPv6 aaddress"
 
-#: app/qml/pages/DeviceListPage.qml:57
+#: app/qml/pages/DeviceListPage.qml:58
 #, kde-format
 msgid ""
 "Install KDE Connect or GSConnect on your computer and connect it to the same"
@@ -232,7 +237,7 @@ msgstr "Viited"
 msgid "Lock device"
 msgstr "Lukusta seade"
 
-#: app/qml/pages/TouchpadPage.qml:89
+#: app/qml/pages/TouchpadPage.qml:90
 #, kde-format
 msgid ""
 "Move finger on screen\n"
@@ -245,7 +250,7 @@ msgstr ""
 "Lühike puudutus algatab lohistamise\n"
 "Kerimine toimib paremas ääres"
 
-#: app/qml/pages/TouchpadPage.qml:81
+#: app/qml/pages/TouchpadPage.qml:82
 #, kde-format
 msgid "Moving ..."
 msgstr "Tõstan..."
@@ -265,7 +270,7 @@ msgstr "Nimi"
 msgid "Name of command"
 msgstr "Käsu nimi"
 
-#: app/qml/pages/DeviceListPage.qml:286
+#: app/qml/pages/DeviceListPage.qml:251
 #, kde-format
 msgid "Nearby devices"
 msgstr "Läheduses asuvad seadmed"
@@ -273,7 +278,7 @@ msgstr "Läheduses asuvad seadmed"
 #: app/qml/pages/RemoteVolumePage.qml:110
 #, kde-format
 msgid "No audio sinks exist on other device"
-msgstr ""
+msgstr "Teises seadmes ei leidu juhitavaid heliliideseid"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
 #, kde-format
@@ -310,17 +315,17 @@ msgstr "Ava seadistused"
 msgid "Open configuration throught context menu"
 msgstr "Ava seadistused kontekstimenüüst"
 
-#: app/qml/pages/DevicePage.qml:220
+#: app/qml/pages/DevicePage.qml:251
 #, kde-format
 msgid "Open keyboard"
 msgstr "Ava klaviatuur"
 
-#: app/qml/pages/DevicePage.qml:213
+#: app/qml/pages/DevicePage.qml:244
 #, kde-format
 msgid "Open touchpad"
 msgstr "Ava puuteplaat"
 
-#: app/qml/pages/DeviceListPage.qml:284
+#: app/qml/pages/DeviceListPage.qml:237
 #, kde-format
 msgid "Paired devices"
 msgstr "Paardunud seadmed"
@@ -330,12 +335,12 @@ msgstr "Paardunud seadmed"
 msgid "Pairing request"
 msgstr "Paardumispäring"
 
-#: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
+#: app/qml/pages/DeviceListPage.qml:148 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
 msgstr "Ootel olev paardumipäring"
 
-#: app/qml/pages/DevicePage.qml:270
+#: app/qml/pages/DevicePage.qml:301
 #, kde-format
 msgid "Plugins"
 msgstr "Moodulid"
@@ -345,7 +350,7 @@ msgstr "Moodulid"
 msgid "Predefined commands"
 msgstr "Eelseadistatud käsud"
 
-#: app/qml/pages/DeviceListPage.qml:253
+#: app/qml/pages/DeviceListPage.qml:277
 #, kde-format
 msgid "Quit"
 msgstr "Välju"
@@ -355,7 +360,7 @@ msgstr "Välju"
 msgid "Reboot"
 msgstr "Taaskäivita"
 
-#: app/qml/pages/DeviceListPage.qml:259
+#: app/qml/pages/DeviceListPage.qml:283
 #, kde-format
 msgid "Refresh"
 msgstr "Värskenda"
@@ -376,17 +381,17 @@ msgstr "Eemalda"
 msgid "Run as background service"
 msgstr "Käivita taustateenusena"
 
-#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:234
+#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:265
 #, kde-format
 msgid "Run command"
 msgstr "Käivita käsk"
 
-#: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:234
+#: app/qml/pages/DeviceListPage.qml:68 app/src/sailfishconnect.cpp:234
 #, kde-format
 msgid "Sailfish Connect"
 msgstr "Sailfish Connect"
 
-#: app/qml/pages/TouchpadPage.qml:73
+#: app/qml/pages/TouchpadPage.qml:74
 #, kde-format
 msgid "Scrolling ..."
 msgstr "Kerin..."
@@ -396,17 +401,17 @@ msgstr "Kerin..."
 msgid "Select Plugins"
 msgstr "Vali moodulid"
 
-#: app/qml/pages/DevicePage.qml:198
+#: app/qml/pages/DevicePage.qml:229
 #, kde-format
 msgid "Select files to send"
-msgstr ""
+msgstr "Vali saadetavad failid"
 
-#: app/qml/pages/DevicePage.qml:227
+#: app/qml/pages/DevicePage.qml:258
 #, kde-format
 msgid "Send clipboard text"
-msgstr ""
+msgstr "Saada tekst lõikelaualt"
 
-#: app/qml/pages/DevicePage.qml:278
+#: app/qml/pages/DevicePage.qml:309
 #, kde-format
 msgid "Send ping"
 msgstr "Saada ping"
@@ -417,15 +422,15 @@ msgstr "Saada ping"
 msgid "Settings"
 msgstr "Seadistused"
 
-#: app/qml/pages/DeviceListPage.qml:248
+#: app/qml/pages/DeviceListPage.qml:272
 #, kde-format
 msgid "Settings ..."
 msgstr "Seadistused..."
 
-#: app/qml/pages/DevicePage.qml:190
+#: app/qml/pages/DevicePage.qml:221
 #, kde-format
 msgid "Share files"
-msgstr ""
+msgstr "Jaga faile"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
 #, kde-format
@@ -442,20 +447,20 @@ msgstr "Lähtekood Github'is"
 msgid "This device wants to pair with your device."
 msgstr "See seade soovib paardumist sinu seadmega"
 
-#: app/qml/pages/TouchpadPage.qml:56
+#: app/qml/pages/TouchpadPage.qml:57
 #, kde-format
 msgid "Touchpad"
 msgstr "Puuteplaat"
 
-#: app/qml/pages/DeviceListPage.qml:162
+#: app/qml/pages/DeviceListPage.qml:163
 #, kde-format
 msgid "Unpair"
 msgstr "Eemalda paardumine"
 
-#: app/qml/pages/DeviceListPage.qml:174
+#: app/qml/pages/DeviceListPage.qml:176
 #, kde-format
 msgid "Unpaired"
-msgstr ""
+msgstr "Paardumata"
 
 #: app/src/helper/jobsnotificator.cpp:114
 #, kde-format
@@ -470,7 +475,7 @@ msgstr "Üleslaadimine ei õnnestunud"
 #: app/src/helper/jobsnotificator.cpp:97
 #, kde-format
 msgid "Upload succeeded"
-msgstr ""
+msgstr "Üleslaadimine õnnestus"
 
 #: app/src/helper/jobsnotificator.cpp:138
 #, kde-format
@@ -482,7 +487,7 @@ msgstr "Laadin üles..."
 msgid "Vibration feedback"
 msgstr "Tagasiside värinana"
 
-#: app/qml/pages/DevicePage.qml:74
+#: app/qml/pages/DevicePage.qml:151
 #, kde-format
 msgid "Waiting for accepted pairing ..."
 msgstr "Ootan nõustumist paardumisega"

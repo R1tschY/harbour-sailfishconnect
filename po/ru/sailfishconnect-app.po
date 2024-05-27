@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-15 20:33+0200\n"
+"POT-Creation-Date: 2024-05-27 20:44+0200\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
 "Last-Translator: Вячеслав Диконов <sdiconov@mail.ru>, 2021\n"
 "Language-Team: Russian (https://app.transifex.com/r1tschy/teams/89267/ru/)\n"
@@ -43,7 +43,7 @@ msgstr "&percnt;1 в пути заменяется на имя конкретн�
 msgid "About"
 msgstr "О программе"
 
-#: app/qml/pages/DeviceListPage.qml:243
+#: app/qml/pages/DeviceListPage.qml:267
 #, kde-format
 msgid "About ..."
 msgstr "Об устройстве ..."
@@ -53,7 +53,7 @@ msgstr "Об устройстве ..."
 msgid "Accept"
 msgstr "Принять"
 
-#: app/qml/pages/DevicePage.qml:186
+#: app/qml/pages/DevicePage.qml:217
 #, kde-format
 msgid "Actions"
 msgstr "Действия"
@@ -78,12 +78,17 @@ msgstr "Приложение запускается при включении и
 msgid "Bug reports on Github"
 msgstr "Сообщения об ошибках на Github"
 
+#: app/qml/pages/DevicePage.qml:157
+#, kde-format
+msgid "Cancel"
+msgstr ""
+
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format
 msgid "Change layout"
 msgstr "Сменить раскладку"
 
-#: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:241
+#: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:272
 #, kde-format
 msgid "Change volume"
 msgstr "Регулировать громкость"
@@ -93,17 +98,17 @@ msgstr "Регулировать громкость"
 msgid "Command"
 msgstr "Команда"
 
-#: app/qml/pages/DevicePage.qml:161
+#: app/qml/pages/DevicePage.qml:192
 #, kde-format
 msgid "Connect"
 msgstr "Подключить"
 
-#: app/qml/pages/DeviceListPage.qml:145 app/qml/pages/DeviceListPage.qml:282
+#: app/qml/pages/DeviceListPage.qml:146
 #, kde-format
 msgid "Connected"
 msgstr "Подключено"
 
-#: app/qml/pages/DeviceListPage.qml:73
+#: app/qml/pages/DeviceListPage.qml:74
 #, kde-format
 msgid "Device Name"
 msgstr "Имя устройства"
@@ -118,7 +123,7 @@ msgstr "Устройство недоступно"
 msgid "Devices from IP address"
 msgstr "Устройства по IP адресу"
 
-#: app/qml/pages/DevicePage.qml:151
+#: app/qml/pages/DevicePage.qml:182
 #, kde-format
 msgid "Do you want to connect to this device?"
 msgstr "Вы хотите подключиться к этому устройству?"
@@ -164,7 +169,7 @@ msgstr "Редактировать команды"
 msgid "Edit share configuration"
 msgstr "Редактировать настройки доступа к данным"
 
-#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:263
+#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:294
 #, kde-format
 msgid "Encryption info"
 msgstr "Режим шифрования"
@@ -184,7 +189,7 @@ msgstr "Спаривание не удалось. %1"
 msgid "Folder to save files"
 msgstr "Каталог для сохранения файлов"
 
-#: app/qml/pages/TouchpadPage.qml:65
+#: app/qml/pages/TouchpadPage.qml:66
 #, kde-format
 msgid "Holding ..."
 msgstr "Удержание ..."
@@ -199,7 +204,7 @@ msgstr "IP адрес"
 msgid "IPv4 or IPv6 address of device"
 msgstr "IPv4 или IPv6 адрес устройства"
 
-#: app/qml/pages/DeviceListPage.qml:57
+#: app/qml/pages/DeviceListPage.qml:58
 #, kde-format
 msgid ""
 "Install KDE Connect or GSConnect on your computer and connect it to the same"
@@ -233,7 +238,7 @@ msgstr "Ссылки"
 msgid "Lock device"
 msgstr "Заблокировать устройство"
 
-#: app/qml/pages/TouchpadPage.qml:89
+#: app/qml/pages/TouchpadPage.qml:90
 #, kde-format
 msgid ""
 "Move finger on screen\n"
@@ -246,7 +251,7 @@ msgstr ""
 "Немного подержите для перетаскавания\n"
 "Прокручивайте справа"
 
-#: app/qml/pages/TouchpadPage.qml:81
+#: app/qml/pages/TouchpadPage.qml:82
 #, kde-format
 msgid "Moving ..."
 msgstr "Перемещение ..."
@@ -266,7 +271,7 @@ msgstr "Имя"
 msgid "Name of command"
 msgstr "Имя команды"
 
-#: app/qml/pages/DeviceListPage.qml:286
+#: app/qml/pages/DeviceListPage.qml:251
 #, kde-format
 msgid "Nearby devices"
 msgstr "Устройства поблизости"
@@ -311,17 +316,17 @@ msgstr "Открыть настройки"
 msgid "Open configuration throught context menu"
 msgstr "Открыть настройки через контекстное меню"
 
-#: app/qml/pages/DevicePage.qml:220
+#: app/qml/pages/DevicePage.qml:251
 #, kde-format
 msgid "Open keyboard"
 msgstr "Показать клавиатуру"
 
-#: app/qml/pages/DevicePage.qml:213
+#: app/qml/pages/DevicePage.qml:244
 #, kde-format
 msgid "Open touchpad"
 msgstr "Показать тачпад"
 
-#: app/qml/pages/DeviceListPage.qml:284
+#: app/qml/pages/DeviceListPage.qml:237
 #, kde-format
 msgid "Paired devices"
 msgstr "Связанные устройства"
@@ -331,12 +336,12 @@ msgstr "Связанные устройства"
 msgid "Pairing request"
 msgstr "Запрос на спаривание"
 
-#: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
+#: app/qml/pages/DeviceListPage.qml:148 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
 msgstr "Ожидается запрос на спаривание ..."
 
-#: app/qml/pages/DevicePage.qml:270
+#: app/qml/pages/DevicePage.qml:301
 #, kde-format
 msgid "Plugins"
 msgstr "Модули"
@@ -346,7 +351,7 @@ msgstr "Модули"
 msgid "Predefined commands"
 msgstr "Ранее определенные команды"
 
-#: app/qml/pages/DeviceListPage.qml:253
+#: app/qml/pages/DeviceListPage.qml:277
 #, kde-format
 msgid "Quit"
 msgstr "Выход"
@@ -356,7 +361,7 @@ msgstr "Выход"
 msgid "Reboot"
 msgstr "Перезагрузить"
 
-#: app/qml/pages/DeviceListPage.qml:259
+#: app/qml/pages/DeviceListPage.qml:283
 #, kde-format
 msgid "Refresh"
 msgstr "Обновить"
@@ -377,17 +382,17 @@ msgstr "Удалить"
 msgid "Run as background service"
 msgstr "Запускать как сервис"
 
-#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:234
+#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:265
 #, kde-format
 msgid "Run command"
 msgstr "Выполнить команду"
 
-#: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:234
+#: app/qml/pages/DeviceListPage.qml:68 app/src/sailfishconnect.cpp:234
 #, kde-format
 msgid "Sailfish Connect"
 msgstr "Sailfish Коннект"
 
-#: app/qml/pages/TouchpadPage.qml:73
+#: app/qml/pages/TouchpadPage.qml:74
 #, kde-format
 msgid "Scrolling ..."
 msgstr "Прокрутка ..."
@@ -397,17 +402,17 @@ msgstr "Прокрутка ..."
 msgid "Select Plugins"
 msgstr "Выберите модули"
 
-#: app/qml/pages/DevicePage.qml:198
+#: app/qml/pages/DevicePage.qml:229
 #, kde-format
 msgid "Select files to send"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:227
+#: app/qml/pages/DevicePage.qml:258
 #, kde-format
 msgid "Send clipboard text"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:278
+#: app/qml/pages/DevicePage.qml:309
 #, kde-format
 msgid "Send ping"
 msgstr "Послать пинг"
@@ -418,12 +423,12 @@ msgstr "Послать пинг"
 msgid "Settings"
 msgstr "Настройка"
 
-#: app/qml/pages/DeviceListPage.qml:248
+#: app/qml/pages/DeviceListPage.qml:272
 #, kde-format
 msgid "Settings ..."
 msgstr "Настройка ..."
 
-#: app/qml/pages/DevicePage.qml:190
+#: app/qml/pages/DevicePage.qml:221
 #, kde-format
 msgid "Share files"
 msgstr ""
@@ -443,17 +448,17 @@ msgstr "Исходный код на Github"
 msgid "This device wants to pair with your device."
 msgstr "Это устройство хочет связаться с вашим устройством."
 
-#: app/qml/pages/TouchpadPage.qml:56
+#: app/qml/pages/TouchpadPage.qml:57
 #, kde-format
 msgid "Touchpad"
 msgstr "Тачпад"
 
-#: app/qml/pages/DeviceListPage.qml:162
+#: app/qml/pages/DeviceListPage.qml:163
 #, kde-format
 msgid "Unpair"
 msgstr "Отвязать"
 
-#: app/qml/pages/DeviceListPage.qml:174
+#: app/qml/pages/DeviceListPage.qml:176
 #, kde-format
 msgid "Unpaired"
 msgstr ""
@@ -483,7 +488,7 @@ msgstr "Закачивание ..."
 msgid "Vibration feedback"
 msgstr "Виброотклик"
 
-#: app/qml/pages/DevicePage.qml:74
+#: app/qml/pages/DevicePage.qml:151
 #, kde-format
 msgid "Waiting for accepted pairing ..."
 msgstr "Ожидание подтверждения спаривания ..."

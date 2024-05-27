@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-15 20:33+0200\n"
+"POT-Creation-Date: 2024-05-27 20:44+0200\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
 "Last-Translator: rui kon <facebookmail@qq.com>, 2021\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/r1tschy/teams/89267/zh_CN/)\n"
@@ -43,7 +43,7 @@ msgstr "&percnt;1 位于路径的将会替换为特定设备名称。"
 msgid "About"
 msgstr "关于"
 
-#: app/qml/pages/DeviceListPage.qml:243
+#: app/qml/pages/DeviceListPage.qml:267
 #, kde-format
 msgid "About ..."
 msgstr "关于 ..."
@@ -53,7 +53,7 @@ msgstr "关于 ..."
 msgid "Accept"
 msgstr "接受"
 
-#: app/qml/pages/DevicePage.qml:186
+#: app/qml/pages/DevicePage.qml:217
 #, kde-format
 msgid "Actions"
 msgstr "操作"
@@ -78,12 +78,17 @@ msgstr "软件将会在系统启动之后自启并且运行于后台。"
 msgid "Bug reports on Github"
 msgstr "在 Github 报告问题"
 
+#: app/qml/pages/DevicePage.qml:157
+#, kde-format
+msgid "Cancel"
+msgstr ""
+
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format
 msgid "Change layout"
 msgstr "更改布局"
 
-#: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:241
+#: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:272
 #, kde-format
 msgid "Change volume"
 msgstr "更改音量"
@@ -93,17 +98,17 @@ msgstr "更改音量"
 msgid "Command"
 msgstr "命令"
 
-#: app/qml/pages/DevicePage.qml:161
+#: app/qml/pages/DevicePage.qml:192
 #, kde-format
 msgid "Connect"
 msgstr "连接"
 
-#: app/qml/pages/DeviceListPage.qml:145 app/qml/pages/DeviceListPage.qml:282
+#: app/qml/pages/DeviceListPage.qml:146
 #, kde-format
 msgid "Connected"
 msgstr "已连接"
 
-#: app/qml/pages/DeviceListPage.qml:73
+#: app/qml/pages/DeviceListPage.qml:74
 #, kde-format
 msgid "Device Name"
 msgstr "设备名称"
@@ -118,7 +123,7 @@ msgstr "设备无法访问"
 msgid "Devices from IP address"
 msgstr "来自IP地址的设备"
 
-#: app/qml/pages/DevicePage.qml:151
+#: app/qml/pages/DevicePage.qml:182
 #, kde-format
 msgid "Do you want to connect to this device?"
 msgstr "是否想要连接到此设备?"
@@ -164,7 +169,7 @@ msgstr "编辑命令"
 msgid "Edit share configuration"
 msgstr "编辑分享配置"
 
-#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:263
+#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:294
 #, kde-format
 msgid "Encryption info"
 msgstr "加密信息"
@@ -184,7 +189,7 @@ msgstr "匹配失败。 %1"
 msgid "Folder to save files"
 msgstr "保存文件的文件夹"
 
-#: app/qml/pages/TouchpadPage.qml:65
+#: app/qml/pages/TouchpadPage.qml:66
 #, kde-format
 msgid "Holding ..."
 msgstr "保持…"
@@ -199,7 +204,7 @@ msgstr "IP地址"
 msgid "IPv4 or IPv6 address of device"
 msgstr "IPv4或IPv6设备地址"
 
-#: app/qml/pages/DeviceListPage.qml:57
+#: app/qml/pages/DeviceListPage.qml:58
 #, kde-format
 msgid ""
 "Install KDE Connect or GSConnect on your computer and connect it to the same"
@@ -231,7 +236,7 @@ msgstr "链接"
 msgid "Lock device"
 msgstr "锁定设备"
 
-#: app/qml/pages/TouchpadPage.qml:89
+#: app/qml/pages/TouchpadPage.qml:90
 #, kde-format
 msgid ""
 "Move finger on screen\n"
@@ -244,7 +249,7 @@ msgstr ""
 "短暂按住以上下拖动\n"
 "向右滚动"
 
-#: app/qml/pages/TouchpadPage.qml:81
+#: app/qml/pages/TouchpadPage.qml:82
 #, kde-format
 msgid "Moving ..."
 msgstr "移动..."
@@ -264,7 +269,7 @@ msgstr "名称"
 msgid "Name of command"
 msgstr "命令名称"
 
-#: app/qml/pages/DeviceListPage.qml:286
+#: app/qml/pages/DeviceListPage.qml:251
 #, kde-format
 msgid "Nearby devices"
 msgstr "附近设备"
@@ -309,17 +314,17 @@ msgstr "打开配置"
 msgid "Open configuration throught context menu"
 msgstr "通过上下文菜单打开配置"
 
-#: app/qml/pages/DevicePage.qml:220
+#: app/qml/pages/DevicePage.qml:251
 #, kde-format
 msgid "Open keyboard"
 msgstr "打开键盘"
 
-#: app/qml/pages/DevicePage.qml:213
+#: app/qml/pages/DevicePage.qml:244
 #, kde-format
 msgid "Open touchpad"
 msgstr "打开触控板"
 
-#: app/qml/pages/DeviceListPage.qml:284
+#: app/qml/pages/DeviceListPage.qml:237
 #, kde-format
 msgid "Paired devices"
 msgstr "配对设备"
@@ -329,12 +334,12 @@ msgstr "配对设备"
 msgid "Pairing request"
 msgstr "配对请求"
 
-#: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
+#: app/qml/pages/DeviceListPage.qml:148 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
 msgstr "等待配对请求…"
 
-#: app/qml/pages/DevicePage.qml:270
+#: app/qml/pages/DevicePage.qml:301
 #, kde-format
 msgid "Plugins"
 msgstr "插件"
@@ -344,7 +349,7 @@ msgstr "插件"
 msgid "Predefined commands"
 msgstr "预设命令"
 
-#: app/qml/pages/DeviceListPage.qml:253
+#: app/qml/pages/DeviceListPage.qml:277
 #, kde-format
 msgid "Quit"
 msgstr "退出"
@@ -354,7 +359,7 @@ msgstr "退出"
 msgid "Reboot"
 msgstr "重启"
 
-#: app/qml/pages/DeviceListPage.qml:259
+#: app/qml/pages/DeviceListPage.qml:283
 #, kde-format
 msgid "Refresh"
 msgstr "刷新"
@@ -375,17 +380,17 @@ msgstr "移除"
 msgid "Run as background service"
 msgstr "作为后台服务运行"
 
-#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:234
+#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:265
 #, kde-format
 msgid "Run command"
 msgstr "运行命令"
 
-#: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:234
+#: app/qml/pages/DeviceListPage.qml:68 app/src/sailfishconnect.cpp:234
 #, kde-format
 msgid "Sailfish Connect"
 msgstr "旗鱼连接"
 
-#: app/qml/pages/TouchpadPage.qml:73
+#: app/qml/pages/TouchpadPage.qml:74
 #, kde-format
 msgid "Scrolling ..."
 msgstr "滚动…"
@@ -395,17 +400,17 @@ msgstr "滚动…"
 msgid "Select Plugins"
 msgstr "选择插件"
 
-#: app/qml/pages/DevicePage.qml:198
+#: app/qml/pages/DevicePage.qml:229
 #, kde-format
 msgid "Select files to send"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:227
+#: app/qml/pages/DevicePage.qml:258
 #, kde-format
 msgid "Send clipboard text"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:278
+#: app/qml/pages/DevicePage.qml:309
 #, kde-format
 msgid "Send ping"
 msgstr "发送 ping"
@@ -416,12 +421,12 @@ msgstr "发送 ping"
 msgid "Settings"
 msgstr "设置"
 
-#: app/qml/pages/DeviceListPage.qml:248
+#: app/qml/pages/DeviceListPage.qml:272
 #, kde-format
 msgid "Settings ..."
 msgstr "设置"
 
-#: app/qml/pages/DevicePage.qml:190
+#: app/qml/pages/DevicePage.qml:221
 #, kde-format
 msgid "Share files"
 msgstr ""
@@ -441,17 +446,17 @@ msgstr "源代码位于 Github"
 msgid "This device wants to pair with your device."
 msgstr "此设备希望和你的设备配对"
 
-#: app/qml/pages/TouchpadPage.qml:56
+#: app/qml/pages/TouchpadPage.qml:57
 #, kde-format
 msgid "Touchpad"
 msgstr "触摸板"
 
-#: app/qml/pages/DeviceListPage.qml:162
+#: app/qml/pages/DeviceListPage.qml:163
 #, kde-format
 msgid "Unpair"
 msgstr "取消配对"
 
-#: app/qml/pages/DeviceListPage.qml:174
+#: app/qml/pages/DeviceListPage.qml:176
 #, kde-format
 msgid "Unpaired"
 msgstr ""
@@ -481,7 +486,7 @@ msgstr "正在更新…"
 msgid "Vibration feedback"
 msgstr "振动反馈"
 
-#: app/qml/pages/DevicePage.qml:74
+#: app/qml/pages/DevicePage.qml:151
 #, kde-format
 msgid "Waiting for accepted pairing ..."
 msgstr "等待接受配对………"

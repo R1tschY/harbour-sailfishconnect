@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-15 20:33+0200\n"
+"POT-Creation-Date: 2024-05-27 20:44+0200\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
 "Last-Translator: R1tschY <r1tschy@posteo.de>, 2021\n"
 "Language-Team: German (https://app.transifex.com/r1tschy/teams/89267/de/)\n"
@@ -43,7 +43,7 @@ msgstr "&percnt;1 im Pfad wird durch Gerätenamen ersetzt"
 msgid "About"
 msgstr "Info"
 
-#: app/qml/pages/DeviceListPage.qml:243
+#: app/qml/pages/DeviceListPage.qml:267
 #, kde-format
 msgid "About ..."
 msgstr "Info"
@@ -53,7 +53,7 @@ msgstr "Info"
 msgid "Accept"
 msgstr "Annehmen"
 
-#: app/qml/pages/DevicePage.qml:186
+#: app/qml/pages/DevicePage.qml:217
 #, kde-format
 msgid "Actions"
 msgstr "Aktionen"
@@ -78,12 +78,17 @@ msgstr "Die Anwendung startet beim Systemstart und läuft im Hintergrund."
 msgid "Bug reports on Github"
 msgstr "Fehlermeldungen auf Github"
 
+#: app/qml/pages/DevicePage.qml:157
+#, kde-format
+msgid "Cancel"
+msgstr ""
+
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format
 msgid "Change layout"
 msgstr "Tastatur ändern"
 
-#: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:241
+#: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:272
 #, kde-format
 msgid "Change volume"
 msgstr "Lautstärke ändern"
@@ -93,17 +98,17 @@ msgstr "Lautstärke ändern"
 msgid "Command"
 msgstr "Befehl"
 
-#: app/qml/pages/DevicePage.qml:161
+#: app/qml/pages/DevicePage.qml:192
 #, kde-format
 msgid "Connect"
 msgstr "Verbinden"
 
-#: app/qml/pages/DeviceListPage.qml:145 app/qml/pages/DeviceListPage.qml:282
+#: app/qml/pages/DeviceListPage.qml:146
 #, kde-format
 msgid "Connected"
 msgstr "Verbunden"
 
-#: app/qml/pages/DeviceListPage.qml:73
+#: app/qml/pages/DeviceListPage.qml:74
 #, kde-format
 msgid "Device Name"
 msgstr "Gerätename"
@@ -118,7 +123,7 @@ msgstr "Gerät nicht erreichbar"
 msgid "Devices from IP address"
 msgstr "Geräte zur IP Adresse"
 
-#: app/qml/pages/DevicePage.qml:151
+#: app/qml/pages/DevicePage.qml:182
 #, kde-format
 msgid "Do you want to connect to this device?"
 msgstr "Möchtest du dich mit diesem Gerät verbinden?"
@@ -164,7 +169,7 @@ msgstr "Befehle ändern"
 msgid "Edit share configuration"
 msgstr "Ändere Teileneinstellungen"
 
-#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:263
+#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:294
 #, kde-format
 msgid "Encryption info"
 msgstr "Verschlüsselungsinformationen"
@@ -184,7 +189,7 @@ msgstr "Kopplung fehlgeschlagen. %1"
 msgid "Folder to save files"
 msgstr "Ordner in dem Dateien gespeichert werden"
 
-#: app/qml/pages/TouchpadPage.qml:65
+#: app/qml/pages/TouchpadPage.qml:66
 #, kde-format
 msgid "Holding ..."
 msgstr "Haltend ..."
@@ -199,7 +204,7 @@ msgstr "IP Adresse"
 msgid "IPv4 or IPv6 address of device"
 msgstr "IPv4 oder IPv6 Adresse des Gerätes"
 
-#: app/qml/pages/DeviceListPage.qml:57
+#: app/qml/pages/DeviceListPage.qml:58
 #, kde-format
 msgid ""
 "Install KDE Connect or GSConnect on your computer and connect it to the same"
@@ -233,7 +238,7 @@ msgstr "Links"
 msgid "Lock device"
 msgstr "Gerät sperren"
 
-#: app/qml/pages/TouchpadPage.qml:89
+#: app/qml/pages/TouchpadPage.qml:90
 #, kde-format
 msgid ""
 "Move finger on screen\n"
@@ -246,7 +251,7 @@ msgstr ""
 "Kurz halten für Drag'n'Drop\n"
 "Scrollen an rechter Seite"
 
-#: app/qml/pages/TouchpadPage.qml:81
+#: app/qml/pages/TouchpadPage.qml:82
 #, kde-format
 msgid "Moving ..."
 msgstr "In Bewegung ..."
@@ -266,7 +271,7 @@ msgstr "Name"
 msgid "Name of command"
 msgstr "Name des Befehls"
 
-#: app/qml/pages/DeviceListPage.qml:286
+#: app/qml/pages/DeviceListPage.qml:251
 #, kde-format
 msgid "Nearby devices"
 msgstr "Geräte in der Nähe"
@@ -311,17 +316,17 @@ msgstr " Konfiguration öffnen"
 msgid "Open configuration throught context menu"
 msgstr "Öffne Konfiguration über Kontextmenü"
 
-#: app/qml/pages/DevicePage.qml:220
+#: app/qml/pages/DevicePage.qml:251
 #, kde-format
 msgid "Open keyboard"
 msgstr "Tastatur öffnen"
 
-#: app/qml/pages/DevicePage.qml:213
+#: app/qml/pages/DevicePage.qml:244
 #, kde-format
 msgid "Open touchpad"
 msgstr "Touchpad öffnen"
 
-#: app/qml/pages/DeviceListPage.qml:284
+#: app/qml/pages/DeviceListPage.qml:237
 #, kde-format
 msgid "Paired devices"
 msgstr "Gekoppelte Geräte"
@@ -331,12 +336,12 @@ msgstr "Gekoppelte Geräte"
 msgid "Pairing request"
 msgstr "Kopplungsanfrage"
 
-#: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
+#: app/qml/pages/DeviceListPage.qml:148 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
 msgstr "Wartende Kopplungsanfrage ..."
 
-#: app/qml/pages/DevicePage.qml:270
+#: app/qml/pages/DevicePage.qml:301
 #, kde-format
 msgid "Plugins"
 msgstr "Plugins"
@@ -346,7 +351,7 @@ msgstr "Plugins"
 msgid "Predefined commands"
 msgstr "Vordefinierte Befehle"
 
-#: app/qml/pages/DeviceListPage.qml:253
+#: app/qml/pages/DeviceListPage.qml:277
 #, kde-format
 msgid "Quit"
 msgstr "Beenden"
@@ -356,7 +361,7 @@ msgstr "Beenden"
 msgid "Reboot"
 msgstr "Neustart"
 
-#: app/qml/pages/DeviceListPage.qml:259
+#: app/qml/pages/DeviceListPage.qml:283
 #, kde-format
 msgid "Refresh"
 msgstr "Aktualisieren"
@@ -377,17 +382,17 @@ msgstr "Löschen"
 msgid "Run as background service"
 msgstr "Als Hintergrundservice laufen lassen"
 
-#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:234
+#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:265
 #, kde-format
 msgid "Run command"
 msgstr "Befehl ausführen"
 
-#: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:234
+#: app/qml/pages/DeviceListPage.qml:68 app/src/sailfishconnect.cpp:234
 #, kde-format
 msgid "Sailfish Connect"
 msgstr "Sailfish Connect"
 
-#: app/qml/pages/TouchpadPage.qml:73
+#: app/qml/pages/TouchpadPage.qml:74
 #, kde-format
 msgid "Scrolling ..."
 msgstr "Scrollend ..."
@@ -397,17 +402,17 @@ msgstr "Scrollend ..."
 msgid "Select Plugins"
 msgstr "Plugins auswählen"
 
-#: app/qml/pages/DevicePage.qml:198
+#: app/qml/pages/DevicePage.qml:229
 #, kde-format
 msgid "Select files to send"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:227
+#: app/qml/pages/DevicePage.qml:258
 #, kde-format
 msgid "Send clipboard text"
 msgstr ""
 
-#: app/qml/pages/DevicePage.qml:278
+#: app/qml/pages/DevicePage.qml:309
 #, kde-format
 msgid "Send ping"
 msgstr "Ping senden"
@@ -418,12 +423,12 @@ msgstr "Ping senden"
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: app/qml/pages/DeviceListPage.qml:248
+#: app/qml/pages/DeviceListPage.qml:272
 #, kde-format
 msgid "Settings ..."
 msgstr "Einstellungen"
 
-#: app/qml/pages/DevicePage.qml:190
+#: app/qml/pages/DevicePage.qml:221
 #, kde-format
 msgid "Share files"
 msgstr ""
@@ -443,17 +448,17 @@ msgstr "Quellcode auf Github"
 msgid "This device wants to pair with your device."
 msgstr "Dieses Gerät möchte sich mit deinem Gerät koppeln."
 
-#: app/qml/pages/TouchpadPage.qml:56
+#: app/qml/pages/TouchpadPage.qml:57
 #, kde-format
 msgid "Touchpad"
 msgstr "Touchpad"
 
-#: app/qml/pages/DeviceListPage.qml:162
+#: app/qml/pages/DeviceListPage.qml:163
 #, kde-format
 msgid "Unpair"
 msgstr "Koppelung auflösen"
 
-#: app/qml/pages/DeviceListPage.qml:174
+#: app/qml/pages/DeviceListPage.qml:176
 #, kde-format
 msgid "Unpaired"
 msgstr ""
@@ -483,7 +488,7 @@ msgstr "Lade hoch ..."
 msgid "Vibration feedback"
 msgstr "Vibration"
 
-#: app/qml/pages/DevicePage.qml:74
+#: app/qml/pages/DevicePage.qml:151
 #, kde-format
 msgid "Waiting for accepted pairing ..."
 msgstr "Warte auf akzeptierte Kopplung ..."

@@ -5,16 +5,16 @@
 # 
 # Translators:
 # R1tschY <r1tschy@posteo.de>, 2021
-# Åke Engelbrektson, 2021
+# Åke Engelbrektson, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-15 20:33+0200\n"
+"POT-Creation-Date: 2024-05-27 20:44+0200\n"
 "PO-Revision-Date: 2021-02-06 22:45+0000\n"
-"Last-Translator: Åke Engelbrektson, 2021\n"
+"Last-Translator: Åke Engelbrektson, 2024\n"
 "Language-Team: Swedish (https://app.transifex.com/r1tschy/teams/89267/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +43,7 @@ msgstr "&percnt;1 i sökvägen, kommer att ersättas med specifikt enhetsnamn."
 msgid "About"
 msgstr "Om"
 
-#: app/qml/pages/DeviceListPage.qml:243
+#: app/qml/pages/DeviceListPage.qml:267
 #, kde-format
 msgid "About ..."
 msgstr "Om ..."
@@ -53,7 +53,7 @@ msgstr "Om ..."
 msgid "Accept"
 msgstr "Acceptera"
 
-#: app/qml/pages/DevicePage.qml:186
+#: app/qml/pages/DevicePage.qml:217
 #, kde-format
 msgid "Actions"
 msgstr "Åtgärder"
@@ -78,12 +78,17 @@ msgstr "Appen startar vid systemstart och körs i bakgrunden."
 msgid "Bug reports on Github"
 msgstr "Felrapporter på GitHub"
 
+#: app/qml/pages/DevicePage.qml:157
+#, kde-format
+msgid "Cancel"
+msgstr ""
+
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format
 msgid "Change layout"
 msgstr "Ändra layout"
 
-#: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:241
+#: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:272
 #, kde-format
 msgid "Change volume"
 msgstr "Ändra volym"
@@ -93,17 +98,17 @@ msgstr "Ändra volym"
 msgid "Command"
 msgstr "Kommando"
 
-#: app/qml/pages/DevicePage.qml:161
+#: app/qml/pages/DevicePage.qml:192
 #, kde-format
 msgid "Connect"
 msgstr "Anslut"
 
-#: app/qml/pages/DeviceListPage.qml:145 app/qml/pages/DeviceListPage.qml:282
+#: app/qml/pages/DeviceListPage.qml:146
 #, kde-format
 msgid "Connected"
 msgstr "Ansluten"
 
-#: app/qml/pages/DeviceListPage.qml:73
+#: app/qml/pages/DeviceListPage.qml:74
 #, kde-format
 msgid "Device Name"
 msgstr "Enhetsnamn"
@@ -118,7 +123,7 @@ msgstr "Enheten kan inte nås"
 msgid "Devices from IP address"
 msgstr "Enheter via IP-adress"
 
-#: app/qml/pages/DevicePage.qml:151
+#: app/qml/pages/DevicePage.qml:182
 #, kde-format
 msgid "Do you want to connect to this device?"
 msgstr "Vill du ansluta till den här enheten?"
@@ -136,12 +141,12 @@ msgstr "Nerladdning misslyckades"
 #: app/src/helper/jobsnotificator.cpp:140
 #, kde-format
 msgid "Download started"
-msgstr ""
+msgstr "Nerladdning startad"
 
 #: app/src/helper/jobsnotificator.cpp:99
 #, kde-format
 msgid "Download succeeded"
-msgstr ""
+msgstr "Nerladdning slutförd"
 
 #: app/src/helper/jobsnotificator.cpp:142
 #, kde-format
@@ -164,7 +169,7 @@ msgstr "Redigera kommandon"
 msgid "Edit share configuration"
 msgstr "Redigera delningsinställningar"
 
-#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:263
+#: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:294
 #, kde-format
 msgid "Encryption info"
 msgstr "Krypteringsinformation"
@@ -184,7 +189,7 @@ msgstr "Kunde inte parkoppla. %1"
 msgid "Folder to save files"
 msgstr "Lagringsmapp"
 
-#: app/qml/pages/TouchpadPage.qml:65
+#: app/qml/pages/TouchpadPage.qml:66
 #, kde-format
 msgid "Holding ..."
 msgstr "Håller ..."
@@ -199,7 +204,7 @@ msgstr "IP-adress"
 msgid "IPv4 or IPv6 address of device"
 msgstr "IPv4- eller IPv6-adress för enheten"
 
-#: app/qml/pages/DeviceListPage.qml:57
+#: app/qml/pages/DeviceListPage.qml:58
 #, kde-format
 msgid ""
 "Install KDE Connect or GSConnect on your computer and connect it to the same"
@@ -233,7 +238,7 @@ msgstr "Länkar"
 msgid "Lock device"
 msgstr "Lås enheten"
 
-#: app/qml/pages/TouchpadPage.qml:89
+#: app/qml/pages/TouchpadPage.qml:90
 #, kde-format
 msgid ""
 "Move finger on screen\n"
@@ -245,7 +250,7 @@ msgstr ""
 "Snabbtryck för att klicka\n"
 "Håll kvar kort för Dra & Släpp"
 
-#: app/qml/pages/TouchpadPage.qml:81
+#: app/qml/pages/TouchpadPage.qml:82
 #, kde-format
 msgid "Moving ..."
 msgstr "Flyttar ..."
@@ -265,7 +270,7 @@ msgstr "Namn"
 msgid "Name of command"
 msgstr "Kommandonamn"
 
-#: app/qml/pages/DeviceListPage.qml:286
+#: app/qml/pages/DeviceListPage.qml:251
 #, kde-format
 msgid "Nearby devices"
 msgstr "Enheter i närheten"
@@ -273,7 +278,7 @@ msgstr "Enheter i närheten"
 #: app/qml/pages/RemoteVolumePage.qml:110
 #, kde-format
 msgid "No audio sinks exist on other device"
-msgstr ""
+msgstr "Det finns ingen ljudmottagare på den andra enheten"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
 #, kde-format
@@ -310,17 +315,17 @@ msgstr "Öppna inställningar"
 msgid "Open configuration throught context menu"
 msgstr "Öppna inställningar genom snabbmeny"
 
-#: app/qml/pages/DevicePage.qml:220
+#: app/qml/pages/DevicePage.qml:251
 #, kde-format
 msgid "Open keyboard"
 msgstr "Öppna tangentbord"
 
-#: app/qml/pages/DevicePage.qml:213
+#: app/qml/pages/DevicePage.qml:244
 #, kde-format
 msgid "Open touchpad"
 msgstr "Öppna styrplatta"
 
-#: app/qml/pages/DeviceListPage.qml:284
+#: app/qml/pages/DeviceListPage.qml:237
 #, kde-format
 msgid "Paired devices"
 msgstr "Parkopplade enheter"
@@ -330,12 +335,12 @@ msgstr "Parkopplade enheter"
 msgid "Pairing request"
 msgstr "Parkopplingsbegäran"
 
-#: app/qml/pages/DeviceListPage.qml:147 app/src/appdaemon.cpp:64
+#: app/qml/pages/DeviceListPage.qml:148 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
 msgstr "Väntande parkopplingsbegäran ..."
 
-#: app/qml/pages/DevicePage.qml:270
+#: app/qml/pages/DevicePage.qml:301
 #, kde-format
 msgid "Plugins"
 msgstr "Insticksmoduler"
@@ -345,7 +350,7 @@ msgstr "Insticksmoduler"
 msgid "Predefined commands"
 msgstr "Förinställda kommandon"
 
-#: app/qml/pages/DeviceListPage.qml:253
+#: app/qml/pages/DeviceListPage.qml:277
 #, kde-format
 msgid "Quit"
 msgstr "Avsluta"
@@ -355,7 +360,7 @@ msgstr "Avsluta"
 msgid "Reboot"
 msgstr "Starta om"
 
-#: app/qml/pages/DeviceListPage.qml:259
+#: app/qml/pages/DeviceListPage.qml:283
 #, kde-format
 msgid "Refresh"
 msgstr "Uppdatera"
@@ -376,17 +381,17 @@ msgstr "Ta bort"
 msgid "Run as background service"
 msgstr "Kör som bakgrundstjänst"
 
-#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:234
+#: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:265
 #, kde-format
 msgid "Run command"
 msgstr "Kör kommando"
 
-#: app/qml/pages/DeviceListPage.qml:67 app/src/sailfishconnect.cpp:234
+#: app/qml/pages/DeviceListPage.qml:68 app/src/sailfishconnect.cpp:234
 #, kde-format
 msgid "Sailfish Connect"
 msgstr "Sailfish Connect"
 
-#: app/qml/pages/TouchpadPage.qml:73
+#: app/qml/pages/TouchpadPage.qml:74
 #, kde-format
 msgid "Scrolling ..."
 msgstr "Skrollar ..."
@@ -396,17 +401,17 @@ msgstr "Skrollar ..."
 msgid "Select Plugins"
 msgstr "Välj insticksmoduler"
 
-#: app/qml/pages/DevicePage.qml:198
+#: app/qml/pages/DevicePage.qml:229
 #, kde-format
 msgid "Select files to send"
-msgstr ""
+msgstr "Välj filer att skicka"
 
-#: app/qml/pages/DevicePage.qml:227
+#: app/qml/pages/DevicePage.qml:258
 #, kde-format
 msgid "Send clipboard text"
-msgstr ""
+msgstr "Skicka urklippstext"
 
-#: app/qml/pages/DevicePage.qml:278
+#: app/qml/pages/DevicePage.qml:309
 #, kde-format
 msgid "Send ping"
 msgstr "Skicka ping"
@@ -417,15 +422,15 @@ msgstr "Skicka ping"
 msgid "Settings"
 msgstr "Inställningar"
 
-#: app/qml/pages/DeviceListPage.qml:248
+#: app/qml/pages/DeviceListPage.qml:272
 #, kde-format
 msgid "Settings ..."
 msgstr "Inställningar ..."
 
-#: app/qml/pages/DevicePage.qml:190
+#: app/qml/pages/DevicePage.qml:221
 #, kde-format
 msgid "Share files"
-msgstr ""
+msgstr "Dela filer"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
 #, kde-format
@@ -442,20 +447,20 @@ msgstr "Källkod på GitHub"
 msgid "This device wants to pair with your device."
 msgstr "Denna enhet vill parkopplas med din enhet."
 
-#: app/qml/pages/TouchpadPage.qml:56
+#: app/qml/pages/TouchpadPage.qml:57
 #, kde-format
 msgid "Touchpad"
 msgstr "Styrplatta"
 
-#: app/qml/pages/DeviceListPage.qml:162
+#: app/qml/pages/DeviceListPage.qml:163
 #, kde-format
 msgid "Unpair"
 msgstr "Ta bort parkoppling"
 
-#: app/qml/pages/DeviceListPage.qml:174
+#: app/qml/pages/DeviceListPage.qml:176
 #, kde-format
 msgid "Unpaired"
-msgstr ""
+msgstr "Parkoppling borttagen"
 
 #: app/src/helper/jobsnotificator.cpp:114
 #, kde-format
@@ -470,7 +475,7 @@ msgstr "Uppladdning misslyckades"
 #: app/src/helper/jobsnotificator.cpp:97
 #, kde-format
 msgid "Upload succeeded"
-msgstr ""
+msgstr "Uppladdning slutförd"
 
 #: app/src/helper/jobsnotificator.cpp:138
 #, kde-format
@@ -482,7 +487,7 @@ msgstr "Laddar upp ..."
 msgid "Vibration feedback"
 msgstr "Vibrationsåterkoppling"
 
-#: app/qml/pages/DevicePage.qml:74
+#: app/qml/pages/DevicePage.qml:151
 #, kde-format
 msgid "Waiting for accepted pairing ..."
 msgstr "Väntar på accepterad parkoppling ..."

@@ -46,13 +46,14 @@ Page {
     }
 
     SilicaFlickable {
+        id: content
         anchors.fill: parent
         contentHeight: column.height
         visible: kdeconnectService.registered
 
         ViewPlaceholder {
             enabled: !startup
-                     && trustedDevices.count === 0
+                     && pairedDevices.count === 0
                      && nearDevices.count === 0
             text: i18n("Install KDE Connect or GSConnect on your computer and connect it to the same WLAN.")
         }
@@ -141,7 +142,7 @@ Page {
                             rightMargin: Theme.horizontalPageMargin
                         }
 
-                        text: (trusted && reachable)
+                        text: (paired && reachable)
                               ? i18n("Connected")
                               : (isPairRequested || isPairRequestedByPeer
                                  ? i18n("Pending pairing request ...") : "")
@@ -161,6 +162,7 @@ Page {
                         MenuItem {
                             text: i18n("Unpair")
                             onClicked: listItem.requestUnpairDevice()
+                            visible: paired
                         }
                     }
 
@@ -193,48 +195,70 @@ Page {
 //            ListModel {
 //                id: devicelistModel
 
-//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "1"; deviceId: "1"; trusted: true; reachable: true }
-//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "2"; deviceId: "1"; trusted: true; reachable: true }
-//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "3"; deviceId: "1"; trusted: true; reachable: true }
-//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "4"; deviceId: "1"; trusted: true; reachable: false }
-//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "5"; deviceId: "1"; trusted: true; reachable: false }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "1"; deviceId: "1"; paired: true; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "2"; deviceId: "1"; paired: true; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "3"; deviceId: "1"; paired: true; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "4"; deviceId: "1"; paired: true; reachable: false }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "5"; deviceId: "1"; paired: true; reachable: false }
 
-//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "1"; deviceId: "1"; trusted: false; reachable: true }
-//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "2"; deviceId: "1"; trusted: false; reachable: true }
-//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "3"; deviceId: "1"; trusted: false; reachable: true }
-//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "4"; deviceId: "1"; trusted: false; reachable: true }
-//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "5"; deviceId: "1"; trusted: false; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "1"; deviceId: "1"; paired: false; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "2"; deviceId: "1"; paired: false; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "3"; deviceId: "1"; paired: false; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "4"; deviceId: "1"; paired: false; reachable: true }
+//                ListElement { iconUrl: "image://theme/icon-m-phone"; name: "5"; deviceId: "1"; paired: false; reachable: true }
 //             }
 
             SortFilterModel {
-                id: trustedDevicesModel
+                id: pairedDevicesModel
 
-                sortRole: "section"
+                sortRole: "name"
+                filterRole: "paired"
+                filterValue: true
                 sourceModel: devicelistModel
             }
 
-            Component {
-                id: sectionHeading
+            SortFilterModel {
+                id: nonpairedDevicesModel
 
-                SectionHeader {
-                    text: roleTexts(section)
-                }
+                filterRole: "paired"
+                filterValue: false
+                sourceModel: devicelistModel
+            }
+            SortFilterModel {
+                id: nearDevicesModel
+
+                sortRole: "name"
+                filterRole: "reachable"
+                filterValue: true
+                sourceModel: nonpairedDevicesModel
             }
 
+            SectionHeader {
+                text: i18n("Paired devices")
+                visible: pairedDevices.count > 0
+            }
             ColumnView {
-                id: trustedDevices
+                id: pairedDevices
                 width: page.width
-                itemHeight: Theme.itemSizeMedium + (3 * Theme.itemSizeSmall / trustedDevices.count)
+                itemHeight: Theme.itemSizeMedium
 
-
-                model: trustedDevicesModel
+                model: pairedDevicesModel
                 delegate: deviceDelegate
-                visible: trustedDevices.count > 0
+                visible: pairedDevices.count > 0
+            }
 
-                Component.onCompleted: {
-                    trustedDevices._listView.section.property = "section"
-                    trustedDevices._listView.section.delegate = sectionHeading
-                }
+            SectionHeader {
+                text: i18n("Nearby devices")
+                visible: nearDevices.count > 0
+            }
+            ColumnView {
+                id: nearDevices
+                width: page.width
+                itemHeight: Theme.itemSizeMedium
+
+                model: nearDevicesModel
+                delegate: deviceDelegate
+                visible: nearDevices.count > 0
             }
         }
 
@@ -261,7 +285,7 @@ Page {
             }
         }
 
-        VerticalScrollDecorator {}
+        VerticalScrollDecorator { flickable: content }
     }
 
     Connections {
@@ -274,20 +298,6 @@ Page {
         running: true
         repeat: false
         onTriggered: startup = false
-    }
-
-    function roleTexts(section) {
-        switch(Number(section)) {
-        case DeviceListModel.Connected:
-            return i18n("Connected")
-        case DeviceListModel.Trusted:
-            return i18n("Paired devices")
-        case DeviceListModel.Near:
-            return i18n("Nearby devices")
-        case DeviceListModel.Nothing:
-        default:
-            return "-"
-        }
     }
 
     function openDevicePage(deviceId) {

@@ -35,20 +35,11 @@ public:
         NameRole = Qt::UserRole,
         IdRole,
         IconUrlRole,
-        TrustedRole,
+        PairedRole,
         ReachableRole,
-        SectionRole,
         IsPairRequestedByPeerRole,
         IsPairRequestedRole
     };
-
-    enum Section {
-        Connected,
-        Trusted,
-        Near,
-        Nothing
-    };
-    Q_ENUM(Section)
 
     explicit DeviceListModel(QObject *parent = nullptr);
     ~DeviceListModel();

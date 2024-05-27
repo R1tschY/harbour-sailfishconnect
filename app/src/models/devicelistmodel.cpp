@@ -85,11 +85,7 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
         return device->id();
     case IconUrlRole:
         return deviceTypeToIcon(device->type().toString());
-    case SectionRole:
-        return device->isPaired()
-                ? (device->isReachable() ? Connected : Trusted)
-                : (device->isReachable() ? Near : Nothing);
-    case TrustedRole:
+    case PairedRole:
         return device->isPaired();
     case ReachableRole:
         return device->isReachable();
@@ -108,9 +104,8 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
     roles.insert(NameRole, "name");
     roles.insert(IdRole, "id");
     roles.insert(IconUrlRole, "iconUrl");
-    roles.insert(TrustedRole, "trusted");
+    roles.insert(PairedRole, "paired");
     roles.insert(ReachableRole, "reachable");
-    roles.insert(SectionRole, "section");
     roles.insert(IsPairRequestedByPeerRole, "isPairRequestedByPeer");
     roles.insert(IsPairRequestedRole, "isPairRequested");
     return roles;
@@ -178,7 +173,7 @@ void DeviceListModel::connectDevice(Device *device)
         deviceDataChanged(device, {Qt::DisplayRole, NameRole});
     });
     connect(device, &Device::pairStateChanged, this, [=]{
-        deviceDataChanged(device, {TrustedRole, IsPairRequestedByPeerRole, IsPairRequestedRole});
+        deviceDataChanged(device, {PairedRole, IsPairRequestedByPeerRole, IsPairRequestedRole});
     });
     connect(device, &Device::reachableChanged, this, [=]{
         deviceDataChanged(device, {ReachableRole});

@@ -1,8 +1,15 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Thu Nov 04 2021 R1tschY <r1tschy@posteo.de> 0.7.0-0-0
-- Sailfish OS 4.0.1 is required (because of deprecated linkage to OpenSSL 1.0)
+* Thu Nov 04 2021 R1tschY <r1tschy@posteo.de> 0.7.0-0
+- Upload of multiple files at once possible
+- Use system keyboard for remote keyboard
+- Unpair action moved to device list page and uses remorse item
+- Upgrade to KDE Connect 24.01.90
+- Fix deprecated linkage to OpenSSL 1.0
+
+* Fri Mar 18 2022 Richard Liebscher <r1tschy@posteo.de> 0.6.2-1
+- Disable sandbox for Sailfish 4.4 support
 
 * Wed Nov 03 2021 Richard Liebscher <r1tschy@posteo.de> 0.6.1-2
 - Rebuild to support Sailfish 4.3 (Sailfish 4.0 is now required)

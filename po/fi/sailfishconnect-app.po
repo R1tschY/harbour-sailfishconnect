@@ -83,7 +83,7 @@ msgstr "Bugiraportit Githubissa"
 #: app/qml/pages/DevicePage.qml:157
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Peruuta"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format
@@ -143,12 +143,12 @@ msgstr "Lataus epäonnistui"
 #: app/src/helper/jobsnotificator.cpp:140
 #, kde-format
 msgid "Download started"
-msgstr ""
+msgstr "Lataus alkoi"
 
 #: app/src/helper/jobsnotificator.cpp:99
 #, kde-format
 msgid "Download succeeded"
-msgstr ""
+msgstr "Lataus onnistui"
 
 #: app/src/helper/jobsnotificator.cpp:142
 #, kde-format
@@ -281,7 +281,7 @@ msgstr "Lähistöllä olevat laitteet"
 #: app/qml/pages/RemoteVolumePage.qml:110
 #, kde-format
 msgid "No audio sinks exist on other device"
-msgstr ""
+msgstr "Toisella laitteella ei ole ääniulostuloja"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
 #, kde-format
@@ -407,12 +407,12 @@ msgstr "Valitse liitännäiset"
 #: app/qml/pages/DevicePage.qml:229
 #, kde-format
 msgid "Select files to send"
-msgstr ""
+msgstr "Valitse lähetettävät tiedostot"
 
 #: app/qml/pages/DevicePage.qml:258
 #, kde-format
 msgid "Send clipboard text"
-msgstr ""
+msgstr "Lähetä leikepöydän teksti"
 
 #: app/qml/pages/DevicePage.qml:309
 #, kde-format
@@ -433,7 +433,7 @@ msgstr "Asetukset ..."
 #: app/qml/pages/DevicePage.qml:221
 #, kde-format
 msgid "Share files"
-msgstr ""
+msgstr "Jaa tiedostoja"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
 #, kde-format
@@ -463,7 +463,7 @@ msgstr "Poista pariliitos"
 #: app/qml/pages/DeviceListPage.qml:176
 #, kde-format
 msgid "Unpaired"
-msgstr ""
+msgstr "Liitos purettu"
 
 #: app/src/helper/jobsnotificator.cpp:114
 #, kde-format
@@ -478,7 +478,7 @@ msgstr "Lähetys epäonnistui"
 #: app/src/helper/jobsnotificator.cpp:97
 #, kde-format
 msgid "Upload succeeded"
-msgstr ""
+msgstr "Lähetys onnistui"
 
 #: app/src/helper/jobsnotificator.cpp:138
 #, kde-format

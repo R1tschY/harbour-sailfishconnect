@@ -81,7 +81,7 @@ msgstr "Felrapporter på GitHub"
 #: app/qml/pages/DevicePage.qml:157
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format

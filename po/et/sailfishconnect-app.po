@@ -80,7 +80,7 @@ msgstr "Veateated Github'is"
 #: app/qml/pages/DevicePage.qml:157
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Katkesta"
 
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format

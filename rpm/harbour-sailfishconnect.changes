@@ -1,7 +1,7 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Thu Nov 04 2021 R1tschY <r1tschy@posteo.de> 0.7.0-0
+* Mon Jun 03 2024 R1tschY <r1tschy@posteo.de> 0.7.0-1
 - Upload of multiple files at once possible
 - Use system keyboard for remote keyboard
 - Unpair action moved to device list page and uses remorse item

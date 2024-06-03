@@ -1,8 +1,8 @@
 Name:       harbour-sailfishconnect
 
 Summary:    SailfishOS client for KDE-Connect
-Version:    0.7.0
-Release:    1
+Version:    0.8.0
+Release:    0
 License:    LICENSE
 URL:        https://github.com/R1tschY/harbour-sailfishconnect
 Source0:    %{name}-%{version}.tar.bz2

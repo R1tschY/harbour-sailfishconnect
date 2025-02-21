@@ -96,9 +96,9 @@
         "Version": "0.1"
     },
     "X-KdeConnect-OutgoingPacketType": [
-        "kdeconnect.clipboard"
+        "kdeconnect.clipboard", "kdeconnect.clipboard.connect"
     ],
     "X-KdeConnect-SupportedPacketType": [
-        "kdeconnect.clipboard"
+        "kdeconnect.clipboard", "kdeconnect.clipboard.connect"
     ]
 }

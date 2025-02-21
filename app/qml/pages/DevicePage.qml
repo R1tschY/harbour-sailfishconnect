@@ -258,7 +258,7 @@ Page {
                     title: i18n("Send clipboard text")
                     icon: "image://theme/icon-m-clipboard"
                     pluginId: "Clipboard"
-                    onClicked: pluginCall("pushClipboard")
+                    onClicked: _device.pluginCall("sailfishconnect_clipboard", "pushClipboard")
                 }
                 PluginAction {
                     device: _device

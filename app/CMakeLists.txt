@@ -3,6 +3,8 @@ add_definitions(-DTRANSLATION_DOMAIN=\"sailfishconnect-app\")
 # Qt
 find_package(Qt5 COMPONENTS Core Network Qml Sql Gui Quick DBus REQUIRED)
 
+add_definitions(-DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050600)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 

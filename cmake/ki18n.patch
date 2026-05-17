@@ -1,0 +1,96 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 54fcaa0..6edefdc 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.0)
++cmake_minimum_required(VERSION 3.16)
+ 
+ set(KF5_VERSION "5.36.0") # handled by release scripts
+ project(KI18n VERSION ${KF5_VERSION})
+@@ -46,9 +46,6 @@ set_package_properties(LibIntl PROPERTIES TYPE REQUIRED
+ 	PURPOSE "Needed for building KI18n unless glibc is the system libc implementation"
+ )
+ 
+-# usually is called using find_package(KF5I18n),
+-# KF5I18NMacros.cmake needs to know the scripts directory
+-set(KF5I18n_DIR ${CMAKE_CURRENT_LIST_DIR}/cmake)
+ include(cmake/KF5I18NMacros.cmake)
+ 
+ remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
+diff --git a/cmake/KF5I18NMacros.cmake b/cmake/KF5I18NMacros.cmake
+index 6168b2a..df627fa 100644
+--- a/cmake/KF5I18NMacros.cmake
++++ b/cmake/KF5I18NMacros.cmake
+@@ -26,10 +26,9 @@
+ # SUCH DAMAGE.
+ 
+ find_package(Gettext REQUIRED)
+-find_package(PythonInterp REQUIRED)
++find_package(Python3 REQUIRED)
+ 
+-set(_ki18n_pmap_compile_script ${CMAKE_CURRENT_LIST_DIR}/ts-pmap-compile.py)
+-set(_ki18n_uic_script ${CMAKE_CURRENT_LIST_DIR}/kf5i18nuic.cmake)
++set(KI18N_CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}" CACHE INTERNAL "")
+ 
+ #create the implementation files from the ui files and add them to the list of sources
+ #usage: KI18N_WRAP_UI(foo_SRCS ${ui_files})
+@@ -50,7 +49,7 @@ macro (KI18N_WRAP_UI _sources )
+          -DKDE_UIC_FILE:FILEPATH=${_tmp_FILE}
+          -DKDE_UIC_H_FILE:FILEPATH=${_header}
+          -DKDE_UIC_BASENAME:STRING=${_basename}
+-         -P ${_ki18n_uic_script}
++         -P ${KI18N_CMAKE_DIR}/kf5i18nuic.cmake
+          MAIN_DEPENDENCY ${_tmp_FILE}
+       )
+       list(APPEND ${_sources} ${_header})
+@@ -109,16 +108,16 @@ function(KI18N_INSTALL podir)
+                 -DGETTEXT_MSGFMT_EXECUTABLE=${GETTEXT_MSGFMT_EXECUTABLE}
+                 -DCOPY_TO=${CMAKE_CURRENT_BINARY_DIR}/${dirname}
+                 -DPO_DIR=${absolute_podir}
+-                -P ${KF5I18n_DIR}/build-pofiles.cmake
++                -P ${KI18N_CMAKE_DIR}/build-pofiles.cmake
+     )
+     add_custom_target(tsfiles-${pathmd5} ALL
+         COMMENT "Generating ts..."
+         COMMAND ${CMAKE_COMMAND}
+                 -DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+-                -D_ki18n_pmap_compile_script=${_ki18n_pmap_compile_script}
++                -D_ki18n_pmap_compile_script=${KI18N_CMAKE_DIR}/ts-pmap-compile.py
+                 -DCOPY_TO=${CMAKE_CURRENT_BINARY_DIR}/${dirname}
+                 -DPO_DIR=${absolute_podir}
+-                -P ${KF5I18n_DIR}/build-tsfiles.cmake
++                -P ${KI18N_CMAKE_DIR}/build-tsfiles.cmake
+     )
+ 
+     if (NOT TARGET pofiles)
+@@ -159,7 +158,7 @@ function(KI18N_INSTALL_TS_FILES lang scripts_dir)
+                COMMAND ${PYTHON_EXECUTABLE}
+                ARGS
+                -B
+-               ${_ki18n_pmap_compile_script}
++               ${KI18N_CMAKE_DIR}/ts-pmap-compile.py
+                ${CMAKE_CURRENT_SOURCE_DIR}/${pmap_file}
+                ${pmapc_file}
+                DEPENDS ${pmap_file})
+diff --git a/cmake/build-tsfiles.cmake b/cmake/build-tsfiles.cmake
+index b65b5e8..7d03aca 100644
+--- a/cmake/build-tsfiles.cmake
++++ b/cmake/build-tsfiles.cmake
+@@ -46,14 +46,14 @@ foreach(pmap_file ${pmap_files})
+ 
+     message(STATUS "building... ${pmap_file} to ${pmapc_file}" )
+     execute_process(
+-        COMMAND ${PYTHON_EXECUTABLE}
++        COMMAND ${Python3_EXECUTABLE}
+             -B
+             ${_ki18n_pmap_compile_script}
+             ${PO_DIR}/${pmap_file}
+             ${pmapc_file}
+             RESULT_VARIABLE code
+     )
+-    if(code)
++    if(NOT code STREQUAL "Success")
+         message(FATAL_ERROR "failed at creating ${pmap_file}...")
+     endif()
+ endforeach()

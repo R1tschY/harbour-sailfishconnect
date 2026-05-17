@@ -23,10 +23,6 @@ BuildRequires:  pkgconfig(keepalive)
 BuildRequires:  cmake
 BuildRequires:  ninja
 BuildRequires:  gettext
-BuildRequires:  python3-devel
-BuildRequires:  python3-base
-BuildRequires:  python3-setuptools
-BuildRequires:  python3-pip
 BuildRequires:  desktop-file-utils
 BuildRequires:  extra-cmake-modules
 # needed only for building dependencies
@@ -56,7 +52,7 @@ else
   GENERATOR="Ninja"
 fi
 
-if [ "$SAILFISH_SDK_FRONTEND" == "qtcreator" ] ; then  
+if [ "$SAILFISH_SDK_FRONTEND" == "qtcreator" ] ; then
   CMAKE_BUILD_TYPE="Debug"
 else
   CMAKE_BUILD_TYPE="RelWithDebInfo"
@@ -67,33 +63,10 @@ if [ -f "CMakeLists.txt" ] ; then
 else 
   BUILD_DIR="."
 fi
-export CONAN_USER_HOME=${SOURCE_DIR}
-
-# install virtualenv
-if [ ! -f ~/.local/bin/virtualenv ] ; then
-  python3 -m pip install --no-warn-script-location --user virtualenv
-fi
-
-# create virtualenv and install conan
-if [ ! -f "$VENV/bin/conan" ] ; then
-  ~/.local/bin/virtualenv --python=python3 "$VENV"
-  source "$VENV/bin/activate"
-else
-  source "$VENV/bin/activate"
-fi
-echo "cython<3" > /tmp/pip-constraint.txt
-PIP_CONSTRAINT=/tmp/pip-constraint.txt pip install conan===1.60.1
-
-# speed up conan remote add
-if ! grep -sq sailfishos "$CONAN_USER_HOME/.conan/remotes.json" ; then
-  conan remote add -f sailfishos https://gitlab.com/api/v4/projects/12208535/packages/conan
-fi
 
 mkdir -p "$BUILD_DIR"
 
 cd "$BUILD_DIR"
-conan install "$SOURCE_DIR" --build=missing --profile:build="$SOURCE_DIR/dev/profiles/%{_target_cpu}" --profile:host="$SOURCE_DIR/dev/profiles/%{_target_cpu}"
-conan remove -f "*" --builds --src --system-reqs
 
 cmake \
   -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \
@@ -102,7 +75,6 @@ cmake \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   -DCONAN_DISABLE_CHECK_COMPILER=ON \
   -DSAILFISHOS=ON \
-  -G "$GENERATOR" \
   "$SOURCE_DIR"
 
 cmake --build . -- %{?_smp_mflags}

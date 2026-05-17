@@ -1,0 +1,24 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d95a9e8b..eca18868 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,6 @@
+ cmake_minimum_required(VERSION 3.0)
++cmake_policy(SET CMP0071 OLD)
++cmake_policy(SET CMP0115 OLD)
+ 
+ set(KF5_VERSION "5.36.0") # handled by release scripts
+ project(KConfig VERSION ${KF5_VERSION})
+diff --git a/autotests/kconfig_compiler/CMakeLists.txt b/autotests/kconfig_compiler/CMakeLists.txt
+index 590c7700..a8c19332 100644
+--- a/autotests/kconfig_compiler/CMakeLists.txt
++++ b/autotests/kconfig_compiler/CMakeLists.txt
+@@ -10,7 +10,7 @@ endif()
+ # make sure the generated headers can be found
+ include_directories(${KCFG_OUTPUT_DIR})
+ 
+-include(${CMAKE_SOURCE_DIR}/KF5ConfigMacros.cmake)
++include(${PROJECT_SOURCE_DIR}/KF5ConfigMacros.cmake)
+ macro(GEN_KCFG_TEST_SOURCE _testName _srcs)
+    KCONFIG_ADD_KCFG_FILES(${_srcs} ${_testName}.kcfgc ${ARGN})
+ endmacro()

@@ -1,0 +1,13 @@
+diff --git a/autotests/CMakeLists.txt b/autotests/CMakeLists.txt
+index 28f40e28..5bd72b8c 100644
+--- a/autotests/CMakeLists.txt
++++ b/autotests/CMakeLists.txt
+@@ -55,7 +55,7 @@ if(NOT CMAKE_CROSSCOMPILING)
+     )
+ endif()
+ 
+-set(ktexttohtmltest_SRCS ktexttohtmltest.cpp ${CMAKE_SOURCE_DIR}/src/lib/text/ktexttohtml.cpp)
++set(ktexttohtmltest_SRCS ktexttohtmltest.cpp ${PROJECT_SOURCE_DIR}/src/lib/text/ktexttohtml.cpp)
+ ecm_add_test(${ktexttohtmltest_SRCS} TEST_NAME ktexttohtmltest LINK_LIBRARIES Qt5::Test)
+ # include the binary dir in order to get kcoreaddons_export.h
+ target_include_directories(ktexttohtmltest PRIVATE ${KCoreAddons_BINARY_DIR}/src/lib)

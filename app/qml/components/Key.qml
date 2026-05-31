@@ -16,6 +16,7 @@
  */
 
 import QtQuick 2.0
+import QtFeedback 5.0
 import Sailfish.Silica 1.0
 
 Rectangle {
@@ -51,6 +52,16 @@ Rectangle {
         text: label
     }
 
+    ThemeEffect {
+        id: pressFeedback
+        effect: "PressStrong"
+    }
+
+    ThemeEffect {
+        id: releaseFeedback
+        effect: "ReleaseStrong"
+    }
+
     Timer {
         id: timer
 
@@ -60,7 +71,7 @@ Rectangle {
 
         onTriggered: {
             if (keyboardLayout.feedback) {
-                keyboardLayout.pressFeedback()
+                pressFeedback.start()
             }
 
             parent.clicked()
@@ -73,7 +84,7 @@ Rectangle {
 
         onClicked: {
             if (keyboardLayout.feedback) {
-                keyboardLayout.pressFeedback()
+                pressFeedback.start()
             }
 
             parent.clicked()
@@ -85,7 +96,7 @@ Rectangle {
 
         onReleased: {
             if (keyboardLayout.feedback) {
-                keyboardLayout.releaseFeedback()
+                releaseFeedback.start()
             }
 
             timer.stop()

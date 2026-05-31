@@ -17,7 +17,6 @@ BuildRequires:  pkgconfig(Qt5Sql)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Test)
-BuildRequires:  pkgconfig(Qt5Feedback)
 BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  pkgconfig(keepalive)
 BuildRequires:  cmake
@@ -29,6 +28,8 @@ BuildRequires:  extra-cmake-modules
 BuildRequires:  git
 BuildRequires:  pkgconfig(Qt5Script)
 BuildRequires:  gettext-devel
+
+Requires: qt5-qtdeclarative-import-feedback
 
 %description
 SailfishOS client for KDE-Connect

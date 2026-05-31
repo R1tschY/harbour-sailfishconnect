@@ -112,7 +112,7 @@ include(ECMQtDeclareLoggingCategory)
 # KDE Connect
 add_subdirectory(kdeconnect-kde)
 
-find_package(Qt5 REQUIRED COMPONENTS Core DBus Network Gui Sql Quick Feedback)
+find_package(Qt5 REQUIRED COMPONENTS Core DBus Network Gui Sql Quick)
 find_package(KF5 REQUIRED COMPONENTS I18n CoreAddons Config)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)

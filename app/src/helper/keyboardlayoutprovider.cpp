@@ -24,7 +24,6 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QDebug>
-#include <QFeedbackEffect>
 #include <QRegularExpression>
 #include <QLoggingCategory>
 #include <QStringBuilder>
@@ -232,20 +231,6 @@ void KeyboardLayoutProvider::setFeedback(const bool &feedback)
     m_settings.endGroup();
 
     emit settingsChanged();
-}
-
-void KeyboardLayoutProvider::pressFeedback()
-{
-#ifndef BUILD_FOR_HARBOUR
-    QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::PressStrong);
-#endif
-}
-
-void KeyboardLayoutProvider::releaseFeedback()
-{
-#ifndef BUILD_FOR_HARBOUR
-    QFeedbackHapticsEffect::playThemeEffect(QFeedbackEffect::ReleaseStrong);
-#endif
 }
 
 void KeyboardLayoutProvider::loadNames()

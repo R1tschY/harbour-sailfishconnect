@@ -1,6 +1,8 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Mon Jun 01 2026 Richard Liebscher <r1tschy@posteo.de> 0.7.2-1
+- Fix installation on Sailfish OS 5.1.0 (#65)
 
 * Fri Aug 29 2025 Richard Liebscher <r1tschy@posteo.de> 0.7.1-1
 - Fix clipboard upload (#58)

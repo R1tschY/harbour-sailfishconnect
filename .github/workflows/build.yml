@@ -9,7 +9,7 @@ on:
       - '*'
 
 env:
-  SFOS_RELEASE: 4.5.0.18
+  SFOS_RELEASE: 5.0.0.62
 
 jobs:
   check:

@@ -29,8 +29,6 @@ BuildRequires:  git
 BuildRequires:  pkgconfig(Qt5Script)
 BuildRequires:  gettext-devel
 
-Requires: qt5-qtdeclarative-import-feedback
-
 %description
 SailfishOS client for KDE-Connect
 

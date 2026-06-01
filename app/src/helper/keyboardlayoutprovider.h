@@ -57,9 +57,6 @@ public:
     bool feedback() const;
     void setFeedback(const bool &feedback);
 
-    Q_INVOKABLE void pressFeedback();
-    Q_INVOKABLE void releaseFeedback();
-
 signals:
     void layoutChanged();
     void settingsChanged();

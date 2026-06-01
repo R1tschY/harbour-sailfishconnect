@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 cmake_policy(SET CMP0071 NEW)
-project(SailfishConnect VERSION 0.8.0 LANGUAGES C CXX)
+project(SailfishConnect VERSION ${PACKAGE_VERSION} LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(SAILFISHOS ON)

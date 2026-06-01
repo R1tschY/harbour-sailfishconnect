@@ -6,7 +6,10 @@ QString DBUS_SERVICE_NAME =
         QStringLiteral("org.harbour.SailfishConnect");
 
 QString PACKAGE_VERSION =
-        QStringLiteral("@SailfishConnect_VERSION@");
+        QStringLiteral("@PACKAGE_VERSION@");
+
+QString PACKAGE_RELEASE =
+        QStringLiteral("@PACKAGE_RELEASE@");
 
 QString PACKAGE_NAME =
         QStringLiteral("harbour-sailfishconnect");

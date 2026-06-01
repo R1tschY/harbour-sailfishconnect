@@ -71,7 +71,7 @@ Rectangle {
 
         onTriggered: {
             if (keyboardLayout.feedback) {
-                pressFeedback.start()
+                pressFeedback.play()
             }
 
             parent.clicked()
@@ -84,7 +84,7 @@ Rectangle {
 
         onClicked: {
             if (keyboardLayout.feedback) {
-                pressFeedback.start()
+                pressFeedback.play()
             }
 
             parent.clicked()
@@ -96,7 +96,7 @@ Rectangle {
 
         onReleased: {
             if (keyboardLayout.feedback) {
-                releaseFeedback.start()
+                releaseFeedback.play()
             }
 
             timer.stop()

@@ -40,7 +40,6 @@ SailfishOS client for KDE-Connect
 %build
 
 export TARGET_CPU="%{_target_cpu}"
-export SAILFISHCONNECT_PACKAGE_VERSION="%{version}-%{release}"
 
 SOURCE_DIR=`readlink -f %{_sourcedir}/..`
 
@@ -71,7 +70,9 @@ cmake \
   -DBUILD_SHARED_LIBS=OFF \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-  -DCPM_SOURCE_CACHE=.cpm-cache \
+  -DCPM_SOURCE_CACHE=$PWD/.cpm-cache \
+  -DPACKAGE_VERSION="%{version}" \
+  -DPACKAGE_RELEASE="%{release}" \
   -DSAILFISHOS=ON \
   "$SOURCE_DIR"
 

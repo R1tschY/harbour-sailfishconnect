@@ -33,6 +33,11 @@ extern QString DBUS_SERVICE_NAME;
 extern QString PACKAGE_VERSION;
 
 /**
+ * @brief package release
+ */
+extern QString PACKAGE_RELEASE;
+
+/**
  * @brief package name (normally "harbour-sailfishconnect")
  */
 extern QString PACKAGE_NAME;

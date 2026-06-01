@@ -41,7 +41,6 @@ SailfishOS client for KDE-Connect
 
 %build
 
-VENV=.venv-conan-%{_target_cpu}
 export TARGET_CPU="%{_target_cpu}"
 export SAILFISHCONNECT_PACKAGE_VERSION="%{version}-%{release}"
 
@@ -74,7 +73,7 @@ cmake \
   -DBUILD_SHARED_LIBS=OFF \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-  -DCONAN_DISABLE_CHECK_COMPILER=ON \
+  -DCPM_SOURCE_CACHE=.cpm-cache \
   -DSAILFISHOS=ON \
   "$SOURCE_DIR"
 

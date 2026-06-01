@@ -17,20 +17,6 @@
 .mypy_cache
 compile_commands.json
 
-# Conan
-conan.lock
-conanbuildinfo.pri
-conanbuildinfo.txt
-conanbuildinfo.cmake
-conaninfo.txt
-conan.lock
-graph_info.json
-.conan
-
-# Python
-__pycache__
-.venv*
-
 # RPM
 *.list
 /rpm/*.spec.*
@@ -39,3 +25,6 @@ __pycache__
 
 # Build dirs
 /build*
+
+# CMake
+.cpm-cache

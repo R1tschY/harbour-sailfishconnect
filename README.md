@@ -81,9 +81,8 @@ ConnectivityReport | :o: | Share connectivity report
 
 ## Contribute
 
-* Translations: https://www.transifex.com/r1tschy/sailfish-connect
+* Translations: [Transifex](https://explore.transifex.com/r1tschy/sailfish-connect/)
 * Code: You are welcome to make pull request in Github :wink:
-* Feedback: Join [#sailfishconnect:matrix.org](https://matrix.to/#/!EJKcWggfiRHMOiaQlz:matrix.org?via=matrix.org)
 
 ## Known Issues
 

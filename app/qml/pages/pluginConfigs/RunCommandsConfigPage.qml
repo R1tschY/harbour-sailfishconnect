@@ -43,7 +43,7 @@ Page {
         function reload() {
             clear()
 
-            var commands = JSON.parse(config.get("commands"))
+            var commands = JSON.parse(config.getString("commands", "{}"))
             for (var key in commands) {
                 if (!commands.hasOwnProperty(key))
                     continue;
@@ -103,7 +103,7 @@ Page {
 
     Connections {
         target: config
-        onConfigChanged: console.log("CHANGE!!!", config.get("commands"))
+        onConfigChanged: commandsModel.reload()
     }
 
     SilicaListView {

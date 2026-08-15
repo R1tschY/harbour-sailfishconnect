@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - '*'
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches:
       - '*'
@@ -16,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Check style
         run: python3 scripts/bad-style.py bad-style.xml
@@ -33,7 +35,7 @@ jobs:
       SFOS_ARCH: ${{ matrix.arch }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
 
@@ -56,3 +58,51 @@ jobs:
           name: sailfishconnect-${{ matrix.arch }}
           path: RPMS
           compression-level: 0
+
+  release:
+    permissions:
+      contents: write
+
+    runs-on: ubuntu-latest
+
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    needs: [build]
+    
+    steps:
+      - name: 'Get version'
+        id: version
+        run: |
+          REF="${{ github.ref }}"
+          version=${REF#refs/tags/v}
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "Version: $version"
+        shell: bash
+
+      - name: Download RPMs
+        uses: actions/download-artifact@v8
+        with:
+          path: RPMS
+          pattern: harbour-sailfishconnect-*
+          merge-multiple: true
+
+      - name: Find RPMs
+        id: rpms
+        run: |
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          find RPMS -name '*.rpm' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ steps.version.outputs.version }}
+          files: ${{ steps.rpms.outputs.files }}
+
+      - name: Upload to openrepos.net
+        uses: R1tschY/upload-to-openrepos@v1
+        with:
+          login: ${{ vars.OPENREPOS_LOGIN }}
+          password: ${{ secrets.OPENREPOS_PASSWORD }}
+          app-name: 'sailfish-connect'
+          rpms: ${{ steps.rpms.outputs.files }}

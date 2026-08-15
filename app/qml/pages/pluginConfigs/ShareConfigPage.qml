@@ -26,7 +26,7 @@ Page {
     allowedOrientations: Orientation.All
 
     property QtObject device
-    property QtObject config: device.getPluginConfig("sailfishconnect_share")
+    property QtObject config: device.getPluginConfig("Share")
 
     SilicaFlickable {
         anchors.fill: parent

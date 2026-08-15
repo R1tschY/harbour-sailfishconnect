@@ -46,17 +46,17 @@ Page {
                 id: downloadFolderField
                 width: parent.width
                 label: i18n("Folder to save files")
-                text: config.get("incoming_path")
+                text: config.getString("incoming_path", "")
 
                 onActiveFocusChanged: {
                     if (activeFocus)
                         return
 
                     if (text.length === 0) {
-                        text = config.get("incoming_path")
+                        text = config.getString("incoming_path", "")
                     } else {
                         config.set("incoming_path", text)
-                        placeholderText = config.get("incoming_path")
+                        placeholderText = config.getString("incoming_path", "")
                     }
                 }
 

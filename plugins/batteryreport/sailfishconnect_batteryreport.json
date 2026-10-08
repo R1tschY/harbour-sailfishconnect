@@ -8,11 +8,13 @@
             }
         ],
         "Description": "Share battery charge state",
+        "Description[de]": "Den Ladezustand des Akkus mit dem Computer teilen",
         "EnabledByDefault": true,
         "Icon": "preferences-system-power-management",
         "Id": "sailfishconnect_batteryreport",
         "License": "GPL",
         "Name": "Battery report",
+        "Name[de]": "Akkustatus",
         "ServiceTypes": [
             "KdeConnect/Plugin"
         ],

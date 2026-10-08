@@ -8,11 +8,13 @@
             }
         ],
         "Description": "Provide SFTP server",
+        "Description[de]": "Dateien des Smartphones per SFTP am Computer zugänglich machen",
         "EnabledByDefault": true,
         "Icon": null,
         "Id": "sailfishconnect_sftpserver",
         "License": "GPL",
         "Name": "SFTP Server",
+        "Name[de]": "SFTP-Server",
         "ServiceTypes": [
             "KdeConnect/Plugin"
         ],

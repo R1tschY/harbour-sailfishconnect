@@ -36,7 +36,7 @@ msgstr "%1ms Wiederholungsintervall"
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:73
 #, kde-format
 msgid "&percnt;1 in the path will be replaced with the specific device name."
-msgstr "&percnt;1 im Pfad wird durch Gerätenamen ersetzt"
+msgstr "&percnt;1 im Pfad wird durch den Gerätenamen ersetzt."
 
 #: app/qml/pages/AboutPage.qml:39
 #, kde-format
@@ -61,7 +61,7 @@ msgstr "Aktionen"
 #: app/qml/pages/SettingsPage.qml:128
 #, kde-format
 msgid "Add device from IP address"
-msgstr "Gerät von IP Adresse hinzufügen"
+msgstr "Gerät über IP-Adresse hinzufügen"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:163
 #, kde-format
@@ -76,7 +76,7 @@ msgstr "Die Anwendung startet beim Systemstart und läuft im Hintergrund."
 #: app/qml/pages/AboutPage.qml:87
 #, kde-format
 msgid "Bug reports on Github"
-msgstr "Fehlermeldungen auf Github"
+msgstr "Fehlermeldungen auf GitHub"
 
 #: app/qml/pages/DevicePage.qml:157
 #, kde-format
@@ -86,7 +86,7 @@ msgstr "Abbrechen"
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:57
 #, kde-format
 msgid "Change layout"
-msgstr "Tastatur ändern"
+msgstr "Tastaturlayout ändern"
 
 #: app/qml/pages/RemoteVolumePage.qml:38 app/qml/pages/DevicePage.qml:272
 #, kde-format
@@ -121,7 +121,7 @@ msgstr "Gerät nicht erreichbar"
 #: app/qml/pages/SettingsPage.qml:53
 #, kde-format
 msgid "Devices from IP address"
-msgstr "Geräte zur IP Adresse"
+msgstr "Geräte zur IP-Adresse"
 
 #: app/qml/pages/DevicePage.qml:182
 #, kde-format
@@ -157,17 +157,17 @@ msgstr "Lade herunter ..."
 #: app/qml/pages/SettingsPage.qml:76
 #, kde-format
 msgid "Edit"
-msgstr "Ändern"
+msgstr "Bearbeiten"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:114
 #, kde-format
 msgid "Edit commands"
-msgstr "Befehle ändern"
+msgstr "Befehle bearbeiten"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:42
 #, kde-format
 msgid "Edit share configuration"
-msgstr "Ändere Teileneinstellungen"
+msgstr "Einstellungen zum Teilen bearbeiten"
 
 #: app/qml/pages/EncryptionInfoPage.qml:42 app/qml/pages/DevicePage.qml:294
 #, kde-format
@@ -187,22 +187,22 @@ msgstr "Kopplung fehlgeschlagen. %1"
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:48
 #, kde-format
 msgid "Folder to save files"
-msgstr "Ordner in dem Dateien gespeichert werden"
+msgstr "Ordner, in dem Dateien gespeichert werden"
 
 #: app/qml/pages/TouchpadPage.qml:66
 #, kde-format
 msgid "Holding ..."
-msgstr "Haltend ..."
+msgstr "Halten ..."
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:47
 #, kde-format
 msgid "IP address"
-msgstr "IP Adresse"
+msgstr "IP-Adresse"
 
 #: app/qml/pages/AddCustomDeviceDialog.qml:46
 #, kde-format
 msgid "IPv4 or IPv6 address of device"
-msgstr "IPv4 oder IPv6 Adresse des Gerätes"
+msgstr "IPv4- oder IPv6-Adresse des Geräts"
 
 #: app/qml/pages/DeviceListPage.qml:58
 #, kde-format
@@ -216,7 +216,7 @@ msgstr ""
 #: app/qml/pages/AboutPage.qml:66
 #, kde-format
 msgid "KDE Connect client for Sailfish OS"
-msgstr "KDE Connect-Client für SailfishOS"
+msgstr "KDE-Connect-Client für Sailfish OS"
 
 #: app/qml/pages/KeyboardPage.qml:106
 #, kde-format
@@ -245,21 +245,17 @@ msgid ""
 "Tap for click\n"
 "Hold shortly for Drag'n'Drop\n"
 "Scroll on right side"
-msgstr ""
-"Bewege Finger auf Bildschirm\n"
-"Antippen zum Klicken\n"
-"Kurz halten für Drag'n'Drop\n"
-"Scrollen an rechter Seite"
+msgstr "Finger auf dem Bildschirm bewegen\nAntippen zum Klicken\nKurz halten für Drag'n'Drop\nAn der rechten Seite scrollen"
 
 #: app/qml/pages/TouchpadPage.qml:82
 #, kde-format
 msgid "Moving ..."
-msgstr "In Bewegung ..."
+msgstr "Bewegen ..."
 
 #: app/qml/components/MprisUi.qml:36
 #, kde-format
 msgid "Multimedia Controls"
-msgstr "Multimedia Steuerung"
+msgstr "Mediensteuerung"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:72
 #, kde-format
@@ -279,7 +275,7 @@ msgstr "Geräte in der Nähe"
 #: app/qml/pages/RemoteVolumePage.qml:110
 #, kde-format
 msgid "No audio sinks exist on other device"
-msgstr "Keine Audioquellen auf anderem Gerät vorhanden"
+msgstr "Keine Audioausgänge auf dem anderen Gerät vorhanden"
 
 #: app/qml/pages/pluginConfigs/RunCommandsConfigPage.qml:177
 #, kde-format
@@ -289,7 +285,7 @@ msgstr "Keine Befehle definiert"
 #: app/qml/pages/RemoteCommandsPage.qml:88
 #, kde-format
 msgid "No commands defined on other device"
-msgstr "Keine Befehle auf anderem Gerät vorhanden"
+msgstr "Auf dem anderen Gerät sind keine Befehle definiert"
 
 #: app/qml/pages/SettingsPage.qml:114
 #, kde-format
@@ -299,7 +295,7 @@ msgstr "Keine Geräte angegeben"
 #: app/qml/components/MprisUi.qml:196
 #, kde-format
 msgid "No remote players"
-msgstr "Keine entfernten Player"
+msgstr "Keine Mediaplayer auf dem anderen Gerät"
 
 #: app/qml/components/MprisUi.qml:94
 #, kde-format
@@ -309,12 +305,12 @@ msgstr "Keine Wiedergabe"
 #: app/qml/pages/DevicePluginsPage.qml:89
 #, kde-format
 msgid "Open configuration"
-msgstr " Konfiguration öffnen"
+msgstr "Konfiguration öffnen"
 
 #: app/qml/pages/DevicePluginsPage.qml:78
 #, kde-format
 msgid "Open configuration throught context menu"
-msgstr "Öffne Konfiguration über Kontextmenü"
+msgstr "Konfiguration über das Kontextmenü öffnen"
 
 #: app/qml/pages/DevicePage.qml:251
 #, kde-format
@@ -339,7 +335,7 @@ msgstr "Kopplungsanfrage"
 #: app/qml/pages/DeviceListPage.qml:148 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
-msgstr "Wartende Kopplungsanfrage ..."
+msgstr "Offene Kopplungsanfrage ..."
 
 #: app/qml/pages/DevicePage.qml:301
 #, kde-format
@@ -375,12 +371,12 @@ msgstr "Ablehnen"
 #: app/qml/pages/SettingsPage.qml:88
 #, kde-format
 msgid "Remove"
-msgstr "Löschen"
+msgstr "Entfernen"
 
 #: app/qml/pages/SettingsPage.qml:44
 #, kde-format
 msgid "Run as background service"
-msgstr "Als Hintergrundservice laufen lassen"
+msgstr "Als Hintergrunddienst ausführen"
 
 #: app/qml/pages/RemoteCommandsPage.qml:37 app/qml/pages/DevicePage.qml:265
 #, kde-format
@@ -395,7 +391,7 @@ msgstr "Sailfish Connect"
 #: app/qml/pages/TouchpadPage.qml:74
 #, kde-format
 msgid "Scrolling ..."
-msgstr "Scrollend ..."
+msgstr "Scrollen ..."
 
 #: app/qml/pages/DevicePluginsPage.qml:61
 #, kde-format
@@ -405,12 +401,12 @@ msgstr "Plugins auswählen"
 #: app/qml/pages/DevicePage.qml:229
 #, kde-format
 msgid "Select files to send"
-msgstr "Wähle zu sendende Datei"
+msgstr "Dateien zum Senden auswählen"
 
 #: app/qml/pages/DevicePage.qml:258
 #, kde-format
 msgid "Send clipboard text"
-msgstr "Text in Zwischenablage senden"
+msgstr "Text aus der Zwischenablage senden"
 
 #: app/qml/pages/DevicePage.qml:309
 #, kde-format
@@ -431,17 +427,17 @@ msgstr "Einstellungen"
 #: app/qml/pages/DevicePage.qml:221
 #, kde-format
 msgid "Share files"
-msgstr "Datei senden"
+msgstr "Dateien senden"
 
 #: app/qml/pages/pluginConfigs/AddCommandDialog.qml:79
 #, kde-format
 msgid "Shell command to execute"
-msgstr "auszuführender Shell-Befehl"
+msgstr "Auszuführender Shell-Befehl"
 
 #: app/qml/pages/AboutPage.qml:96
 #, kde-format
 msgid "Source code on Github"
-msgstr "Quellcode auf Github"
+msgstr "Quellcode auf GitHub"
 
 #: app/qml/pages/DevicePage.qml:108
 #, kde-format
@@ -456,12 +452,12 @@ msgstr "Touchpad"
 #: app/qml/pages/DeviceListPage.qml:163
 #, kde-format
 msgid "Unpair"
-msgstr "Koppelung auflösen"
+msgstr "Kopplung auflösen"
 
 #: app/qml/pages/DeviceListPage.qml:176
 #, kde-format
 msgid "Unpaired"
-msgstr "Koppelung aufgelöst"
+msgstr "Kopplung aufgelöst"
 
 #: app/src/helper/jobsnotificator.cpp:114
 #, kde-format
@@ -486,7 +482,7 @@ msgstr "Lade hoch ..."
 #: app/qml/pages/KeyboardChangeLayoutPage.qml:48
 #, kde-format
 msgid "Vibration feedback"
-msgstr "Vibration"
+msgstr "Vibrationsrückmeldung"
 
 #: app/qml/pages/DevicePage.qml:151
 #, kde-format

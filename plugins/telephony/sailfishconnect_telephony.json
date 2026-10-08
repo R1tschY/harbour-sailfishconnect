@@ -8,10 +8,12 @@
             }
         ],
         "Description": "Send notifications for incoming and missed calls",
+        "Description[de]": "Benachrichtigungen über eingehende und verpasste Anrufe senden",
         "EnabledByDefault": true,
         "Id": "sailfishconnect_telephony",
         "License": "GPLv3",
         "Name": "Call notifications",
+        "Name[de]": "Anrufbenachrichtigungen",
         "ServiceTypes": [
             "KdeConnect/Plugin"
         ],

@@ -182,7 +182,7 @@ msgstr "Ошибка %1"
 #: app/src/appdaemon.cpp:178
 #, kde-format
 msgid "Failed to pair. %1"
-msgstr "Спаривание не удалось. %1"
+msgstr "Сопряжение не удалось. %1"
 
 #: app/qml/pages/pluginConfigs/ShareConfigPage.qml:48
 #, kde-format
@@ -334,12 +334,12 @@ msgstr "Связанные устройства"
 #: app/src/appdaemon.cpp:66
 #, kde-format
 msgid "Pairing request"
-msgstr "Запрос на спаривание"
+msgstr "Запрос на сопряжение"
 
 #: app/qml/pages/DeviceListPage.qml:148 app/src/appdaemon.cpp:64
 #, kde-format
 msgid "Pending pairing request ..."
-msgstr "Ожидается запрос на спаривание ..."
+msgstr "Ожидается запрос на сопряжение ..."
 
 #: app/qml/pages/DevicePage.qml:301
 #, kde-format
@@ -491,4 +491,4 @@ msgstr "Виброотклик"
 #: app/qml/pages/DevicePage.qml:151
 #, kde-format
 msgid "Waiting for accepted pairing ..."
-msgstr "Ожидание подтверждения спаривания ..."
+msgstr "Ожидание подтверждения сопряжения ..."

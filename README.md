@@ -24,6 +24,9 @@
 ## Install
 
 * Openrepos: https://openrepos.net/content/r1tschy/sailfish-connect
+* Harpoon:
+
+  [![Add to Harpoon](add-to-harpoon.png)](https://github.com/JuhaniLehtimaeki/Harpoon)
 * Harbour: *in the future* (when app is stable)
 
 ## KDE Connect Clients

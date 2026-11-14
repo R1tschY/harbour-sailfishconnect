@@ -38,7 +38,9 @@ public:
         PairedRole,
         ReachableRole,
         IsPairRequestedByPeerRole,
-        IsPairRequestedRole
+        IsPairRequestedRole,
+        ShareSupportedRole,
+        ClipboardSupportedRole
     };
 
     explicit DeviceListModel(QObject *parent = nullptr);

@@ -9,6 +9,8 @@ Source0:    %{name}-%{version}.tar.bz2
 Source1:    CMakeLists.txt
 Source2:    %{_target_cpu}.profile
 Requires:   sailfishsilica-qt5 >= 0.10.9
+Requires:   nemo-qml-plugin-dbus-qt5
+Requires:   sailfishshare-components
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(openssl) >= 1.1.1 
 BuildRequires:  pkgconfig(Qt5Core)
@@ -106,4 +108,5 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}/locale
 %{_datadir}/%{name}/harbour-sailfishconnect.service
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/dbus-1/services/%{name}.%{name}.service
 %{_datadir}/icons/hicolor/*/apps/%{name}.png

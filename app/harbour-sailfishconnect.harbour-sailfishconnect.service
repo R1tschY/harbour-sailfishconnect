@@ -1,0 +1,5 @@
+# D-Bus activation for the share dialog; Name is <OrganizationName>.<ApplicationName>
+# from the desktop file. Started only when no instance owns that name yet.
+[D-BUS Service]
+Name=harbour-sailfishconnect.harbour-sailfishconnect
+Exec=/usr/bin/harbour-sailfishconnect

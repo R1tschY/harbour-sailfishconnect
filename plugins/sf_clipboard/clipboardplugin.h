@@ -38,6 +38,7 @@ public:
     void connected() override {}
     void receivePacket(const NetworkPacket &np) override;
     Q_SCRIPTABLE void pushClipboard();
+    Q_SCRIPTABLE void sendClipText(const QString &content);
 
 private:
     QClipboard* m_clipboard;

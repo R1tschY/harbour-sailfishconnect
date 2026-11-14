@@ -17,6 +17,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Sailfish.Share 1.0
 import Nemo.DBus 2.0
 import "pages"
 
@@ -32,6 +33,11 @@ ApplicationWindow
     readonly property string shareService:
         "harbour-sailfishconnect.harbour-sailfishconnect"
 
+    // Parses the share() D-Bus argument into a list of resources.
+    ShareAction {
+        id: shareActionParser
+    }
+
     // Share dialog receiver. The method name "sendto" and this object path
     // must match X-Share-Methods of the desktop file.
     DBusAdaptor {
@@ -42,34 +48,38 @@ ApplicationWindow
         iface: "org.sailfishos.share"
 
         function share(shareConfiguration) {
-            var filePath = localResourcePath(shareConfiguration.resources);
-            if (filePath === "") {
+            shareActionParser.loadConfiguration(shareConfiguration);
+            var filePaths = localResourcePaths(shareActionParser.resources);
+            if (filePaths.length === 0) {
                 console.warn("Share request contains no local file resource");
                 return;
             }
-            window.openSharePage(filePath);
+            window.openSharePage(filePaths);
         }
     }
 
-    function localResourcePath(resources) {
-        if (!resources || resources.length === 0)
-            return "";
+    function localResourcePaths(resources) {
+        var paths = [];
+        if (!resources)
+            return paths;
 
-        // Single files only: bare path strings, maps with a filePath key,
-        // or file:// URIs. Text or link resources are not supported (yet).
-        var resource = resources[0];
-        if (typeof resource !== "string")
-            resource = resource && resource.filePath
-                       ? resource.filePath.toString() : "";
-        if (resource.indexOf("file://") === 0)
-            resource = resource.substring(7);
-        if (resource.indexOf("/") !== 0)
-            return "";
+        // Files only: bare path strings, maps with a filePath key, or
+        // file:// URIs. Text or link resources are not supported (yet).
+        for (var i = 0; i < resources.length; ++i) {
+            var resource = resources[i];
+            if (typeof resource !== "string")
+                resource = resource && resource.filePath
+                           ? resource.filePath.toString() : "";
+            if (resource.indexOf("file://") === 0)
+                resource = resource.substring(7);
+            if (resource.indexOf("/") === 0)
+                paths.push(resource);
+        }
 
-        return resource;
+        return paths;
     }
 
-    function openSharePage(filePath) {
+    function openSharePage(filePaths) {
         if (typeof pageStack === "undefined")
             return; // happens when using QmlLive
 
@@ -78,6 +88,6 @@ ApplicationWindow
         ui.showMainWindow();
 
         pageStack.push(Qt.resolvedUrl("pages/ShareSendPage.qml"),
-                       { filePath: filePath });
+                       { filePaths: filePaths });
     }
 }

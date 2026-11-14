@@ -15,4 +15,4 @@ ApplicationName=harbour-sailfishconnect
 [X-Share Method sendto]
 Description=Send to paired device
 Capabilities=*
-SupportsMultipleFiles=no
+SupportsMultipleFiles=yes

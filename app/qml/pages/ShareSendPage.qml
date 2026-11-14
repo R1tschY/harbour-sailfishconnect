@@ -23,9 +23,15 @@ import SailfishConnect.Api 0.6
 Page {
     id: page
 
-    property string filePath
-    readonly property string fileName:
-        filePath.length > 0 ? filePath.split("/").pop() : ""
+    property var filePaths: []
+    readonly property string fileListText: {
+        if (filePaths.length === 0)
+            return ""
+        var firstName = filePaths[0].split("/").pop()
+        if (filePaths.length === 1)
+            return firstName
+        return i18n("%1 files", filePaths.length) + " (" + firstName + ")"
+    }
 
     allowedOrientations: Orientation.All
 
@@ -65,7 +71,7 @@ Page {
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
-                text: page.fileName
+                text: page.fileListText
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeSmall
                 truncationMode: TruncationMode.Fade
@@ -164,7 +170,8 @@ Page {
     }
 
     function sendToDevice(deviceId) {
-        console.log("Sending " + filePath + " to device " + deviceId)
+        console.log("Sending " + filePaths.length + " file(s) to device "
+                    + deviceId)
 
         var device = daemon.getDevice(deviceId)
         if (!device) {
@@ -173,9 +180,13 @@ Page {
             return;
         }
 
-        // file:// prefix is required: the Share plugin wraps the string in
-        // a QUrl and distinguishes local files by checking isLocalFile().
-        device.getShareApi().shareUrl("file://" + filePath)
+        // file:// prefixes are required: the Share plugin wraps each string
+        // in a QUrl and distinguishes local files by checking isLocalFile().
+        // shareUrls() transmits the files one by one on the wire.
+        var urls = []
+        for (var i = 0; i < filePaths.length; ++i)
+            urls.push("file://" + filePaths[i])
+        device.getShareApi().shareUrls(urls)
         pageStack.pop()
     }
 }

@@ -95,6 +95,10 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
         return device->isPairRequested();
     case ShareSupportedRole:
         return device->loadedPlugins().contains(QStringLiteral("Share"));
+    case ClipboardSupportedRole:
+        // The plugin id is derived from the C++ class name of the SFOS
+        // clipboard plugin (see PluginLoader), not from its json Id.
+        return device->loadedPlugins().contains(QStringLiteral("Clipboard"));
     }
 
     return QVariant();
@@ -111,6 +115,7 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
     roles.insert(IsPairRequestedByPeerRole, "isPairRequestedByPeer");
     roles.insert(IsPairRequestedRole, "isPairRequested");
     roles.insert(ShareSupportedRole, "shareSupported");
+    roles.insert(ClipboardSupportedRole, "clipboardSupported");
     return roles;
 }
 
@@ -182,7 +187,7 @@ void DeviceListModel::connectDevice(Device *device)
         deviceDataChanged(device, {ReachableRole});
     });
     connect(device, &Device::pluginsChanged, this, [=]{
-        deviceDataChanged(device, {ShareSupportedRole});
+        deviceDataChanged(device, {ShareSupportedRole, ClipboardSupportedRole});
     });
     connect(device, &Device::destroyed, this, [=]{
         //qCCritical(logger) << "device destroyed with id" << device->id();

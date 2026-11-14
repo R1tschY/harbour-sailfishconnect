@@ -15,6 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDBusConnection>
+#include <QDBusMessage>
+
 #include <dbusinterfaces.h>
 #include <core/kdeconnectpluginconfig.h>
 
@@ -191,6 +194,18 @@ public:
     }
 
     Q_SCRIPTABLE void pluginCall(const QString& plugin, const QString& method);
+
+    // Send arbitrary text to the device's clipboard (SFOS clipboard plugin).
+    Q_SCRIPTABLE void sendClipText(const QString& content) {
+        QDBusMessage msg = QDBusMessage::createMethodCall(
+            QStringLiteral("org.kde.kdeconnect"),
+            QStringLiteral("/modules/kdeconnect/devices/") % id()
+                % QStringLiteral("/sailfishconnect_clipboard"),
+            QStringLiteral("org.kde.kdeconnect.device.sailfishconnect_clipboard"),
+            QStringLiteral("sendClipText"));
+        msg << content;
+        checkForDbusError(QDBusConnection::sessionBus().asyncCall(msg));
+    }
 
 Q_SIGNALS:
     void pluginsChangedProxy();

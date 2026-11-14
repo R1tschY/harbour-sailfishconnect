@@ -53,8 +53,13 @@ void ClipboardPlugin::receivePacket(const NetworkPacket &np)
 
 void ClipboardPlugin::pushClipboard()
 {
+    sendClipText(m_clipboard->text());
+}
+
+void ClipboardPlugin::sendClipText(const QString &content)
+{
     m_updateTimestamp = QDateTime::currentDateTime().toMSecsSinceEpoch();
-    m_currentContent = m_clipboard->text();
+    m_currentContent = content;
 
     NetworkPacket np(PACKET_TYPE_CLIPBOARD, {
         {QStringLiteral("content"), m_currentContent},

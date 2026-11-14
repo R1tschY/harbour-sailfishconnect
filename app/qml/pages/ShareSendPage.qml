@@ -24,6 +24,11 @@ Page {
     id: page
 
     property var filePaths: []
+    property string text: ""
+    readonly property bool textMode: text !== ""
+    // Model role selecting devices able to receive this kind of content.
+    readonly property string capabilityRole:
+        textMode ? "clipboardSupported" : "shareSupported"
     readonly property string fileListText: {
         if (filePaths.length === 0)
             return ""
@@ -54,8 +59,13 @@ Page {
 
         ViewPlaceholder {
             enabled: connectedDevices.count === 0
-            text: i18n("No connected device that receives files was found. "
-                       + "Pair a device and enable file sharing on it.")
+            text: page.textMode
+                  ? i18n("No connected device with clipboard support was "
+                         + "found. Pair a device and enable clipboard "
+                         + "sharing on it.")
+                  : i18n("No connected device that receives files was "
+                         + "found. Pair a device and enable file sharing "
+                         + "on it.")
         }
 
         Column {
@@ -65,13 +75,15 @@ Page {
             spacing: Theme.paddingLarge
 
             PageHeader {
-                title: i18n("Send file")
+                title: page.textMode ? i18n("Send text") : i18n("Send file")
             }
 
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
-                text: page.fileListText
+                text: page.textMode
+                     ? page.text.split("\n")[0]
+                     : page.fileListText
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeSmall
                 truncationMode: TruncationMode.Fade
@@ -104,9 +116,9 @@ Page {
             }
 
             SortFilterModel {
-                id: shareCapableDevicesModel
+                id: capableDevicesModel
 
-                filterRole: "shareSupported"
+                filterRole: page.capabilityRole
                 filterValue: true
                 sourceModel: connectedDevicesModel
             }
@@ -116,7 +128,7 @@ Page {
                 width: page.width
                 itemHeight: Theme.itemSizeMedium
 
-                model: shareCapableDevicesModel
+                model: capableDevicesModel
                 delegate: deviceDelegate
             }
         }
@@ -170,9 +182,6 @@ Page {
     }
 
     function sendToDevice(deviceId) {
-        console.log("Sending " + filePaths.length + " file(s) to device "
-                    + deviceId)
-
         var device = daemon.getDevice(deviceId)
         if (!device) {
             console.warn("Sending to non-existing device "
@@ -180,13 +189,21 @@ Page {
             return;
         }
 
-        // file:// prefixes are required: the Share plugin wraps each string
-        // in a QUrl and distinguishes local files by checking isLocalFile().
-        // shareUrls() transmits the files one by one on the wire.
-        var urls = []
-        for (var i = 0; i < filePaths.length; ++i)
-            urls.push("file://" + filePaths[i])
-        device.getShareApi().shareUrls(urls)
+        if (page.textMode) {
+            console.log("Sending text to device " + deviceId)
+            device.sendClipText(page.text)
+        } else {
+            console.log("Sending " + filePaths.length + " file(s) to device "
+                        + deviceId)
+            // file:// prefixes are required: the Share plugin wraps each
+            // string in a QUrl and distinguishes local files by checking
+            // isLocalFile(). shareUrls() transmits the files one by one on
+            // the wire.
+            var urls = []
+            for (var i = 0; i < filePaths.length; ++i)
+                urls.push("file://" + filePaths[i])
+            device.getShareApi().shareUrls(urls)
+        }
         pageStack.pop()
     }
 }

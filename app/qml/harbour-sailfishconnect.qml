@@ -49,12 +49,18 @@ ApplicationWindow
 
         function share(shareConfiguration) {
             shareActionParser.loadConfiguration(shareConfiguration);
-            var filePaths = localResourcePaths(shareActionParser.resources);
-            if (filePaths.length === 0) {
-                console.warn("Share request contains no local file resource");
+            var resources = shareActionParser.resources;
+            var filePaths = localResourcePaths(resources);
+            if (filePaths.length > 0) {
+                window.openSharePage({ filePaths: filePaths, text: "" });
                 return;
             }
-            window.openSharePage(filePaths);
+            var text = textResource(resources);
+            if (text === "") {
+                console.warn("Share request contains no supported resource");
+                return;
+            }
+            window.openSharePage({ filePaths: [], text: text });
         }
     }
 
@@ -79,7 +85,33 @@ ApplicationWindow
         return paths;
     }
 
-    function openSharePage(filePaths) {
+    function textResource(resources) {
+        var texts = [];
+        if (!resources)
+            return "";
+
+        // Text shares arrive as maps with a data or status key, or as bare
+        // strings that are not paths or URIs.
+        for (var i = 0; i < resources.length; ++i) {
+            var resource = resources[i];
+            if (typeof resource === "string") {
+                if (resource.indexOf("/") !== 0
+                        && resource.indexOf("://") < 0)
+                    texts.push(resource);
+                continue;
+            }
+            if (!resource)
+                continue;
+            var content = resource.status ? resource.status.toString()
+                      : resource.data ? resource.data.toString() : "";
+            if (content !== "")
+                texts.push(content);
+        }
+
+        return texts.join("\n");
+    }
+
+    function openSharePage(payload) {
         if (typeof pageStack === "undefined")
             return; // happens when using QmlLive
 
@@ -87,7 +119,6 @@ ApplicationWindow
         window.activate();
         ui.showMainWindow();
 
-        pageStack.push(Qt.resolvedUrl("pages/ShareSendPage.qml"),
-                       { filePaths: filePaths });
+        pageStack.push(Qt.resolvedUrl("pages/ShareSendPage.qml"), payload);
     }
 }

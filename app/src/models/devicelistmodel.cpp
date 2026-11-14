@@ -93,6 +93,8 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const
         return device->isPairRequestedByPeer();
     case IsPairRequestedRole:
         return device->isPairRequested();
+    case ShareSupportedRole:
+        return device->loadedPlugins().contains(QStringLiteral("Share"));
     }
 
     return QVariant();
@@ -108,6 +110,7 @@ QHash<int, QByteArray> DeviceListModel::roleNames() const
     roles.insert(ReachableRole, "reachable");
     roles.insert(IsPairRequestedByPeerRole, "isPairRequestedByPeer");
     roles.insert(IsPairRequestedRole, "isPairRequested");
+    roles.insert(ShareSupportedRole, "shareSupported");
     return roles;
 }
 
@@ -177,6 +180,9 @@ void DeviceListModel::connectDevice(Device *device)
     });
     connect(device, &Device::reachableChanged, this, [=]{
         deviceDataChanged(device, {ReachableRole});
+    });
+    connect(device, &Device::pluginsChanged, this, [=]{
+        deviceDataChanged(device, {ShareSupportedRole});
     });
     connect(device, &Device::destroyed, this, [=]{
         //qCCritical(logger) << "device destroyed with id" << device->id();

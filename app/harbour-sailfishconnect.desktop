@@ -2,9 +2,17 @@
 Type=Application
 X-Nemo-Application-Type=silica-qt5
 X-Nemo-Single-Instance=yes
-Icon=harbour-sailfishconnect
+Icon=/usr/share/icons/hicolor/128x128/apps/harbour-sailfishconnect.png
 Exec=harbour-sailfishconnect
 Name=Sailfish Connect
+X-Share-Methods=sendto
 
 [X-Sailjail]
 Sandboxing=Disabled
+OrganizationName=harbour-sailfishconnect
+ApplicationName=harbour-sailfishconnect
+
+[X-Share Method sendto]
+Description=Send to paired device
+Capabilities=*
+SupportsMultipleFiles=no

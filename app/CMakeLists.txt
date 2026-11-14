@@ -105,6 +105,10 @@ install(FILES ${PACKAGE_NAME}.desktop
 install(FILES ${PACKAGE_NAME}.service
     DESTINATION share/${PACKAGE_NAME}
 )
+# D-Bus activation so the share dialog can start the app when it is closed.
+install(FILES ${PACKAGE_NAME}.${PACKAGE_NAME}.service
+    DESTINATION share/dbus-1/services
+)
 install(FILES icons/86x86/${PACKAGE_NAME}.png
     DESTINATION share/icons/hicolor/86x86/apps
 )

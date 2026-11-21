@@ -26,11 +26,14 @@
 #include <QQmlContext>
 #include <QQuickView>
 #include <QSettings>
+#include <QTimer>
 #include <KLocalizedContext>
 #include <notification.h>
 #include <sailfishapp.h>
 
 #include "appdaemon.h"
+#include <device.h>
+#include <kdeconnectplugin.h>
 #include "dbus/kdeconnect.h"
 #include "../../plugins/sf_mprisremote/albumartcache.h"
 #include "sailfishconnect-config.h"
@@ -56,6 +59,11 @@ UI::UI(bool daemonMode, QObject *parent)
     , m_keyboardLayoutProvider(new KeyboardLayoutProvider(this))
     , m_daemonMode(daemonMode)
 {
+    if (m_daemonMode) {
+        // The service must keep running without a window.
+        qGuiApp->setQuitOnLastWindowClosed(false);
+    }
+
     m_settings.beginGroup(QStringLiteral("UI"));
 
     auto sessionBus = QDBusConnection::sessionBus();
@@ -96,6 +104,59 @@ void UI::showMainWindow()
     m_view->rootContext()->setContextProperty(QStringLiteral("keyboardLayout"), m_keyboardLayoutProvider);
     m_view->setSource(SailfishApp::pathToMainQml());
     m_view->showFullScreen();
+}
+
+void UI::showFindPhone(const QString &deviceId)
+{
+    showMainWindow();
+
+    // Let the QML view load before opening the page.
+    QTimer::singleShot(0, this, [this, deviceId]() {
+        emit findPhoneRinging(deviceId);
+    });
+}
+
+void UI::hideFindPhone(const QString &deviceId)
+{
+    QTimer::singleShot(0, this, [this, deviceId]() {
+        emit findPhoneStopped(deviceId);
+    });
+}
+
+void UI::stopFindPhone(const QString &deviceId)
+{
+    Device *device = m_daemon->getDevice(deviceId);
+    if (!device) {
+        return;
+    }
+
+    // The core stores plugins under the short name of the plugin class.
+    KdeConnectPlugin *plugin = device->plugin(QStringLiteral("FindThisDevice"));
+    if (!plugin) {
+        qCWarning(logger) << "find this device plugin not found for" << deviceId;
+        return;
+    }
+
+    qCDebug(logger) << "stopping ringtone of" << deviceId;
+    QMetaObject::invokeMethod(plugin, "stopRinging", Qt::DirectConnection);
+}
+
+bool UI::isFindPhoneRinging(const QString &deviceId)
+{
+    Device *device = m_daemon->getDevice(deviceId);
+    if (!device) {
+        return false;
+    }
+
+    KdeConnectPlugin *plugin = device->plugin(QStringLiteral("FindThisDevice"));
+    if (!plugin) {
+        return false;
+    }
+
+    bool ringing = false;
+    QMetaObject::invokeMethod(plugin, "isRinging", Qt::DirectConnection,
+                              Q_RETURN_ARG(bool, ringing));
+    return ringing;
 }
 
 void UI::quit()
@@ -192,7 +253,9 @@ void UI::setRunInBackground(bool value)
     m_settings.setValue(QStringLiteral("runInBackground"), value);
     m_settings.sync();
 
-    qGuiApp->setQuitOnLastWindowClosed(!value);
+    if (!m_daemonMode) {
+        qGuiApp->setQuitOnLastWindowClosed(!value);
+    }
 
 #ifndef BUILD_FOR_HARBOUR
     QProcess* systemctl = new QProcess(this);
@@ -219,7 +282,7 @@ QVariant UI::openDevicePageDbusAction(const QString &deviceId)
 
 bool UI::eventFilter(QObject* watched, QEvent* event)
 {
-    if (event->type() == QEvent::Close && !m_runInBackground) {
+    if (event->type() == QEvent::Close && !m_daemonMode && !m_runInBackground) {
         quit();
     }
 

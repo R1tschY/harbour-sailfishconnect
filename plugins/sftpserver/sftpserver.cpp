@@ -1,530 +1,444 @@
-#include <argp.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/*
+ * Copyright 2021 Richard Liebscher <richard.liebscher@gmail.com>.
+ * Copyright 2026 Manuel FLURY <zx97@users.noreply.github.com>.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-#include <optional>
+#include "sftpserver.h"
+
+#include <QDebug>
+#include <QDir>
+#include <QFile>
+#include <QLoggingCategory>
+#include <QThread>
+
+#include <sys/socket.h>
+
 #include <vector>
 
-#include <QThread>
-#include <QDebug>
-#include <libssh/callbacks.h>
-#include <libssh/libssh.h>
-#include <libssh/server.h>
-#include <libssh/sftp.h>
+#include "sftpservercommands.h"
+#include "ssh.h"
 
-#include <sftpservercommands.h>
+Q_LOGGING_CATEGORY(logger, "kdeconnect.plugin.sftpserver")
 
-#define KEYS_FOLDER "/home/richard/tmp/"
+namespace {
 
+constexpr int minPort = 40000;
+constexpr int maxPort = 59999;
+constexpr int maxPortTries = 40;
+constexpr int maxPasswordTries = 3;
 
-class SshServer {
+QByteArray randomBytes(int count)
+{
+    QFile urandom(QStringLiteral("/dev/urandom"));
+    if (urandom.open(QIODevice::ReadOnly)) {
+        const QByteArray bytes = urandom.read(count);
+        if (bytes.size() == count) {
+            return bytes;
+        }
+    }
+
+    // /dev/urandom is always available on Sailfish OS. This is only a
+    // last-resort fallback that should never be reached.
+    QByteArray bytes(count, 0);
+    for (int i = 0; i < count; ++i) {
+        bytes[i] = static_cast<char>(qrand() & 0xff);
+    }
+    return bytes;
+}
+
+QString createPassword()
+{
+    static const char alphabet[] =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    const int alphabetSize = static_cast<int>(sizeof(alphabet)) - 1;
+    const QByteArray bytes = randomBytes(32);
+
+    QString password;
+    password.reserve(bytes.size());
+    for (int i = 0; i < bytes.size(); ++i) {
+        const int index = static_cast<unsigned char>(bytes.at(i)) % alphabetSize;
+        password.append(QLatin1Char(alphabet[index]));
+    }
+    return password;
+}
+
+quint16 createPort()
+{
+    const QByteArray bytes = randomBytes(2);
+    const quint32 value = (static_cast<quint32>(
+                               static_cast<unsigned char>(bytes.at(0)))
+                           << 8)
+        | static_cast<unsigned char>(bytes.at(1));
+    return static_cast<quint16>(minPort + value % (maxPort - minPort + 1));
+}
+
+} // namespace
+
+/// Serves one accepted TCP connection: key exchange, password authentication,
+/// session channel and SFTP subsystem.
+class SftpConnectionThread : public QThread
+{
 public:
-    SshServer(const QString& user, const QString& password, int passwordTries)
-        : m_user(user)
-        , m_password(password)
-        , m_passwordTries(passwordTries)
+    SftpConnectionThread(SshSession session, QString rootPath, QString user,
+                         QString password)
+        : m_session(std::move(session))
+        , m_rootPath(std::move(rootPath))
+        , m_user(std::move(user))
+        , m_password(std::move(password))
     {
     }
 
-    int passwordTries() const
+    ~SftpConnectionThread() override
     {
-        return m_passwordTries;
-    }
+        // SFTP sessions keep pointers to their channel, so they have to go
+        // first.
+        m_sftpSessions.clear();
 
-    bool checkPassword(const char* user, const char* password) const
-    {
-        return m_user == QString::fromUtf8(user)
-                && m_password == QString::fromUtf8(password);
-    }
+        if (m_session.cPointer()) {
+            ssh_disconnect(m_session.cPointer());
+        }
 
-private:
-    QString m_user;
-    QString m_password;
-    int m_passwordTries;
-};
-
-class SftpServerChannel {
-public:
-    SftpServerChannel(SshChannelPtr channel)
-        : m_channel(std::move(channel))
-        , m_sftpSession()
-    {
-    }
-
-    void createSftpSession(SshSession& session)
-    {
-        Q_ASSERT(!m_sftpSession.has_value());
-        printf("createSftpSession");
-        m_sftpSession.emplace(sftp_server_new(session.cPointer(), m_channel.get()));
-        Q_ASSERT(m_sftpSession.has_value());
-    }
-
-    ssh_channel getChannelPtr() const { return m_channel.get(); }
-    bool hasSftpSession() const { return m_sftpSession.has_value(); }
-
-    int initSftpSession()
-    {
-        Q_ASSERT(m_sftpSession.has_value());
-        m_inited = true;
-        return m_sftpSession.value().init();
-    }
-
-    bool readMessage()
-    {
-        if (!m_inited)
-            initSftpSession();
-        return m_sftpSession.value().readMessage();
-    }
-
-private:
-    SshChannelPtr m_channel;
-    std::optional<SftpServerSession> m_sftpSession;
-    bool m_inited = false;
-};
-
-class SshServerSession {
-public:
-    SshServerSession(SshSession session, SshServer* server);
-
-    ~SshServerSession()
-    {
-        ssh_disconnect(m_session.cPointer());
-    }
-
-    void disconnect()
-    {
-        ssh_disconnect(m_session.cPointer());
-        m_connected = false;
-    }
-
-    bool connected()
-    {
-        return m_connected;
-    }
-
-    ssh_session sshSession() const
-    {
-        return m_session.cPointer();
-    }
-
-    bool hasSftpChannel() const
-    {
-        return m_channels.size() > 0 && m_channels.front().hasSftpSession();
-    }
-
-    int getChannelIndex(ssh_channel channel) const;
-
-    int authorizeWithPassword(const char* user, const char* password);
-    void startSftpSession(ssh_channel channel);
-    ssh_channel createChannel();
-    void closeChannel(ssh_channel channel);
-
-private:
-    friend class SshFsThread;
-
-    SshSession m_session;
-    ssh_server_callbacks_struct m_cb = {};
-    ssh_callbacks_struct m_callbacks = {};
-
-    std::vector<SftpServerChannel> m_channels;
-    ssh_channel_callbacks_struct m_channel_cb = {};
-
-    SshServer* m_server = nullptr;
-
-    int m_leftTries = 3;
-    bool m_connected = true;
-    bool m_authenticated = false;
-};
-
-class SshFsThread : public QThread {
-public:
-    SshFsThread(SshSession session, SshServer* server, QObject* parent = nullptr)
-        : QThread(parent)
-        , m_session(std::move(session), std::move(server))
-    {
+        for (ssh_channel channel : m_channels) {
+            ssh_channel_free(channel);
+        }
     }
 
     void run() override;
 
 private:
-    SshServerSession m_session;
+    static ssh_channel openSessionChannel(ssh_session session, void *userdata);
+    static int authenticatePassword(ssh_session session, const char *user,
+                                    const char *password, void *userdata);
+    static int requestSubsystem(ssh_session session, ssh_channel channel,
+                                const char *subsystem, void *userdata);
+    static void closeChannel(ssh_session session, ssh_channel channel,
+                             void *userdata);
+
+    void startSftpSession(ssh_channel channel);
+
+    SshSession m_session;
+    QString m_rootPath;
+    QString m_user;
+    QString m_password;
+
+    ssh_server_callbacks_struct m_serverCallbacks = {};
+    ssh_channel_callbacks_struct m_channelCallbacks = {};
+
+    std::vector<ssh_channel> m_channels;
+    std::vector<std::unique_ptr<SftpServerSession>> m_sftpSessions;
+
+    int m_remainingTries = maxPasswordTries;
+    bool m_authenticated = false;
 };
 
-void SshFsThread::run()
+void SftpConnectionThread::run()
 {
-    printf("ssh_handle_key_exchange\n");
-    if (ssh_handle_key_exchange(m_session.sshSession())) {
-        printf("ssh_handle_key_exchange: %s\n", ssh_get_error(m_session.sshSession()));
+    ssh_session session = m_session.cPointer();
+    if (!session) {
         return;
     }
-    printf("ssh_set_auth_methods\n");
-    ssh_set_auth_methods(m_session.sshSession(), SSH_AUTH_METHOD_PASSWORD);
-    ssh_event mainloop = ssh_event_new();
-    printf("ssh_event_add_session\n");
-    ssh_event_add_session(mainloop, m_session.sshSession());
 
-    while (!m_session.hasSftpChannel()) {
-        printf("POLL\n");
-        int r = ssh_event_dopoll(mainloop, -1);
-        if (r == SSH_ERROR) {
-            printf("Error : %s\n", ssh_get_error(m_session.sshSession()));
-            return;
+    m_serverCallbacks.userdata = this;
+    m_serverCallbacks.auth_password_function = &SftpConnectionThread::authenticatePassword;
+    m_serverCallbacks.channel_open_request_session_function =
+        &SftpConnectionThread::openSessionChannel;
+    ssh_callbacks_init(&m_serverCallbacks);
+    if (ssh_set_server_callbacks(session, &m_serverCallbacks) != SSH_OK) {
+        qCWarning(logger) << "Cannot install SSH server callbacks:"
+                          << ssh_get_error(session);
+        return;
+    }
+
+    m_channelCallbacks.userdata = this;
+    m_channelCallbacks.channel_subsystem_request_function =
+        &SftpConnectionThread::requestSubsystem;
+    m_channelCallbacks.channel_close_function = &SftpConnectionThread::closeChannel;
+    m_channelCallbacks.channel_eof_function = &SftpConnectionThread::closeChannel;
+    ssh_callbacks_init(&m_channelCallbacks);
+
+    if (ssh_handle_key_exchange(session) != SSH_OK) {
+        qCWarning(logger) << "SSH key exchange failed:" << ssh_get_error(session);
+        return;
+    }
+
+    ssh_set_auth_methods(session, SSH_AUTH_METHOD_PASSWORD);
+
+    ssh_event event = ssh_event_new();
+    if (!event) {
+        qCWarning(logger) << "Cannot allocate SSH event loop";
+        return;
+    }
+    ssh_event_add_session(event, session);
+
+    // Wait until the client authenticated and opened the SFTP subsystem.
+    while (m_sftpSessions.empty() && !isInterruptionRequested()) {
+        int rc = ssh_event_dopoll(event, 1000);
+        if (rc == SSH_ERROR) {
+            qCWarning(logger) << "SSH event loop failed:" << ssh_get_error(session);
+            break;
         }
-        if (isInterruptionRequested()) {
-            printf("Thread interrupted\n");
-            return;
-        }
-        if (!m_session.connected()) {
-            printf("Error, exiting loop\n");
+    }
+    ssh_event_free(event);
+
+    if (m_sftpSessions.empty()) {
+        return;
+    }
+
+    for (auto &sftpSession : m_sftpSessions) {
+        if (sftpSession->init() != 0) {
+            qCWarning(logger) << "Cannot initialize SFTP session:"
+                              << ssh_get_error(session);
             return;
         }
     }
 
-    printf("Got everything to start: %ld\n", m_session.m_channels.size());
-    for (auto& channel : m_session.m_channels) {
-        int res = channel.initSftpSession();
-        if (res < 0) {
-            printf("Error sftp_server_init\n");
-            return;
-        }
-    }
-
-    std::vector<ssh_channel> read_channels;
-    std::vector<ssh_channel> except_channels;
-    timeval timeout = {
-        .tv_sec = 5,
-        .tv_usec = 0,
-    };
-    sftp_client_message msg;
     while (!isInterruptionRequested()) {
-        for (auto& channel : m_session.m_channels) {
-            bool res = channel.readMessage();
-            if (!res)
-                return;
+        bool alive = true;
+        for (auto &sftpSession : m_sftpSessions) {
+            alive = sftpSession->readMessage() && alive;
         }
-
-        // read_channels.clear();
-        // except_channels.clear();
-        // for (auto& channel : m_session.m_channels) {
-        //     read_channels.push_back(channel.getChannelPtr());
-        //     except_channels.push_back(channel.getChannelPtr());
-        // }
-        // read_channels.push_back(nullptr);
-        // except_channels.push_back(nullptr);
-
-        // int res = ssh_channel_select(
-        //     read_channels.data(), nullptr, except_channels.data(), &timeout);
-        // printf("select\n");
-        // if (res == SSH_OK) {
-        //     for (auto iter = read_channels.data(); *iter != nullptr; ++iter) {
-        //         printf("read channel %p\n", *iter);
-        //         int index = m_session.getChannelIndex(*iter);
-        //         if (index < 0) continue;
-        //         m_session.m_channels[index].readMessage();
-        //     }
-        //     for (auto iter = except_channels.data(); *iter != nullptr; ++iter) {
-        //         int index = m_session.getChannelIndex(*iter);
-        //         if (index < 0) continue;
-        //         m_session.m_channels[index].readMessage();
-        //     }
-        // } else if (res == SSH_EINTR) {
-        //     printf("SSH_EINTR");
-        //     continue;
-        // } else {
-        //     printf("Error ssh_channel_select: %s", m_session.m_session.errorString());
-        //     return;
-        // }
+        if (!alive) {
+            break;
+        }
     }
 }
 
-static ssh_channel new_session_channel(ssh_session session, void* userdata)
+ssh_channel SftpConnectionThread::openSessionChannel(ssh_session session, void *userdata)
 {
-    Q_UNUSED(session);
-    Q_ASSERT(userdata != nullptr);
-    return reinterpret_cast<SshServerSession*>(userdata)->createChannel();
-}
-
-ssh_channel SshServerSession::createChannel()
-{
-    printf("Allocated session channel\n");
-    ssh_channel channel = ssh_channel_new(m_session.cPointer());
-    m_channels.emplace_back(SshChannelPtr(channel));
-    ssh_set_channel_callbacks(channel, &m_channel_cb);
+    auto *self = static_cast<SftpConnectionThread *>(userdata);
+    ssh_channel channel = ssh_channel_new(session);
+    if (!channel) {
+        return nullptr;
+    }
+    if (ssh_set_channel_callbacks(channel, &self->m_channelCallbacks) != SSH_OK) {
+        ssh_channel_free(channel);
+        return nullptr;
+    }
+    self->m_channels.push_back(channel);
     return channel;
 }
 
-static int auth_password(ssh_session session, const char* user,
-    const char* password, void* userdata)
+int SftpConnectionThread::authenticatePassword(ssh_session, const char *user,
+                                               const char *password, void *userdata)
 {
-    Q_ASSERT(userdata != nullptr);
-    return reinterpret_cast<SshServerSession*>(userdata)->authorizeWithPassword(user, password);
-}
+    auto *self = static_cast<SftpConnectionThread *>(userdata);
 
-int SshServerSession::authorizeWithPassword(const char* user, const char* password)
-{
-    printf("Authenticating user %s pwd %s\n", user, password);
-    if (m_server->checkPassword(user, password)) {
-        m_authenticated = true;
-        printf("Authenticated\n");
+    const QByteArray expectedUser = self->m_user.toUtf8();
+    const QByteArray expectedPassword = self->m_password.toUtf8();
+    if (qstrcmp(user, expectedUser.constData()) == 0
+        && qstrcmp(password, expectedPassword.constData()) == 0) {
+        self->m_authenticated = true;
         return SSH_AUTH_SUCCESS;
     }
-    m_leftTries -= 1;
-    if (m_leftTries == 0) {
-        printf("Too many authentication tries\n");
-        disconnect();
+
+    self->m_remainingTries -= 1;
+    if (self->m_remainingTries <= 0) {
+        qCWarning(logger) << "Too many failed authentication attempts, disconnecting";
         return SSH_AUTH_DENIED;
     }
     return SSH_AUTH_DENIED;
 }
 
-static int subsystem_request(
-    ssh_session session,
-    ssh_channel channel,
-    const char* subsystem,
-    void* userdata)
+int SftpConnectionThread::requestSubsystem(ssh_session, ssh_channel channel,
+                                           const char *subsystem, void *userdata)
 {
-    printf("Subsystem request %s\n", subsystem);
-
-    if (strcmp(subsystem, "sftp") == 0) {
-        reinterpret_cast<SshServerSession*>(userdata)->startSftpSession(channel);
-        printf("Start SFTP\n");
-        return SSH_OK;
+    if (qstrcmp(subsystem, "sftp") != 0) {
+        qCWarning(logger) << "Unsupported SSH subsystem requested:" << subsystem;
+        return SSH_ERROR;
     }
 
+    auto *self = static_cast<SftpConnectionThread *>(userdata);
+    self->startSftpSession(channel);
     return SSH_OK;
 }
 
-static void close_channel(
-    ssh_session session,
-    ssh_channel channel,
-    void* userdata)
+void SftpConnectionThread::closeChannel(ssh_session, ssh_channel channel,
+                                        void *userdata)
 {
-    auto* self = reinterpret_cast<SshServerSession*>(userdata);
-    Q_ASSERT(self != nullptr);
-    self->closeChannel(channel);
+    Q_UNUSED(channel)
+
+    auto *self = static_cast<SftpConnectionThread *>(userdata);
+    qCDebug(logger) << "SSH channel closed, session" << self;
+    // The channel stays in m_channels and is freed with the thread: the SFTP
+    // session keeps using the handle until sftp_get_client_message() reports
+    // the disconnection.
 }
 
-static void logSession(ssh_session session, int priority,
-    const char* message, void* userdata)
+void SftpConnectionThread::startSftpSession(ssh_channel channel)
 {
-    qDebug() << priority << message;
-    printf("%d %s", priority, message);
-}
-
-SshServerSession::SshServerSession(SshSession session, SshServer* server)
-    : m_session(std::move(session))
-    , m_server(server)
-    , m_leftTries(server->passwordTries())
-{
-    printf("new_session_channel\n");
-
-    m_cb.userdata = this;
-    m_cb.auth_password_function = auth_password;
-    m_cb.channel_open_request_session_function = new_session_channel;
-    ssh_callbacks_init(&m_cb);
-    ssh_set_server_callbacks(m_session.cPointer(), &m_cb);
-
-    m_callbacks.userdata = this;
-    m_callbacks.log_function = logSession;
-    ssh_callbacks_init(&m_callbacks);
-
-    m_channel_cb.userdata = this;
-    m_channel_cb.channel_subsystem_request_function = subsystem_request;
-    m_channel_cb.channel_close_function = close_channel;
-    m_channel_cb.channel_eof_function = close_channel;
-    ssh_callbacks_init(&m_channel_cb);
-
-    bool config = false;
-    ssh_options_set(m_session.cPointer(), SSH_OPTIONS_COMPRESSION, "yes");
-    ssh_options_set(m_session.cPointer(), SSH_OPTIONS_PROCESS_CONFIG, &config);
-    ssh_options_set(m_session.cPointer(), SSH_OPTIONS_LOG_VERBOSITY_STR, "4");
-}
-
-void SshServerSession::closeChannel(ssh_channel channel)
-{
-    printf("Channel closed by remote\n");
-    int index = getChannelIndex(channel);
-    Q_ASSERT(index >= 0);
-    m_channels.erase(m_channels.begin() + index);
-}
-
-void SshServerSession::startSftpSession(ssh_channel channel)
-{
-    int index = getChannelIndex(channel);
-    Q_ASSERT(index >= 0);
-
-    m_channels[index].createSftpSession(m_session);
-}
-
-int SshServerSession::getChannelIndex(ssh_channel channel) const
-{
-    auto iter = std::find_if(
-        m_channels.begin(), m_channels.end(),
-        [=](auto& ch) { return ch.getChannelPtr() == channel; });
-    if (iter != m_channels.end()) {
-        return static_cast<int>(std::distance(m_channels.begin(), iter));
-    }
-    return -1;
-}
-
-const char* argp_program_version = "libssh server example " SSH_STRINGIFY(LIBSSH_VERSION);
-const char* argp_program_bug_address = "<libssh@libssh.org>";
-
-/* Program documentation. */
-static char doc[] = "libssh -- a Secure Shell protocol implementation";
-
-/* A description of the arguments we accept. */
-static char args_doc[] = "BINDADDR";
-
-/* The options we understand. */
-static struct argp_option options[] = {
-    { .name = "port",
-        .key = 'p',
-        .arg = "PORT",
-        .flags = 0,
-        .doc = "Set the port to bind",
-        .group = 0 },
-    { .name = "hostkey",
-        .key = 'k',
-        .arg = "FILE",
-        .flags = 0,
-        .doc = "Set the host key",
-        .group = 0 },
-    { .name = "dsakey",
-        .key = 'd',
-        .arg = "FILE",
-        .flags = 0,
-        .doc = "Set the dsa key",
-        .group = 0 },
-    { .name = "rsakey",
-        .key = 'r',
-        .arg = "FILE",
-        .flags = 0,
-        .doc = "Set the rsa key",
-        .group = 0 },
-    { .name = "verbose",
-        .key = 'v',
-        .arg = nullptr,
-        .flags = 0,
-        .doc = "Get verbose output",
-        .group = 0 },
-    { nullptr, 0, nullptr, 0, nullptr, 0 }
-};
-
-/* Parse a single option. */
-static error_t parse_opt(int key, char* arg, struct argp_state* state)
-{
-    /* Get the input argument from argp_parse, which we
-     * know is a pointer to our arguments structure.
-     */
-    ssh_bind sshbind = reinterpret_cast<ssh_bind>(state->input);
-
-    switch (key) {
-    case 'p':
-        ssh_bind_options_set(sshbind, SSH_BIND_OPTIONS_BINDPORT_STR, arg);
-        break;
-    case 'd':
-        ssh_bind_options_set(sshbind, SSH_BIND_OPTIONS_DSAKEY, arg);
-        break;
-    case 'k':
-        ssh_bind_options_set(sshbind, SSH_BIND_OPTIONS_HOSTKEY, arg);
-        break;
-    case 'r':
-        ssh_bind_options_set(sshbind, SSH_BIND_OPTIONS_RSAKEY, arg);
-        break;
-    case 'v':
-        ssh_bind_options_set(sshbind, SSH_BIND_OPTIONS_LOG_VERBOSITY_STR, "3");
-        break;
-    case ARGP_KEY_ARG:
-        if (state->arg_num >= 1) {
-            /* Too many arguments. */
-            argp_usage(state);
-        }
-        ssh_bind_options_set(sshbind, SSH_BIND_OPTIONS_BINDADDR, arg);
-        break;
-    case ARGP_KEY_END:
-        if (state->arg_num < 1) {
-            /* Not enough arguments. */
-            argp_usage(state);
-        }
-        break;
-    default:
-        return ARGP_ERR_UNKNOWN;
+    sftp_session sftp = sftp_server_new(m_session.cPointer(), channel);
+    if (!sftp) {
+        qCWarning(logger) << "Cannot create SFTP server session";
+        return;
     }
 
-    return 0;
+    m_sftpSessions.emplace_back(std::make_unique<SftpServerSession>(sftp, m_rootPath));
 }
 
-/* Our argp parser. */
-static struct argp argp = { options, parse_opt, args_doc, doc, nullptr, nullptr, nullptr };
-
-class SshEventQueue {
+/// Accepts incoming TCP connections and hands each one to a session thread.
+class SftpServer::AcceptThread : public QThread
+{
 public:
-    SshEventQueue()
-        : m_eventqueue(ssh_event_new())
+    AcceptThread(SshBind bind, ssh_key hostKey, QString rootPath, QString user,
+                 QString password)
+        : m_bind(std::move(bind))
+        , m_hostKey(hostKey)
+        , m_rootPath(std::move(rootPath))
+        , m_user(std::move(user))
+        , m_password(std::move(password))
     {
     }
-    ~SshEventQueue() { ssh_event_free(m_eventqueue); }
 
-    bool run(int timeout)
+    ~AcceptThread() override
     {
-        int rc = SSH_OK;
-        while (rc == SSH_OK) {
-            printf("POLL\n");
-            rc = ssh_event_dopoll(m_eventqueue, timeout);
+        if (m_hostKey) {
+            ssh_key_free(m_hostKey);
         }
-        return rc != SSH_ERROR;
     }
 
-private:
-    ssh_event m_eventqueue;
-    QString m_error;
-};
-
-int main(int argc, char** argv)
-{
-    printf("Debug: %d\n", __LINE__);
-    SshServer server(QStringLiteral("user"), QStringLiteral("password"), 3);
-    SshContext context;
-    printf("Debug: %d\n", __LINE__);
-    SshBind bind;
-    printf("Debug: %d\n", __LINE__);
-    //ssh_bind_options_set(sshbind, SSH_BIND_OPTIONS_ECDSAKEY, KEYS_FOLDER "ssh_host_ecdsa_key");
-    bind.setOption(SSH_BIND_OPTIONS_RSAKEY, KEYS_FOLDER "ssh_host_rsa_key");
-    int verbosity = SSH_LOG_TRACE;
-    bind.setOption(SSH_BIND_OPTIONS_LOG_VERBOSITY, &verbosity);
-    bool processConfig = false;
-    bind.setOption(SSH_BIND_OPTIONS_PROCESS_CONFIG, &processConfig);
-    // TODO: more options
-    printf("Debug: %d\n", __LINE__);
-    /*
-     * Parse our arguments; every option seen by parse_opt will
-     * be reflected in arguments.
-     */
-    argp_parse(&argp, argc, argv, 0, nullptr, bind.cPointer());
-    printf("Debug: %d\n", __LINE__);
-    if (bind.listen() < 0) {
-        printf("Error listening to socket: %s\n", bind.errorString());
-        return 1;
-    }
-    printf("Debug: %d\n", __LINE__);
+    void run() override
     {
-        std::vector<std::unique_ptr<SshFsThread>> clients;
-
-        int r;
-        while (true) {
+        while (!isInterruptionRequested()) {
             SshSession session;
-            r = bind.accept(session);
-            if (r == SSH_ERROR) {
-                printf("error accepting a connection : %s\n", bind.errorString());
+            if (m_bind.accept(session) != SSH_OK) {
+                if (!isInterruptionRequested()) {
+                    qCWarning(logger) << "Cannot accept SSH connection:"
+                                      << m_bind.errorString();
+                }
                 break;
             }
 
-            clients.emplace_back(std::make_unique<SshFsThread>(std::move(session), &server));
-            clients.back()->start(QThread::LowPriority);
+            auto *connection = new SftpConnectionThread(
+                std::move(session), m_rootPath, m_user, m_password);
+            connect(connection, &QThread::finished, connection, &QObject::deleteLater);
+            connection->start(QThread::LowPriority);
         }
     }
 
-    return 0;
+    void shutdown()
+    {
+        requestInterruption();
+
+        int fd = m_bind.fileDescriptor();
+        if (fd >= 0) {
+            ::shutdown(fd, SHUT_RDWR);
+        }
+    }
+
+private:
+    SshBind m_bind;
+    ssh_key m_hostKey = nullptr;
+    QString m_rootPath;
+    QString m_user;
+    QString m_password;
+};
+
+SftpServer::SftpServer(QString rootPath, QObject *parent)
+    : QObject(parent)
+    , m_rootPath(std::move(rootPath))
+{
+}
+
+SftpServer::~SftpServer()
+{
+    stop();
+}
+
+bool SftpServer::start()
+{
+    if (m_running) {
+        return true;
+    }
+
+    m_error.clear();
+
+    // libssh is reference counted, this is safe to call more than once. The
+    // daemon is long lived, so ssh_finalize() is never called.
+    ssh_init();
+
+    const QString canonicalRoot = QDir(m_rootPath).canonicalPath();
+    if (!canonicalRoot.isEmpty()) {
+        m_rootPath = canonicalRoot;
+    }
+
+    m_credentials.user = QStringLiteral("kdeconnect");
+    m_credentials.password = createPassword();
+    m_credentials.port = 0;
+
+    for (int attempt = 0; attempt < maxPortTries; ++attempt) {
+        const quint16 port = createPort();
+
+        SshBind bind;
+        const QByteArray bindAddress = QByteArrayLiteral("0.0.0.0");
+        const QByteArray portString = QByteArray::number(port);
+        bind.setOption(SSH_BIND_OPTIONS_BINDADDR, bindAddress.constData());
+        bind.setOption(SSH_BIND_OPTIONS_BINDPORT_STR, portString.constData());
+
+        ssh_key hostKey = nullptr;
+        if (ssh_pki_generate(SSH_KEYTYPE_ED25519, 0, &hostKey) != SSH_OK
+            && ssh_pki_generate(SSH_KEYTYPE_RSA, 2048, &hostKey) != SSH_OK) {
+            m_error = tr("Cannot generate an SSH host key");
+            return false;
+        }
+
+        if (bind.setOption(SSH_BIND_OPTIONS_IMPORT_KEY, hostKey) != SSH_OK) {
+            ssh_key_free(hostKey);
+            m_error = tr("Cannot use the generated SSH host key: %1")
+                          .arg(QString::fromUtf8(bind.errorString()));
+            return false;
+        }
+
+        if (bind.listen() != SSH_OK) {
+            // Probably a busy port: try another one.
+            qCDebug(logger) << "Cannot listen on port" << port << ":"
+                            << bind.errorString();
+            ssh_key_free(hostKey);
+            continue;
+        }
+
+        m_credentials.port = port;
+        m_acceptThread = std::make_unique<AcceptThread>(
+            std::move(bind), hostKey, m_rootPath, m_credentials.user,
+            m_credentials.password);
+        m_acceptThread->start();
+        m_running = true;
+
+        qCDebug(logger) << "SFTP server listening on port" << port
+                        << "with root" << m_rootPath;
+        return true;
+    }
+
+    m_error = tr("No free port available for the SFTP server");
+    return false;
+}
+
+void SftpServer::stop()
+{
+    if (!m_running) {
+        return;
+    }
+
+    m_running = false;
+
+    if (m_acceptThread) {
+        m_acceptThread->shutdown();
+        m_acceptThread->wait(5000);
+        m_acceptThread.reset();
+    }
+
+    qCDebug(logger) << "SFTP server stopped";
 }

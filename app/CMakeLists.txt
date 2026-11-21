@@ -41,6 +41,8 @@ add_static_plugins_lib(
 #    Telepathy
     Telephony
     SftpServer
+    FindThisDevice
+    SailfishSms
 )
 
 # plugin clients

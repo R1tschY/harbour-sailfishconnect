@@ -57,6 +57,7 @@
 #include "models/stringlistmodel.h"
 
 #include "ui.h"
+#include "networkwatcher.h"
 #include "js/qmlregister.h"
 #include "dbus/kdeconnect.h"
 #include "dbus/servicewatcher.h"
@@ -308,7 +309,7 @@ int main(int argc, char *argv[])
     // UI
     //KeyboardLayoutProvider keyboardLayoutProvider;
     UI ui(options.daemonMode);
-    ui.showMainWindow();
+    ConnmanWatcher connmanWatcher;
     if (!options.daemonMode)
         ui.showMainWindow();
 

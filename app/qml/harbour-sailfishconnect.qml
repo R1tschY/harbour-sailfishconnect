@@ -25,5 +25,26 @@ ApplicationWindow
     initialPage: Component { DeviceListPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
+
+    Connections {
+        target: ui
+
+        onFindPhoneRinging: {
+            if (window.pageStack.currentPage
+                    && window.pageStack.currentPage.objectName === "findPhonePage") {
+                window.pageStack.currentPage.deviceId = deviceId;
+            } else {
+                window.pageStack.push(Qt.resolvedUrl("pages/FindPhonePage.qml"),
+                                      { deviceId: deviceId });
+            }
+        }
+
+        onFindPhoneStopped: {
+            if (window.pageStack.currentPage
+                    && window.pageStack.currentPage.objectName === "findPhonePage") {
+                window.pageStack.pop();
+            }
+        }
+    }
 }
 

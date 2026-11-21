@@ -1,0 +1,23 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "zx97@users.noreply.github.com",
+                "Name": "Manuel FLURY"
+            }
+        ],
+        "Description": "Ring this device when the peer asks for it",
+        "EnabledByDefault": true,
+        "Icon": "find-location",
+        "Id": "sailfishconnect_findthisdevice",
+        "License": "GPL",
+        "Name": "Find this device",
+        "ServiceTypes": [
+            "KdeConnect/Plugin"
+        ],
+        "Version": "0.1"
+    },
+    "X-KdeConnect-SupportedPacketType": [
+        "kdeconnect.findmyphone.request"
+    ]
+}

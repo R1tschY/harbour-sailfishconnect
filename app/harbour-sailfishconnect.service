@@ -2,11 +2,16 @@
 Description=SailfishConnect
 Requires=lipstick.service
 After=lipstick.service
+# Keep restarting, a dead daemon makes the phone disappear
+StartLimitIntervalSec=0
 
 [Service]
 Type=dbus
 ExecStart=/usr/bin/harbour-sailfishconnect --daemon
 BusName=org.harbour.SailfishConnect
+Restart=always
+RestartSec=5
+LimitCORE=infinity
 
 [Install]
 WantedBy=post-user-session.target

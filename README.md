@@ -46,14 +46,14 @@ MousePad | :heavy_check_mark: | :computer_mouse: Create mouse input from your ph
 Share | :heavy_check_mark: | Send and receive files, text and URLs.
 Telephony | :heavy_check_mark: | :telephone_receiver: Share call status (incoming or active) with your computer.
 RemoteKeyboard | :heavy_check_mark: | :keyboard: Create keyboard input from your phone.
-SendNotifications | :construction: | Share notifications of your phone.
+SendNotifications | :heavy_check_mark: | Share notifications of your phone (enabled by default).
 RunCommand | :heavy_check_mark: | Run user-defined commands on your computer.
 RemoteCommands | :heavy_check_mark: | Let user-defined commands run on your phone.
 RemoteSystemVolume | :heavy_check_mark: | :sound: Control system volume of your computer.
-SMS | :o: | :speech_balloon: Send SMS messages and read SMS history from your computer.
+SMS | :construction: | :speech_balloon: Read conversations and send SMS messages from your computer.
 Contacts | :o: | :busts_in_silhouette: Share contacts with your computer.
-Sftp | :o: | :open_file_folder: Provide access to local files from your computer.
-FindThisDevice | :o: | :vibration_mode: Make finding your phone easier.
+Sftp | :heavy_check_mark: | :open_file_folder: Provide access to local files from your computer.
+FindThisDevice | :heavy_check_mark: | :vibration_mode: Ring the phone to find it (stops after one minute).
 SystemVolume | :o: | :sound: Share control of system volume of your phone.
 ReceiseNotifications | :o: | Receive notifications of your computer.
 MprisReceiver | :o: | :play_or_pause_button: Share multimedia player control with your computer.

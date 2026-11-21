@@ -70,6 +70,8 @@ public:
 signals:
     void runInBackgroundChanged();
     Q_SCRIPTABLE void openingDevicePage(const QString& deviceId);
+    void findPhoneRinging(const QString &deviceId);
+    void findPhoneStopped(const QString &deviceId);
 
 public slots:
     /**
@@ -87,6 +89,27 @@ public slots:
      * @param deviceId id of device
      */
     Q_SCRIPTABLE void openDevicePage(const QString& deviceId);
+
+    /**
+     * @brief raise the app and show the "find my phone" page
+     * @param deviceId id of the ringing device
+     */
+    Q_SCRIPTABLE void showFindPhone(const QString& deviceId);
+
+    /**
+     * @brief hide the "find my phone" page
+     */
+    Q_SCRIPTABLE void hideFindPhone(const QString& deviceId);
+
+    /**
+     * @brief stop the ringtone of the device
+     */
+    Q_SCRIPTABLE void stopFindPhone(const QString& deviceId);
+
+    /**
+     * @brief whether the device is currently ringing
+     */
+    Q_SCRIPTABLE bool isFindPhoneRinging(const QString& deviceId);
 
 private slots:
     void onRegisteredService();

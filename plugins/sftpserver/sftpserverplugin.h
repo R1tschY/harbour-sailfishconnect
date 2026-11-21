@@ -1,5 +1,6 @@
 /*
  * Copyright 2021 Richard Liebscher <richard.liebscher@gmail.com>.
+ * Copyright 2026 Manuel FLURY <zx97@users.noreply.github.com>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +20,35 @@
 
 #include <core/kdeconnectplugin.h>
 
+#include <memory>
+
+class SftpServer;
+
+/// Serves the user's home directory over SFTP to a paired KDE Connect peer.
+///
+/// The peer asks for a server by sending a kdeconnect.sftp.request packet.
+/// We answer with the credentials of an embedded SSH/SFTP server, which the
+/// peer then mounts with sshfs.
 class SftpServerPlugin : public KdeConnectPlugin
 {
     Q_OBJECT
-public:
-    using KdeConnectPlugin::KdeConnectPlugin;
 
-    void connected() override {}
+public:
+    SftpServerPlugin(QObject *parent, const QVariantList &args);
+    ~SftpServerPlugin() override;
+
+    void connected() override
+    {
+    }
     void receivePacket(const NetworkPacket &np) override;
+
+private:
+    void startServer();
+    void stopServer(bool notifyPeer);
+    void sendCredentialsPacket();
+    void sendErrorMessage(const QString &message);
+    QString exportedPath() const;
+    QString localIpAddress() const;
+
+    std::unique_ptr<SftpServer> m_server;
 };
